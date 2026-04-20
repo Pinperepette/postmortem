@@ -684,12 +684,7 @@ document.getElementById('bestbox').innerHTML=
         }
       },
       plugins:{
-        legend:{labels:{color:'#c9d1d9',generateLabels:()=>[
-          {text:'Testo',fillStyle:C.blue,strokeStyle:C.blue,pointStyle:'circle',fontColor:'#c9d1d9'},
-          {text:'Foto',fillStyle:C.orange,strokeStyle:C.orange,pointStyle:'circle',fontColor:'#c9d1d9'},
-          {text:'Video',fillStyle:C.green,strokeStyle:C.green,pointStyle:'circle',fontColor:'#c9d1d9'},
-          {text:'Media mobile',fillStyle:'transparent',strokeStyle:C.orange,pointStyle:'line',fontColor:'#c9d1d9'},
-        ]}},
+        legend:{display:false},
         tooltip:{callbacks:{label:ctx=>{
           const m=ctx.raw.m;
           if(!m) return fmt(ctx.raw.y)+' views';

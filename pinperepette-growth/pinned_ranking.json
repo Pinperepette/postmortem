@@ -1,0 +1,169 @@
+{
+  "method": "Multi-criteria ranking pesato: save-worthy (25%), rappresentativita (20%), timelessness (20%), cluster strength (15%), engagement (10%), self-contained (10%)",
+  "current_pinned": {
+    "id": "2050603892589642218",
+    "note": "SubLodeX/Claude Code UI release - attivo dal 2026-05-02. Va sostituito dopo 2-4 settimane (=in scadenza ora, oggi 2026-05-15: ~13gg). Cluster 'Tooling Claude Code', kind=original, save-worthy ratio 0.377 (BK=53/L=140). Buon pinned ma topic specifico product-release, perde slancio dopo il drop iniziale."
+  },
+  "sample_total_originals": 25,
+  "sample_breakdown": {
+    "dataset_originals": 17,
+    "dataset_quote": 1,
+    "extra_originals_window_23_28_apr": 7,
+    "excluded_current_pinned": 1,
+    "total_candidates_universe": 24
+  },
+  "candidates_top5": [
+    {
+      "rank": 1,
+      "tweet_id": "2052122761712087306",
+      "tweet_url": "https://x.com/Pinperepette/status/2052122761712087306",
+      "text_preview": "La cosa che mi manda ai matti e che stanno tutti correndo a fare agenti, wrapper, MCP, orchestrator e AI OS vari... cazzi e mazzi, pero manca ancora il layer base, quello inevitabile tipo Cloudflare per il web, OAuth per identity, Stripe per i pagamenti...",
+      "ts": "2026-05-06T20:26:07+00:00",
+      "age_days": 8,
+      "metrics": {"likes": 166, "rt": 8, "replies": 21, "views": 8222, "bookmarks": 68},
+      "bookmark_like_ratio": 0.41,
+      "cluster": "AGD memoria agenti + Security/OPSEC (intersezione)",
+      "kind": "original",
+      "has_media": false,
+      "has_link": false,
+      "score_breakdown": {
+        "save_worthy": 8.0,
+        "rappresentativeness": 10.0,
+        "timelessness": 9.5,
+        "cluster_strength": 10.0,
+        "engagement_absolute": 8.0,
+        "self_contained": 10.0,
+        "total_weighted": 9.18
+      },
+      "why_pinned": "Tesi-manifesto: 'manca il trust layer degli agenti'. Interseca i due cluster best-performing (Security/OPSEC + AGD), zero link, zero media, essay self-contained che resta valido per mesi (la tesi non scade). Save-worthy 0.41 + 68 bookmark = il visitor del profilo capisce in 3 righe chi sei (security engineer che pensa infra agenti). Phoenix-friendly: no link, dwell alto, ratio BK/V buono.",
+      "rotation_window": "4 settimane (poi pesca top tech del momento sul nuovo trust-layer/agent-security in evoluzione)"
+    },
+    {
+      "rank": 2,
+      "tweet_id": "2049927881787367589",
+      "tweet_url": "https://x.com/Pinperepette/status/2049927881787367589",
+      "text_preview": "l'altro giorno apro devtools su un sito con un cookie banner iper curato, toggle, categorie, spiegazioni infinite, faccio rifiuta tutto, confermo due volte, chiudo e penso ok fatto; poi guardo le network request e vedo ventitre tracker gia partiti...",
+      "ts": "2026-04-30T19:04:27+00:00",
+      "age_days": 14,
+      "metrics": {"likes": 363, "rt": 67, "replies": 33, "views": 16940, "bookmarks": 48},
+      "bookmark_like_ratio": 0.132,
+      "cluster": "Security & OPSEC (best performing, eng_median 260)",
+      "kind": "original",
+      "has_media": false,
+      "has_link": false,
+      "score_breakdown": {
+        "save_worthy": 5.0,
+        "rappresentativeness": 10.0,
+        "timelessness": 9.5,
+        "cluster_strength": 10.0,
+        "engagement_absolute": 10.0,
+        "self_contained": 10.0,
+        "total_weighted": 8.78
+      },
+      "why_pinned": "Ceiling thread (ha risposto a 10/10 commenter), narrativa OPSEC pura, eng totale 511, zero link/media, racconto self-contained che resta valido fintanto che esistono cookie banner (cioe per sempre). Save-worthy basso ma compensato da eng assoluto enorme e dal fatto che e gia il tweet piu condiviso del subject nel periodo: ottimo per dwell + reshare dai profile visitors.",
+      "rotation_window": "3-4 settimane (puo restare a lungo perche timeless; sostituirlo solo se esce un drop tecnico nuovo piu forte)"
+    },
+    {
+      "rank": 3,
+      "tweet_id": "2053011592833310871",
+      "tweet_url": "https://x.com/Pinperepette/status/2053011592833310871",
+      "text_preview": "I supply chain attack sugli MCP erano inevitabili. A febbraio ne e emerso uno pubblicamente, ma chissa quanti altri ne sono passati sotto il radar da allora. Clone quasi identici di server legit, repository GitHub costruiti per sembrare veri...",
+      "ts": "2026-05-09T07:18:01+00:00",
+      "age_days": 5,
+      "metrics": {"likes": 79, "rt": 10, "replies": 6, "views": 4087, "bookmarks": 24},
+      "bookmark_like_ratio": 0.304,
+      "cluster": "Security & OPSEC + AGD memoria agenti",
+      "kind": "original",
+      "has_media": false,
+      "has_link": false,
+      "score_breakdown": {
+        "save_worthy": 7.0,
+        "rappresentativeness": 10.0,
+        "timelessness": 9.0,
+        "cluster_strength": 10.0,
+        "engagement_absolute": 6.5,
+        "self_contained": 10.0,
+        "total_weighted": 8.65
+      },
+      "why_pinned": "Long-form essay puro su supply chain attack MCP + agenti. Interseca i due cluster best. Zero link, zero media, tesi originale ('typo -> RCE automatizzata'). Save-worthy 0.30 in cluster Security. Resta valido per tutto il 2026 perche il problema MCP/typosquatting peggiora, non si risolve. Eta 5gg: fresco. Ottimo se Pinperepette vuole un pinned 'editoriale tecnico'.",
+      "rotation_window": "3 settimane (sostituire quando esce un drop tecnico ancora piu forte, o se il tema MCP perde momentum)"
+    },
+    {
+      "rank": 4,
+      "tweet_id": "2053221682559496200",
+      "tweet_url": "https://x.com/Pinperepette/status/2053221682559496200",
+      "text_preview": "AGD nasce da una domanda abbastanza semplice: perche stiamo ancora usando documenti lineari come memoria degli agenti? Prende alcune idee che funzionavano gia bene: markdown per la leggibilita, hypertext/HTML per refs e navigazione, Obsidian per la mentalita graph-based...",
+      "ts": "2026-05-09T21:12:50+00:00",
+      "age_days": 5,
+      "metrics": {"likes": 50, "rt": 5, "replies": 9, "views": 3722, "bookmarks": 55},
+      "bookmark_like_ratio": 1.1,
+      "cluster": "AGD memoria agenti (eng_median 64)",
+      "kind": "original",
+      "has_media": false,
+      "has_link": true,
+      "score_breakdown": {
+        "save_worthy": 9.5,
+        "rappresentativeness": 10.0,
+        "timelessness": 8.0,
+        "cluster_strength": 9.0,
+        "engagement_absolute": 5.0,
+        "self_contained": 8.5,
+        "total_weighted": 8.45
+      },
+      "why_pinned": "Save-worthy outlier: BK=55 > L=50 (ratio 1.10, reference material). Manifesto AGD + annuncio plugin Claude Code = product+philosophy in un tweet. Penalita: ha link in root (Phoenix penality lieve), e legato al lancio del plugin quindi semi-timeless (tra 6 mesi suona vecchio). Ottimo come pinned 'vetrina prodotto' se vuole convertire visitor del profilo in user del plugin AGD.",
+      "rotation_window": "2-3 settimane (e una release: l'effetto novita decade; sostituirlo appena le install si stabilizzano)"
+    },
+    {
+      "rank": 5,
+      "tweet_id": "2050120271042920952",
+      "tweet_url": "https://x.com/Pinperepette/status/2050120271042920952",
+      "text_preview": "Qualche giorno fa mi chiamano per dare un'occhiata a un sistema. Non era roba mia, amico di un amico, 'non funziona qualcosa, forse ci hanno attaccato'... Apro i log dell'app in produzione, routine. Scorro, errori, retry, timeout... niente di strano. Poi una riga mi fa fermare. Nel campo request_headers c'era scritto, in chiaro: Authorization: Bearer eyJhbGci...",
+      "ts": "2026-05-01T07:48:56+00:00",
+      "age_days": 13,
+      "metrics": {"likes": 157, "rt": 9, "replies": 7, "views": 14481, "bookmarks": 20},
+      "bookmark_like_ratio": 0.127,
+      "cluster": "Security & OPSEC (narrativo)",
+      "kind": "original",
+      "has_media": false,
+      "has_link": false,
+      "score_breakdown": {
+        "save_worthy": 5.0,
+        "rappresentativeness": 10.0,
+        "timelessness": 9.5,
+        "cluster_strength": 10.0,
+        "engagement_absolute": 7.5,
+        "self_contained": 10.0,
+        "total_weighted": 8.43
+      },
+      "why_pinned": "Storia OPSEC perfetta in stile 'mi hanno chiamato per...': bearer token in chiaro nei log. Self-contained, zero link/media, narrativa che resta valida finche esiste Kibana (sempre). Stesso pattern del #2 ma con eng leggermente piu basso. Ottima alternanza se il #2 stanca dopo 3 settimane.",
+      "rotation_window": "3 settimane (usare in rotazione con il #2: stessa voce OPSEC, stessa timelessness, alterna per non bruciare entrambi)"
+    }
+  ],
+  "candidates_rejected_top_engagement": [
+    {
+      "tweet_id": "2050279170526089647",
+      "actual_eng": 912,
+      "kind": "quote",
+      "reason": "TOP ENG ASSOLUTO (755L+87RT+58R+12BK) ma e quote dell'intervista alla stampante: humor virale, cluster 'Vita & societa tech' (worst performing, eng_median 18 - questo e outlier non rappresentativo). Save-worthy ratio 0.016 (12BK su 755L) = nessuno lo bookmarka. NON e rappresentativo della voce tech/security/AGD. Pinned-killer per il posizionamento."
+    },
+    {
+      "tweet_id": "2051395641822044307",
+      "actual_eng": 610,
+      "kind": "original",
+      "reason": "Ratio 1.394 (BK 336 > L 241) e cluster AGD: candidato fortissimo MA testo root troppo breve e dipendente dal link ('Ne parlo su -->'): non e self-contained, il valore e nel pezzo linkato. Penalita Phoenix per link in root + age 10gg + spinge il visitor FUORI dal profilo. Se Pinperepette ha gia rilasciato il pezzo Substack come articolo standalone, candidato di backup."
+    },
+    {
+      "tweet_id": "2047980846838132944",
+      "actual_eng": 113,
+      "kind": "original",
+      "reason": "92 likes per Kolmogorov il 25 aprile: alto eng ma data-bound (festa nazionale italiana), ratio 0.054, cluster 'lifestyle/date specifica'. Tra 30 giorni leggerlo sembra fuori contesto."
+    },
+    {
+      "tweet_id": "2050962566629711884",
+      "actual_eng": 148,
+      "kind": "original",
+      "reason": "'un altro wallpaper e smetto, giuro' - 124L ma cluster 'Vita & societa tech' (worst). Ratio 0.032. Off-topic per pinned biglietto da visita."
+    }
+  ],
+  "rotation_suggestion": "Cadenza consigliata: rotation ogni 3-4 settimane (allineata al ciclo di freschezza dei pinned Phoenix). Criterio next-pick: dopo lo scadere del #1 (Agent Security Gateway), pescare il top tweet del cluster Security/AGD pubblicato negli ultimi 14gg con save-worthy ratio > 0.25 e zero link in root. Monitorare: (a) profile_visits/pinned_impression ratio (drop > 30% = bruciare e sostituire), (b) eng-rate del pinned vs eng-rate del feed normale del subject (deve essere >= 2x), (c) bookmark/like ratio del pinned (se cala sotto 0.15 in 7gg = tweet 'consumato'). Pattern di alternanza: #1 (manifesto AGD/security) -> #2 (storia OPSEC long-form) -> #4 (release product AGD) -> ripeti, in modo da coprire vetrina, voce e prodotto in cicli."
+}

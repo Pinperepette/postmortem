@@ -237,7 +237,7 @@
 </div>
 
 <!-- 4. ACTION PLAN -->
-<h2>Action plan · 6 azioni</h2>
+<h2>Action plan · 7 azioni</h2>
 <div id="actionPlan"></div>
 
 <!-- 5. CONFLICT RESOLUTION -->
@@ -1112,10 +1112,101 @@
   </div>
 </section>
 
+<!-- 14.5 X ALGORITHM 2026 UPDATE -->
+<section class="panel" style="border-top:3px solid var(--gold)">
+<h2>🚀 X Algorithm 2026 — Phoenix Update <span class="src src-code" title="xai-org/x-algorithm release 2026-05-15">●OSS 2026-05-15</span></h2>
+
+<div style="background:var(--panel2);padding:16px;border-radius:8px;margin-bottom:16px;font-size:13px;line-height:1.55">
+  <strong style="color:var(--gold)">Errata corrige &amp; nuovi insight.</strong> Oggi xAI ha rilasciato <code>xai-org/x-algorithm</code>: il for-you feed è stato riscritto. <strong>Heavy Ranker, SimClusters e TwHIN non esistono più</strong>. Tutto il ranking passa per <strong>Phoenix</strong>, un transformer Grok-based con candidate isolation. Il retrieval out-of-network ora è <strong>Two-Tower</strong>, non più SimClusters. Le diagnosi sopra (datate 09:43) restano valide nel <em>cosa fare</em>, ma alcuni meccanismi citati nei rationale (es. "peso 13.5", "SimClusters 24h", "13 head Phoenix") sono modellati sulla vecchia architettura. Sotto, cosa cambia <em>davvero</em> per il tuo profilo <code>@pinperepette</code> (tier <strong>niche</strong>, primary_axis <strong>distribution</strong>).
+</div>
+
+<h3 style="margin-top:20px;color:var(--accent2)">Le 7 novità del release</h3>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-top:8px">
+  <div class="mechanic-card">
+    <strong>1. Pipeline end-to-end runnable</strong><br>
+    <span class="muted">Un solo <code>run_pipeline.py</code> sostituisce retrieval e ranker separati. Inferenza riproducibile fuori X.</span>
+  </div>
+  <div class="mechanic-card">
+    <strong>2. Mini-Phoenix pre-trained (3 GB)</strong><br>
+    <span class="muted">256-dim, 4 head, 2 layer. Hash embeddings 1M user/item/author. Distribuito via Git LFS.</span>
+  </div>
+  <div class="mechanic-card">
+    <strong>3. Grox — content understanding</strong><br>
+    <span class="muted">Nuovo servizio Python: spam detection, PTOS policy, banger-screen, multimodal embedder v5, ASR sui video. Tutta la "trust &amp; safety" è qui.</span>
+  </div>
+  <div class="mechanic-card">
+    <strong>4. Ads blending system</strong><br>
+    <span class="muted"><code>home-mixer/ads/</code>: iniezione ad nel feed con brand-safety che rispetta i confini del contenuto sensibile.</span>
+  </div>
+  <div class="mechanic-card">
+    <strong>5. Query hydrators espansi</strong><br>
+    <span class="muted">Ora idrata: starter packs, impression bloom filter, IP, mutual-follow graph, served history. Il modello vede più contesto utente.</span>
+  </div>
+  <div class="mechanic-card">
+    <strong>6. Candidate hydrators espansi</strong><br>
+    <span class="muted">Engagement counts, brand safety, language, media, quote expansion, mutual-follow score. Più segnali per candidato.</span>
+  </div>
+  <div class="mechanic-card">
+    <strong>7. Nuove candidate source</strong><br>
+    <span class="muted">Ads, Who-to-follow, <strong>Phoenix MoE</strong> (Mixture of Experts), Phoenix topics, prompts. Più sorgenti out-of-network.</span>
+  </div>
+</div>
+
+<h3 style="margin-top:24px;color:var(--accent2)">Cosa cambia davvero (vs il tuo report 09:43)</h3>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px">
+  <div class="mechanic-card anti">
+    <strong style="color:var(--fail)">❌ Obsoleto</strong>
+    <ul style="margin:8px 0 0 0;padding-left:18px;line-height:1.6">
+      <li><strong>"Heavy Ranker reply peso 13.5"</strong> — non esiste più come peso fisso. Phoenix predice <em>P(reply)</em> ma combina con altri 21 segnali; i pesi sono caricati a runtime via feature switches, non noti.</li>
+      <li><strong>"SimClusters 24h finestra"</strong> — SimClusters dismessi. Il retrieval ora è Two-Tower (User Tower vs Candidate Tower, dot product). Non c'è più una "finestra cluster".</li>
+      <li><strong>"Phoenix 13 head con bookmark/screenshot"</strong> — Phoenix ha 22 azioni multi-task, non 13. Bookmark NON è una delle azioni predette (almeno nel codice OSS). Screenshot non esiste come azione.</li>
+      <li><strong>"AuthorDiversityDecayFactor 0.5/0.25 floor"</strong> — formula nuova: <code>(1 - floor) × decay^pos + floor</code>. Decay esponenziale continuo, non a step.</li>
+    </ul>
+  </div>
+  <div class="mechanic-card">
+    <strong style="color:var(--ok)">✅ Confermato/Rinforzato</strong>
+    <ul style="margin:8px 0 0 0;padding-left:18px;line-height:1.6">
+      <li><strong>L8 anti-burst</strong> resta cruciale: AuthorDiversity ora più aggressivo (decay continuo). Action #2 è giusta, anzi sottostimata.</li>
+      <li><strong>L4+L7 dwell</strong> rinforzata: <code>dwell</code>, <code>cont_dwell_time</code> e <code>cont_click_dwell_time</code> sono 3 azioni Phoenix separate. Screenshot devtools (action #3) attiva tutte e 3.</li>
+      <li><strong>L11 cluster focus</strong> resta valida ma per ragione diversa: <em>non</em> SimClusters routing, ma <em>User Tower embedding</em>. Concentrarsi su pochi temi rende l'embedding più "leggibile" al Two-Tower.</li>
+      <li><strong>OON penalty</strong> ora ha tre regimi: standard, <code>TopicOonWeightFactor</code> (per topic feed), <code>NEW_USER_OON_WEIGHT_FACTOR</code> (utenti nuovi). Tu sei OON per chi non ti segue → sempre penalizzato salvo topic-feed.</li>
+      <li><strong>L13 share / quote</strong> rinforzata: il release introduce 3 azioni share distinte (<code>share</code>, <code>share_via_dm</code>, <code>share_via_copy_link</code>), tutte positive. Action #4 (link in reply) regge.</li>
+    </ul>
+  </div>
+</div>
+
+<h3 style="margin-top:24px;color:var(--accent2)">⚡ Nuova leva: L16 — anti-not-dwelled</h3>
+<div class="mechanic-card" style="border-left-color:var(--gold)">
+  <p style="margin:0 0 8px 0"><strong>Phoenix 2026 ha un'azione negativa nuova: <code>not_dwelled</code>.</strong> Predice la probabilità che il lettore <em>scrolli via senza fermarsi</em>. È simmetrica a <code>dwell</code>: ogni post predetto come "low-dwell" perde reach indipendentemente da like/RT.</p>
+  <p style="margin:0 0 8px 0">Per <strong>@pinperepette</strong> (median text length attuale ~140 char, p90 ~280): sei già nella sweet spot — testi non troppo corti, non thread-bait. Ma <strong>l'hook nei primi 100 caratteri</strong> diventa la metrica chiave. Un tweet che apre con domanda retorica generica perde sul cold-start, anche se chiuso bene.</p>
+  <p style="margin:0;color:var(--muted);font-size:13px"><strong>Operativo:</strong> primo paragrafo di ogni tweet original deve avere <em>un artefatto o un claim concreto</em> nei primi 100 char. Niente "secondo me", "interessante notare", "vi siete mai chiesti". Direttamente il punto. Vedi action 7 sotto.</p>
+</div>
+
+<h3 style="margin-top:24px;color:var(--accent2)">📋 Implicazioni operative per il tuo plan</h3>
+<table style="width:100%;border-collapse:collapse;margin-top:8px;font-size:13px">
+  <thead>
+    <tr style="background:var(--panel2)"><th style="text-align:left;padding:8px;border-bottom:1px solid var(--line)">Action attuale</th><th style="text-align:left;padding:8px;border-bottom:1px solid var(--line)">Stato</th><th style="text-align:left;padding:8px;border-bottom:1px solid var(--line)">Nota Phoenix 2026</th></tr>
+  </thead>
+  <tbody>
+    <tr><td style="padding:8px;border-bottom:1px solid var(--line)"><strong>#1 L11 — Cluster focus</strong></td><td style="padding:8px;border-bottom:1px solid var(--line)"><span class="pill v-ok">conferma</span></td><td style="padding:8px;border-bottom:1px solid var(--line)">Razionale ora è "User Tower coherence", non "SimClusters". Stesso comportamento richiesto.</td></tr>
+    <tr><td style="padding:8px;border-bottom:1px solid var(--line)"><strong>#2 L8 — Anti-burst</strong></td><td style="padding:8px;border-bottom:1px solid var(--line)"><span class="pill v-ok">rinforzata</span></td><td style="padding:8px;border-bottom:1px solid var(--line)">AuthorDiversity ora con decay continuo, ancora più punitiva sui burst. Priority si alza.</td></tr>
+    <tr><td style="padding:8px;border-bottom:1px solid var(--line)"><strong>#3 L4+L7 — Screenshot dwell</strong></td><td style="padding:8px;border-bottom:1px solid var(--line)"><span class="pill v-ok">rinforzata</span></td><td style="padding:8px;border-bottom:1px solid var(--line)">3 azioni Phoenix dwell-related: dwell, cont_dwell_time, cont_click_dwell_time. Lo screenshot le attiva tutte.</td></tr>
+    <tr><td style="padding:8px;border-bottom:1px solid var(--line)"><strong>#4 L13 — No link in root</strong></td><td style="padding:8px;border-bottom:1px solid var(--line)"><span class="pill v-warn">speculativa</span></td><td style="padding:8px;border-bottom:1px solid var(--line)">"OpenLink penalty" non è azione Phoenix esplicita. Ma <code>not_dwelled</code> sì: un link nel root porta via il dwell → la regola regge per motivo diverso.</td></tr>
+    <tr><td style="padding:8px;border-bottom:1px solid var(--line)"><strong>#5 L6 — Save-worthy</strong></td><td style="padding:8px;border-bottom:1px solid var(--line)"><span class="pill v-warn">da rivedere</span></td><td style="padding:8px;border-bottom:1px solid var(--line)">Bookmark NON è azione Phoenix. La leva vera è <code>follow_author</code> + <code>cont_dwell_time</code>. Format checklist resta valido, motivo cambia.</td></tr>
+    <tr><td style="padding:8px;border-bottom:1px solid var(--line)"><strong>#6 L2 — Hot take</strong></td><td style="padding:8px;border-bottom:1px solid var(--line)"><span class="pill v-ok">conferma</span></td><td style="padding:8px;border-bottom:1px solid var(--line)">P(reply) è una delle 22 azioni Phoenix. Peso non noto, ma resta positivo.</td></tr>
+    <tr><td style="padding:8px;background:rgba(251,191,36,.08)"><strong>#7 L16 — Anti-not-dwelled</strong> <span class="pill" style="background:var(--gold);color:#000">NUOVA</span></td><td style="padding:8px;background:rgba(251,191,36,.08)"><span class="pill v-ok">aggiunta</span></td><td style="padding:8px;background:rgba(251,191,36,.08)">Hook nei primi 100 char. Specifica per Phoenix 2026 (azione <code>not_dwelled</code>).</td></tr>
+  </tbody>
+</table>
+
+<div style="margin-top:20px;padding:14px;background:var(--panel2);border-radius:8px;border-left:3px solid var(--accent);font-size:13px">
+  <strong>TL;DR.</strong> Il tuo plan non va buttato. <strong>5 azioni su 6 reggono</strong> (con razionali da riformulare). Action #5 (save-worthy) va motivata via <code>follow_author</code> + dwell, non bookmark. <strong>Aggiungi L16</strong> (hook nei primi 100 char): è la novità più importante del release per i niche tier come te, dove il cold-start determina tutto. Repo: <code>github.com/xai-org/x-algorithm</code>.
+</div>
+</section>
+
 <!-- 15. FOOTER -->
 <footer>
-  Analisi v5 generata il 2026-05-15 su sample 249 tweet, 14 giorni. Coverage 0.189% della history. 5 thread analizzati.<br>
-  Analisi v5 con Sprint 1+2+3 — confidence provenance, narrative profile, what-if engine, timeline reconstruction, audience graph, pre-publish predictor. <span style="color:var(--gold)">🏴‍☠️</span>
+  Analisi v5.1 generata il 2026-05-15 su sample 249 tweet, 14 giorni. Coverage 0.189% della history. 5 thread analizzati.<br>
+  Sprint 1+2+3 + Phoenix 2026 update — confidence provenance, narrative profile, what-if engine, timeline reconstruction, audience graph, pre-publish predictor, X Algorithm 2026 errata corrige. <span style="color:var(--gold)">🏴‍☠️</span>
 </footer>
 
 <script>
@@ -1164,7 +1255,12 @@ const actions = [
    what:"Una volta a settimana, hot take sul cluster Security/OPSEC o AGD agenti con struttura precisa: claim controintuitivo (1 frase) + 2-3 supporti concreti (dati, esempi, link a paper SENZA URL nel root) + invito specifico ('chi sta lavorando su X mi corregga, ho dubbi sul punto 2').",
    rationale:"comment_response_rate=0.507 reliable e reply_mine_to_other=0.82 dimostrano che la macchina conversazionale gira. Il bottleneck e' l'innesco: hot take strutturato attiva L2 a monte. Phoenix Reply head ha peso 13.5 (27× un like).",
    kpi:"reply_in_total medio da 4.66 a ≥7 sui tweet hot-take cluster forte",reach:"+30-50% reply rate su tweet hot-take vs original narrativo",effort_text:"20-30 minuti per costruire il take con la struttura claim+supporti+invito.",
-   risk:"Hot take frainteso come flame → blocchi/mute (negative_feedback_v2 peso -74)",risk_src:"code",mitigation:"Mai targeting personale, niente nominativi negativi; claim sul fenomeno, non sulla persona"}
+   risk:"Hot take frainteso come flame → blocchi/mute (negative_feedback_v2 peso -74)",risk_src:"code",mitigation:"Mai targeting personale, niente nominativi negativi; claim sul fenomeno, non sulla persona"},
+  {rank:7,title:"Hook concreto nei primi 100 caratteri di ogni tweet original",leverage:"L16",phoenix:"P(not_dwelled) — azione negativa Phoenix 2026",score:24.0,impact:8,confidence:8,effort:1,source:"code",
+   what:"Da subito, su ogni tweet original: i primi 100 caratteri devono contenere un artefatto concreto o un claim diretto. Niente 'secondo me', 'interessante notare', 'vi siete mai chiesti', 'oggi ho pensato'. Apri con: nome del tool / cifra / errore osservato / claim controintuitivo / domanda specifica con dato. Il resto del tweet sviluppa, ma l'hook deve fermare lo scroll nei primi 2 secondi.",
+   rationale:"Phoenix 2026 (release 15 mag, xai-org/x-algorithm) introduce l'azione negativa P(not_dwelled): predice la probabilita' che il lettore scrolli via senza fermarsi. E' simmetrica a dwell. Per niche tier, dove il cold-start determina tutto, l'hook nei primi 100 char e' la metrica che spinge o affossa il post indipendentemente da like/RT. Median text length attuale ~140 char e' OK, ma se il primo terzo e' vago il modello predice not_dwelled alto e il post non viaggia.",
+   kpi:"% tweet original con primo paragrafo che contiene artefatto/claim concreto: oggi ~50%, target ≥85% in 2 settimane",reach:"+15-30% reach sui tweet con hook concreto vs hook generico",effort_text:"Costo zero: rilettura di 30 secondi prima di pubblicare. Sostituisci la prima frase se generica.",
+   risk:"Hook troppo 'clickbait' che tradisce la voce narrativa/ironica del subject",risk_src:"speculative",mitigation:"Hook concreto != clickbait. Esempi: 'devtools, Network tab, 47 richieste prima del consent' apre un'osservazione, non un titolo. La voce ironica viene dopo, nei caps successivi."}
 ];
 
 function prioClass(s){if(s>=20)return['must','p-must'];if(s>=10)return['high','p-high'];if(s>=6)return['mid','p-mid'];return['low','p-low'];}

@@ -199,6 +199,37 @@
         }
       ],
       "effort_text": "20-30 minuti per costruire il take con la struttura claim+supporti+invito."
+    },
+    {
+      "rank": 7,
+      "title": "Hook concreto nei primi 100 caratteri di ogni tweet original",
+      "leverage": "L16",
+      "leverage_name": "anti-not-dwelled",
+      "phoenix_head": "P(not_dwelled) — azione negativa Phoenix 2026",
+      "what_to_do": "Da subito, su ogni tweet original: i primi 100 caratteri devono contenere un artefatto concreto o un claim diretto. Niente 'secondo me', 'interessante notare', 'vi siete mai chiesti', 'oggi ho pensato'. Apri con: nome del tool / cifra / errore osservato / claim controintuitivo / domanda specifica con dato. Il resto del tweet sviluppa, ma l'hook deve fermare lo scroll nei primi 2 secondi.",
+      "rationale": "Phoenix 2026 (release 15 mag, xai-org/x-algorithm) introduce l'azione negativa esplicita not_dwelled, simmetrica a dwell, che predice la probabilità di scroll-via senza pausa. Per niche tier come pinperepette il cold-start determina la reach; l'hook nei primi 100 char e' la metrica che spinge o affossa il post indipendentemente da like/RT. Median text length attuale 140 char e' OK, ma se il primo terzo del testo e' generico Phoenix predice not_dwelled alto.",
+      "priority": {
+        "impact": 0.8,
+        "confidence": 0.8,
+        "effort": 0.1,
+        "score": 6.4
+      },
+      "expected_outcome": {
+        "kpi_target": "% tweet original con primo paragrafo che contiene artefatto/claim concreto: oggi ~50%, target >=85% in 2 settimane",
+        "reach_delta": "+15-30% reach sui tweet con hook concreto vs hook generico",
+        "cluster_strength_delta": "indiretto: aumenta dwell del cluster Security/OPSEC e AGD se l'hook contiene artefatto del cluster",
+        "secondary_effects": "Migliora anche L4+L7 (dwell) e L11 (cluster_focus, perche' l'artefatto e' tipicamente cluster-coherent)"
+      },
+      "risks": [
+        {
+          "scenario": "Hook troppo 'clickbait' che tradisce la voce narrativa/ironica del subject",
+          "axis_at_risk": "ranking",
+          "mitigation": "Hook concreto != clickbait. Esempi buoni: 'devtools, Network tab, 47 richieste prima del consent' apre un'osservazione, non un titolo. La voce ironica resta nei cap successivi.",
+          "source": "speculative"
+        }
+      ],
+      "effort_text": "Costo zero: rilettura di 30 secondi prima di pubblicare. Sostituisci la prima frase se generica.",
+      "confidence_source": "code"
     }
   ],
   "anti_patterns": [
@@ -234,7 +265,7 @@
     {
       "metric": "burst_rate_30min",
       "current": 0.69,
-      "target": 0.30,
+      "target": 0.3,
       "window": "4 weeks",
       "source": "code"
     },
@@ -254,8 +285,8 @@
     },
     {
       "metric": "with_media_share_strong_clusters",
-      "current": 0.30,
-      "target": 0.70,
+      "current": 0.3,
+      "target": 0.7,
       "window": "4 weeks",
       "source": "code"
     },
@@ -266,5 +297,19 @@
       "window": "4 weeks",
       "source": "code"
     }
-  ]
+  ],
+  "_phoenix_2026_update": {
+    "release_date": "2026-05-15",
+    "repo": "https://github.com/xai-org/x-algorithm",
+    "note": "Phoenix transformer + Two-Tower retrieval + Grox content understanding. HeavyRanker/SimClusters/TwHIN dismessi. Azione negativa nuova: not_dwelled. AuthorDiversity formula nuova: (1-floor)*decay^pos+floor.",
+    "actions_revalidated": {
+      "1_L11_cluster_focus": "confirmed (razionale ora e' User Tower coherence, non SimClusters)",
+      "2_L8_anti_burst": "reinforced (AuthorDiversity decay continuo, piu' aggressivo)",
+      "3_L4_L7_screenshot": "reinforced (3 azioni Phoenix dwell-related: dwell, cont_dwell_time, cont_click_dwell_time)",
+      "4_L13_no_link_root": "speculative (OpenLink penalty non e' azione Phoenix esplicita, ma not_dwelled si: la regola regge per motivo diverso)",
+      "5_L6_save_worthy": "needs_reframe (Bookmark NON e' azione Phoenix; leva vera = follow_author + cont_dwell_time)",
+      "6_L2_hot_take": "confirmed (P(reply) e' tra le 22 azioni Phoenix)",
+      "7_L16_anti_not_dwelled": "added (nuova leva, specifica Phoenix 2026)"
+    }
+  }
 }

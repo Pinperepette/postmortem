@@ -1,0 +1,155 @@
+{
+  "clusters": [
+    {
+      "name": "Vita & società tech",
+      "label": "Vita & società tech",
+      "description": "Osservazioni ironiche e personali sul mondo tech, cultura digitale e vita quotidiana dello sviluppatore.",
+      "archetype": "conversazionale",
+      "n": 22,
+      "n_pct": 50.0,
+      "rt_median": 0.0,
+      "rt_p90": 6.8,
+      "re_median": 1.5,
+      "eng_median": 18.0,
+      "top_examples": [
+        {
+          "id": "2050279170526089647",
+          "kind": "quote",
+          "text": "surreale. prossima intervista alla stampante: “cosa provi quando sei in inceppamento carta?”",
+          "eng_total": 900
+        },
+        {
+          "id": "2051395641822044307",
+          "kind": "original",
+          "text": "ogni giorno esce qualcosa sugli agenti, molte cose interessanti, molte inutili 😅... poi ogni tanto arriva una PR come quella di @antirez  e cambia davvero il modo in cui li pensi. Ne parlo su -------&gt;",
+          "eng_total": 274
+        },
+        {
+          "id": "2050962566629711884",
+          "kind": "original",
+          "text": "un altro wallpaper e smetto, giuro https://t.co/HpkinMy9rc",
+          "eng_total": 144
+        }
+      ]
+    },
+    {
+      "name": "Tooling Claude Code",
+      "label": "Tooling Claude Code",
+      "description": "Esperimenti, UI e workflow attorno a Claude Code e ambienti di sviluppo agentici.",
+      "archetype": "informativo",
+      "n": 11,
+      "n_pct": 25.0,
+      "rt_median": 1,
+      "rt_p90": 10.0,
+      "re_median": 1,
+      "eng_median": 9,
+      "top_examples": [
+        {
+          "id": "2050322398629777556",
+          "kind": "original",
+          "text": "come usi Claude Code? Mi sono fatto una UI dove Claude lavora direttamente dentro i progetti, con editor e terminale veri, supporto multi-project e anche connessione via SSH per lavorare su macchine r",
+          "eng_total": 232
+        },
+        {
+          "id": "2050120271042920952",
+          "kind": "original",
+          "text": "Qualche giorno fa mi chiamano per dare un’occhiata a un sistema. Non era roba mia, amico di un amico, “non funziona qualcosa, forse ci hanno attaccato”, quindi entri già con quell’idea. Apro i log dell",
+          "eng_total": 173
+        },
+        {
+          "id": "2050603892589642218",
+          "kind": "original",
+          "text": "sto giocando con SubLodeX. è tipo un IDE con Claude dentro: apri un progetto, hai file, terminale e git, e quando Claude scrive codice lo vedi comparire in editor in tempo reale, niente copia-incolla.",
+          "eng_total": 140
+        }
+      ]
+    },
+    {
+      "name": "AGD memoria agenti",
+      "label": "AGD memoria agenti",
+      "description": "Riflessioni e progettazione sulla memoria indirizzabile degli agenti LLM (AGD, MCP, knowledge layer).",
+      "archetype": "opinionato",
+      "n": 7,
+      "n_pct": 15.91,
+      "rt_median": 3,
+      "rt_p90": 8.4,
+      "re_median": 9,
+      "eng_median": 64,
+      "top_examples": [
+        {
+          "id": "2052122761712087306",
+          "kind": "original",
+          "text": "La cosa che mi manda ai matti è che stanno tutti correndo a fare agenti, wrapper, MCP, orchestrator e AI OS vari... cazzi e mazzi, però manca ancora il layer base, quello inevitabile tipo Cloudflare pe",
+          "eng_total": 195
+        },
+        {
+          "id": "2053473084032606340",
+          "kind": "original",
+          "text": "Sto lavorando a un esperimento che parte da una domanda abbastanza semplice: perché gli agenti continuano a trattare la memoria come un documento gigante invece che come qualcosa di indirizzabile e na",
+          "eng_total": 119
+        },
+        {
+          "id": "2053171492276281582",
+          "kind": "original",
+          "text": "Secondo me il dibattito Markdown vs HTML di questa settimana è una falsa polemica. Cloudflare, Anthropic, mdream e MarkItDown stanno tutti misurando problemi diversi e quindi sembrano in disaccordo an",
+          "eng_total": 79
+        }
+      ]
+    },
+    {
+      "name": "Security & OPSEC",
+      "label": "Security/OPSEC",
+      "description": "Analisi e racconti tecnici su sicurezza, tracking, vulnerabilità e costi della difesa.",
+      "archetype": "narrativo",
+      "n": 2,
+      "n_pct": 4.55,
+      "rt_median": 37.0,
+      "rt_p90": 61.0,
+      "re_median": 18.5,
+      "eng_median": 260.5,
+      "top_examples": [
+        {
+          "id": "2049927881787367589",
+          "kind": "original",
+          "text": "l’altro giorno apro devtools su un sito con un cookie banner iper curato, toggle, categorie, spiegazioni infinite, faccio rifiuta tutto, confermo due volte, chiudo e penso ok fatto; poi guardo le netw",
+          "eng_total": 463
+        },
+        {
+          "id": "2054983202968600734",
+          "kind": "original",
+          "text": "il momento in cui trovare vulnerabilita' smette di costare mesi di esseri umani esperti e inizia a costare decine di dollari di GPU. https://t.co/E1sNdQR54a",
+          "eng_total": 58
+        }
+      ]
+    },
+    {
+      "name": "Sviluppo agenti & LLM",
+      "label": "Sviluppo LLM",
+      "description": "Divulgazione e dettagli tecnici sul funzionamento di LLM, agenti e tool-use.",
+      "archetype": "informativo",
+      "n": 2,
+      "n_pct": 4.55,
+      "rt_median": 7.5,
+      "rt_p90": 13.5,
+      "re_median": 4.0,
+      "eng_median": 39.5,
+      "top_examples": [
+        {
+          "id": "2050280153725493455",
+          "kind": "self_thread",
+          "text": "Per chi volesse capire come funziona un LLM ----&gt; https://t.co/vnpMMPc2qq",
+          "eng_total": 75
+        },
+        {
+          "id": "2052138871337496679",
+          "kind": "self_thread",
+          "text": "@IlCastiga Manca il livello dove l’agente dice che strumenti ci sono per fare questo ? Quanto sono sicuri ? E il sistema gli elenchi N strumenti con uno score di sicurezza e altri dettagli tecnici.",
+          "eng_total": 4
+        }
+      ]
+    }
+  ],
+  "label_language": "italiano",
+  "best_performing_cluster": "Security & OPSEC",
+  "worst_performing_cluster": "Vita & società tech"
+}

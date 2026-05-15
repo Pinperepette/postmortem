@@ -1,0 +1,236 @@
+{
+  "method": "Rule-based MVP. Keyword match per cluster + risk regex + format multiplier su cluster baseline.",
+  "trained_on": "subject-specific cluster baseline (n=17 originals, finestra 14gg, account @Pinperepette). NON cross-account ML.",
+  "limitations": [
+    "Cluster classification via keyword match, no embedding — fails on out-of-vocabulary topics e su tweet con lessico misto.",
+    "Distribution prediction ha error band ±60% (sample n=17 troppo piccolo per CI strette; Security/OPSEC ha solo n=2).",
+    "Niente account peer comparison (servono 5000+ tweet cross-account stesso cluster per gradient boosting affidabile).",
+    "Niente real-time training (snapshot statico al momento dell'analisi; nessun fine-tuning su nuovi dati).",
+    "Format multiplier sono euristici globali, non per-cluster — un video su Security potrebbe avere multiplier diverso da video su Vita tech.",
+    "Burst overlap non valutabile senza timestamp di pubblicazione previsto; viene solo segnalato come warning condizionale."
+  ],
+  "subject_baselines": {
+    "cluster_eng_medians": {
+      "Security & OPSEC": 260.5,
+      "Sviluppo agenti & LLM": 39.5,
+      "AGD memoria agenti": 64.0,
+      "Tooling Claude Code": 9.0,
+      "Vita & società tech": 18.0
+    },
+    "cluster_eng_p90": {
+      "Security & OPSEC": 463.0,
+      "Sviluppo agenti & LLM": 75.0,
+      "AGD memoria agenti": 195.0,
+      "Tooling Claude Code": 232.0,
+      "Vita & società tech": 274.0
+    },
+    "format_multipliers": {
+      "has_media": 1.3,
+      "has_video": 1.5,
+      "has_external_link": 0.8,
+      "text_under_100": 0.7
+    },
+    "strong_clusters": ["Security & OPSEC", "AGD memoria agenti"],
+    "weak_clusters": ["Vita & società tech", "Tooling Claude Code"]
+  },
+  "cluster_keywords": {
+    "Security & OPSEC": ["security", "opsec", "vulnerabilit", "exploit", "cve", "buffer overflow", "tracking", "cookie", "devtools", "supply chain", "mcp attack", "gpu vs umano", "fuzz", "rce", "0day", "malware", "phishing"],
+    "Sviluppo agenti & LLM": ["llm", "agent", "agenti", "tool-use", "tool use", "prompt", "context window", "rag", "embedding", "fine-tun", "inference", "token", "transformer"],
+    "AGD memoria agenti": ["agd", "memoria", "memory layer", "knowledge layer", "indirizzab", "mcp", "orchestrator", "wrapper", "markdown vs html", "cloudflare", "anthropic"],
+    "Tooling Claude Code": ["claude code", "sublodex", "ide", "editor", "workflow", "terminale", "multi-project", "ssh", "sandbox"],
+    "Vita & società tech": ["wallpaper", "stampante", "ironia", "lifestyle", "smetto", "giuro", "stanchezza", "domenica", "caffè", "weekend"]
+  },
+  "example_drafts_analyzed": [
+    {
+      "draft_id": "DRAFT_A",
+      "draft_text": "Stavo guardando un PR di antirez su Redis: ha rifatto il sistema di expirations switching da heap a radix tree con un trick di lazy deletion che taglia il 40% dei syscall su keys con TTL alti. Il dettaglio interessante è il batching ammortizzato — vedere il commit per la riga 247 che è quella che fa il vero lavoro: skip iterativo su intervalli densi senza degradare worst-case.",
+      "features": {
+        "char_length": 391,
+        "has_media": false,
+        "has_video": false,
+        "has_external_link": false,
+        "mentions_count": 0,
+        "hashtags_count": 0
+      },
+      "cluster_probabilities": {
+        "Security & OPSEC": 0.08,
+        "Sviluppo agenti & LLM": 0.12,
+        "AGD memoria agenti": 0.18,
+        "Tooling Claude Code": 0.10,
+        "Vita & società tech": 0.07,
+        "out_of_vocabulary_tech_deep_dive": 0.45
+      },
+      "predicted_cluster": "out_of_vocabulary_tech_deep_dive (fallback baseline = AGD memoria agenti, cluster adiacente più forte)",
+      "predicted_cluster_confidence": "low — keyword match scarso, contenuto è systems-programming/Redis-internals non coperto dai 5 cluster del subject. Fallback su AGD per archetipo opinionato/tecnico.",
+      "risks": [
+        {
+          "type": "out_of_vocabulary",
+          "severity": "medium",
+          "detail": "Topic Redis/radix-tree non rientra nei 5 cluster del subject. L'embedding SimClusters potrebbe finire in cluster systems-programming dove l'autore non ha ancora autorità (TwHIN cold)."
+        },
+        {
+          "type": "no_media_on_potentially_strong_cluster",
+          "severity": "medium",
+          "detail": "Tweet tecnico narrativo senza screenshot del diff/commit. format_perf dice with_media_eng_median=46 vs without=3 (15× margine). Aggiungere screenshot della riga 247 attiverebbe PhoenixPredictedDwellScoreFeature."
+        }
+      ],
+      "predicted_distribution": {
+        "p50_views": 4200,
+        "p90_views": 12800,
+        "p50_engagement": 55,
+        "p90_engagement": 170,
+        "error_band": "±60%",
+        "rationale": "Baseline AGD median 64 × format_mult 1.0 (no media, no video, no link, len>100) = ~64 eng. Views≈eng×75 (proxy follower-based). Ma penalty out-of-vocab → riduzione 15% applicata."
+      },
+      "suggestions": [
+        "Aggiungi screenshot del diff Redis (riga 247) → +30% engagement atteso, attiva Dwell head.",
+        "Considera di reframare in chiave AGD/Security: 'come lazy deletion in Redis è lo stesso pattern che useremmo per memoria agenti indirizzabile' → ricolloca su cluster forte.",
+        "Hook nei primi 280 char è ok (anti-pattern long-form senza hook NON triggerato).",
+        "Mai mettere link al commit nel root: se vuoi linkare il PR, mettilo come reply al tuo tweet dopo 30-60 min."
+      ],
+      "overall_score": 6.5,
+      "score_breakdown": {
+        "content_depth": 8,
+        "cluster_fit": 5,
+        "format_optimization": 4,
+        "risk_factor": 9
+      }
+    },
+    {
+      "draft_id": "DRAFT_B",
+      "draft_text": "Articolo interessante sull'IA https://example.com/ai-future",
+      "features": {
+        "char_length": 59,
+        "has_media": false,
+        "has_video": false,
+        "has_external_link": true,
+        "mentions_count": 0,
+        "hashtags_count": 0
+      },
+      "cluster_probabilities": {
+        "Security & OPSEC": 0.05,
+        "Sviluppo agenti & LLM": 0.20,
+        "AGD memoria agenti": 0.05,
+        "Tooling Claude Code": 0.05,
+        "Vita & società tech": 0.65
+      },
+      "predicted_cluster": "Vita & società tech",
+      "predicted_cluster_confidence": "medium — fallback su cluster generico per assenza di keyword specifiche, lessico vago ('articolo interessante').",
+      "risks": [
+        {
+          "type": "link_in_root_anti_pattern",
+          "severity": "high",
+          "detail": "URL https://example.com/ai-future nel root. anti_patterns.json segnala Phoenix OpenLink head potenziale penalty + utente esce dall'app → dwell zero. Sposta link in reply al tuo tweet dopo 30-60 min."
+        },
+        {
+          "type": "text_too_short",
+          "severity": "high",
+          "detail": "char_length=59 < 100. Phoenix Dwell head riceve segnale minimo (scrolly via in 2 sec). format_multiplier text_under_100 = 0.7."
+        },
+        {
+          "type": "weak_cluster_dominant",
+          "severity": "high",
+          "detail": "Predicted cluster 'Vita & società tech' è il worst_performing_cluster del subject (rt_median 0, eng_median 18). action_plan.anti_patterns esplicitamente: 'tweet Vita & società tech lifestyle come original dominanti' va evitato."
+        },
+        {
+          "type": "no_context_hook",
+          "severity": "medium",
+          "detail": "Frase 'articolo interessante sull'IA' è vague-clickbait senza claim/dato/dettaglio. Nessun hook per cold-start window di 15 sec."
+        }
+      ],
+      "predicted_distribution": {
+        "p50_views": 450,
+        "p90_views": 2100,
+        "p50_engagement": 6,
+        "p90_engagement": 28,
+        "error_band": "±60%",
+        "rationale": "Baseline Vita & società tech median 18 × 0.7 (text<100) × 0.8 (external link) = ~10 eng. Penalty cumulativa anti-pattern porta sotto 8."
+      },
+      "suggestions": [
+        "NON pubblicare in questa forma. Riscrivi completamente.",
+        "Sposta il link in reply al tuo stesso tweet dopo il cold-start.",
+        "Espandi il root a 150-280 char con il claim principale dell'articolo + 1-2 dati concreti + tua opinione.",
+        "Reframa su cluster forte: se l'articolo parla di security o AGD, esplicita la chiave di lettura tecnica nel root.",
+        "Considera di NON pubblicare se il topic è generic-IA: stai diluendo l'embedding SimClusters."
+      ],
+      "overall_score": 1.5,
+      "score_breakdown": {
+        "content_depth": 1,
+        "cluster_fit": 2,
+        "format_optimization": 1,
+        "risk_factor": 2
+      }
+    },
+    {
+      "draft_id": "DRAFT_C",
+      "draft_text": "I MCP supply chain attack erano inevitabili. È solo l'inizio.",
+      "features": {
+        "char_length": 60,
+        "has_media": false,
+        "has_video": false,
+        "has_external_link": false,
+        "mentions_count": 0,
+        "hashtags_count": 0
+      },
+      "cluster_probabilities": {
+        "Security & OPSEC": 0.62,
+        "Sviluppo agenti & LLM": 0.10,
+        "AGD memoria agenti": 0.22,
+        "Tooling Claude Code": 0.03,
+        "Vita & società tech": 0.03
+      },
+      "predicted_cluster": "Security & OPSEC",
+      "predicted_cluster_confidence": "high — keyword 'supply chain attack' + 'MCP' attivano simultaneamente cluster Security (primary) e AGD (secondary). Allineamento col best_performing_cluster del subject.",
+      "risks": [
+        {
+          "type": "text_too_short",
+          "severity": "high",
+          "detail": "char_length=60 < 100. format_multiplier text_under_100 = 0.7. Anche se il claim è forte, il root manca dei 2-3 supporti richiesti da action_plan rank 6 (hot take: claim + 2 supporti + invito)."
+        },
+        {
+          "type": "no_media_on_strong_cluster",
+          "severity": "high",
+          "detail": "Cluster predetto Security/OPSEC è cluster forte e l'action_plan rank 3 raccomanda esplicitamente screenshot devtools/codice/log come immagine espandibile. Tweet senza media perde 15× il multiplier baseline."
+        },
+        {
+          "type": "missing_hot_take_structure",
+          "severity": "medium",
+          "detail": "Claim controintuitivo presente ('erano inevitabili') ma mancano i 2-3 supporti concreti + invito. action_plan rank 6 template: claim + 2 supporti + invito ('chi sta vedendo questo pattern? mi corregga')."
+        },
+        {
+          "type": "burst_overlap_conditional",
+          "severity": "medium",
+          "detail": "Warning condizionale: se pubblichi entro 30 min dall'ultimo tweet → AuthorDiversityDecayFactor 0.5. Burst_rate_30min attuale del subject = 0.69 (alto). Verifica spacing >=60 min."
+        }
+      ],
+      "predicted_distribution": {
+        "p50_views": 13700,
+        "p90_views": 31800,
+        "p50_engagement": 182,
+        "p90_engagement": 425,
+        "error_band": "±60%",
+        "rationale": "Baseline Security & OPSEC median 260.5 × 0.7 (text<100) = ~182 eng. Cluster forte recupera molto della penalty short-text. Con media + espansione a 200 char → stima salirebbe a ~340 eng (p50)."
+      },
+      "suggestions": [
+        "Espandi a 200-280 char: aggiungi 2 esempi concreti recenti di MCP supply chain (es. pacchetto compromesso, attack vector specifico, costo difesa).",
+        "Allega screenshot: diff di un MCP malevolo, network tab che mostra l'esfiltrazione, snippet codice del manifest avvelenato.",
+        "Chiudi con invito: 'chi sta vedendo signature/integrity check sui server MCP in produzione? mi interessa il pattern.'",
+        "Mantieni il cluster Security: ottima scelta editoriale, allineata al rank 1 dell'action plan.",
+        "Spacing: pubblica solo se sono >=60 min dall'ultimo tweet originale (anti-burst rank 2)."
+      ],
+      "overall_score": 7.0,
+      "score_breakdown": {
+        "content_depth": 6,
+        "cluster_fit": 10,
+        "format_optimization": 4,
+        "risk_factor": 8
+      }
+    }
+  ],
+  "_meta": {
+    "generated_at": "2026-05-15T07:00:00+00:00",
+    "stub_version": "0.1.0-rule-based",
+    "subject_handle": "@Pinperepette",
+    "subject_user_id": "174553974"
+  }
+}

@@ -1,0 +1,279 @@
+{
+  "method": "Inferred narrative from engagement velocity (lifetime-avg views/min and eng/min vs cohort percentiles), reply pattern, bookmark/like ratio, rt/views share-proxy, burst overlap (other tweets by subject within +/-30 min), text length and media as dwell-proxy, and keyword-based cluster match. NOT real algorithm tracing.",
+  "confidence_overall": "speculative",
+  "disclaimer": "Questa e ricostruzione probabilistica basata su signal indiretti. Non abbiamo accesso ai log dell'algoritmo X (Heavy Ranker, SimClusters, Phoenix). I 4 stage descritti sono inferenza narrativa, non telemetria reale. Le velocity sono calcolate come views/min e engagement/min su lifetime-medio (snapshot - created_at) e NON come finestra reale 0-15min: questa e' la principale limitation perche' non conosciamo la distribuzione temporale dei views (curva tipica concentrata nelle prime 6 ore, qui assunta uniforme). Le soglie 'above cohort pXX' sono percentile relative al cohort interno del subject (n=44 tweet canonici timeline-tab), non al cohort globale di X.",
+  "limitations": {
+    "velocity_proxy": "views/min calcolato su (snapshot - created_at): la curva reale e concentrata nelle prime ore, quindi la velocity vera nei primi 15 min e probabilmente 5-15x quella media qui usata. Il ranking relativo tra tweet rimane comunque informativo.",
+    "burst_detection": "burst overlap = altri tweet (quote/original/self_thread/reply) del subject entro +/-30 min. Throttling reale di X e closed-source; questo e proxy.",
+    "phoenix": "Phoenix Predicted Bookmark/Good-Click e closed-source: la confidence dello stage recovery e LOW.",
+    "cluster_assignment": "I cluster sono keyword-based interni al report, NON gli embedding SimClusters reali di X."
+  },
+  "cohort_benchmarks_used": {
+    "views_per_min_p50": 0.100,
+    "views_per_min_p75": 0.483,
+    "views_per_min_p82": 0.677,
+    "views_per_min_p90": 0.740,
+    "views_per_min_p95": 0.812,
+    "eng_per_min_p50": 0.00109,
+    "eng_per_min_p75": 0.00889,
+    "eng_per_min_p82": 0.01103,
+    "eng_per_min_p90": 0.01754,
+    "eng_per_min_p95": 0.02218,
+    "_n_cohort": 44,
+    "_scope": "subject internal cohort: kind in [original, quote, self_thread] age>60min"
+  },
+  "tweets": [
+    {
+      "tweet_id": "2050279170526089647",
+      "tweet_text_short": "surreale. prossima intervista alla stampante: 'cosa provi quando sei in inceppamento carta?'",
+      "kind": "quote",
+      "created_at": "2026-05-01T18:20:21+00:00",
+      "age_hours_at_snapshot": 324.6,
+      "actual_metrics": {"likes": 755, "rt": 87, "replies": 58, "views": 19731, "bookmarks": 12, "quotes": 8},
+      "stages": {
+        "cold_start": {
+          "state": "cold_start_positive",
+          "evidence": [
+            {"signal": "views_per_min_lifetime_avg", "value": 1.013, "interpretation": "above cohort p95 (top tweet del campione)", "source": "speculative"},
+            {"signal": "engagement_velocity_lifetime_avg", "value": 0.0462, "interpretation": "above cohort p95: like+rt+repl/min sopra mediana per ordine di grandezza", "source": "speculative"},
+            {"signal": "dwell_proxy", "value": 92, "interpretation": "text breve (92 char) + nessun media: dwell basso ma kind=quote sfrutta dwell del tweet citato. Heavy Ranker probabilmente premia quote-engaged-author", "source": "speculative"},
+            {"signal": "kind_quote_seed", "value": "quote", "interpretation": "quote tweet su contenuto virale gia warm: cold-start ereditato (boost iniziale via SimClusters del tweet originale)", "source": "speculative"}
+          ],
+          "duration_estimate": "0-15 min",
+          "confidence": "medium"
+        },
+        "distribution": {
+          "state": "distribution_optimal",
+          "evidence": [
+            {"signal": "cluster_match", "value": "Vita & societa tech", "interpretation": "keyword 'stampante/inceppamento' match cluster conversazionale: SimClusters likely fan-out su community tech-humor (ampio)", "source": "speculative"},
+            {"signal": "burst_overlap_30min", "value": 7, "interpretation": "7 tweet vicini ma sono replies (low-priority feed) e un self_thread a +3.9min: throttling minimo perche il root quote drena attenzione", "source": "speculative"},
+            {"signal": "reply_velocity_and_author_response", "value": 0.412, "interpretation": "comment_response_rate=0.412 con 7 commenter risposti: reply_engaged_by_author boost (peso ~0.75) attivo", "source": "speculative"},
+            {"signal": "rt_count_87", "value": 87, "interpretation": "87 RT (>>cluster median 0.0) genera secondo wave di distribuzione cross-cluster", "source": "speculative"}
+          ],
+          "duration_estimate": "15min - 6h",
+          "confidence": "medium"
+        },
+        "recovery": {
+          "state": "recovery_share_driven",
+          "evidence": [
+            {"signal": "bookmark_like_ratio", "value": 0.016, "interpretation": "bassissimo: NON save-worthy, Phoenix Predicted Bookmark NON attivo (humor non e reference)", "source": "speculative"},
+            {"signal": "rt_views_share_proxy", "value": 0.00441, "interpretation": "vicino alla soglia 0.005: share decente, principale driver del recovery (humor relatabile)", "source": "speculative"},
+            {"signal": "dwell_recovery", "value": "low", "interpretation": "no media + text breve: dwell limitato, ma quote sfrutta dwell del nested", "source": "speculative"},
+            {"signal": "cluster_strength", "value": "rt=87 vs cluster rt_p90=6.8", "interpretation": "12.8x p90 del cluster Vita-societa-tech: outlier estremo, possibile reassignment a cluster Humor/Italian-tech non mappato qui", "source": "speculative"}
+          ],
+          "duration_estimate": "6h - 24h",
+          "confidence": "low (Phoenix closed source)"
+        },
+        "final": {
+          "state": "viral",
+          "terminal_cluster": "Vita & societa tech (con spillover cross-cluster via humor universale)",
+          "vs_cluster_benchmark": "eng_total 908 vs cluster eng_median 18.0 = 50x; rt 87 vs cluster rt_p90 6.8 = 12.8x"
+        }
+      },
+      "narrative": "Partito con velocity esplosiva (p95 cohort) sfruttando il seed del quote-tweet su un contenuto gia warm. Distribuzione amplificata da 87 RT che hanno aperto fan-out cross-cluster nonostante il cluster di base (Vita & societa tech) abbia rt_median=0. Recovery non guidato da bookmark (0.016 ratio: e' humor, non reference) ma dalla share-velocity (rt/views=0.00441) e dal author-reply rate 0.412. Outcome viral con 50x il median di cluster: classico spike-not-ride."
+    },
+    {
+      "tweet_id": "2049927881787367589",
+      "tweet_text_short": "l'altro giorno apro devtools su un sito con un cookie banner iper curato...",
+      "kind": "original",
+      "created_at": "2026-04-30T19:04:27+00:00",
+      "age_hours_at_snapshot": 347.8,
+      "actual_metrics": {"likes": 363, "rt": 67, "replies": 33, "views": 16940, "bookmarks": 48, "quotes": 4},
+      "stages": {
+        "cold_start": {
+          "state": "cold_start_positive",
+          "evidence": [
+            {"signal": "views_per_min_lifetime_avg", "value": 0.812, "interpretation": "above cohort p93", "source": "speculative"},
+            {"signal": "engagement_velocity_lifetime_avg", "value": 0.0222, "interpretation": "above cohort p93", "source": "speculative"},
+            {"signal": "dwell_proxy", "value": 935, "interpretation": "text length 935 char (oltre p90 del subject 921): high dwell, Heavy Ranker premia good-click/dwell", "source": "speculative"},
+            {"signal": "prime_time", "value": "19:04 UTC", "interpretation": "best_hour=19, prime time conferma early-distribution favorevole", "source": "speculative"}
+          ],
+          "duration_estimate": "0-15 min",
+          "confidence": "medium"
+        },
+        "distribution": {
+          "state": "distribution_optimal",
+          "evidence": [
+            {"signal": "cluster_match", "value": "Security & OPSEC (best_performing_cluster)", "interpretation": "keyword 'devtools/cookie/network/tracking' match cluster top: SimClusters fan-out su community Security IT, audience hot e ricettiva", "source": "speculative"},
+            {"signal": "burst_overlap_30min", "value": 4, "interpretation": "4 vicini ma tutti reply tab (low-impact feed): no throttle del root", "source": "speculative"},
+            {"signal": "comment_response_rate", "value": 1.000, "interpretation": "ceiling: ha risposto a TUTTI i 10 commenter L1, reply_engaged_by_author saturato (peso ~0.75 max)", "source": "speculative"},
+            {"signal": "cluster_rt_median_comparison", "value": "rt=67 vs cluster rt_median=37", "interpretation": "1.8x median del cluster best-performing: ranking saldamente nel cluster Security", "source": "speculative"}
+          ],
+          "duration_estimate": "15min - 6h",
+          "confidence": "medium"
+        },
+        "recovery": {
+          "state": "recovery_dwell_driven",
+          "evidence": [
+            {"signal": "bookmark_like_ratio", "value": 0.132, "interpretation": "moderato (sotto soglia 0.3 high save-worthy): bookmark presente ma non dominante", "source": "speculative"},
+            {"signal": "rt_views_share_proxy", "value": 0.00396, "interpretation": "vicino soglia 0.005: share decente", "source": "speculative"},
+            {"signal": "dwell_recovery", "value": "high", "interpretation": "text 935 char + storytelling narrativo: tempo lettura stimato 45-90s, good-click likely fires", "source": "speculative"},
+            {"signal": "cluster_strength", "value": "rt 67 vs cluster_p90 61", "interpretation": "sopra p90 del best cluster: ranking stabilized in Security/OPSEC", "source": "speculative"}
+          ],
+          "duration_estimate": "6h - 24h",
+          "confidence": "low (Phoenix closed source)"
+        },
+        "final": {
+          "state": "strong",
+          "terminal_cluster": "Security & OPSEC",
+          "vs_cluster_benchmark": "rt 67 vs cluster rt_median 37 = 1.81x; eng_total 463 vs cluster eng_median 260.5 = 1.78x"
+        }
+      },
+      "narrative": "Cold-start positivo grazie a text lungo narrativo (935 char, dwell ottimo) in prime time 19 UTC. Distribuzione canalizzata nel best-performing cluster Security/OPSEC con reply rate ceiling (1.0, ha risposto a tutti i 10 commenter). Recovery dwell-driven piu che save-driven (bookmark/like 0.13 moderato). Outcome strong, 1.8x rt_median e 1.78x eng_median del cluster: ride-the-wave nel cluster giusto."
+    },
+    {
+      "tweet_id": "2051395641822044307",
+      "tweet_text_short": "ogni giorno esce qualcosa sugli agenti...arriva una PR come quella di @antirez...",
+      "kind": "original",
+      "created_at": "2026-05-04T20:16:48+00:00",
+      "age_hours_at_snapshot": 250.6,
+      "actual_metrics": {"likes": 241, "rt": 25, "replies": 8, "views": 11136, "bookmarks": 336, "quotes": 1},
+      "stages": {
+        "cold_start": {
+          "state": "cold_start_positive",
+          "evidence": [
+            {"signal": "views_per_min_lifetime_avg", "value": 0.740, "interpretation": "above cohort p89", "source": "speculative"},
+            {"signal": "engagement_velocity_lifetime_avg", "value": 0.0182, "interpretation": "above cohort p91", "source": "speculative"},
+            {"signal": "dwell_proxy", "value": 251, "interpretation": "text 251 char + media photo: dwell discreto + media impression boost (+with_media_eng_median 46 vs 3 no_media)", "source": "speculative"},
+            {"signal": "mention_antirez", "value": "@antirez", "interpretation": "mention high-authority IT-tech: probabile early boost via grafo follower comune", "source": "speculative"}
+          ],
+          "duration_estimate": "0-15 min",
+          "confidence": "medium"
+        },
+        "distribution": {
+          "state": "distribution_optimal",
+          "evidence": [
+            {"signal": "cluster_match", "value": "borderline Vita-societa-tech / AGD memoria agenti", "interpretation": "keyword 'agenti/PR/antirez' ibrido: keyword classifier lo mette in Vita-societa-tech (worst) ma il pubblico effettivo e AGD/Sviluppo agenti", "source": "speculative"},
+            {"signal": "burst_overlap_30min", "value": 0, "interpretation": "ZERO burst overlap: distribuzione NON throttled, slot ottimale", "source": "speculative"},
+            {"signal": "comment_response_rate", "value": 0.500, "interpretation": "4/8 commenter risposti, reply_engaged moderato", "source": "speculative"},
+            {"signal": "low_replies_high_bookmarks", "value": "rep=8 bk=336", "interpretation": "engagement asimmetrico: utenti salvano invece di commentare = reference material, segnale forte a Phoenix", "source": "speculative"}
+          ],
+          "duration_estimate": "15min - 6h",
+          "confidence": "medium"
+        },
+        "recovery": {
+          "state": "recovery_save_driven",
+          "evidence": [
+            {"signal": "bookmark_like_ratio", "value": 1.394, "interpretation": "bookmarks > likes (336>241): pattern raro che indica reference material puro. Phoenix Predicted Bookmark fires al massimo (probabile reinjection in Home For-You via save-worthy boost)", "source": "speculative"},
+            {"signal": "rt_views_share_proxy", "value": 0.00225, "interpretation": "sotto soglia 0.005: share basso (contenuto da salvare, non da condividere)", "source": "speculative"},
+            {"signal": "dwell_recovery", "value": "high", "interpretation": "photo + text 251 char: ottimo dwell, good-click likely fires", "source": "speculative"},
+            {"signal": "bookmarks_to_views_ratio", "value": 0.0302, "interpretation": "6x la soglia save-worthy tipica 0.005: outlier sul signal piu forte di Phoenix", "source": "speculative"}
+          ],
+          "duration_estimate": "6h - 24h",
+          "confidence": "low (Phoenix closed source)"
+        },
+        "final": {
+          "state": "strong",
+          "terminal_cluster": "Vita & societa tech (classifier) ma audience reale AGD memoria agenti / Sviluppo LLM",
+          "vs_cluster_benchmark": "bookmarks 336 vs subject mediana ~0.0083 b/v ratio: outlier estremo save-worthy. eng_total 274 vs Vita-societa cluster eng_median 18 = 15.2x"
+        }
+      },
+      "narrative": "Cold-start positivo (p89 views, p91 eng) potenziato dalla mention @antirez. Distribuzione completamente unthrottled (zero burst neighbors a +/-30 min) ma probabile misclustering keyword (Vita-societa-tech invece di AGD). Recovery dominato da Phoenix Predicted Bookmark: bk/like=1.394 e' pattern raro tipico del reference material che X reinjetta. Outcome strong, 15x cluster eng_median grazie al boost save-worthy nonostante cluster keyword sbagliato."
+    },
+    {
+      "tweet_id": "2050322398629777556",
+      "tweet_text_short": "come usi Claude Code? Mi sono fatto una UI dove Claude lavora direttamente dentro i progetti...",
+      "kind": "original",
+      "created_at": "2026-05-01T21:12:07+00:00",
+      "age_hours_at_snapshot": 321.7,
+      "actual_metrics": {"likes": 204, "rt": 10, "replies": 18, "views": 9324, "bookmarks": 77, "quotes": 0},
+      "stages": {
+        "cold_start": {
+          "state": "cold_start_neutral",
+          "evidence": [
+            {"signal": "views_per_min_lifetime_avg", "value": 0.483, "interpretation": "p75 cohort: sopra mediana ma non outlier", "source": "speculative"},
+            {"signal": "engagement_velocity_lifetime_avg", "value": 0.0120, "interpretation": "p84 cohort: discreto", "source": "speculative"},
+            {"signal": "dwell_proxy_video", "value": "411 char + video", "interpretation": "kind=video con_video_eng_median=144 (vs 3 no_media): high dwell potential", "source": "speculative"},
+            {"signal": "burst_alert", "value": "10 neighbors", "interpretation": "10 tweet nei +/-30 min (mix self_thread e reply): SEGNALE EARLY DI BURST RATE 0.69 del subject, possibile soft-throttle gia in cold-start", "source": "speculative"}
+          ],
+          "duration_estimate": "0-15 min",
+          "confidence": "medium"
+        },
+        "distribution": {
+          "state": "distribution_throttled_burst",
+          "evidence": [
+            {"signal": "cluster_match", "value": "Tooling Claude Code", "interpretation": "match esatto: keyword 'Claude Code/UI/editor/terminale' clusterizza correttamente", "source": "speculative"},
+            {"signal": "burst_overlap_30min", "value": 10, "interpretation": "10 burst neighbors (self_thread + reply): consecutive_burst_count=15 a livello profilo, qui zona di alta densita. Distribuzione probabilmente throttled per cannibalizzazione self-tweet", "source": "speculative"},
+            {"signal": "comment_response_rate", "value": 0.429, "interpretation": "6/14 commenter risposti: reply_engaged moderato", "source": "speculative"},
+            {"signal": "cluster_rt_median_underperform", "value": "rt=10 vs cluster_p90=10", "interpretation": "sul p90 del cluster ma cluster ha rt_median=1: il throttle si vede sui RT, non sui likes", "source": "speculative"}
+          ],
+          "duration_estimate": "15min - 6h",
+          "confidence": "medium-low"
+        },
+        "recovery": {
+          "state": "recovery_save_driven",
+          "evidence": [
+            {"signal": "bookmark_like_ratio", "value": 0.377, "interpretation": "sopra soglia 0.3: high save-worthy, Phoenix Predicted Bookmark fires (tutorial/demo material)", "source": "speculative"},
+            {"signal": "rt_views_share_proxy", "value": 0.00107, "interpretation": "molto sotto soglia 0.005: share bassissimo, contenuto da salvare/provare non da condividere", "source": "speculative"},
+            {"signal": "dwell_recovery", "value": "high", "interpretation": "video amplify + text 411 char: dwell molto alto (with_video_eng_median 144), good-click molto probabile", "source": "speculative"},
+            {"signal": "save_worthy_ratio", "value": 0.826, "interpretation": "from _thread_data: high_bookmarks_signal=true: Phoenix reinjection probabile", "source": "speculative"}
+          ],
+          "duration_estimate": "6h - 24h",
+          "confidence": "low (Phoenix closed source)"
+        },
+        "final": {
+          "state": "strong",
+          "terminal_cluster": "Tooling Claude Code",
+          "vs_cluster_benchmark": "eng_total 232 vs cluster eng_median 9 = 25.8x; rt 10 vs cluster rt_p90 10 = 1.0x (cap)"
+        }
+      },
+      "narrative": "Cold-start neutro ma con sintomo burst (10 tweet del subject in +/-30 min). Distribuzione throttled in mid-flight per cannibalizzazione self-thread (burst_rate profilo 0.69, consecutive_burst 15). Recovery save-driven grazie al video tutorial: bk/like 0.377 sopra soglia 0.3, with_video_eng_median 144 e Phoenix Predicted Bookmark probabilmente fires. Outcome strong (25x cluster eng_median) ma cap sui RT a 1x cluster_p90: il throttle si vede dove gli rt sarebbero dovuti volare."
+    },
+    {
+      "tweet_id": "2052122761712087306",
+      "tweet_text_short": "La cosa che mi manda ai matti e che stanno tutti correndo a fare agenti, wrapper, MCP...manca il trust layer...",
+      "kind": "original",
+      "created_at": "2026-05-06T20:26:07+00:00",
+      "age_hours_at_snapshot": 202.5,
+      "actual_metrics": {"likes": 166, "rt": 8, "replies": 21, "views": 8223, "bookmarks": 68, "quotes": 3},
+      "stages": {
+        "cold_start": {
+          "state": "cold_start_positive",
+          "evidence": [
+            {"signal": "views_per_min_lifetime_avg", "value": 0.677, "interpretation": "above cohort p82", "source": "speculative"},
+            {"signal": "engagement_velocity_lifetime_avg", "value": 0.0161, "interpretation": "above cohort p86", "source": "speculative"},
+            {"signal": "dwell_proxy", "value": 1571, "interpretation": "text 1571 char (LONG-form, sopra p90 subject 921): dwell molto alto, Heavy Ranker premia good-click/dwell estremamente probabile", "source": "speculative"},
+            {"signal": "prime_time", "value": "20:26 UTC", "interpretation": "prime evening slot (best_hour=19, evening_rate 0.45)", "source": "speculative"}
+          ],
+          "duration_estimate": "0-15 min",
+          "confidence": "medium"
+        },
+        "distribution": {
+          "state": "distribution_normal",
+          "evidence": [
+            {"signal": "cluster_match", "value": "AGD memoria agenti", "interpretation": "match esatto: keyword 'agenti/MCP/orchestrator/trust layer' cluster opinionato. Cluster eng_median=64, tweet 195>>64", "source": "speculative"},
+            {"signal": "burst_overlap_30min", "value": 1, "interpretation": "solo 1 reply a +24min: distribuzione NON throttled", "source": "speculative"},
+            {"signal": "comment_response_rate", "value": 0.389, "interpretation": "7/18 commenter risposti: 18 commenter L1 e' il piu alto del top5, conversation density forte", "source": "speculative"},
+            {"signal": "replies_dominant", "value": "rep=21 > rt=8", "interpretation": "replies > rt: contenuto opinionato che genera discussion, reply_engaged_proxy 0.75 saturato sul piano qualitativo", "source": "speculative"}
+          ],
+          "duration_estimate": "15min - 6h",
+          "confidence": "medium"
+        },
+        "recovery": {
+          "state": "recovery_save_driven",
+          "evidence": [
+            {"signal": "bookmark_like_ratio", "value": 0.410, "interpretation": "sopra soglia 0.3: high save-worthy, opinione lunga salvata come riferimento. Phoenix Predicted Bookmark fires", "source": "speculative"},
+            {"signal": "rt_views_share_proxy", "value": 0.00097, "interpretation": "molto sotto soglia 0.005: opinion piece non shared, salvato", "source": "speculative"},
+            {"signal": "dwell_recovery", "value": "very high", "interpretation": "text 1571 char senza media: dwell pulito da lettura, good-click likely fires su scroll-stop", "source": "speculative"},
+            {"signal": "cluster_strength", "value": "eng 195 vs cluster eng_median 64 = 3x", "interpretation": "ranking saldo nel cluster AGD", "source": "speculative"}
+          ],
+          "duration_estimate": "6h - 24h",
+          "confidence": "low (Phoenix closed source)"
+        },
+        "final": {
+          "state": "strong",
+          "terminal_cluster": "AGD memoria agenti",
+          "vs_cluster_benchmark": "eng_total 195 vs cluster eng_median 64 = 3.05x; rt 8 vs cluster rt_p90 8.4 = 0.95x"
+        }
+      },
+      "narrative": "Cold-start positivo (p82 views, p86 eng) trainato da long-form 1571 char in prime evening. Distribuzione normale, no throttle (solo 1 reply neighbor a +24min), cluster match esatto su AGD memoria agenti. Recovery save-driven: bk/like 0.41 sopra soglia, share 0.00097 sotto soglia = utenti salvano l'opinione invece di condividerla. Outcome strong nel cluster opinionato AGD (3x eng_median), cap sui RT al p90 del cluster: contenuto profondo che converte in bookmark e reply (21) ma non in viralita rt."
+    }
+  ],
+  "summary_table": [
+    {"tweet": "stampante (quote)", "flow": "cold+ -> optimal -> share_driven -> viral (50x cluster)"},
+    {"tweet": "cookie banner devtools", "flow": "cold+ -> optimal -> dwell_driven -> strong (1.8x cluster)"},
+    {"tweet": "antirez PR agenti", "flow": "cold+ -> optimal (0 burst) -> save_driven (bk>likes) -> strong (15x cluster)"},
+    {"tweet": "Claude Code UI video", "flow": "cold_neutral -> throttled_burst (10 neighbors) -> save_driven -> strong ma rt-capped"},
+    {"tweet": "trust layer agenti", "flow": "cold+ -> normal -> save_driven -> strong (3x cluster)"}
+  ]
+}

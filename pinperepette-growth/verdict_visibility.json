@@ -1,0 +1,67 @@
+{
+  "verdict": "warn",
+  "downstream_signal": "limited",
+  "confidence": 0.78,
+  "primary_hypothesis": "Nessun visibility filter X attivo (NotGraduated/DoNotAmplify/Duplicate/Crypto/UntrustedUrl tutti negativi e profilo veterano verified). L'unico vettore concreto di reach loss e' AuthorDiversityDecayFactor: cadenza di pubblicazione molto alta (17.79 tweet/giorno, burst 30min 0.6895, 15 tweet consecutivi in burst) che applica decay 0.5 -> floor 0.25 sui tweet successivi dello stesso autore nel feed.",
+  "reasoning_chain": [
+    {
+      "step": "hypothesis",
+      "content": "Account veterano (statuses_total=131858, created 2010, verified) con engagement sano sui top tweet (top=900, p95 originals=311.8) e zero marker spam: nessun filtro hard-drop plausibile. Il burst rate elevato e i 15 tweet consecutivi suggeriscono pero' una penalita' soft via AuthorDiversityDecayFactor che limita (non blocca) la distribuzione."
+    },
+    {
+      "step": "evidence",
+      "signals_cited": [
+        {"sig": "profile.statuses_total", "val": 131858, "source": "code"},
+        {"sig": "profile.verified", "val": true, "source": "code"},
+        {"sig": "profile.followers", "val": 17560, "source": "code"},
+        {"sig": "visibility_signals.duplicate_content_rate", "val": 0.0, "source": "code"},
+        {"sig": "visibility_signals.many_mention_rate", "val": 0.0, "source": "code"},
+        {"sig": "visibility_signals.crypto_keywords_rate", "val": 0.0, "source": "code"},
+        {"sig": "visibility_signals.untrusted_url_rate", "val": 0.0, "source": "code"},
+        {"sig": "visibility_signals.zero_engagement_rate", "val": 0.0803, "source": "code"},
+        {"sig": "visibility_signals.burst_rate_30min", "val": 0.6895, "source": "code"},
+        {"sig": "visibility_signals.consecutive_burst_count", "val": 15, "source": "code"},
+        {"sig": "temporal_summary.tweets_per_day_avg", "val": 17.79, "source": "code"},
+        {"sig": "graph_summary.top_tweet.eng_total", "val": 900, "source": "code"},
+        {"sig": "distribution_signals.engagement_distribution_originals_only.p95", "val": 311.8, "source": "code"},
+        {"sig": "distribution_signals.engagement_distribution_originals_only.p50", "val": 119.0, "source": "code"},
+        {"sig": "ranking_signals.comment_response_rate", "val": 0.507, "source": "code"}
+      ],
+      "interpretation": "Tutti i quattro segnali content-spam sono a 0.0 (DuplicateContent, DuplicateMention, HighCryptospamScore, UntrustedUrl non possono triggerare con >=2 segnali concordanti, nessuno scatta). NotGraduated escluso: 131858 status + 16 anni di account + verified rendono il gate di reputazione iniziale inapplicabile. DoNotAmplify escluso: zero_engagement_rate solo 8% e originali con p50=119 indicano che i tweet 'timeline-tab' raggiungono la rete (un account amplification-blocked avrebbe medians vicine a 0). L'unico segnale fuori scala e' il burst (0.6895 + 15 consecutivi + 17.79/giorno): caso da manuale di AuthorDiversityDecayFactor (decay 0.5, floor 0.25): il 2-3-Nesimo tweet nella stessa finestra vede il proprio score scontato del 50-75% nel feed altrui."
+    },
+    {
+      "step": "counter_hypothesis",
+      "content": "Ipotesi alternativa: shadowban-light/UQF-cut su account 'rumoroso'. Confutata da (a) top tweet a 900 eng e originali con p90=248.8 -> i contenuti raggiungono comunque audience ampia, incompatibile con DoNotAmplify; (b) comment_response_rate 0.507 e reply_in_total 4.66 indicano thread vivi (account abuse/spam-flagged sarebbero in ConversationSection low quality, con reply medians compresse). Il pattern e' dispersione di reach per cadenza, non blocco strutturale."
+    },
+    {
+      "step": "verdict",
+      "content": "warn / limited: nessun filter X attivo, ma penalita' algoritmica per author-diversity decay riduce la reach marginale dei tweet successivi al primo della finestra. Downstream (heavy ranker, simclusters) parte da base 'full reach' ma con scaling fattore 0.5-0.25 sui burst -> trattare come 'limited' nelle catene downstream."
+    }
+  ],
+  "specific_alerts": [
+    {
+      "pattern": "burst_rate_30min",
+      "value": 0.6895,
+      "advice": "Il 69% dei tweet cade in finestre <30min con almeno un altro tweet dello stesso autore: AuthorDiversityDecayFactor (default 0.5) scala il 2o tweet al 50% e il 3o al floor 25%. Distanziare i post: target burst_rate_30min < 0.30.",
+      "source": "empirical"
+    },
+    {
+      "pattern": "consecutive_burst_count",
+      "value": 15,
+      "advice": "15 tweet consecutivi in burst nello span di 14 giorni indica raffiche prolungate. Spezzare le sessioni in finestre di max 1-2 tweet/ora; il floor di decay (0.25) e' raggiunto rapidamente in raffiche.",
+      "source": "empirical"
+    },
+    {
+      "pattern": "tweets_per_day_avg",
+      "value": 17.79,
+      "advice": "Cadenza molto alta. Per un account niche/mid (followers=17560, tier_final=niche) il rendimento marginale per tweet cala oltre i 6-8/giorno; ridurre il volume libera l'autore-diversity budget e concentra il ranking sui pezzi migliori (top cluster Security/OPSEC, eng_median 260.5).",
+      "source": "speculative"
+    },
+    {
+      "pattern": "evening_18_22_concentration",
+      "value": 0.4545,
+      "advice": "45% dei post tra le 18 e le 22 -> co-occorrenza temporale alta -> burst inevitabile. Spalmare la quota serale anche su afternoon e mattino per ridurre la sovrapposizione.",
+      "source": "speculative"
+    }
+  ]
+}

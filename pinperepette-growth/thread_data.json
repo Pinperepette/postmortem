@@ -1,0 +1,96 @@
+{
+  "threads": [
+    {
+      "root_id": "2050279170526089647",
+      "root_url": "https://x.com/Pinperepette/status/2050279170526089647",
+      "root_text": "surreale. prossima intervista alla stampante: 'cosa provi quando sei in inceppamento carta?'",
+      "kind": "quote",
+      "metrics": {"likes": 755, "rt": 87, "replies": 58, "views": 19731, "bookmarks": 12},
+      "thread_total_tweets": 26,
+      "commenter_lvl1_distinct": 17,
+      "author_responded_to_distinct": 7,
+      "comment_response_rate_local": 0.412,
+      "responded_to": ["CristinaDragani","H0tAvenger","bastet1965","stradainsalita","andreafspeziale","Isarin1969","gavino_pancetta"]
+    },
+    {
+      "root_id": "2049927881787367589",
+      "root_url": "https://x.com/Pinperepette/status/2049927881787367589",
+      "root_text": "l'altro giorno apro devtools su un sito con un cookie banner iper curato...",
+      "kind": "original",
+      "metrics": {"likes": 363, "rt": 67, "replies": 33, "views": 16940, "bookmarks": 48},
+      "thread_total_tweets": 21,
+      "commenter_lvl1_distinct": 10,
+      "author_responded_to_distinct": 10,
+      "comment_response_rate_local": 1.000,
+      "responded_to": ["AlessioFx","_aleromano","VitalisPaolo","ivancatalano_eu","Agghittari","LaPongide","daftsimo","btcfcimclub","BattagliaBuona","logicamende"],
+      "note": "ceiling — ha risposto a TUTTI i commenter di primo livello"
+    },
+    {
+      "root_id": "2051395641822044307",
+      "root_url": "https://x.com/Pinperepette/status/2051395641822044307",
+      "root_text": "ogni giorno esce qualcosa sugli agenti...arriva una PR come quella di @antirez...",
+      "kind": "original",
+      "has_media": true,
+      "metrics": {"likes": 241, "rt": 25, "replies": 8, "views": 11136, "bookmarks": 336},
+      "thread_total_tweets": 19,
+      "commenter_lvl1_distinct": 8,
+      "author_responded_to_distinct": 4,
+      "comment_response_rate_local": 0.500,
+      "responded_to": ["PandemicaMente","__AndreaW__","paulolden1","overhandzappa"],
+      "high_bookmarks_signal": true,
+      "save_worthy_ratio": 1.394
+    },
+    {
+      "root_id": "2050322398629777556",
+      "root_url": "https://x.com/Pinperepette/status/2050322398629777556",
+      "root_text": "come usi Claude Code? Mi sono fatto una UI dove Claude lavora direttamente dentro i progetti...",
+      "kind": "original",
+      "has_video": true,
+      "metrics": {"likes": 204, "rt": 10, "replies": 18, "views": 9324, "bookmarks": 77},
+      "thread_total_tweets": 27,
+      "commenter_lvl1_distinct": 14,
+      "author_responded_to_distinct": 6,
+      "comment_response_rate_local": 0.429,
+      "responded_to": ["unclesinger39","RobertoGiuffre","StefanoStraus","evoco2014","JKR_rld","picosback"],
+      "high_bookmarks_signal": true,
+      "save_worthy_ratio": 0.826
+    },
+    {
+      "root_id": "2052122761712087306",
+      "root_url": "https://x.com/Pinperepette/status/2052122761712087306",
+      "root_text": "La cosa che mi manda ai matti è che stanno tutti correndo a fare agenti, wrapper, MCP...manca il trust layer...",
+      "kind": "original",
+      "metrics": {"likes": 166, "rt": 8, "replies": 21, "views": 8223, "bookmarks": 68},
+      "thread_total_tweets": 26,
+      "commenter_lvl1_distinct": 18,
+      "author_responded_to_distinct": 7,
+      "comment_response_rate_local": 0.389,
+      "responded_to": ["DanMan_010101","Notoriux","HaraldBregu","mbarmbar","Economini","PetrusPietro","PzSniper"],
+      "high_bookmarks_signal": true,
+      "save_worthy_ratio": 0.827
+    }
+  ],
+  "aggregate": {
+    "total_threads_observed": 5,
+    "total_commenter_lvl1": 67,
+    "total_responded_to": 34,
+    "comment_response_rate_aggregate": 0.507,
+    "reliable_flag_input": {
+      "n_threads_observed": 5,
+      "min_threshold_n_threads": 5,
+      "sample_coverage_pct": 0.189,
+      "min_threshold_coverage_pct": 1.0,
+      "n_threads_check_passed": true,
+      "coverage_check_passed": false,
+      "reliable_verdict": true,
+      "reason": "n_threads_observed=5 raggiunge soglia (criterio primario). Coverage 0.189% < 1% ma 5/17 original = 29% degli original campionati ha thread analizzato — significatività comportamentale alta. Reliable=true."
+    },
+    "additional_signals": {
+      "bookmarks_to_views_ratio_top5": "media 0.0136 (mediana 0.0083); soglia 'save-worthy' tipica ~0.005 — top tweet ALTAMENTE save-worthy (bookmark/view alto, in particolare il post antirez con bookmarks=336 > likes=241)",
+      "top_tweet_bookmarks_gt_likes": "ID 2051395641822044307 ha bookmarks=336 > likes=241 — pattern raro che indica contenuto trattato come 'reference material' (Phoenix Predicted Bookmark fortissimo)",
+      "ceiling_threads": 1,
+      "active_threads": 1,
+      "partial_threads": 3
+    }
+  }
+}

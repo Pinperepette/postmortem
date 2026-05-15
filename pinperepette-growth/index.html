@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>X Growth Diagnostic v5 — @Pinperepette</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+  :root{--bg:#0a0a0f;--panel:#11111a;--panel2:#161622;--line:#1f1f2e;--text:#e7e9ea;--muted:#71767b;--accent:#7c3aed;--accent2:#22d3ee;--ok:#10b981;--warn:#f59e0b;--fail:#ef4444;--gold:#fbbf24;--tier-niche:#22d3ee}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;max-width:1280px;margin:0 auto;padding:24px;line-height:1.5}
+  h1{font-size:28px;font-weight:800;margin-bottom:6px}
+  h2{font-size:13px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin:32px 0 14px;font-weight:700;display:flex;align-items:center;gap:10px}
+  h2::before{content:"";width:4px;height:14px;background:var(--accent);border-radius:2px}
+  h3{font-size:16px;font-weight:700;margin-bottom:6px}
+  p{margin-bottom:8px}
+  a{color:var(--accent2);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:24px;margin-bottom:24px}
+  .pill{display:inline-block;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:600;margin-right:6px}
+  .v-ok{background:rgba(16,185,129,.15);color:var(--ok);border:1px solid rgba(16,185,129,.3)}
+  .v-warn{background:rgba(245,158,11,.15);color:var(--warn);border:1px solid rgba(245,158,11,.3)}
+  .v-fail{background:rgba(239,68,68,.15);color:var(--fail);border:1px solid rgba(239,68,68,.3)}
+
+  .src{display:inline-block;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:600;margin-left:6px;font-family:'SF Mono',Monaco,monospace;cursor:help}
+  .src-code{background:rgba(16,185,129,.15);color:var(--ok);border:1px solid rgba(16,185,129,.3)}
+  .src-emp,.src-empirical{background:rgba(245,158,11,.15);color:var(--warn);border:1px solid rgba(245,158,11,.3)}
+  .src-spec,.src-speculative{background:rgba(239,68,68,.15);color:var(--fail);border:1px solid rgba(239,68,68,.3)}
+
+  .narrative-archetype{font-size:28px;font-weight:700;color:var(--accent2);letter-spacing:-0.02em}
+  .mechanic-card{padding:16px;background:var(--panel2);border-radius:8px;margin-bottom:12px;border-left:3px solid var(--accent)}
+  .mechanic-card.anti{border-left-color:var(--fail)}
+  .voice-marker{display:inline-block;padding:6px 12px;border-radius:6px;background:var(--panel2);color:var(--accent2);margin:4px;font-size:13px;cursor:help;border:1px solid var(--line)}
+  .voice-marker:hover{background:var(--accent);color:var(--bg)}
+  .arc-step{display:inline-block;padding:10px 12px;background:var(--panel2);border-radius:6px;font-size:12px;max-width:260px;border:1px solid var(--line);vertical-align:top}
+  .fingerprint{font-family:'SF Mono',Monaco,monospace;font-size:14px;padding:14px;border-left:3px solid var(--gold);background:var(--panel2);margin:10px 0;color:var(--text);line-height:1.6}
+
+  .metric{font-size:32px;font-weight:700}
+  .metric-label{font-size:12px;text-transform:uppercase;color:var(--muted);letter-spacing:0.05em}
+  .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  @media (max-width:768px){.grid-4,.grid-3,.grid-2{grid-template-columns:1fr}}
+
+  .action-card{background:var(--panel2);border-left:4px solid var(--accent);padding:20px;margin-bottom:14px;border-radius:8px}
+  .action-card.priority-must{border-left-color:var(--fail)}
+  .action-card.priority-high{border-left-color:var(--warn)}
+  .action-card.priority-mid{border-left-color:var(--accent2)}
+  .action-card.priority-low{border-left-color:var(--muted)}
+  .action-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+  .action-num{font-family:'SF Mono',Monaco,monospace;color:var(--muted);font-size:13px}
+  .what-to-do{font-size:14px;color:#d1d5db;margin-top:8px;line-height:1.6}
+  .rationale{font-size:13px;margin-top:8px;line-height:1.6}
+  .outcome{display:flex;gap:18px;flex-wrap:wrap;margin-top:10px;font-size:12px;color:var(--muted);padding:8px;background:var(--panel);border-radius:6px}
+  .risk{margin-top:10px;padding:10px;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.18);border-radius:6px;font-size:13px;line-height:1.6}
+  .leva{background:rgba(124,58,237,.18);color:#c4b5fd;border:1px solid rgba(124,58,237,.3)}
+  .phoenix{background:rgba(251,191,36,.12);color:var(--gold);border:1px solid rgba(251,191,36,.25)}
+
+  .evidence{font-family:'SF Mono',Monaco,monospace;font-size:12px;color:var(--muted)}
+  .evidence-item{padding:8px 10px;background:var(--panel2);border-radius:6px;margin-bottom:6px;font-size:13px;line-height:1.5}
+
+  .confidence-bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:8px 0}
+  .confidence-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+  .progress-bar{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin-top:4px}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:10px;text-align:left;border-bottom:1px solid var(--line);font-size:14px}
+  th{color:var(--muted);font-weight:600;text-transform:uppercase;font-size:11px}
+
+  .cluster-best{border:1px solid rgba(16,185,129,.5);background:rgba(16,185,129,.05)}
+  .cluster-worst{border:1px solid rgba(239,68,68,.5);background:rgba(239,68,68,.05)}
+
+  .chart{width:100%;height:300px}
+  .chart-lg{width:100%;height:360px}
+
+  .diagnosis-tag{display:inline-block;padding:6px 12px;border-radius:6px;background:var(--panel2);color:var(--accent2);font-size:12px;font-family:monospace;margin:4px 4px 0 0}
+
+  .p-must{background:rgba(239,68,68,.2);color:var(--fail);border:1px solid rgba(239,68,68,.4)}
+  .p-high{background:rgba(245,158,11,.2);color:var(--warn)}
+  .p-mid{background:rgba(34,211,238,.2);color:var(--accent2)}
+  .p-low{background:rgba(113,118,123,.2);color:var(--muted)}
+
+  .header{display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap}
+  .avatar{width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:42px;flex-shrink:0}
+  .bio{font-family:'SF Mono',Monaco,monospace;font-size:13px;color:#d1d5db;background:var(--panel2);padding:10px 12px;border-radius:8px;border-left:3px solid var(--accent);margin-top:8px}
+
+  .gauge-wrap{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+  .gauge{width:280px;height:240px;flex-shrink:0}
+
+  .source-legend{margin-top:16px;padding:12px;background:var(--panel2);border-radius:8px;font-size:13px;line-height:1.9}
+
+  footer{text-align:center;padding:24px;color:var(--muted);font-size:12px;font-family:monospace}
+
+  /* ===== Sprint 2.B — timeline stages ===== */
+  .stage-box{padding:12px;background:var(--bg);border-radius:6px;min-width:160px;flex:1;border:1px solid var(--line)}
+  .stage-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em}
+  .stage-state{font-weight:600;margin:6px 0;font-size:13px}
+  .stage-evidence{font-size:11px;color:var(--accent2);font-family:monospace}
+  .stage-cold_start_positive{border-left:3px solid var(--ok)}
+  .stage-cold_start_neutral{border-left:3px solid var(--muted)}
+  .stage-distribution_optimal{border-left:3px solid var(--ok)}
+  .stage-distribution_throttled_burst{border-left:3px solid var(--warn)}
+  .stage-distribution_normal{border-left:3px solid var(--muted)}
+  .stage-recovery_save_driven{border-left:3px solid var(--gold)}
+  .stage-recovery_share_driven{border-left:3px solid var(--accent2)}
+  .stage-recovery_dwell_driven{border-left:3px solid var(--accent)}
+  .stage-viral{color:var(--gold);font-weight:700}
+  .stage-strong{color:var(--ok);font-weight:700}
+  .stage-final{border-left:3px solid var(--gold)}
+</style>
+</head>
+<body>
+
+<!-- 1. HEADER -->
+<div class="panel">
+  <div class="header">
+    <div class="avatar">🏴‍☠️</div>
+    <div style="flex:1;min-width:280px">
+      <h1>🏴‍☠️ The Pirate 🏴‍☠️</h1>
+      <div style="color:var(--muted);font-size:15px">@Pinperepette · <span style="color:var(--accent2)">verified</span></div>
+      <div class="bio">🏴‍☠️ { 'name': 'Andrea Amani' }, #Security #engineer , P(Bug | Fix) ≠ P(Fix | Bug). Debugging → ∞ (converge? maybe). Classe '76, Σ(errors²) ≠ 0 ;</div>
+      <div style="margin-top:10px"><span class="pill" style="background:rgba(34,211,238,.15);color:var(--tier-niche);border:1px solid rgba(34,211,238,.3)">v5 — Sprint 1+2+3 (confidence + narrative + what-if + timeline + audience + predictor) · sample 249 tweet · coverage 0.189%</span></div>
+    </div>
+  </div>
+  <div class="grid-4" style="margin-top:24px">
+    <div><div class="metric-label">Followers</div><div class="metric">17.561</div></div>
+    <div><div class="metric-label">Following</div><div class="metric">805</div></div>
+    <div><div class="metric-label">Statuses</div><div class="metric">131.858</div></div>
+    <div><div class="metric-label">Tier</div><div class="metric" style="color:var(--tier-niche)">niche</div></div>
+  </div>
+</div>
+
+<!-- 2. GROWTH SCORE -->
+<h2>Growth Score</h2>
+<div class="panel">
+  <div class="gauge-wrap">
+    <div id="gaugeGrowth" class="gauge"></div>
+    <div style="flex:1;min-width:280px">
+      <div style="margin-bottom:12px">
+        <span class="pill" style="background:rgba(34,211,238,.15);color:var(--tier-niche);border:1px solid rgba(34,211,238,.3)">tier: niche</span>
+        <span class="pill" style="background:rgba(124,58,237,.18);color:#c4b5fd;border:1px solid rgba(124,58,237,.3)">phase: validation</span>
+        <span class="pill" style="background:rgba(251,191,36,.12);color:var(--gold);border:1px solid rgba(251,191,36,.25)">primary axis: distribution</span>
+      </div>
+      <p style="font-size:15px;line-height:1.7;color:#d1d5db">Tu scrivi tanto e bene, ma sparpagli troppo: meta' dei tweet finisce in 'Vita &amp; societa' tech' che non viaggia (rt_median 0), mentre il filone Security/OPSEC che spacca lo tocchi appena (2 post). In piu' pubblichi a raffiche (quasi 18 tweet al giorno, 69% in finestre di 30 minuti): X scala automaticamente del 50-75% i tuoi tweet ravvicinati. Le conversazioni che hai sotto i tuoi tweet funzionano (rispondi al 51% dei commentatori), quindi il motore relazionale c'e'. Manca focus tematico e ritmo.</p>
+      <div class="source-legend">
+        <strong style="display:block;margin-bottom:8px">Confidence sources:</strong>
+        <span class="src src-code">●code</span> <span style="color:var(--muted)">calcolato da signals reali (HIGH)</span><br>
+        <span class="src src-emp">●empirical</span> <span style="color:var(--muted)">da Twitter OSS code pubblicato (MEDIUM)</span><br>
+        <span class="src src-spec">●speculative</span> <span style="color:var(--muted)">estrapolazione / Phoenix closed-source (LOW)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 3. DIAGNOSI 3-AXIS -->
+<h2>Diagnosi 3-axis</h2>
+<div class="grid-3">
+
+  <!-- VISIBILITY -->
+  <div class="panel">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <h3>Visibility</h3>
+      <span class="pill v-warn">warn · limited</span>
+    </div>
+    <div class="metric-label">Confidence 0.78</div>
+    <div class="confidence-bar"><div class="confidence-fill" style="width:78%"></div></div>
+    <p style="margin-top:10px;font-size:15px"><strong>AuthorDiversityDecayFactor</strong></p>
+    <p style="color:var(--muted);font-size:13px">Cadenza molto alta + burst 69% → scaling 0.5→0.25 sui tweet successivi.</p>
+    <div style="margin-top:12px">
+      <div class="metric-label">Key evidence</div>
+      <div class="evidence-item">burst_rate_30min = <strong>0.6895</strong> <span class="src src-code" title="Calcolato da signals reali (HIGH)">●code</span></div>
+      <div class="evidence-item">consecutive_burst_count = <strong>15</strong> <span class="src src-code" title="Calcolato da signals reali (HIGH)">●code</span></div>
+      <div class="evidence-item">tweets_per_day_avg = <strong>17.79</strong> <span class="src src-code" title="Calcolato da signals reali (HIGH)">●code</span></div>
+      <div class="evidence-item">duplicate_content_rate = <strong>0.0</strong> <span class="src src-code" title="Calcolato da signals reali (HIGH)">●code</span></div>
+    </div>
+    <div style="margin-top:12px">
+      <div class="metric-label">Specific alerts</div>
+      <div class="evidence-item">burst_rate_30min · target &lt;0.30 <span class="src src-empirical" title="Da X OSS code (MEDIUM)">●empirical</span></div>
+      <div class="evidence-item">consecutive_burst_count · spezzare in finestre 1-2/h <span class="src src-empirical" title="Da X OSS code (MEDIUM)">●empirical</span></div>
+      <div class="evidence-item">tweets_per_day_avg · target 6-8/giorno <span class="src src-speculative" title="Phoenix/estrapolazione (LOW)">●speculative</span></div>
+      <div class="evidence-item">evening_18_22_concentration · spalmare orari <span class="src src-speculative" title="Phoenix/estrapolazione (LOW)">●speculative</span></div>
+    </div>
+  </div>
+
+  <!-- DISTRIBUTION -->
+  <div class="panel">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <h3>Distribution</h3>
+      <span class="pill v-fail">fail · blocked</span>
+    </div>
+    <div class="metric-label">Confidence 0.82</div>
+    <div class="confidence-bar"><div class="confidence-fill" style="width:82%"></div></div>
+    <p style="margin-top:10px;font-size:15px"><strong>Cluster dominante a basso valore di reach</strong></p>
+    <p style="color:var(--muted);font-size:13px">Engagement a picchi non a regime.</p>
+    <div style="margin-top:12px">
+      <div class="metric-label">Key evidence</div>
+      <div class="evidence-item">cluster_dominance_hhi=0.3419 → allineamento misto <span class="src src-code" title="Calcolato da signals reali (HIGH)">●code</span></div>
+      <div class="evidence-item">'Vita &amp; società tech' n_pct=50% con rt_median=0.0 <span class="src src-code" title="Calcolato da signals reali (HIGH)">●code</span></div>
+      <div class="evidence-item">best_cluster='Security/OPSEC' ma solo n=2 (4.55%) <span class="src src-code" title="Calcolato da signals reali (HIGH)">●code</span></div>
+      <div class="evidence-item">spike_vs_ride_index=50.0 → distribuzione a picchi <span class="src src-code" title="Calcolato da signals reali (HIGH)">●code</span></div>
+    </div>
+    <div style="margin-top:12px">
+      <div class="metric-label">Diagnosis</div>
+      <span class="diagnosis-tag">alignment: mixed</span>
+      <span class="diagnosis-tag">quality: weak</span>
+      <span class="diagnosis-tag">expansion: medium</span>
+      <span class="diagnosis-tag">temporal: spike</span>
+    </div>
+  </div>
+
+  <!-- RANKING -->
+  <div class="panel">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <h3>Ranking</h3>
+      <span class="pill v-ok">ok · active</span>
+    </div>
+    <div class="metric-label">Confidence 0.78</div>
+    <div class="confidence-bar"><div class="confidence-fill" style="width:78%"></div></div>
+    <p style="margin-top:10px;font-size:15px"><strong>Stickiness mixed sotto soglia sticky originals</strong></p>
+    <p style="color:var(--muted);font-size:13px">cr 0.507 nella fascia bassa di active.</p>
+    <div style="margin-top:12px">
+      <div class="metric-label">Key evidence</div>
+      <div class="evidence-item">reply_mine_to_other=0.8233 → conversational (L1 peso 75) <span class="src src-empirical" title="Da X OSS code (MEDIUM)">●empirical</span></div>
+      <div class="evidence-item">comment_response_rate=0.507 reliable=TRUE <span class="src src-code" title="Calcolato da signals reali (HIGH)">●code</span></div>
+      <div class="evidence-item">originals: mean=141.71, p90=248.8 → mixed <span class="src src-code" title="Calcolato da signals reali (HIGH)">●code</span></div>
+      <div class="evidence-item">prime_hours_post_rate=0.6591 ≥0.6 → velocity high <span class="src src-code" title="Calcolato da signals reali (HIGH)">●code</span></div>
+    </div>
+    <div style="margin-top:12px">
+      <div class="metric-label">Diagnosis</div>
+      <span class="diagnosis-tag">density: conversational</span>
+      <span class="diagnosis-tag">leverage: active</span>
+      <span class="diagnosis-tag">stickiness: mixed</span>
+      <span class="diagnosis-tag">velocity: high</span>
+    </div>
+  </div>
+</div>
+
+<!-- 4. ACTION PLAN -->
+<h2>Action plan · 6 azioni</h2>
+<div id="actionPlan"></div>
+
+<!-- 5. CONFLICT RESOLUTION -->
+<h2>Conflict resolution</h2>
+<div class="panel">
+  <div class="grid-2">
+    <div style="padding:14px;background:var(--panel2);border-radius:8px;border-left:3px solid var(--warn)">
+      <strong style="color:var(--warn);font-size:13px;text-transform:uppercase">axis_tension</strong>
+      <p style="margin-top:8px;font-size:14px;line-height:1.6">Ranking=ok con cr=0.507 reliable indica che L1 e' gia' active, ma Distribution=fail per dispersione cluster: il rischio e' che spingendo ulteriormente L1/L2 si amplifichi il rumore dei cluster deboli. <strong>Risoluzione:</strong> applicare L1/L2 selettivamente solo sui cluster forti (Security/OPSEC, AGD memoria agenti, Sviluppo agenti).</p>
+    </div>
+    <div style="padding:14px;background:var(--panel2);border-radius:8px;border-left:3px solid var(--warn)">
+      <strong style="color:var(--warn);font-size:13px;text-transform:uppercase">volume_vs_quality</strong>
+      <p style="margin-top:8px;font-size:14px;line-height:1.6">17.79 tweet/giorno + burst 69% creano AuthorDiversityDecayFactor che erode pure i tweet buoni. Conflitto con la pulsione naturale dell'autore a 'parlare di tutto'. <strong>Risoluzione:</strong> cap volume e spacing, non riduzione drastica.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 6. CLUSTER TOPIC MAP -->
+<h2>Cluster topic map</h2>
+<div class="panel">
+  <div class="grid-2">
+    <div>
+      <table>
+        <thead><tr><th>Cluster</th><th>n</th><th>%</th><th>rt med</th><th>eng med</th></tr></thead>
+        <tbody>
+          <tr class="cluster-worst"><td>Vita &amp; società tech</td><td>22</td><td>50.0%</td><td>0.0</td><td>18.0</td></tr>
+          <tr><td>Tooling Claude Code</td><td>11</td><td>25.0%</td><td>1</td><td>9</td></tr>
+          <tr><td>AGD memoria agenti</td><td>7</td><td>15.9%</td><td>3</td><td>64</td></tr>
+          <tr class="cluster-best"><td>Security/OPSEC</td><td>2</td><td>4.55%</td><td>37.0</td><td>260.5</td></tr>
+          <tr><td>Sviluppo LLM</td><td>2</td><td>4.55%</td><td>7.5</td><td>39.5</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:14px;font-size:13px;color:var(--muted)">Best: <strong style="color:var(--ok)">Security/OPSEC</strong> · Worst: <strong style="color:var(--fail)">Vita &amp; società tech</strong> · HHI 0.3419 (mixed)</p>
+    </div>
+    <div id="clusterPie" class="chart-lg"></div>
+  </div>
+</div>
+
+<!-- 7. ENGAGEMENT CHARTS -->
+<h2>Engagement charts</h2>
+<div class="panel">
+  <div class="grid-2">
+    <div id="chartBucket" class="chart"></div>
+    <div id="chartKind" class="chart"></div>
+  </div>
+  <div class="grid-2" style="margin-top:16px">
+    <div id="chartPerc" class="chart"></div>
+    <div id="chartRtCluster" class="chart"></div>
+  </div>
+  <div id="chartRadar" class="chart-lg" style="margin-top:16px"></div>
+</div>
+
+<!-- 8. ANTI-PATTERNS -->
+<h2>Anti-patterns</h2>
+<div class="panel">
+  <div class="grid-2" id="antiPatterns"></div>
+</div>
+
+<!-- 9. KPI TO WATCH -->
+<h2>KPI to watch</h2>
+<div class="panel">
+  <table>
+    <thead><tr><th>Metric</th><th>Current</th><th>Target</th><th>Window</th><th>Source</th></tr></thead>
+    <tbody id="kpiTable"></tbody>
+  </table>
+</div>
+
+<!-- 9b. PROFILO NARRATIVO -->
+<h2 style="display:flex;align-items:center;gap:12px">📖 Profilo narrativo <span style="font-size:13px;color:var(--muted);font-weight:normal;font-style:italic;text-transform:none;letter-spacing:0">— critica letteraria computazionale, NON ranking</span></h2>
+
+<div class="panel" style="text-align:center;padding:32px;background:linear-gradient(135deg,var(--panel),var(--panel2))">
+  <div style="font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">archetype</div>
+  <div class="narrative-archetype">ingegnere-pirata narratore, security romantico</div>
+</div>
+
+<div class="grid-2">
+  <!-- SX: Mechanics -->
+  <div>
+    <div class="mechanic-card">
+      <strong style="font-size:15px">🔥 Strongest mechanic: investigative deep-dive con artefatto concreto</strong>
+      <p style="margin-top:8px;font-size:13px;color:#d1d5db;line-height:1.6">Apre con un gesto operativo banale ('apro devtools', 'apro i log', 'mi chiamano per un sistema'), porta il lettore dentro la scena tecnica un passo alla volta, mostra l'artefatto crudo (header, network call, riga di log, token in chiaro), e chiude con una osservazione laterale che spostina il frame da 'bug' a 'sistema/cultura'. Funziona perche' non spiega, dimostra: il tweet e' una piccola investigazione, non un commento.</p>
+      <div style="margin-top:10px;padding:10px;background:var(--panel);border-radius:6px;font-size:12px;line-height:1.6">
+        <div>"l'altro giorno apro devtools su un sito con un cookie banner iper curato... vedo ventitré tracker già partiti prima del banner... abbiamo costruito la UI della privacy senza la privacy" <a href="https://x.com/Pinperepette/status/2049927881787367589" target="_blank">↗</a></div>
+        <div style="margin-top:6px">"Apro i log dell'app in produzione, routine... Authorization: Bearer eyJhbGci... A volte la superficie d'attacco è Kibana" <a href="https://x.com/Pinperepette/status/2050120271042920952" target="_blank">↗</a></div>
+      </div>
+    </div>
+
+    <div class="mechanic-card anti">
+      <strong style="font-size:15px">❌ Anti-pattern: celebrativo/personal senza tensione diagnostica</strong>
+      <p style="margin-top:8px;font-size:13px;color:#d1d5db;line-height:1.6">Quando posta cose affettive (foto, wallpaper, momenti dolci) o brevi battute auto-citate ('da povero pirata'), l'engagement si appiattisce. Il pubblico lo segue per il movimento 'osservazione → meccanica → giudizio', non per il volto privato. Anche le reply a stand-up generiche (emoji ride 😂😂😂, frasi di assenso) hanno return basso: il pubblico premia la voce diagnostica, non quella domestica.</p>
+      <div style="margin-top:10px;padding:10px;background:var(--panel);border-radius:6px;font-size:12px;line-height:1.6">
+        <div>"E' tornata ed è venuta a trovarmi ❤️" (eng 93) <a href="https://x.com/Pinperepette/status/2051995215993401786" target="_blank">↗</a></div>
+        <div style="margin-top:6px">"un altro wallpaper e smetto, giuro" (eng 148) <a href="https://x.com/Pinperepette/status/2050962566629711884" target="_blank">↗</a></div>
+      </div>
+    </div>
+
+    <div class="mechanic-card" style="opacity:0.75">
+      <strong style="font-size:14px">🌑 Weakest mechanic: reaction breve senza artefatto</strong>
+      <p style="margin-top:6px;font-size:12px;color:var(--muted);line-height:1.5">Reply o originali ridotti a battuta/affermazione generica, privi della scena tecnica o dell'oggetto concreto da osservare. Manca l'innesco diagnostico che distingue la sua voce: senza 'apro X / vedo Y', il tweet collassa nella media dei reply italiani su X.</p>
+    </div>
+  </div>
+
+  <!-- DX: Emotional & Tonal -->
+  <div>
+    <div class="mechanic-card" style="border-left-color:var(--gold)">
+      <strong style="font-size:15px">🎭 Emotional signature: scoperta tecnica + indignazione paziente</strong>
+      <p style="margin-top:8px;font-size:13px;color:#d1d5db;line-height:1.6">Tono dominante: chi ha gia' visto la merda sotto il tappeto e la racconta a bassa voce, con punte di rabbia controllata ('mannaia la puttana', 'mi manda ai matti') che funzionano come valvole, non come grido. La rabbia non e' contro le persone ma contro la pigrizia strutturale dei sistemi. C'e' calore residuo verso chi sbaglia (il 'developer impulsivo che lavora a 200 token al secondo'), nessun disprezzo, molta lucidita'.</p>
+      <div style="margin-top:10px;padding:10px;background:var(--panel);border-radius:6px;font-size:12px;line-height:1.6">
+        <div>"abbiamo costruito la UI della privacy senza la privacy... (Mannaia la puttana)" <a href="https://x.com/Pinperepette/status/2049927881787367589" target="_blank">↗</a></div>
+        <div style="margin-top:6px">"Nessun cazzo di MCP dovrebbe girare col vostro shell user, MAI... fino alla morte termica dell'universo" <a href="https://x.com/Pinperepette/status/2053011592833310871" target="_blank">↗</a></div>
+      </div>
+    </div>
+
+    <div class="mechanic-card" style="border-left-color:var(--accent2)">
+      <strong style="font-size:15px">↔️ Tonal range</strong>
+      <div class="grid-2" style="margin-top:12px;gap:10px">
+        <div style="padding:12px;background:var(--panel);border-radius:6px;border-top:2px solid var(--ok)">
+          <div style="font-size:11px;color:var(--muted);text-transform:uppercase;margin-bottom:4px">🌙 min — bassa voce</div>
+          <div style="font-size:12px;color:#d1d5db;line-height:1.5">registro affettivo nudo, frase corta, niente meccanica — il pirata che abbassa la voce</div>
+          <div style="margin-top:8px;font-size:12px;font-style:italic">"E' tornata ed è venuta a trovarmi ❤️" <a href="https://x.com/Pinperepette/status/2051995215993401786" target="_blank">↗</a></div>
+        </div>
+        <div style="padding:12px;background:var(--panel);border-radius:6px;border-top:2px solid var(--fail)">
+          <div style="font-size:11px;color:var(--muted);text-transform:uppercase;margin-bottom:4px">🔥 max — rant viscerale</div>
+          <div style="font-size:12px;color:#d1d5db;line-height:1.5">rant tecnico viscerale a paragrafo lungo, imprecazione + diagnosi + lista mitigazioni</div>
+          <div style="margin-top:8px;font-size:12px;font-style:italic">"Nessun cazzo di MCP dovrebbe girare col vostro shell user, MAI..." <a href="https://x.com/Pinperepette/status/2053011592833310871" target="_blank">↗</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Voice markers -->
+<div class="panel" style="padding:20px">
+  <strong style="display:block;margin-bottom:12px;font-size:14px;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em">🎙 Signature voice markers</strong>
+  <div>
+    <span class="voice-marker" title="l'altro giorno apro devtools su un sito con un cookie banner iper curato...">incipit cinematografico 'l'altro giorno apro X' / 'qualche giorno fa mi chiamano'</span>
+    <span class="voice-marker" title="sto giocando con SubLodeX. è tipo un IDE con Claude dentro...">dichiarazione esplicita di test/lavoro ('sto giocando con', 'sto lavorando a')</span>
+    <span class="voice-marker" title="stanno tutti correndo a fare agenti, wrapper, MCP, orchestrator... cazzi e mazzi">imprecazione tecnica controllata ('mannaia la puttana', 'cazzi e mazzi', 'merdate')</span>
+    <span class="voice-marker" title="ogni giorno esce qualcosa sugli agenti, molte cose interessanti, molte inutili 😅">auto-ridimensionamento col 😅 / lol a fine paragrafo</span>
+    <span class="voice-marker" title="@Libroecacciavi1 da povero pirata, direi :)">branding pirata + identita' come stringa di codice</span>
+    <span class="voice-marker" title="manca il layer base, quello inevitabile tipo Cloudflare per il web, OAuth per identity, Stripe...">analogia infrastrutturale ('Cloudflare per il web, OAuth per identity, Stripe...')</span>
+    <span class="voice-marker" title="gente che ha dato sudo a mezzo ecosistema 'temporaneamente'...fino alla morte termica dell'universo">closing iperbolico-temporale ('fino alla morte termica dell'universo')</span>
+    <span class="voice-marker" title="vedo soprattutto wrapperini sopra SDK OpenAI e demo messe insieme a culo">italiano parlato + tecnicismo inglese intatto ('wrapperini', 'fake MCP', 'a culo')</span>
+  </div>
+</div>
+
+<!-- Narrative arcs -->
+<div class="panel" style="padding:20px">
+  <strong style="display:block;margin-bottom:14px">🌀 Narrative arc: scena tecnica → rivelazione sistemica → verdetto laterale</strong>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+    <div class="arc-step">
+      <div style="font-weight:600;font-size:12px;color:var(--accent2)">SCENA</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px">"apro devtools su un sito con un cookie banner iper curato..."</div>
+      <a href="https://x.com/Pinperepette/status/2049927881787367589" target="_blank" style="font-size:11px">↗ vedi</a>
+    </div>
+    <span style="font-size:24px;color:var(--accent)">→</span>
+    <div class="arc-step">
+      <div style="font-weight:600;font-size:12px;color:var(--accent2)">RIVELAZIONE</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px">"ventitré tracker già partiti prima del banner... nei primi 300 ms è gi"</div>
+      <a href="https://x.com/Pinperepette/status/2049927881787367589" target="_blank" style="font-size:11px">↗ vedi</a>
+    </div>
+    <span style="font-size:24px;color:var(--accent)">→</span>
+    <div class="arc-step">
+      <div style="font-weight:600;font-size:12px;color:var(--accent2)">VERDETTO</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px">"abbiamo costruito la UI della privacy senza la privacy"</div>
+      <a href="https://x.com/Pinperepette/status/2049927881787367589" target="_blank" style="font-size:11px">↗ vedi</a>
+    </div>
+  </div>
+</div>
+
+<div class="panel" style="padding:20px">
+  <strong style="display:block;margin-bottom:14px">🌀 Narrative arc: demo/prodotto → rilascio → conversazione coi betatester</strong>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+    <div class="arc-step">
+      <div style="font-weight:600;font-size:12px;color:var(--accent2)">DEMO</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px">"come usi Claude Code? Mi sono fatto una UI dove Claude lavora dentr"</div>
+      <a href="https://x.com/Pinperepette/status/2050322398629777556" target="_blank" style="font-size:11px">↗ vedi</a>
+    </div>
+    <span style="font-size:24px;color:var(--accent)">→</span>
+    <div class="arc-step">
+      <div style="font-weight:600;font-size:12px;color:var(--accent2)">RILASCIO</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px">"sto giocando con SubLodeX... Stellinatelo se vi va :)"</div>
+      <a href="https://x.com/Pinperepette/status/2050603892589642218" target="_blank" style="font-size:11px">↗ vedi</a>
+    </div>
+    <span style="font-size:24px;color:var(--accent)">→</span>
+    <div class="arc-step">
+      <div style="font-weight:600;font-size:12px;color:var(--accent2)">CONVERSAZIONE</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px">"puoi scegliere il tema che vuoi, ma anche per i singoli pezzi..."</div>
+      <a href="https://x.com/Pinperepette/status/2050328527594037376" target="_blank" style="font-size:11px">↗ vedi</a>
+    </div>
+  </div>
+</div>
+
+<div class="panel" style="padding:20px">
+  <strong style="display:block;margin-bottom:14px">🌀 Narrative arc: problema concettuale → primitiva proposta → implementazione spedita</strong>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+    <div class="arc-step">
+      <div style="font-weight:600;font-size:12px;color:var(--accent2)">PROBLEMA</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px">"perché gli agenti continuano a trattare la memoria come un document"</div>
+      <a href="https://x.com/Pinperepette/status/2053473084032606340" target="_blank" style="font-size:11px">↗ vedi</a>
+    </div>
+    <span style="font-size:24px;color:var(--accent)">→</span>
+    <div class="arc-step">
+      <div style="font-weight:600;font-size:12px;color:var(--accent2)">PRIMITIVA</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px">"AGD... Claude non deve leggere tutto. Scopre blocchi, segue refs..."</div>
+      <a href="https://x.com/Pinperepette/status/2053221682559496200" target="_blank" style="font-size:11px">↗ vedi</a>
+    </div>
+    <span style="font-size:24px;color:var(--accent)">→</span>
+    <div class="arc-step">
+      <div style="font-weight:600;font-size:12px;color:var(--accent2)">IMPLEMENTAZIONE</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px">"E ora c'è anche il plugin per Claude Code. Installazione vera, MCP"</div>
+      <a href="https://x.com/Pinperepette/status/2053221682559496200" target="_blank" style="font-size:11px">↗ vedi</a>
+    </div>
+  </div>
+</div>
+
+<!-- Sentence fingerprints -->
+<div class="panel" style="padding:20px">
+  <strong style="display:block;margin-bottom:12px">🔮 Sentence fingerprints</strong>
+  <span style="display:block;color:var(--muted);font-size:13px;margin-bottom:12px">Frasi "uniche" che identificano la voce del subject — espressioni che nessun altro direbbe in quel modo.</span>
+  <div class="fingerprint">"abbiamo costruito la UI della privacy senza la privacy"</div>
+  <div class="fingerprint">"il developer impulsivo che installa roba a caso lavora a 200 token al secondo e non dorme mai"</div>
+  <div class="fingerprint">"in IT 'temporaneamente' significa fino alla morte termica dell'universo"</div>
+  <div class="fingerprint">"A volte la superficie d'attacco non è l'endpoint esposto o la dipendenza vulnerabile. A volte è Kibana"</div>
+  <div class="fingerprint">"P(Bug | Fix) ≠ P(Fix | Bug). Σ(errors²) ≠ 0"</div>
+</div>
+
+<!-- 10. WHAT-IF REACH ENGINE (Sprint 2.A) -->
+<section class="panel">
+  <h2>🔮 What-If Reach Engine <span class="src src-spec">●causal inference, CI 95%</span></h2>
+  <p style="color:var(--muted);font-size:14px">Stime controfattuali via propensity-score matching (3-NN, bootstrap n=1000). NON tracing reale: confronto con tweet "simili" non esposti al fattore.</p>
+
+  <div class="grid-3" style="margin-top:24px">
+    <!-- Card 1: burst penalty (not detectable) -->
+    <div class="panel" style="padding:20px">
+      <strong>Burst penalty (AuthorDiversityDecay)</strong>
+      <div class="metric" style="margin:12px 0">-2.5%</div>
+      <div style="font-size:12px;color:var(--muted)">CI 95%: [-89.3%, +60.1%]</div>
+      <div style="margin-top:8px">n_T=171, n_C=77</div>
+      <p style="font-size:13px;margin-top:12px">Stimiamo che ~0% di reach addizionale per tweet sarebbe stato guadagnato senza burst. CI attraversa lo zero → effetto non rilevabile dal sample. Reach totale persa stimata 3192 (CI 2199–4196), ma intervallo troppo ampio per concludere.</p>
+      <span class="src src-spec">●non rilevabile (CI attraversa 0)</span>
+    </div>
+    <!-- Card 2: cluster coherence (STRONG SIGNAL) -->
+    <div class="panel cluster-best" style="padding:20px">
+      <strong>Cluster coherence (tweet weak cluster)</strong>
+      <div class="metric" style="margin:12px 0;color:var(--fail)">+245.4%</div>
+      <div style="font-size:12px;color:var(--muted)">CI 95%: [+108.8%, +388.6%]</div>
+      <div style="margin-top:8px">n_T=35 (Vita), n_C=77 (Security+LLM)</div>
+      <p style="font-size:13px;margin-top:12px">Tweet sul cluster "Vita &amp; società tech" perdono in media ~2.5× reach vs gli stessi tweet ipoteticamente pubblicati sui cluster forti. Segnale robusto: CI lontano da zero, costo totale stimato 853 reach (CI 462–1249).</p>
+      <span class="src src-code">●HIGH (n_T=35, CI stretto)</span>
+    </div>
+    <!-- Card 3: link policy (SPECULATIVE) -->
+    <div class="panel" style="padding:20px">
+      <strong>Link policy (link nel root)</strong>
+      <div class="metric" style="margin:12px 0">+114.5%</div>
+      <div style="font-size:12px;color:var(--muted)">CI 95%: [+69.7%, +160.7%]</div>
+      <div style="margin-top:8px">n_T=11, n_C=6</div>
+      <p style="font-size:13px;margin-top:12px">Phoenix link penalty: tweet con link esterno nel root sotto-performano del ~115%. Sample minuscolo (17 originals totali), Phoenix closed-source → conferma indiretta.</p>
+      <span class="src src-spec">●SPECULATIVE (sample tiny)</span>
+    </div>
+  </div>
+
+  <h3 style="margin-top:32px">Top tweet — what-if reach</h3>
+  <table>
+    <thead><tr><th>Tweet</th><th>Actual reach</th><th>No-burst</th><th>High-cluster</th><th>No-link</th><th>Best-case</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><a href="https://x.com/Pinperepette/status/2050603892589642218" target="_blank">2050603892… (agents_llm, original)</a></td>
+        <td>256</td><td>—</td><td>—</td><td>431.8 (+68.7%)</td><td><strong style="color:var(--ok)">431.8 (+68.7%)</strong></td>
+      </tr>
+      <tr>
+        <td><a href="https://x.com/Pinperepette/status/2050635104565797263" target="_blank">2050635104… (other, burst+link)</a></td>
+        <td>64</td><td>63.3 (-1.0%)</td><td>—</td><td>239.8 (+274.7%)</td><td><strong style="color:var(--ok)">239.8 (+274.7%)</strong></td>
+      </tr>
+      <tr>
+        <td><a href="https://x.com/Pinperepette/status/2050962566629711884" target="_blank">2050962566… (other, burst+link)</a></td>
+        <td>214</td><td>213.3 (-0.3%)</td><td>—</td><td>389.8 (+82.1%)</td><td><strong style="color:var(--ok)">389.8 (+82.1%)</strong></td>
+      </tr>
+      <tr>
+        <td><a href="https://x.com/Pinperepette/status/2051563174445363220" target="_blank">2051563174… (other, link)</a></td>
+        <td>77</td><td>—</td><td>—</td><td>252.8 (+228.3%)</td><td><strong style="color:var(--ok)">252.8 (+228.3%)</strong></td>
+      </tr>
+      <tr>
+        <td><a href="https://x.com/Pinperepette/status/2051995215993401786" target="_blank">2051995215… (other, burst+link)</a></td>
+        <td>117</td><td>116.3 (-0.6%)</td><td>—</td><td>292.8 (+150.2%)</td><td><strong style="color:var(--ok)">292.8 (+150.3%)</strong></td>
+      </tr>
+      <tr>
+        <td><a href="https://x.com/Pinperepette/status/2053171492276281582" target="_blank">2053171492… (agents_llm, link)</a></td>
+        <td>121</td><td>—</td><td>—</td><td>296.8 (+145.3%)</td><td><strong style="color:var(--ok)">296.8 (+145.3%)</strong></td>
+      </tr>
+      <tr>
+        <td><a href="https://x.com/Pinperepette/status/2053221682559496200" target="_blank">2053221682… (agents_llm, link)</a></td>
+        <td>110</td><td>—</td><td>—</td><td>285.8 (+159.8%)</td><td><strong style="color:var(--ok)">285.8 (+159.8%)</strong></td>
+      </tr>
+      <tr>
+        <td><a href="https://x.com/Pinperepette/status/2053473084032606340" target="_blank">2053473084… (agents_llm, burst+link)</a></td>
+        <td>205</td><td>204.3 (-0.3%)</td><td>—</td><td>380.8 (+85.8%)</td><td><strong style="color:var(--ok)">380.8 (+85.8%)</strong></td>
+      </tr>
+      <tr>
+        <td><a href="https://x.com/Pinperepette/status/2053906236542689679" target="_blank">2053906236… (agents_llm, link)</a></td>
+        <td>81</td><td>—</td><td>—</td><td>256.8 (+217.0%)</td><td><strong style="color:var(--ok)">256.8 (+217.0%)</strong></td>
+      </tr>
+      <tr>
+        <td><a href="https://x.com/Pinperepette/status/2054983202968600734" target="_blank">2054983202… (security_opsec, link)</a></td>
+        <td>88</td><td>—</td><td>—</td><td>263.8 (+199.8%)</td><td><strong style="color:var(--ok)">263.8 (+199.8%)</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top:16px;padding:12px;background:var(--panel2);border-radius:8px;font-size:12px;color:var(--muted)">
+    <strong>⚠️ Limitazioni:</strong> Sample 17 originali → CI ampi. Matching imperfetto (poche feature categoriche, residual confounding). Phoenix closed-source per link policy. Cluster assignment via keyword heuristic.
+  </div>
+</section>
+
+<!-- 11. TIMELINE RANKING RECONSTRUCTION (Sprint 2.B) -->
+<section class="panel">
+  <h2>🛤️ Timeline Ranking Reconstruction <span class="src src-spec">●inferred narrative, NOT real tracing</span></h2>
+  <p style="color:var(--muted);font-size:14px">Ricostruzione probabilistica del "viaggio" dei top 5 tweet attraverso le fasi dell'algoritmo. Inferenza da velocity, dwell proxy, save ratio. Non abbiamo accesso ai log X.</p>
+
+  <!-- Tweet 1: stampante quote -->
+  <div class="tlcard" style="padding:20px;background:var(--panel2);border-radius:8px;margin-top:16px">
+    <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:12px;gap:16px;flex-wrap:wrap">
+      <div>
+        <strong>surreale. prossima intervista alla stampante: 'cosa provi quando sei in inceppamento carta?'</strong>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px">quote · likes=755 · rt=87 · replies=58 · bookmarks=12</div>
+      </div>
+      <a href="https://x.com/Pinperepette/status/2050279170526089647" target="_blank">↗ vedi</a>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:stretch;margin-top:16px">
+      <div class="stage-box stage-cold_start_positive">
+        <div class="stage-label">1. Cold-start (0-15 min)</div>
+        <div class="stage-state">cold_start_positive</div>
+        <div class="stage-evidence">views_per_min_lifetime_avg=1.013</div>
+      </div>
+      <span style="font-size:24px;color:var(--accent);align-self:center">→</span>
+      <div class="stage-box stage-distribution_optimal">
+        <div class="stage-label">2. Distribution (15min-6h)</div>
+        <div class="stage-state">distribution_optimal</div>
+        <div class="stage-evidence">cluster_match=Vita &amp; societa tech</div>
+      </div>
+      <span style="font-size:24px;color:var(--accent);align-self:center">→</span>
+      <div class="stage-box stage-recovery_share_driven">
+        <div class="stage-label">3. Recovery (6h-24h)</div>
+        <div class="stage-state">recovery_share_driven</div>
+        <div class="stage-evidence">bookmark_like_ratio=0.016</div>
+      </div>
+      <span style="font-size:24px;color:var(--accent);align-self:center">→</span>
+      <div class="stage-box stage-final">
+        <div class="stage-label">4. Final</div>
+        <div class="stage-state stage-viral">viral</div>
+        <div class="stage-evidence">eng_total 908 vs cluster eng_median 18.0 = 50x; rt 87 vs cluster rt_p90 6.8 = 12.8x</div>
+      </div>
+    </div>
+    <p style="margin-top:16px;font-style:italic;color:var(--muted);font-size:13px">Partito con velocity esplosiva (p95 cohort) sfruttando il seed del quote-tweet su un contenuto gia warm. Distribuzione amplificata da 87 RT che hanno aperto fan-out cross-cluster nonostante il cluster di base (Vita &amp; societa tech) abbia rt_median=0. Recovery non guidato da bookmark (humor, non reference) ma dalla share-velocity. Outcome viral con 50x il median di cluster.</p>
+  </div>
+
+  <!-- Tweet 2: cookie banner devtools -->
+  <div class="tlcard" style="padding:20px;background:var(--panel2);border-radius:8px;margin-top:16px">
+    <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:12px;gap:16px;flex-wrap:wrap">
+      <div>
+        <strong>l'altro giorno apro devtools su un sito con un cookie banner iper curato...</strong>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px">original · likes=363 · rt=67 · replies=33 · bookmarks=48</div>
+      </div>
+      <a href="https://x.com/Pinperepette/status/2049927881787367589" target="_blank">↗ vedi</a>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:stretch;margin-top:16px">
+      <div class="stage-box stage-cold_start_positive">
+        <div class="stage-label">1. Cold-start (0-15 min)</div>
+        <div class="stage-state">cold_start_positive</div>
+        <div class="stage-evidence">views_per_min_lifetime_avg=0.812</div>
+      </div>
+      <span style="font-size:24px;color:var(--accent);align-self:center">→</span>
+      <div class="stage-box stage-distribution_optimal">
+        <div class="stage-label">2. Distribution (15min-6h)</div>
+        <div class="stage-state">distribution_optimal</div>
+        <div class="stage-evidence">cluster_match=Security &amp; OPSEC</div>
+      </div>
+      <span style="font-size:24px;color:var(--accent);align-self:center">→</span>
+      <div class="stage-box stage-recovery_dwell_driven">
+        <div class="stage-label">3. Recovery (6h-24h)</div>
+        <div class="stage-state">recovery_dwell_driven</div>
+        <div class="stage-evidence">bookmark_like_ratio=0.132</div>
+      </div>
+      <span style="font-size:24px;color:var(--accent);align-self:center">→</span>
+      <div class="stage-box stage-final">
+        <div class="stage-label">4. Final</div>
+        <div class="stage-state stage-strong">strong</div>
+        <div class="stage-evidence">rt 67 vs cluster rt_median 37 = 1.81x; eng_total 463 vs cluster eng_median 260.5 = 1.78x</div>
+      </div>
+    </div>
+    <p style="margin-top:16px;font-style:italic;color:var(--muted);font-size:13px">Cold-start positivo grazie a text lungo narrativo (935 char, dwell ottimo) in prime time 19 UTC. Distribuzione canalizzata nel best-performing cluster Security/OPSEC con reply rate ceiling (1.0, ha risposto a tutti i 10 commenter). Recovery dwell-driven piu che save-driven. Outcome strong, 1.8x rt_median e 1.78x eng_median del cluster: ride-the-wave nel cluster giusto.</p>
+  </div>
+
+  <!-- Tweet 3: antirez PR -->
+  <div class="tlcard" style="padding:20px;background:var(--panel2);border-radius:8px;margin-top:16px">
+    <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:12px;gap:16px;flex-wrap:wrap">
+      <div>
+        <strong>ogni giorno esce qualcosa sugli agenti...arriva una PR come quella di @antirez...</strong>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px">original · likes=241 · rt=25 · replies=8 · bookmarks=336</div>
+      </div>
+      <a href="https://x.com/Pinperepette/status/2051395641822044307" target="_blank">↗ vedi</a>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:stretch;margin-top:16px">
+      <div class="stage-box stage-cold_start_positive">
+        <div class="stage-label">1. Cold-start (0-15 min)</div>
+        <div class="stage-state">cold_start_positive</div>
+        <div class="stage-evidence">views_per_min_lifetime_avg=0.740</div>
+      </div>
+      <span style="font-size:24px;color:var(--accent);align-self:center">→</span>
+      <div class="stage-box stage-distribution_optimal">
+        <div class="stage-label">2. Distribution (15min-6h)</div>
+        <div class="stage-state">distribution_optimal</div>
+        <div class="stage-evidence">burst_overlap_30min=0</div>
+      </div>
+      <span style="font-size:24px;color:var(--accent);align-self:center">→</span>
+      <div class="stage-box stage-recovery_save_driven">
+        <div class="stage-label">3. Recovery (6h-24h)</div>
+        <div class="stage-state">recovery_save_driven</div>
+        <div class="stage-evidence">bookmark_like_ratio=1.394</div>
+      </div>
+      <span style="font-size:24px;color:var(--accent);align-self:center">→</span>
+      <div class="stage-box stage-final">
+        <div class="stage-label">4. Final</div>
+        <div class="stage-state stage-strong">strong</div>
+        <div class="stage-evidence">eng_total 274 vs Vita-societa cluster eng_median 18 = 15.2x</div>
+      </div>
+    </div>
+    <p style="margin-top:16px;font-style:italic;color:var(--muted);font-size:13px">Cold-start positivo (p89 views, p91 eng) potenziato dalla mention @antirez. Distribuzione completamente unthrottled (zero burst neighbors). Recovery dominato da Phoenix Predicted Bookmark: bk/like=1.394 e' pattern raro tipico del reference material che X reinjetta. Outcome strong, 15x cluster eng_median grazie al boost save-worthy nonostante cluster keyword sbagliato.</p>
+  </div>
+
+  <!-- Tweet 4: Claude Code UI video -->
+  <div class="tlcard" style="padding:20px;background:var(--panel2);border-radius:8px;margin-top:16px">
+    <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:12px;gap:16px;flex-wrap:wrap">
+      <div>
+        <strong>come usi Claude Code? Mi sono fatto una UI dove Claude lavora direttamente dentro i progetti...</strong>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px">original · likes=204 · rt=10 · replies=18 · bookmarks=77</div>
+      </div>
+      <a href="https://x.com/Pinperepette/status/2050322398629777556" target="_blank">↗ vedi</a>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:stretch;margin-top:16px">
+      <div class="stage-box stage-cold_start_neutral">
+        <div class="stage-label">1. Cold-start (0-15 min)</div>
+        <div class="stage-state">cold_start_neutral</div>
+        <div class="stage-evidence">views_per_min_lifetime_avg=0.483</div>
+      </div>
+      <span style="font-size:24px;color:var(--accent);align-self:center">→</span>
+      <div class="stage-box stage-distribution_throttled_burst">
+        <div class="stage-label">2. Distribution (15min-6h)</div>
+        <div class="stage-state">distribution_throttled_burst</div>
+        <div class="stage-evidence">burst_overlap_30min=10</div>
+      </div>
+      <span style="font-size:24px;color:var(--accent);align-self:center">→</span>
+      <div class="stage-box stage-recovery_save_driven">
+        <div class="stage-label">3. Recovery (6h-24h)</div>
+        <div class="stage-state">recovery_save_driven</div>
+        <div class="stage-evidence">bookmark_like_ratio=0.377</div>
+      </div>
+      <span style="font-size:24px;color:var(--accent);align-self:center">→</span>
+      <div class="stage-box stage-final">
+        <div class="stage-label">4. Final</div>
+        <div class="stage-state stage-strong">strong</div>
+        <div class="stage-evidence">eng_total 232 vs cluster eng_median 9 = 25.8x; rt 10 vs cluster rt_p90 10 = 1.0x (cap)</div>
+      </div>
+    </div>
+    <p style="margin-top:16px;font-style:italic;color:var(--muted);font-size:13px">Cold-start neutro ma con sintomo burst (10 tweet del subject in +/-30 min). Distribuzione throttled in mid-flight per cannibalizzazione self-thread (burst_rate profilo 0.69, consecutive_burst 15). Recovery save-driven grazie al video tutorial. Outcome strong (25x cluster eng_median) ma cap sui RT a 1x cluster_p90: il throttle si vede dove gli rt sarebbero dovuti volare.</p>
+  </div>
+
+  <!-- Tweet 5: trust layer agenti -->
+  <div class="tlcard" style="padding:20px;background:var(--panel2);border-radius:8px;margin-top:16px">
+    <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:12px;gap:16px;flex-wrap:wrap">
+      <div>
+        <strong>La cosa che mi manda ai matti e che stanno tutti correndo a fare agenti, wrapper, MCP...manca il trust layer...</strong>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px">original · likes=166 · rt=8 · replies=21 · bookmarks=68</div>
+      </div>
+      <a href="https://x.com/Pinperepette/status/2052122761712087306" target="_blank">↗ vedi</a>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:stretch;margin-top:16px">
+      <div class="stage-box stage-cold_start_positive">
+        <div class="stage-label">1. Cold-start (0-15 min)</div>
+        <div class="stage-state">cold_start_positive</div>
+        <div class="stage-evidence">views_per_min_lifetime_avg=0.677</div>
+      </div>
+      <span style="font-size:24px;color:var(--accent);align-self:center">→</span>
+      <div class="stage-box stage-distribution_normal">
+        <div class="stage-label">2. Distribution (15min-6h)</div>
+        <div class="stage-state">distribution_normal</div>
+        <div class="stage-evidence">cluster_match=AGD memoria agenti</div>
+      </div>
+      <span style="font-size:24px;color:var(--accent);align-self:center">→</span>
+      <div class="stage-box stage-recovery_save_driven">
+        <div class="stage-label">3. Recovery (6h-24h)</div>
+        <div class="stage-state">recovery_save_driven</div>
+        <div class="stage-evidence">bookmark_like_ratio=0.410</div>
+      </div>
+      <span style="font-size:24px;color:var(--accent);align-self:center">→</span>
+      <div class="stage-box stage-final">
+        <div class="stage-label">4. Final</div>
+        <div class="stage-state stage-strong">strong</div>
+        <div class="stage-evidence">eng_total 195 vs cluster eng_median 64 = 3.05x; rt 8 vs cluster rt_p90 8.4 = 0.95x</div>
+      </div>
+    </div>
+    <p style="margin-top:16px;font-style:italic;color:var(--muted);font-size:13px">Cold-start positivo (p82 views, p86 eng) trainato da long-form 1571 char in prime evening. Distribuzione normale, no throttle, cluster match esatto su AGD memoria agenti. Recovery save-driven: bk/like 0.41 sopra soglia, share sotto soglia = utenti salvano l'opinione invece di condividerla. Outcome strong nel cluster opinionato AGD (3x eng_median), cap sui RT al p90.</p>
+  </div>
+</section>
+
+<!-- 12. AUDIENCE GRAPH MVP (Sprint 3.A) -->
+<section class="panel">
+  <h2>🕸️ Audience Graph (MVP) <span class="src src-emp">●partial — no follower list disponibile</span></h2>
+  <p style="color:var(--muted);font-size:14px">Grafo 1-hop dalle interazioni osservate nel sample (replies + mentions + thread participants). Snare-x non espone follower list o RT graph → limite documentato.</p>
+
+  <div class="grid-3" style="margin-top:24px">
+    <div class="panel" style="padding:16px;text-align:center">
+      <div class="metric-label">Nodi</div>
+      <div class="metric">155</div>
+    </div>
+    <div class="panel" style="padding:16px;text-align:center">
+      <div class="metric-label">Archi</div>
+      <div class="metric">179</div>
+    </div>
+    <div class="panel" style="padding:16px;text-align:center">
+      <div class="metric-label">Mutual engagement</div>
+      <div class="metric">22</div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:24px">Top amplifier / gateway nodes</h3>
+  <table>
+    <thead><tr><th>Handle</th><th>Interazioni</th><th>Tipo</th><th>Cluster hint</th></tr></thead>
+    <tbody>
+      <tr><td><a href="https://x.com/PandemicaMente" target="_blank">@PandemicaMente</a></td><td>12</td><td>amplifier + gateway (mutual)</td><td>unknown</td></tr>
+      <tr><td><a href="https://x.com/mellospank" target="_blank">@mellospank</a></td><td>7</td><td>amplifier + gateway (mutual)</td><td>unknown</td></tr>
+      <tr><td><a href="https://x.com/seralf" target="_blank">@seralf</a></td><td>7</td><td>amplifier + gateway (mutual)</td><td>unknown</td></tr>
+      <tr><td><a href="https://x.com/stradainsalita" target="_blank">@stradainsalita</a></td><td>6</td><td>amplifier + gateway (mutual)</td><td>unknown</td></tr>
+      <tr><td><a href="https://x.com/21lettere" target="_blank">@21lettere</a></td><td>5</td><td>amplifier + gateway (mutual)</td><td>unknown</td></tr>
+      <tr><td><a href="https://x.com/andreafspeziale" target="_blank">@andreafspeziale</a></td><td>5</td><td>gateway (mutual)</td><td>tech</td></tr>
+      <tr><td><a href="https://x.com/DanMan_010101" target="_blank">@DanMan_010101</a></td><td>5</td><td>gateway (mutual)</td><td>tech</td></tr>
+      <tr><td><a href="https://x.com/eliosh" target="_blank">@eliosh</a></td><td>5</td><td>gateway (mutual)</td><td>tech</td></tr>
+      <tr><td><a href="https://x.com/il_Malpensante" target="_blank">@il_Malpensante</a></td><td>5</td><td>gateway (mutual)</td><td>unknown</td></tr>
+      <tr><td><a href="https://x.com/Economini" target="_blank">@Economini</a></td><td>4</td><td>gateway (mutual)</td><td>business</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="margin-top:24px">Cluster distribution</h3>
+  <div class="chart" id="audienceClusterChart" style="height:240px"></div>
+
+  <p style="margin-top:16px;padding:12px;background:var(--panel2);border-radius:8px;font-size:13px">
+    <strong>Insight:</strong> Audience core osservata: PandemicaMente (12 interaz.), cinicomateriale (9 interaz.), IlCastiga (8 interaz.). Gateway nodes potenziali (mutual + interazioni &gt;=3, followers ignoti): PandemicaMente, mellospank, seralf. Limite chiave: senza follower count dei terzi non possiamo classificare amplifier per reach; il grafo cattura SOLO chi si è espresso nel sample da 14 giorni.
+  </p>
+
+  <div style="margin-top:16px;padding:12px;background:var(--panel2);border-radius:8px;font-size:12px;color:var(--muted)">
+    <strong>⚠️ Limitazioni:</strong> Niente follower count terzi → amplifier_score sempre false. Niente cross-reference 2-hop. Bias: solo utenti che si sono espressi nei 14 giorni del sample.
+  </div>
+</section>
+
+<!-- 13. PRE-PUBLISH PREDICTOR (Sprint 3.B) -->
+<section class="panel">
+  <h2>✍️ Pre-Publish Predictor (MVP stub) <span class="src src-spec">●rule-based, requires ML model for full version</span></h2>
+  <p style="color:var(--muted);font-size:14px">Demo della futura "IDE per Twitter": dato un draft, predice cluster, risk e distribution. Versione attuale rule-based; produzione richiede 5000+ tweet cross-account.</p>
+
+  <div style="margin-top:24px">
+    <a href="PREPUBLISH_SPEC.md" target="_blank" style="display:inline-block;padding:8px 16px;background:var(--accent);color:white;border-radius:6px;text-decoration:none">📋 Spec versione production-grade</a>
+  </div>
+
+  <h3 style="margin-top:24px">3 draft analizzati</h3>
+
+  <!-- DRAFT A -->
+  <div class="panel" style="padding:20px;background:var(--panel2);margin-top:16px">
+    <div style="font-family:monospace;font-size:13px;padding:12px;background:var(--bg);border-radius:6px;border-left:3px solid var(--accent)">Stavo guardando un PR di antirez su Redis: ha rifatto il sistema di expirations switching da heap a radix tree con un trick di lazy deletion che taglia il 40% dei syscall su keys con TTL alti. Il dettaglio interessante è il batching ammortizzato — vedere il commit per la riga 247 che è quella che fa il vero lavoro: skip iterativo su intervalli densi senza degradare worst-case.</div>
+
+    <div style="display:flex;gap:16px;margin-top:16px;flex-wrap:wrap">
+      <div style="flex:1;min-width:240px">
+        <strong style="font-size:13px;color:var(--muted)">Cluster prediction:</strong>
+        <div>
+          <div style="margin:6px 0"><div style="display:flex;justify-content:space-between;font-size:12px"><span>out_of_vocabulary_tech_deep_dive</span><span>45%</span></div><div style="height:6px;background:var(--line);border-radius:3px;overflow:hidden"><div style="width:45%;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2))"></div></div></div>
+          <div style="margin:6px 0"><div style="display:flex;justify-content:space-between;font-size:12px"><span>AGD memoria agenti</span><span>18%</span></div><div style="height:6px;background:var(--line);border-radius:3px;overflow:hidden"><div style="width:18%;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2))"></div></div></div>
+          <div style="margin:6px 0"><div style="display:flex;justify-content:space-between;font-size:12px"><span>Sviluppo agenti &amp; LLM</span><span>12%</span></div><div style="height:6px;background:var(--line);border-radius:3px;overflow:hidden"><div style="width:12%;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2))"></div></div></div>
+        </div>
+      </div>
+
+      <div style="flex:1;min-width:240px">
+        <strong style="font-size:13px;color:var(--muted)">Risks:</strong>
+        <ul style="margin-top:8px;padding-left:20px">
+          <li style="font-size:13px;color:var(--warn)"><strong>medium</strong>: out_of_vocabulary — Topic Redis/radix-tree non rientra nei 5 cluster del subject. L'embedding SimClusters potrebbe finire in cluster systems-programming dove l'autore non ha ancora autorità.</li>
+          <li style="font-size:13px;color:var(--warn)"><strong>medium</strong>: no_media_on_potentially_strong_cluster — Tweet tecnico narrativo senza screenshot del diff/commit. with_media_eng_median=46 vs without=3 (15× margine).</li>
+        </ul>
+      </div>
+
+      <div style="flex:1;min-width:240px">
+        <strong style="font-size:13px;color:var(--muted)">Distribution estimate:</strong>
+        <div style="margin-top:8px">
+          <div>p50: <strong>4200 views</strong></div>
+          <div>p90: <strong>12800 views</strong></div>
+          <div style="font-size:11px;color:var(--muted);margin-top:4px">error band ±60% — stima rumorosa, sample piccolo</div>
+        </div>
+        <strong style="font-size:13px;color:var(--muted);display:block;margin-top:12px">Score</strong>
+        <div class="metric" style="font-size:24px">6.5/10</div>
+      </div>
+    </div>
+
+    <div style="margin-top:12px;padding:12px;background:var(--bg);border-radius:6px;border-left:3px solid var(--ok)">
+      <strong style="font-size:13px">💡 Suggestions:</strong>
+      <ul style="margin-top:6px;padding-left:20px;font-size:13px">
+        <li>Aggiungi screenshot del diff Redis (riga 247) → +30% engagement atteso, attiva Dwell head.</li>
+        <li>Considera di reframare in chiave AGD/Security: 'come lazy deletion in Redis è lo stesso pattern che useremmo per memoria agenti indirizzabile' → ricolloca su cluster forte.</li>
+        <li>Hook nei primi 280 char è ok (anti-pattern long-form senza hook NON triggerato).</li>
+        <li>Mai mettere link al commit nel root: se vuoi linkare il PR, mettilo come reply al tuo tweet dopo 30-60 min.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- DRAFT B -->
+  <div class="panel" style="padding:20px;background:var(--panel2);margin-top:16px">
+    <div style="font-family:monospace;font-size:13px;padding:12px;background:var(--bg);border-radius:6px;border-left:3px solid var(--accent)">Articolo interessante sull'IA https://example.com/ai-future</div>
+
+    <div style="display:flex;gap:16px;margin-top:16px;flex-wrap:wrap">
+      <div style="flex:1;min-width:240px">
+        <strong style="font-size:13px;color:var(--muted)">Cluster prediction:</strong>
+        <div>
+          <div style="margin:6px 0"><div style="display:flex;justify-content:space-between;font-size:12px"><span>Vita &amp; società tech</span><span>65%</span></div><div style="height:6px;background:var(--line);border-radius:3px;overflow:hidden"><div style="width:65%;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2))"></div></div></div>
+          <div style="margin:6px 0"><div style="display:flex;justify-content:space-between;font-size:12px"><span>Sviluppo agenti &amp; LLM</span><span>20%</span></div><div style="height:6px;background:var(--line);border-radius:3px;overflow:hidden"><div style="width:20%;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2))"></div></div></div>
+          <div style="margin:6px 0"><div style="display:flex;justify-content:space-between;font-size:12px"><span>Security &amp; OPSEC</span><span>5%</span></div><div style="height:6px;background:var(--line);border-radius:3px;overflow:hidden"><div style="width:5%;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2))"></div></div></div>
+        </div>
+      </div>
+
+      <div style="flex:1;min-width:240px">
+        <strong style="font-size:13px;color:var(--muted)">Risks:</strong>
+        <ul style="margin-top:8px;padding-left:20px">
+          <li style="font-size:13px;color:var(--fail)"><strong>high</strong>: link_in_root_anti_pattern — URL nel root attiva Phoenix OpenLink potenziale penalty + utente esce dall'app → dwell zero.</li>
+          <li style="font-size:13px;color:var(--fail)"><strong>high</strong>: text_too_short — char_length=59 &lt; 100. Phoenix Dwell head riceve segnale minimo. format_multiplier text_under_100 = 0.7.</li>
+          <li style="font-size:13px;color:var(--fail)"><strong>high</strong>: weak_cluster_dominant — Predicted cluster 'Vita &amp; società tech' è il worst_performing_cluster (rt_median 0, eng_median 18).</li>
+          <li style="font-size:13px;color:var(--warn)"><strong>medium</strong>: no_context_hook — Frase vague-clickbait senza claim/dato/dettaglio. Nessun hook per cold-start window di 15 sec.</li>
+        </ul>
+      </div>
+
+      <div style="flex:1;min-width:240px">
+        <strong style="font-size:13px;color:var(--muted)">Distribution estimate:</strong>
+        <div style="margin-top:8px">
+          <div>p50: <strong>450 views</strong></div>
+          <div>p90: <strong>2100 views</strong></div>
+          <div style="font-size:11px;color:var(--muted);margin-top:4px">error band ±60% — stima rumorosa, sample piccolo</div>
+        </div>
+        <strong style="font-size:13px;color:var(--muted);display:block;margin-top:12px">Score</strong>
+        <div class="metric" style="font-size:24px;color:var(--fail)">1.5/10</div>
+      </div>
+    </div>
+
+    <div style="margin-top:12px;padding:12px;background:var(--bg);border-radius:6px;border-left:3px solid var(--ok)">
+      <strong style="font-size:13px">💡 Suggestions:</strong>
+      <ul style="margin-top:6px;padding-left:20px;font-size:13px">
+        <li>NON pubblicare in questa forma. Riscrivi completamente.</li>
+        <li>Sposta il link in reply al tuo stesso tweet dopo il cold-start.</li>
+        <li>Espandi il root a 150-280 char con il claim principale dell'articolo + 1-2 dati concreti + tua opinione.</li>
+        <li>Reframa su cluster forte: se l'articolo parla di security o AGD, esplicita la chiave di lettura tecnica nel root.</li>
+        <li>Considera di NON pubblicare se il topic è generic-IA: stai diluendo l'embedding SimClusters.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- DRAFT C -->
+  <div class="panel" style="padding:20px;background:var(--panel2);margin-top:16px">
+    <div style="font-family:monospace;font-size:13px;padding:12px;background:var(--bg);border-radius:6px;border-left:3px solid var(--accent)">I MCP supply chain attack erano inevitabili. È solo l'inizio.</div>
+
+    <div style="display:flex;gap:16px;margin-top:16px;flex-wrap:wrap">
+      <div style="flex:1;min-width:240px">
+        <strong style="font-size:13px;color:var(--muted)">Cluster prediction:</strong>
+        <div>
+          <div style="margin:6px 0"><div style="display:flex;justify-content:space-between;font-size:12px"><span>Security &amp; OPSEC</span><span>62%</span></div><div style="height:6px;background:var(--line);border-radius:3px;overflow:hidden"><div style="width:62%;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2))"></div></div></div>
+          <div style="margin:6px 0"><div style="display:flex;justify-content:space-between;font-size:12px"><span>AGD memoria agenti</span><span>22%</span></div><div style="height:6px;background:var(--line);border-radius:3px;overflow:hidden"><div style="width:22%;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2))"></div></div></div>
+          <div style="margin:6px 0"><div style="display:flex;justify-content:space-between;font-size:12px"><span>Sviluppo agenti &amp; LLM</span><span>10%</span></div><div style="height:6px;background:var(--line);border-radius:3px;overflow:hidden"><div style="width:10%;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2))"></div></div></div>
+        </div>
+      </div>
+
+      <div style="flex:1;min-width:240px">
+        <strong style="font-size:13px;color:var(--muted)">Risks:</strong>
+        <ul style="margin-top:8px;padding-left:20px">
+          <li style="font-size:13px;color:var(--fail)"><strong>high</strong>: text_too_short — char_length=60 &lt; 100. format_multiplier text_under_100 = 0.7. Mancano i 2-3 supporti del template hot take.</li>
+          <li style="font-size:13px;color:var(--fail)"><strong>high</strong>: no_media_on_strong_cluster — Cluster predetto Security/OPSEC è forte e l'action_plan rank 3 raccomanda screenshot. Tweet senza media perde 15× il multiplier baseline.</li>
+          <li style="font-size:13px;color:var(--warn)"><strong>medium</strong>: missing_hot_take_structure — Claim controintuitivo presente, mancano 2-3 supporti concreti + invito.</li>
+          <li style="font-size:13px;color:var(--warn)"><strong>medium</strong>: burst_overlap_conditional — Se entro 30 min dall'ultimo tweet → AuthorDiversityDecayFactor 0.5. Burst_rate_30min subject=0.69.</li>
+        </ul>
+      </div>
+
+      <div style="flex:1;min-width:240px">
+        <strong style="font-size:13px;color:var(--muted)">Distribution estimate:</strong>
+        <div style="margin-top:8px">
+          <div>p50: <strong>13700 views</strong></div>
+          <div>p90: <strong>31800 views</strong></div>
+          <div style="font-size:11px;color:var(--muted);margin-top:4px">error band ±60% — stima rumorosa, sample piccolo</div>
+        </div>
+        <strong style="font-size:13px;color:var(--muted);display:block;margin-top:12px">Score</strong>
+        <div class="metric" style="font-size:24px;color:var(--ok)">7.0/10</div>
+      </div>
+    </div>
+
+    <div style="margin-top:12px;padding:12px;background:var(--bg);border-radius:6px;border-left:3px solid var(--ok)">
+      <strong style="font-size:13px">💡 Suggestions:</strong>
+      <ul style="margin-top:6px;padding-left:20px;font-size:13px">
+        <li>Espandi a 200-280 char: aggiungi 2 esempi concreti recenti di MCP supply chain (es. pacchetto compromesso, attack vector specifico, costo difesa).</li>
+        <li>Allega screenshot: diff di un MCP malevolo, network tab che mostra l'esfiltrazione, snippet codice del manifest avvelenato.</li>
+        <li>Chiudi con invito: 'chi sta vedendo signature/integrity check sui server MCP in produzione? mi interessa il pattern.'</li>
+        <li>Mantieni il cluster Security: ottima scelta editoriale, allineata al rank 1 dell'action plan.</li>
+        <li>Spacing: pubblica solo se sono &gt;=60 min dall'ultimo tweet originale (anti-burst rank 2).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="margin-top:24px;padding:16px;background:var(--panel2);border-radius:8px;font-size:13px">
+    <strong>Why this matters (vision):</strong> il prodotto evolve da "diagnostic post-hoc" a "compiler editoriale". Mentre scrivi, vedi cluster_pred, risk, distribution → puoi correggere PRIMA di pubblicare. Versione full = textarea live + ML model trained su 5000+ tweet cluster-similar (vedi spec).
+  </div>
+</section>
+
+<!-- 14. FOOTER -->
+<footer>
+  Analisi v5 generata il 2026-05-15 su sample 249 tweet, 14 giorni. Coverage 0.189% della history. 5 thread analizzati.<br>
+  Analisi v5 con Sprint 1+2+3 — confidence provenance, narrative profile, what-if engine, timeline reconstruction, audience graph, pre-publish predictor. <span style="color:var(--gold)">🏴‍☠️</span>
+</footer>
+
+<script>
+// ===== GAUGE =====
+echarts.init(document.getElementById('gaugeGrowth')).setOption({
+  series:[{
+    type:'gauge',min:0,max:100,
+    progress:{show:true,width:18,itemStyle:{color:'#22d3ee'}},
+    axisLine:{lineStyle:{width:18,color:[[1,'#1f1f2e']]}},
+    pointer:{show:false},
+    axisTick:{show:false},splitLine:{show:false},axisLabel:{show:false},
+    detail:{valueAnimation:true,fontSize:42,color:'#e7e9ea',formatter:'{value}',offsetCenter:[0,0]},
+    title:{offsetCenter:[0,'70%'],color:'#71767b',fontSize:12},
+    data:[{value:71,name:'Growth score'}]
+  }]
+});
+
+// ===== ACTIONS =====
+const actions = [
+  {rank:1,title:"Consolida due cluster vincenti: Security/OPSEC + AGD memoria agenti",leverage:"L11",phoenix:"SimClusters ANN",score:20.25,impact:9,confidence:9,effort:4,source:"code",
+   what:"Per i prossimi 7 giorni, 70% dei tweet originali deve cadere su due macro-temi: (a) Security/OPSEC (devtools, tracking, vulnerabilita', costo GPU vs costo umano) e (b) AGD/memoria agenti (layer base, indirizzabilita', critica MCP wrapper). 30% libero per esperimenti coerenti. Stop ai tweet 'Vita & societa' tech' lifestyle: se ti viene voglia, mettili come reply ad altri, non come original.",
+   rationale:"Cluster_dominance_hhi=0.34 (mixed) + best cluster (Security/OPSEC, eng_median 260.5) con solo 2 tweet = stai sprecando l'embedding sui cluster che non viaggiano. Concentrando 70% su 2 cluster porti l'HHI verso 0.45-0.55 (focused).",
+   kpi:"cluster_dominance_hhi da 0.34 a ≥0.45 in 4 settimane",reach:"+30-50% eng mediano cluster consolidato",effort_text:"Cambio editoriale, non quantitativo: stesso tempo di scrittura.",
+   risk:"Cluster forti esauriti dopo 2 settimane (poco materiale)",risk_src:"speculative",mitigation:"Tenere un buffer di 3-5 idee in coda per ogni cluster; espandere su cluster adiacente prima di rientrare sul lifestyle"},
+  {rank:2,title:"Spezza i burst: max 1 tweet originale ogni 60 minuti",leverage:"L8",phoenix:"tutti gli head (scaling 0.5→0.25)",score:36.0,impact:8,confidence:9,effort:2,source:"code",
+   what:"Cap operativo: massimo 1 tweet originale o self_thread ogni 60 minuti. Reply ai commenti sotto i tuoi tweet non contano (rimangono in-thread). Se hai 3 idee pronte in 30 minuti, schedulale. Spalma la fascia 18-22 (oggi 45% del volume) anche su 9-12 e 14-17. Target burst_rate_30min sotto 0.30 entro 2 settimane.",
+   rationale:"burst_rate_30min=0.6895 + consecutive_burst=15 + 17.79 tweet/giorno = AuthorDiversityDecayFactor scala il 2o tweet al 50% e dal 3o al floor 25%. I tuoi tweet medi/buoni perdono meta' della reach gia' prima del heavy ranker. Disinnescare il burst e' reach gratis.",
+   kpi:"burst_rate_30min da 0.69 a ≤0.30 in 2 settimane",reach:"+15-25% reach mediana sui tweet 'secondi' della finestra",effort_text:"Disciplina di pubblicazione, non di scrittura. 2-3 minuti/giorno per schedulare.",
+   risk:"Frustrazione personale: dover trattenere idee pronte",risk_src:"speculative",mitigation:"Usa una nota/buffer; molte 'idee pronte' in burst sono lo stesso pensiero — accorpa in self_thread nativo (X lo tratta come unit)"},
+  {rank:3,title:"Screenshot devtools/codice come immagine espandibile nei tweet Security",leverage:"L4+L7",phoenix:"PhoenixDwell + PhoenixGoodClick",score:18.67,impact:7,confidence:8,effort:3,source:"empirical",
+   what:"Per ogni tweet del cluster Security/OPSEC e AGD: allega 1 immagine concreta — screenshot devtools (network tab, console, header), snippet codice annotato, diff PR, log estratto. Caption breve (100-180 char) pone la domanda, l'immagine contiene il dettaglio. L'utente apre l'immagine → dwell 8-15s automatico.",
+   rationale:"format_perf: with_media_eng_median=46 vs without_media=3 (15× margine). with_video=144. Cluster Security/OPSEC e' narrativo: screenshot di prova alzano credibilita' + dwell. Phoenix promuove Dwell e GoodClick a head dedicati.",
+   kpi:"with_media share cluster forti da ~30% a ≥70%; eng_median Security/OPSEC da 260 a ≥350",reach:"+20-40% engagement screenshot vs caption-only",effort_text:"5-10 minuti extra per tweet: aprire devtools, screenshot pulito, croppare.",
+   risk:"Screenshot rivelano info sensibile (clienti, sistemi reali)",risk_src:"speculative",mitigation:"Usare ambienti di test, redact host/email, screenshot di siti pubblici/CMS open-source"},
+  {rank:4,title:"Link esterni solo nelle reply al tuo tweet, mai nel tweet root del cluster forte",leverage:"L13",phoenix:"PhoenixShareScore + OpenLink (penalty)",score:36.0,impact:6,confidence:6,effort:1,source:"speculative",
+   what:"Regola per i tweet original dei cluster forti (Security/OPSEC, AGD): zero link nel tweet root. Se devi linkare (articolo, PR, repo, signal.pirate), pubblica il tweet senza link, aspetta 30-60 minuti il cold-start (dwell + reply), poi metti il link come tua reply al tuo stesso tweet ('approfondimento qui →').",
+   rationale:"Phoenix ha head dedicato OpenLink (peso non pubblico, plausibile penalty ANALYSIS). Spostandoli nella reply preservi (a) il dwell del root, (b) la finestra SimClusters 24h, (c) il segnale Share senza attivare penalty OpenLink.",
+   kpi:"0 link nei tweet original dei cluster forti; share/RT ratio in salita",reach:"+10-20% dwell sui tweet senza link nel root",effort_text:"Costo zero: e' una regola, non un'azione extra. 10 secondi per spostare il link.",
+   risk:"Meno traffico al blog signal.pirate nel breve",risk_src:"speculative",mitigation:"Il link nella prima reply e' altrettanto cliccabile; in compenso il root viaggia di piu'"},
+  {rank:5,title:"Format save-worthy: 1 checklist o frame riusabile a settimana sul cluster forte",leverage:"L6",phoenix:"PhoenixBookmark + Screenshot + Share",score:12.25,impact:7,confidence:7,effort:4,source:"speculative",
+   what:"Una volta a settimana, pubblica un tweet 'da salvare' sul cluster forte: checklist numerata (es. '7 indicatori che il cookie banner mente: 1. richieste partono prima del consent 2. ...'), comparativa secca ('trovare vulnerabilita': ieri 3 mesi di analista. oggi 40$ di GPU. domani: ...'), o frame riusabile 4-6 righe. Format compatto, screenshot-friendly, controintuitivo.",
+   rationale:"bookmark_rate stimato attualmente 0.5% basso rispetto al profilo (audience tecnica, contenuti di valore). Phoenix ha promosso Bookmark + Screenshot a head dedicati: contenuto save-worthy ottiene segnale post-engagement che vive anche dopo la finestra SimClusters di 24h.",
+   kpi:"bookmark_rate da 0.5% a ≥1.5% in 4 settimane",reach:"+25-40% engagement totale su tweet save-worthy",effort_text:"30-60 minuti a settimana per costruire il frame.",
+   risk:"Format checklist rischia di suonare LinkedIn-style, lontano dalla voce ironica e narrativa",risk_src:"speculative",mitigation:"Mantieni la voce: checklist con tono 'da pirata', niente bullet sterili"},
+  {rank:6,title:"Hot take security una volta a settimana: claim + 2 supporti + invito",leverage:"L2",phoenix:"PhoenixReply (peso 13.5)",score:14.0,impact:6,confidence:7,effort:3,source:"empirical",
+   what:"Una volta a settimana, hot take sul cluster Security/OPSEC o AGD agenti con struttura precisa: claim controintuitivo (1 frase) + 2-3 supporti concreti (dati, esempi, link a paper SENZA URL nel root) + invito specifico ('chi sta lavorando su X mi corregga, ho dubbi sul punto 2').",
+   rationale:"comment_response_rate=0.507 reliable e reply_mine_to_other=0.82 dimostrano che la macchina conversazionale gira. Il bottleneck e' l'innesco: hot take strutturato attiva L2 a monte. Phoenix Reply head ha peso 13.5 (27× un like).",
+   kpi:"reply_in_total medio da 4.66 a ≥7 sui tweet hot-take cluster forte",reach:"+30-50% reply rate su tweet hot-take vs original narrativo",effort_text:"20-30 minuti per costruire il take con la struttura claim+supporti+invito.",
+   risk:"Hot take frainteso come flame → blocchi/mute (negative_feedback_v2 peso -74)",risk_src:"code",mitigation:"Mai targeting personale, niente nominativi negativi; claim sul fenomeno, non sulla persona"}
+];
+
+function prioClass(s){if(s>=20)return['must','p-must'];if(s>=10)return['high','p-high'];if(s>=6)return['mid','p-mid'];return['low','p-low'];}
+function srcTooltip(s){return s==='code'?'Calcolato da signals reali (HIGH)':s==='empirical'?'Da X OSS code (MEDIUM)':'Phoenix/estrapolazione (LOW)';}
+
+const ap = document.getElementById('actionPlan');
+actions.forEach(a=>{
+  const [pc,pillCls] = prioClass(a.score);
+  ap.insertAdjacentHTML('beforeend',`
+    <div class="action-card priority-${pc}">
+      <div class="action-head">
+        <span class="action-num">[${String(a.rank).padStart(2,'0')}]</span>
+        <h3 style="flex:1;min-width:240px">${a.title}</h3>
+        <span class="pill ${pillCls}">priority ${a.score.toFixed(2)}</span>
+        <span class="pill leva">${a.leverage}</span>
+        <span class="pill phoenix">Phoenix: ${a.phoenix}</span>
+        <span class="src src-${a.source}" title="${srcTooltip(a.source)}">●${a.source}</span>
+      </div>
+      <p class="what-to-do">${a.what}</p>
+      <p class="rationale" style="color:var(--muted)">${a.rationale}</p>
+      <div class="outcome">
+        <span>📈 KPI: ${a.kpi}</span>
+        <span>📊 Reach: ${a.reach}</span>
+        <span>⏱ ${a.effort_text}</span>
+      </div>
+      <div class="risk">
+        ⚠️ Rischio: ${a.risk} <span class="src src-${a.risk_src}" title="${srcTooltip(a.risk_src)}">●${a.risk_src}</span><br>
+        💡 Mitigation: ${a.mitigation}
+      </div>
+    </div>
+  `);
+});
+
+// ===== CLUSTER PIE =====
+echarts.init(document.getElementById('clusterPie')).setOption({
+  tooltip:{trigger:'item'},
+  legend:{bottom:0,textStyle:{color:'#71767b'}},
+  series:[{
+    type:'pie',radius:['40%','70%'],
+    label:{color:'#e7e9ea'},
+    data:[
+      {value:22,name:'Vita & società tech',itemStyle:{color:'#ef4444'}},
+      {value:11,name:'Tooling Claude Code',itemStyle:{color:'#7c3aed'}},
+      {value:7,name:'AGD memoria agenti',itemStyle:{color:'#22d3ee'}},
+      {value:2,name:'Security/OPSEC',itemStyle:{color:'#10b981'}},
+      {value:2,name:'Sviluppo LLM',itemStyle:{color:'#fbbf24'}}
+    ]
+  }]
+});
+
+// ===== ENGAGEMENT BUCKETS =====
+echarts.init(document.getElementById('chartBucket')).setOption({
+  title:{text:'Engagement format buckets',textStyle:{color:'#e7e9ea',fontSize:13}},
+  tooltip:{},
+  grid:{left:90,right:20,top:40,bottom:30},
+  xAxis:{type:'value',axisLabel:{color:'#71767b'},splitLine:{lineStyle:{color:'#1f1f2e'}}},
+  yAxis:{type:'category',data:['without_media','with_media','with_link','with_video'],axisLabel:{color:'#71767b'}},
+  series:[{type:'bar',data:[3,46,52,144],itemStyle:{color:'#22d3ee'},label:{show:true,color:'#e7e9ea',position:'right'}}]
+});
+
+// ===== KIND DISTRIBUTION =====
+echarts.init(document.getElementById('chartKind')).setOption({
+  title:{text:'Tweet kind distribution',textStyle:{color:'#e7e9ea',fontSize:13}},
+  tooltip:{trigger:'item'},
+  legend:{bottom:0,textStyle:{color:'#71767b'}},
+  series:[{
+    type:'pie',radius:['40%','70%'],
+    label:{color:'#e7e9ea'},
+    data:[
+      {value:17,name:'original',itemStyle:{color:'#22d3ee'}},
+      {value:205,name:'reply_to_others',itemStyle:{color:'#7c3aed'}},
+      {value:26,name:'self_thread',itemStyle:{color:'#10b981'}},
+      {value:1,name:'quote',itemStyle:{color:'#fbbf24'}}
+    ]
+  }]
+});
+
+// ===== PERCENTILES =====
+echarts.init(document.getElementById('chartPerc')).setOption({
+  title:{text:'Engagement percentili (originals)',textStyle:{color:'#e7e9ea',fontSize:13}},
+  tooltip:{},
+  grid:{left:60,right:20,top:40,bottom:30},
+  xAxis:{type:'category',data:['p10','p25','p50','p75','p90','p95'],axisLabel:{color:'#71767b'}},
+  yAxis:{type:'value',axisLabel:{color:'#71767b'},splitLine:{lineStyle:{color:'#1f1f2e'}}},
+  series:[{type:'bar',data:[51.4,64.0,119.0,173.0,248.8,311.8],itemStyle:{color:'#7c3aed'},label:{show:true,color:'#e7e9ea',position:'top'}}]
+});
+
+// ===== RT MEDIAN BY CLUSTER =====
+echarts.init(document.getElementById('chartRtCluster')).setOption({
+  title:{text:'RT median per cluster',textStyle:{color:'#e7e9ea',fontSize:13}},
+  tooltip:{},
+  grid:{left:140,right:30,top:40,bottom:30},
+  xAxis:{type:'value',axisLabel:{color:'#71767b'},splitLine:{lineStyle:{color:'#1f1f2e'}}},
+  yAxis:{type:'category',data:['Vita & società tech','Tooling Claude Code','AGD memoria agenti','Sviluppo LLM','Security/OPSEC'],axisLabel:{color:'#71767b'}},
+  series:[{type:'bar',data:[0,1,3,7.5,37],itemStyle:{color:'#10b981'},label:{show:true,color:'#e7e9ea',position:'right'}}]
+});
+
+// ===== RADAR 4D =====
+echarts.init(document.getElementById('chartRadar')).setOption({
+  title:{text:'Growth score components',textStyle:{color:'#e7e9ea',fontSize:13}},
+  tooltip:{},
+  legend:{data:['Pinperepette'],textStyle:{color:'#71767b'},bottom:0},
+  radar:{
+    indicator:[
+      {name:'eng_median_z',max:1},
+      {name:'cluster_focus',max:1},
+      {name:'conversation_density',max:1},
+      {name:'non_zero_rate',max:1}
+    ],
+    axisName:{color:'#e7e9ea'},
+    splitLine:{lineStyle:{color:'#1f1f2e'}},
+    splitArea:{areaStyle:{color:['#11111a','#161622']}}
+  },
+  series:[{type:'radar',data:[{value:[0.5455,1.0,0.507,0.9197],name:'Pinperepette',areaStyle:{color:'rgba(124,58,237,.3)'},lineStyle:{color:'#7c3aed'},itemStyle:{color:'#22d3ee'}}]}]
+});
+
+// ===== ANTI-PATTERNS =====
+const antiPatterns = [
+  {p:"link esterni nei tweet original dei cluster forti",r:"Phoenix OpenLink head (peso non pubblico, plausibile penalty ANALYSIS) + perdita di dwell perche' l'utente esce dall'app + spinge l'embedding del root verso il dominio esterno invece del tema. Link va sempre nella reply al proprio tweet, dopo i primi 30-60 min di cold-start.",s:"speculative"},
+  {p:"burst >3 tweet/30min sullo stesso tema",r:"AuthorDiversityDecayFactor (default 0.5, floor 0.25): il 2o tweet vale 50%, il 3o vale 25% nei feed altrui. Anche se il tema e' forte, stai bruciando reach. Se hai 3 idee pronte, accorpa in self_thread nativo (X lo tratta come unit).",s:"empirical"},
+  {p:"tweet 'Vita & societa' tech' lifestyle come original dominanti",r:"Cluster con n_pct=50% ma rt_median=0 e eng_median 18: occupa volume editoriale senza viaggiare, diluisce l'embedding SimClusters fuori dai cluster premianti. Se ti viene voglia di postarne, mettili come reply ad altri o quote, non come original.",s:"empirical"},
+  {p:"long-form senza hook nei primi 280 char",r:"mean_text_length 370 e p90 921 sono buoni per Phoenix Dwell, ma se il primo paragrafo non ha cliffhanger l'utente scrolla prima del 'Mostra altro'. Hook precedente al cut-off e' obbligatorio.",s:"speculative"}
+];
+const apContainer = document.getElementById('antiPatterns');
+antiPatterns.forEach(x=>{
+  apContainer.insertAdjacentHTML('beforeend',`
+    <div style="padding:16px;background:var(--panel2);border-radius:8px;border-left:3px solid var(--fail)">
+      <strong>❌ ${x.p}</strong>
+      <span class="src src-${x.s}" title="${srcTooltip(x.s)}">●${x.s}</span>
+      <p style="color:var(--muted);font-size:14px;margin-top:8px;line-height:1.6">${x.r}</p>
+    </div>
+  `);
+});
+
+// ===== KPI TABLE =====
+const kpis = [
+  {m:"cluster_dominance_hhi",c:0.34,t:0.45,w:"4 weeks",s:"speculative",up:true},
+  {m:"burst_rate_30min",c:0.69,t:0.30,w:"4 weeks",s:"code",up:false},
+  {m:"bookmark_rate",c:0.005,t:0.015,w:"4 weeks",s:"code",up:true},
+  {m:"best_cluster_volume_n (Security/OPSEC + AGD)",c:9,t:18,w:"4 weeks",s:"speculative",up:true},
+  {m:"with_media_share_strong_clusters",c:0.30,t:0.70,w:"4 weeks",s:"code",up:true},
+  {m:"zero_engagement_rate",c:0.08,t:0.04,w:"4 weeks",s:"code",up:false}
+];
+const kpiTable = document.getElementById('kpiTable');
+kpis.forEach(k=>{
+  let pct = k.up ? Math.min(100,(k.c/k.t)*100) : Math.min(100,(k.t/k.c)*100);
+  kpiTable.insertAdjacentHTML('beforeend',`
+    <tr>
+      <td><strong>${k.m}</strong><div class="progress-bar"><div class="progress-fill" style="width:${pct.toFixed(0)}%"></div></div></td>
+      <td>${k.c}</td>
+      <td>${k.t} ${k.up?'↑':'↓'}</td>
+      <td>${k.w}</td>
+      <td><span class="src src-${k.s}" title="${srcTooltip(k.s)}">●${k.s}</span></td>
+    </tr>
+  `);
+});
+
+// ===== AUDIENCE CLUSTER PIE (Sprint 3.A) =====
+echarts.init(document.getElementById('audienceClusterChart')).setOption({
+  tooltip:{trigger:'item'},
+  legend:{bottom:0,textStyle:{color:'#71767b'}},
+  series:[{
+    type:'pie',radius:['40%','70%'],
+    label:{color:'#e7e9ea',formatter:'{b}: {c} ({d}%)'},
+    data:[
+      {value:145,name:'unknown',itemStyle:{color:'#71767b'}},
+      {value:6,name:'tech',itemStyle:{color:'#22d3ee'}},
+      {value:4,name:'business',itemStyle:{color:'#fbbf24'}}
+    ]
+  }]
+});
+</script>
+
+</body>
+</html>

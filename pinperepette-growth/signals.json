@@ -1,0 +1,302 @@
+{
+  "profile": {
+    "handle": "Pinperepette",
+    "user_id": "174553974",
+    "name": "🏴‍☠️ The Pirate 🏴‍☠️",
+    "verified": true,
+    "bio": "🏴‍☠️ { 'name': 'Andrea Amani' }, #Security #engineer , P(Bug | Fix) ≠ P(Fix | Bug).  Debugging → ∞ (converge? maybe). Classe '76, Σ(errors²) ≠ 0 ;",
+    "followers": 17560,
+    "following": 805,
+    "statuses_total": 131858,
+    "created_at": "2010-08-04T06:02:49Z",
+    "location": null,
+    "account_age_proxy": "veteran"
+  },
+  "sample_meta": {
+    "count_original": 17,
+    "count_reply_others": 205,
+    "count_self_thread": 26,
+    "count_quote": 1,
+    "count_retweet": 0,
+    "count_total_canonical": 249,
+    "from": "2026-04-30T12:33:18Z",
+    "to": "2026-05-14T17:52:29Z",
+    "span_days": 14,
+    "sample_coverage_pct": 0.189
+  },
+  "language": "italiano",
+  "visibility_signals": {
+    "zero_engagement_rate": 0.0803,
+    "burst_rate_30min": 0.6895,
+    "consecutive_burst_count": 15,
+    "duplicate_content_rate": 0.0,
+    "many_mention_rate": 0.0,
+    "crypto_keywords_rate": 0.0,
+    "untrusted_url_rate": 0.0
+  },
+  "distribution_signals": {
+    "engagement_distribution": {
+      "p10": 1.0,
+      "p25": 1.0,
+      "p50": 2.0,
+      "p75": 4.0,
+      "p90": 18.6,
+      "p95": 77.4,
+      "mean": 16.79,
+      "std": 71.67,
+      "gini": 0.8667
+    },
+    "cluster_dominance_hhi": 0.3419,
+    "spike_vs_ride_index": 50.0,
+    "audience_dispersion_proxy": 0.5707,
+    "n_topic_clusters_with_volume": 5,
+    "best_cluster_by_rt_median": "Security/OPSEC",
+    "worst_cluster_by_rt_median": "Vita & società tech",
+    "topic_clusters": [
+      {
+        "label": "Vita & società tech",
+        "n": 22,
+        "n_pct": 50.0,
+        "rt_median": 0.0,
+        "rt_p90": 6.8,
+        "re_median": 1.5,
+        "eng_median": 18.0,
+        "top_examples": [
+          {
+            "id": "2050279170526089647",
+            "kind": "quote",
+            "text_preview": "surreale. prossima intervista alla stampante: “cosa provi quando sei in inceppamento carta?”",
+            "eng_total": 900
+          },
+          {
+            "id": "2051395641822044307",
+            "kind": "original",
+            "text_preview": "ogni giorno esce qualcosa sugli agenti, molte cose interessanti, molte inutili 😅... poi ogni tanto arriva una PR come quella di @antirez  e ",
+            "eng_total": 274
+          },
+          {
+            "id": "2050962566629711884",
+            "kind": "original",
+            "text_preview": "un altro wallpaper e smetto, giuro https://t.co/HpkinMy9rc",
+            "eng_total": 144
+          }
+        ]
+      },
+      {
+        "label": "Tooling Claude Code",
+        "n": 11,
+        "n_pct": 25.0,
+        "rt_median": 1,
+        "rt_p90": 10.0,
+        "re_median": 1,
+        "eng_median": 9,
+        "top_examples": [
+          {
+            "id": "2050322398629777556",
+            "kind": "original",
+            "text_preview": "come usi Claude Code? Mi sono fatto una UI dove Claude lavora direttamente dentro i progetti, con editor e terminale veri, supporto multi-pr",
+            "eng_total": 232
+          },
+          {
+            "id": "2050120271042920952",
+            "kind": "original",
+            "text_preview": "Qualche giorno fa mi chiamano per dare un’occhiata a un sistema. Non era roba mia, amico di un amico, “non funziona qualcosa, forse ci hanno",
+            "eng_total": 173
+          },
+          {
+            "id": "2050603892589642218",
+            "kind": "original",
+            "text_preview": "sto giocando con SubLodeX. è tipo un IDE con Claude dentro: apri un progetto, hai file, terminale e git, e quando Claude scrive codice lo ve",
+            "eng_total": 140
+          }
+        ]
+      },
+      {
+        "label": "AGD memoria agenti",
+        "n": 7,
+        "n_pct": 15.91,
+        "rt_median": 3,
+        "rt_p90": 8.4,
+        "re_median": 9,
+        "eng_median": 64,
+        "top_examples": [
+          {
+            "id": "2052122761712087306",
+            "kind": "original",
+            "text_preview": "La cosa che mi manda ai matti è che stanno tutti correndo a fare agenti, wrapper, MCP, orchestrator e AI OS vari... cazzi e mazzi, però manc",
+            "eng_total": 195
+          },
+          {
+            "id": "2053473084032606340",
+            "kind": "original",
+            "text_preview": "Sto lavorando a un esperimento che parte da una domanda abbastanza semplice: perché gli agenti continuano a trattare la memoria come un docu",
+            "eng_total": 119
+          },
+          {
+            "id": "2053171492276281582",
+            "kind": "original",
+            "text_preview": "Secondo me il dibattito Markdown vs HTML di questa settimana è una falsa polemica. Cloudflare, Anthropic, mdream e MarkItDown stanno tutti m",
+            "eng_total": 79
+          }
+        ]
+      },
+      {
+        "label": "Security/OPSEC",
+        "n": 2,
+        "n_pct": 4.55,
+        "rt_median": 37.0,
+        "rt_p90": 61.0,
+        "re_median": 18.5,
+        "eng_median": 260.5,
+        "top_examples": [
+          {
+            "id": "2049927881787367589",
+            "kind": "original",
+            "text_preview": "l’altro giorno apro devtools su un sito con un cookie banner iper curato, toggle, categorie, spiegazioni infinite, faccio rifiuta tutto, con",
+            "eng_total": 463
+          },
+          {
+            "id": "2054983202968600734",
+            "kind": "original",
+            "text_preview": "il momento in cui trovare vulnerabilita' smette di costare mesi di esseri umani esperti e inizia a costare decine di dollari di GPU. https:/",
+            "eng_total": 58
+          }
+        ]
+      },
+      {
+        "label": "Sviluppo LLM",
+        "n": 2,
+        "n_pct": 4.55,
+        "rt_median": 7.5,
+        "rt_p90": 13.5,
+        "re_median": 4.0,
+        "eng_median": 39.5,
+        "top_examples": [
+          {
+            "id": "2050280153725493455",
+            "kind": "self_thread",
+            "text_preview": "Per chi volesse capire come funziona un LLM ----&gt; https://t.co/vnpMMPc2qq",
+            "eng_total": 75
+          },
+          {
+            "id": "2052138871337496679",
+            "kind": "self_thread",
+            "text_preview": "@IlCastiga Manca il livello dove l’agente dice che strumenti ci sono per fare questo ? Quanto sono sicuri ? E il sistema gli elenchi N strum",
+            "eng_total": 4
+          }
+        ]
+      }
+    ],
+    "clustering_method": "keyword_based_no_embedding",
+    "engagement_distribution_originals_only": {
+      "p10": 51.4,
+      "p25": 64.0,
+      "p50": 119.0,
+      "p75": 173.0,
+      "p90": 248.8,
+      "p95": 311.8,
+      "mean": 141.71,
+      "std": 103.19,
+      "gini": 0.3642,
+      "_n": 17,
+      "_kinds_included": [
+        "original"
+      ]
+    }
+  },
+  "ranking_signals": {
+    "kind_distribution": {
+      "original_mine": 0.3864,
+      "self_thread": 0.5909,
+      "quote": 0.0227,
+      "reply_mine_to_other": 0.8233,
+      "_n_sample": 44,
+      "_sample_coverage_pct": 0.189
+    },
+    "comment_response_rate": 0.507,
+    "comment_response_rate_reliable": true,
+    "reply_in_total": 4.66,
+    "reply_engaged_proxy": 0.75,
+    "mean_text_length": 370.18,
+    "median_text_length": 147.0,
+    "p90_text_length": 921.2,
+    "prime_hours_post_rate": 0.6591
+  },
+  "temporal_summary": {
+    "best_hour": 19,
+    "best_dow": "Thu",
+    "posting_hours_distribution": {
+      "morning_06_12": 0.25,
+      "afternoon_12_18": 0.2955,
+      "evening_18_22": 0.4545,
+      "night_22_06": 0.0
+    },
+    "tweets_per_day_avg": 17.79
+  },
+  "format_perf": {
+    "with_media_eng_median": 46,
+    "without_media_eng_median": 3,
+    "with_link_eng_median": 52.0,
+    "without_link_eng_median": 2.5,
+    "with_video_eng_median": 144,
+    "_n_with_media": 13,
+    "_n_without_media": 31,
+    "_n_with_link": 20,
+    "_n_without_link": 24,
+    "_n_with_video": 3
+  },
+  "graph_summary": {
+    "followers": 17560,
+    "top_tweet": {
+      "id": "2050279170526089647",
+      "eng_total": 900
+    }
+  },
+  "global_engagement_percentiles": {
+    "p10": 1.0,
+    "p25": 1.0,
+    "p50": 2.0,
+    "p75": 4.0,
+    "p90": 18.6,
+    "p95": 77.4,
+    "mean": 16.79,
+    "std": 71.67,
+    "gini": 0.8667
+  },
+  "tier": "niche",
+  "tier_meta": {
+    "branching_state": "critical",
+    "phase_typical": "specialization",
+    "primary_focus_label": "cluster focus + alleanze (L1+L11+L2)",
+    "eng_median_for_tier_calc": {
+      "value": 18.0,
+      "method": "median(eng_total) over canonical tweets with kind in ['original','self_thread','quote'] (timeline-tab) — exclude reply_to_others; these tweets reach the follower feed and drive X reach-tier classification",
+      "n_used": 44,
+      "tier_by_followers": "mid",
+      "tier_by_engagement": "niche",
+      "tier_final_rule": "MIN(tier_by_followers, tier_by_engagement)"
+    }
+  },
+  "growth_score": {
+    "score": 0.7116,
+    "components": {
+      "eng_median_z": 0.5455,
+      "cluster_focus": 1.0,
+      "conversation_density": 0.507,
+      "non_zero_rate": 0.9197
+    },
+    "weights": {
+      "eng_median_z": 0.4,
+      "cluster_focus": 0.3,
+      "conversation_density": 0.2,
+      "non_zero_rate": 0.1
+    },
+    "_eng_median_source": "eng_median_for_tier (timeline-tab kinds only)"
+  },
+  "_meta": {
+    "generated_at": "2026-05-15T06:54:36.156808+00:00",
+    "dataset_path": "/Users/pinperepette/Desktop/test-laboratorio/live/pinperepette/dataset.json",
+    "thread_data_path": "/Users/pinperepette/Desktop/test-laboratorio/live/pinperepette/_thread_data.json",
+    "n_tweets_canonical": 249
+  }
+}

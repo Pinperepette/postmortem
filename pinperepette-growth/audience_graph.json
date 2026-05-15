@@ -1,0 +1,4784 @@
+{
+  "method": "1-hop graph from observed interactions in sample (replies + mentions + thread participants). PARTIAL — no follower list, no RT graph.",
+  "limitations": [
+    "Nessuna follower list disponibile (snare-x limit)",
+    "Nessun retweet amplification graph",
+    "Nessuna cross-reference 2-hop (chi-amplifica-chi tra users)",
+    "Bias: solo utenti che si sono espressi nei 14 giorni del sample",
+    "Follower count per nodo non disponibile → amplifier_score sempre false; gateway_score usa criterio soft (mutual + total>=3)",
+    "cluster_hint basato solo su pattern nell'handle (bio terzi non recuperata)"
+  ],
+  "subject": {
+    "handle": "Pinperepette",
+    "followers": 17560,
+    "total_unique_audience_observed": 155
+  },
+  "audience_nodes": [
+    {
+      "handle": "PandemicaMente",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply",
+        "outbound_reply",
+        "thread_participant"
+      ],
+      "n_replies_received_from": 5,
+      "n_replies_sent_to": 6,
+      "n_mentions": 0,
+      "n_thread_responses": 1,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 12,
+      "mutual_engagement": true,
+      "centrality_proxy": 12,
+      "gateway_score": true,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "cinicomateriale",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "mass_tag_noise",
+        "mention"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 0,
+      "n_mentions": 9,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 9,
+      "mutual_engagement": false,
+      "centrality_proxy": 9,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "IlCastiga",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_mention",
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 8,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 2,
+      "n_interactions_total": 8,
+      "mutual_engagement": false,
+      "centrality_proxy": 8,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "mellospank",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply",
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 2,
+      "n_replies_sent_to": 5,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 7,
+      "mutual_engagement": true,
+      "centrality_proxy": 7,
+      "gateway_score": true,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "seralf",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply",
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 2,
+      "n_replies_sent_to": 5,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 7,
+      "mutual_engagement": true,
+      "centrality_proxy": 7,
+      "gateway_score": true,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "dalseno_andrea",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 6,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 6,
+      "mutual_engagement": false,
+      "centrality_proxy": 6,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "paulolden1",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply",
+        "thread_participant"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 5,
+      "n_mentions": 0,
+      "n_thread_responses": 1,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 6,
+      "mutual_engagement": false,
+      "centrality_proxy": 6,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "stradainsalita",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply",
+        "outbound_reply",
+        "thread_participant"
+      ],
+      "n_replies_received_from": 2,
+      "n_replies_sent_to": 3,
+      "n_mentions": 0,
+      "n_thread_responses": 1,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 6,
+      "mutual_engagement": true,
+      "centrality_proxy": 6,
+      "gateway_score": true,
+      "amplifier_score": false,
+      "cluster_hint": "tech"
+    },
+    {
+      "handle": "21lettere",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply",
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 1,
+      "n_replies_sent_to": 4,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 5,
+      "mutual_engagement": true,
+      "centrality_proxy": 5,
+      "gateway_score": true,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "andreafspeziale",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply",
+        "outbound_mention",
+        "outbound_reply",
+        "thread_participant"
+      ],
+      "n_replies_received_from": 1,
+      "n_replies_sent_to": 3,
+      "n_mentions": 0,
+      "n_thread_responses": 1,
+      "n_outbound_mentions_to_them": 1,
+      "n_interactions_total": 5,
+      "mutual_engagement": true,
+      "centrality_proxy": 5,
+      "gateway_score": true,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "DanMan_010101",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply",
+        "mention",
+        "outbound_mention",
+        "outbound_reply",
+        "thread_participant"
+      ],
+      "n_replies_received_from": 1,
+      "n_replies_sent_to": 2,
+      "n_mentions": 1,
+      "n_thread_responses": 1,
+      "n_outbound_mentions_to_them": 1,
+      "n_interactions_total": 5,
+      "mutual_engagement": true,
+      "centrality_proxy": 5,
+      "gateway_score": true,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "eliosh",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply",
+        "outbound_mention",
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 3,
+      "n_replies_sent_to": 2,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 1,
+      "n_interactions_total": 5,
+      "mutual_engagement": true,
+      "centrality_proxy": 5,
+      "gateway_score": true,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "fabick75",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply",
+        "mention"
+      ],
+      "n_replies_received_from": 1,
+      "n_replies_sent_to": 0,
+      "n_mentions": 4,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 5,
+      "mutual_engagement": false,
+      "centrality_proxy": 5,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "il_Malpensante",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply",
+        "outbound_mention",
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 1,
+      "n_replies_sent_to": 4,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 1,
+      "n_interactions_total": 5,
+      "mutual_engagement": true,
+      "centrality_proxy": 5,
+      "gateway_score": true,
+      "amplifier_score": false,
+      "cluster_hint": "business"
+    },
+    {
+      "handle": "minasmazar",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 5,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 5,
+      "mutual_engagement": false,
+      "centrality_proxy": 5,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "BattagliaBuona",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply",
+        "thread_participant"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 3,
+      "n_mentions": 0,
+      "n_thread_responses": 1,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 4,
+      "mutual_engagement": false,
+      "centrality_proxy": 4,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "Economini",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply",
+        "outbound_reply",
+        "thread_participant"
+      ],
+      "n_replies_received_from": 2,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 1,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 4,
+      "mutual_engagement": true,
+      "centrality_proxy": 4,
+      "gateway_score": true,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "H0tAvenger",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply",
+        "thread_participant"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 3,
+      "n_mentions": 0,
+      "n_thread_responses": 1,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 4,
+      "mutual_engagement": false,
+      "centrality_proxy": 4,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "nyistrikaba",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_mention",
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 4,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 2,
+      "n_interactions_total": 4,
+      "mutual_engagement": false,
+      "centrality_proxy": 4,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "orsobianco",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 4,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 4,
+      "mutual_engagement": false,
+      "centrality_proxy": 4,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "Agghittari",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply",
+        "thread_participant"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 2,
+      "n_mentions": 0,
+      "n_thread_responses": 1,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 3,
+      "mutual_engagement": false,
+      "centrality_proxy": 3,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "angryzapper",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 3,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 3,
+      "mutual_engagement": false,
+      "centrality_proxy": 3,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "arruba_",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 3,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 3,
+      "mutual_engagement": false,
+      "centrality_proxy": 3,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "boni_castellane",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_mention",
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 3,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 6,
+      "n_interactions_total": 3,
+      "mutual_engagement": false,
+      "centrality_proxy": 3,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "Cr1st14nM3s14n0",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply",
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 1,
+      "n_replies_sent_to": 2,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 3,
+      "mutual_engagement": true,
+      "centrality_proxy": 3,
+      "gateway_score": true,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "JKR_rld",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply",
+        "thread_participant"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 2,
+      "n_mentions": 0,
+      "n_thread_responses": 1,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 3,
+      "mutual_engagement": false,
+      "centrality_proxy": 3,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "logicamende",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_mention",
+        "outbound_reply",
+        "thread_participant"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 2,
+      "n_mentions": 0,
+      "n_thread_responses": 1,
+      "n_outbound_mentions_to_them": 1,
+      "n_interactions_total": 3,
+      "mutual_engagement": false,
+      "centrality_proxy": 3,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "m13v_",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply",
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 2,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 3,
+      "mutual_engagement": true,
+      "centrality_proxy": 3,
+      "gateway_score": true,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "Manfred43109337",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply",
+        "mention",
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 1,
+      "n_replies_sent_to": 1,
+      "n_mentions": 1,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 3,
+      "mutual_engagement": true,
+      "centrality_proxy": 3,
+      "gateway_score": true,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "MoriSpion",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 3,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 3,
+      "mutual_engagement": false,
+      "centrality_proxy": 3,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "Origa9",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 3,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 3,
+      "mutual_engagement": false,
+      "centrality_proxy": 3,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "PetrusPietro",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply",
+        "thread_participant"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 2,
+      "n_mentions": 0,
+      "n_thread_responses": 1,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 3,
+      "mutual_engagement": false,
+      "centrality_proxy": 3,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "RobertoGiuffre",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply",
+        "thread_participant"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 2,
+      "n_mentions": 0,
+      "n_thread_responses": 1,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 3,
+      "mutual_engagement": false,
+      "centrality_proxy": 3,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "roccosgroi",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply",
+        "outbound_mention",
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 2,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 1,
+      "n_interactions_total": 3,
+      "mutual_engagement": true,
+      "centrality_proxy": 3,
+      "gateway_score": true,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "rumentacontrac1",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply",
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 1,
+      "n_replies_sent_to": 2,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 3,
+      "mutual_engagement": true,
+      "centrality_proxy": 3,
+      "gateway_score": true,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "sulex____",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_mention",
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 3,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 2,
+      "n_interactions_total": 3,
+      "mutual_engagement": false,
+      "centrality_proxy": 3,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "USpiaggia",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply",
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 2,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 3,
+      "mutual_engagement": true,
+      "centrality_proxy": 3,
+      "gateway_score": true,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "__AndreaW__",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply",
+        "thread_participant"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 1,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 2,
+      "mutual_engagement": false,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "_aleromano",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply",
+        "thread_participant"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 1,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 2,
+      "mutual_engagement": false,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "AlessioFx",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply",
+        "thread_participant"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 1,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 2,
+      "mutual_engagement": false,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "alkampfer",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply",
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 1,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 2,
+      "mutual_engagement": true,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "bastet1965",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply",
+        "thread_participant"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 1,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 2,
+      "mutual_engagement": false,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "bebbolus",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply",
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 1,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 2,
+      "mutual_engagement": true,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "btcfcimclub",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply",
+        "thread_participant"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 1,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 2,
+      "mutual_engagement": false,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "CBD0x",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply",
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 1,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 2,
+      "mutual_engagement": true,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "tech"
+    },
+    {
+      "handle": "CristinaDragani",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_mention",
+        "outbound_reply",
+        "thread_participant"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 1,
+      "n_outbound_mentions_to_them": 1,
+      "n_interactions_total": 2,
+      "mutual_engagement": false,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "daftsimo",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_mention",
+        "outbound_reply",
+        "thread_participant"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 1,
+      "n_outbound_mentions_to_them": 1,
+      "n_interactions_total": 2,
+      "mutual_engagement": false,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "davmago",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply",
+        "outbound_mention",
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 1,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 1,
+      "n_interactions_total": 2,
+      "mutual_engagement": true,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "DiegoTheCrypto",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 2,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 2,
+      "mutual_engagement": false,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "tech"
+    },
+    {
+      "handle": "evilsocket",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_mention",
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 2,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 1,
+      "n_interactions_total": 2,
+      "mutual_engagement": false,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "evoco2014",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply",
+        "thread_participant"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 1,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 2,
+      "mutual_engagement": false,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "gavino_pancetta",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply",
+        "thread_participant"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 1,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 2,
+      "mutual_engagement": false,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "grok",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_mention",
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 2,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 2,
+      "n_interactions_total": 2,
+      "mutual_engagement": false,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "guido_fiore1",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 2,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 2,
+      "mutual_engagement": false,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "GuidoAnzuoni",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "mention",
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 1,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 2,
+      "mutual_engagement": false,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "HaraldBregu",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply",
+        "thread_participant"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 1,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 2,
+      "mutual_engagement": false,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "homelymatt",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 2,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 2,
+      "mutual_engagement": false,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "Isarin1969",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply",
+        "thread_participant"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 1,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 2,
+      "mutual_engagement": false,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "business"
+    },
+    {
+      "handle": "ivancatalano_eu",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_mention",
+        "outbound_reply",
+        "thread_participant"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 1,
+      "n_outbound_mentions_to_them": 1,
+      "n_interactions_total": 2,
+      "mutual_engagement": false,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "keape86",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply",
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 1,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 2,
+      "mutual_engagement": true,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "lagoria",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply"
+      ],
+      "n_replies_received_from": 2,
+      "n_replies_sent_to": 0,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 2,
+      "mutual_engagement": false,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "LaPongide",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply",
+        "thread_participant"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 1,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 2,
+      "mutual_engagement": false,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "Magicapuglia",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 2,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 2,
+      "mutual_engagement": false,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "maus0303",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "mass_tag_noise",
+        "mention"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 0,
+      "n_mentions": 2,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 2,
+      "mutual_engagement": false,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "mbarmbar",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply",
+        "thread_participant"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 1,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 2,
+      "mutual_engagement": false,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "mikebojafausss",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 2,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 2,
+      "mutual_engagement": false,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "MiPnamic",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 2,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 2,
+      "mutual_engagement": false,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "Notoriux",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply",
+        "thread_participant"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 1,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 2,
+      "mutual_engagement": false,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "overhandzappa",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply",
+        "thread_participant"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 1,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 2,
+      "mutual_engagement": false,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "Palmino58881",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 2,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 2,
+      "mutual_engagement": false,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "PenelopeVr46",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 2,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 2,
+      "mutual_engagement": false,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "pgallir",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 2,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 2,
+      "mutual_engagement": false,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "PzSniper",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply",
+        "thread_participant"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 1,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 2,
+      "mutual_engagement": false,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "rioagor",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 2,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 2,
+      "mutual_engagement": false,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "RLdanno",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 2,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 2,
+      "mutual_engagement": false,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "robymes",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply",
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 1,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 2,
+      "mutual_engagement": true,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "TassBurrfoot",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "mention",
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 1,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 2,
+      "mutual_engagement": false,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "unclesinger39",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply",
+        "thread_participant"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 1,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 2,
+      "mutual_engagement": false,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "VitalisPaolo",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply",
+        "thread_participant"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 1,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 2,
+      "mutual_engagement": false,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "WebMarkeThink",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 2,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 2,
+      "mutual_engagement": false,
+      "centrality_proxy": 2,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "0xbipi",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_mention",
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 1,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "tech"
+    },
+    {
+      "handle": "0xzane_",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply"
+      ],
+      "n_replies_received_from": 1,
+      "n_replies_sent_to": 0,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "tech"
+    },
+    {
+      "handle": "AndreaPagani_",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "andreaparmeggi4",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply"
+      ],
+      "n_replies_received_from": 1,
+      "n_replies_sent_to": 0,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "AnonymaticaSRL",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "business"
+    },
+    {
+      "handle": "antifemgrandma",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply"
+      ],
+      "n_replies_received_from": 1,
+      "n_replies_sent_to": 0,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "antirez",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_mention",
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 8,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "arcipiero",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply"
+      ],
+      "n_replies_received_from": 1,
+      "n_replies_sent_to": 0,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "Ardeacinerea90",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "AresBracc1a",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "bloom014",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "boriani_cl68704",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "CaproRoco",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "chiara_paci",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply"
+      ],
+      "n_replies_received_from": 1,
+      "n_replies_sent_to": 0,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "Clodo76",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_mention",
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 1,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "cos_bor",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "CyberAntani",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "tech"
+    },
+    {
+      "handle": "dammister",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "davidegiarolo",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "fabio2602",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply"
+      ],
+      "n_replies_received_from": 1,
+      "n_replies_sent_to": 0,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "fuckthebear",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply"
+      ],
+      "n_replies_received_from": 1,
+      "n_replies_sent_to": 0,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "ggpower177",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply"
+      ],
+      "n_replies_received_from": 1,
+      "n_replies_sent_to": 0,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "gianni_dat",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "gio0_castelli",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply"
+      ],
+      "n_replies_received_from": 1,
+      "n_replies_sent_to": 0,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "griso135",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply"
+      ],
+      "n_replies_received_from": 1,
+      "n_replies_sent_to": 0,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "guforosso2",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply"
+      ],
+      "n_replies_received_from": 1,
+      "n_replies_sent_to": 0,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "inximkr",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "jan_sobi",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "JolandaBivona",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "Just0neRabbi7",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "LampoNero",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "lawndoc",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply"
+      ],
+      "n_replies_received_from": 1,
+      "n_replies_sent_to": 0,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "LBellinzaghi",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "Libroecacciavi1",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "LucaMorini78",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "luigifoschini",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "lvmrevolution",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply"
+      ],
+      "n_replies_received_from": 1,
+      "n_replies_sent_to": 0,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "massimo_san",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply"
+      ],
+      "n_replies_received_from": 1,
+      "n_replies_sent_to": 0,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "business"
+    },
+    {
+      "handle": "massimomario1",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply"
+      ],
+      "n_replies_received_from": 1,
+      "n_replies_sent_to": 0,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "Mastronauta",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "meksone",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply"
+      ],
+      "n_replies_received_from": 1,
+      "n_replies_sent_to": 0,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "MrFrank_90",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "musearte05",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "myrdrwin2020",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply"
+      ],
+      "n_replies_received_from": 1,
+      "n_replies_sent_to": 0,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "NoPlaceToHide83",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_mention",
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 1,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "PaoloVivani",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "Photonixxx",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "piave79",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "picosback",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "thread_participant"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 0,
+      "n_mentions": 0,
+      "n_thread_responses": 1,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "pignottone",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "mention"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 0,
+      "n_mentions": 1,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "pinolallo",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply"
+      ],
+      "n_replies_received_from": 1,
+      "n_replies_sent_to": 0,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "pixel_75",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "QuinziUgo",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_mention",
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 2,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "sc_kleene",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "Stebbo_IT",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "StefanoStraus",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "thread_participant"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 0,
+      "n_mentions": 0,
+      "n_thread_responses": 1,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "TerzaniLuca",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "tovarishm5s",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "mass_tag_noise",
+        "mention"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 0,
+      "n_mentions": 1,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "trisino",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "unbuey",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "mass_tag_noise",
+        "mention"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 0,
+      "n_mentions": 1,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "underscorner",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "vadimcomanescu",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "VinnieVegaPF",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "wuheitek",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_reply"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 1,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "xtrazz",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "inbound_reply"
+      ],
+      "n_replies_received_from": 1,
+      "n_replies_sent_to": 0,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 0,
+      "n_interactions_total": 1,
+      "mutual_engagement": false,
+      "centrality_proxy": 1,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "albe_ricci",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_mention"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 0,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 1,
+      "n_interactions_total": 0,
+      "mutual_engagement": false,
+      "centrality_proxy": 0,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "Carlo314159",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_mention"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 0,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 2,
+      "n_interactions_total": 0,
+      "mutual_engagement": false,
+      "centrality_proxy": 0,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "Corriere",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_mention"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 0,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 1,
+      "n_interactions_total": 0,
+      "mutual_engagement": false,
+      "centrality_proxy": 0,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "doomannihilator",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_mention"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 0,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 1,
+      "n_interactions_total": 0,
+      "mutual_engagement": false,
+      "centrality_proxy": 0,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "giorgio_gori",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_mention"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 0,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 1,
+      "n_interactions_total": 0,
+      "mutual_engagement": false,
+      "centrality_proxy": 0,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "karpathy",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_mention"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 0,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 1,
+      "n_interactions_total": 0,
+      "mutual_engagement": false,
+      "centrality_proxy": 0,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "marattin",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_mention"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 0,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 1,
+      "n_interactions_total": 0,
+      "mutual_engagement": false,
+      "centrality_proxy": 0,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "Napalm51",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_mention"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 0,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 1,
+      "n_interactions_total": 0,
+      "mutual_engagement": false,
+      "centrality_proxy": 0,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "twtayaan",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_mention"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 0,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 1,
+      "n_interactions_total": 0,
+      "mutual_engagement": false,
+      "centrality_proxy": 0,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    },
+    {
+      "handle": "VeltroniWalter",
+      "followers": null,
+      "verified": null,
+      "description_short": null,
+      "interaction_types": [
+        "outbound_mention"
+      ],
+      "n_replies_received_from": 0,
+      "n_replies_sent_to": 0,
+      "n_mentions": 0,
+      "n_thread_responses": 0,
+      "n_outbound_mentions_to_them": 1,
+      "n_interactions_total": 0,
+      "mutual_engagement": false,
+      "centrality_proxy": 0,
+      "gateway_score": false,
+      "amplifier_score": false,
+      "cluster_hint": "unknown"
+    }
+  ],
+  "edges": [
+    {
+      "from": "Pinperepette",
+      "to": "rumentacontrac1",
+      "weight": 2.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "rumentacontrac1",
+      "to": "Pinperepette",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "twtayaan",
+      "weight": 0.5,
+      "types": [
+        "mention"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "CBD0x",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "CBD0x",
+      "to": "Pinperepette",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "robymes",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "robymes",
+      "to": "Pinperepette",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "USpiaggia",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "USpiaggia",
+      "to": "Pinperepette",
+      "weight": 2.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "m13v_",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "m13v_",
+      "to": "Pinperepette",
+      "weight": 2.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "davmago",
+      "weight": 1.5,
+      "types": [
+        "reply",
+        "mention"
+      ]
+    },
+    {
+      "from": "davmago",
+      "to": "Pinperepette",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "mellospank",
+      "weight": 5.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "mellospank",
+      "to": "Pinperepette",
+      "weight": 2.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "alkampfer",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "alkampfer",
+      "to": "Pinperepette",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "andreafspeziale",
+      "weight": 4.5,
+      "types": [
+        "reply",
+        "mention",
+        "thread"
+      ]
+    },
+    {
+      "from": "andreafspeziale",
+      "to": "Pinperepette",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "seralf",
+      "weight": 5.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "seralf",
+      "to": "Pinperepette",
+      "weight": 2.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "eliosh",
+      "weight": 2.5,
+      "types": [
+        "reply",
+        "mention"
+      ]
+    },
+    {
+      "from": "eliosh",
+      "to": "Pinperepette",
+      "weight": 3.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "stradainsalita",
+      "weight": 4.0,
+      "types": [
+        "reply",
+        "thread"
+      ]
+    },
+    {
+      "from": "stradainsalita",
+      "to": "Pinperepette",
+      "weight": 2.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "karpathy",
+      "weight": 0.5,
+      "types": [
+        "mention"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "PandemicaMente",
+      "weight": 7.0,
+      "types": [
+        "reply",
+        "thread"
+      ]
+    },
+    {
+      "from": "PandemicaMente",
+      "to": "Pinperepette",
+      "weight": 5.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "il_Malpensante",
+      "weight": 4.5,
+      "types": [
+        "reply",
+        "mention"
+      ]
+    },
+    {
+      "from": "il_Malpensante",
+      "to": "Pinperepette",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "roccosgroi",
+      "weight": 1.5,
+      "types": [
+        "reply",
+        "mention"
+      ]
+    },
+    {
+      "from": "roccosgroi",
+      "to": "Pinperepette",
+      "weight": 2.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "bebbolus",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "bebbolus",
+      "to": "Pinperepette",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "keape86",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "keape86",
+      "to": "Pinperepette",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "RLdanno",
+      "weight": 2.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "wuheitek",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "antirez",
+      "weight": 5.0,
+      "types": [
+        "reply",
+        "mention"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "arruba_",
+      "weight": 3.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "CaproRoco",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "piave79",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "TassBurrfoot",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "TassBurrfoot",
+      "to": "Pinperepette",
+      "weight": 0.5,
+      "types": [
+        "mention"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "gianni_dat",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "LampoNero",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "Manfred43109337",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Manfred43109337",
+      "to": "Pinperepette",
+      "weight": 1.5,
+      "types": [
+        "reply",
+        "mention"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "grok",
+      "weight": 3.0,
+      "types": [
+        "reply",
+        "mention"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "MoriSpion",
+      "weight": 3.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "Carlo314159",
+      "weight": 1.0,
+      "types": [
+        "mention"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "sc_kleene",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "PenelopeVr46",
+      "weight": 2.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "RobertoGiuffre",
+      "weight": 3.0,
+      "types": [
+        "reply",
+        "thread"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "CyberAntani",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "Palmino58881",
+      "weight": 2.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "IlCastiga",
+      "weight": 9.0,
+      "types": [
+        "reply",
+        "mention"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "mikebojafausss",
+      "weight": 2.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "LBellinzaghi",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "VinnieVegaPF",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "Ardeacinerea90",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "LucaMorini78",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "doomannihilator",
+      "weight": 0.5,
+      "types": [
+        "mention"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "dalseno_andrea",
+      "weight": 6.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "mbarmbar",
+      "weight": 2.0,
+      "types": [
+        "reply",
+        "thread"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "homelymatt",
+      "weight": 2.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "PetrusPietro",
+      "weight": 3.0,
+      "types": [
+        "reply",
+        "thread"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "PzSniper",
+      "weight": 2.0,
+      "types": [
+        "reply",
+        "thread"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "HaraldBregu",
+      "weight": 2.0,
+      "types": [
+        "reply",
+        "thread"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "Mastronauta",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "Economini",
+      "weight": 2.0,
+      "types": [
+        "reply",
+        "thread"
+      ]
+    },
+    {
+      "from": "Economini",
+      "to": "Pinperepette",
+      "weight": 2.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "DanMan_010101",
+      "weight": 3.5,
+      "types": [
+        "reply",
+        "mention",
+        "thread"
+      ]
+    },
+    {
+      "from": "DanMan_010101",
+      "to": "Pinperepette",
+      "weight": 1.5,
+      "types": [
+        "reply",
+        "mention"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "pixel_75",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "Notoriux",
+      "weight": 2.0,
+      "types": [
+        "reply",
+        "thread"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "pgallir",
+      "weight": 2.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "Stebbo_IT",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "WebMarkeThink",
+      "weight": 2.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "angryzapper",
+      "weight": 3.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "underscorner",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "minasmazar",
+      "weight": 5.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "0xbipi",
+      "weight": 1.5,
+      "types": [
+        "reply",
+        "mention"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "trisino",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "nyistrikaba",
+      "weight": 5.0,
+      "types": [
+        "reply",
+        "mention"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "boni_castellane",
+      "weight": 6.0,
+      "types": [
+        "reply",
+        "mention"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "paulolden1",
+      "weight": 6.0,
+      "types": [
+        "reply",
+        "thread"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "Just0neRabbi7",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "NoPlaceToHide83",
+      "weight": 1.5,
+      "types": [
+        "reply",
+        "mention"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "overhandzappa",
+      "weight": 2.0,
+      "types": [
+        "reply",
+        "thread"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "__AndreaW__",
+      "weight": 2.0,
+      "types": [
+        "reply",
+        "thread"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "Libroecacciavi1",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "dammister",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "MrFrank_90",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "GuidoAnzuoni",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "GuidoAnzuoni",
+      "to": "Pinperepette",
+      "weight": 0.5,
+      "types": [
+        "mention"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "vadimcomanescu",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "davidegiarolo",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "AresBracc1a",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "H0tAvenger",
+      "weight": 4.0,
+      "types": [
+        "reply",
+        "thread"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "21lettere",
+      "weight": 4.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "21lettere",
+      "to": "Pinperepette",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "marattin",
+      "weight": 0.5,
+      "types": [
+        "mention"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "VeltroniWalter",
+      "weight": 0.5,
+      "types": [
+        "mention"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "Corriere",
+      "weight": 0.5,
+      "types": [
+        "mention"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "Agghittari",
+      "weight": 3.0,
+      "types": [
+        "reply",
+        "thread"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "DiegoTheCrypto",
+      "weight": 2.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "Origa9",
+      "weight": 3.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "orsobianco",
+      "weight": 4.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "bloom014",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "TerzaniLuca",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "cos_bor",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "evoco2014",
+      "weight": 2.0,
+      "types": [
+        "reply",
+        "thread"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "bastet1965",
+      "weight": 2.0,
+      "types": [
+        "reply",
+        "thread"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "guido_fiore1",
+      "weight": 2.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "evilsocket",
+      "weight": 2.5,
+      "types": [
+        "reply",
+        "mention"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "QuinziUgo",
+      "weight": 2.0,
+      "types": [
+        "reply",
+        "mention"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "sulex____",
+      "weight": 4.0,
+      "types": [
+        "reply",
+        "mention"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "Clodo76",
+      "weight": 1.5,
+      "types": [
+        "reply",
+        "mention"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "Photonixxx",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "daftsimo",
+      "weight": 2.5,
+      "types": [
+        "reply",
+        "mention",
+        "thread"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "inximkr",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "AnonymaticaSRL",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "Isarin1969",
+      "weight": 2.0,
+      "types": [
+        "reply",
+        "thread"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "JKR_rld",
+      "weight": 3.0,
+      "types": [
+        "reply",
+        "thread"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "unclesinger39",
+      "weight": 2.0,
+      "types": [
+        "reply",
+        "thread"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "gavino_pancetta",
+      "weight": 2.0,
+      "types": [
+        "reply",
+        "thread"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "PaoloVivani",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "CristinaDragani",
+      "weight": 2.5,
+      "types": [
+        "reply",
+        "mention",
+        "thread"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "logicamende",
+      "weight": 3.5,
+      "types": [
+        "reply",
+        "mention",
+        "thread"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "giorgio_gori",
+      "weight": 0.5,
+      "types": [
+        "mention"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "boriani_cl68704",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "ivancatalano_eu",
+      "weight": 2.5,
+      "types": [
+        "reply",
+        "mention",
+        "thread"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "Cr1st14nM3s14n0",
+      "weight": 2.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Cr1st14nM3s14n0",
+      "to": "Pinperepette",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "Magicapuglia",
+      "weight": 2.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "AndreaPagani_",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "MiPnamic",
+      "weight": 2.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "_aleromano",
+      "weight": 2.0,
+      "types": [
+        "reply",
+        "thread"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "LaPongide",
+      "weight": 2.0,
+      "types": [
+        "reply",
+        "thread"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "rioagor",
+      "weight": 2.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "BattagliaBuona",
+      "weight": 4.0,
+      "types": [
+        "reply",
+        "thread"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "AlessioFx",
+      "weight": 2.0,
+      "types": [
+        "reply",
+        "thread"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "VitalisPaolo",
+      "weight": 2.0,
+      "types": [
+        "reply",
+        "thread"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "btcfcimclub",
+      "weight": 2.0,
+      "types": [
+        "reply",
+        "thread"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "JolandaBivona",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "albe_ricci",
+      "weight": 0.5,
+      "types": [
+        "mention"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "Napalm51",
+      "weight": 0.5,
+      "types": [
+        "mention"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "musearte05",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "jan_sobi",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "luigifoschini",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "fuckthebear",
+      "to": "Pinperepette",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "chiara_paci",
+      "to": "Pinperepette",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "0xzane_",
+      "to": "Pinperepette",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "fabio2602",
+      "to": "Pinperepette",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "massimomario1",
+      "to": "Pinperepette",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "myrdrwin2020",
+      "to": "Pinperepette",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "gio0_castelli",
+      "to": "Pinperepette",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "fabick75",
+      "to": "Pinperepette",
+      "weight": 3.0,
+      "types": [
+        "reply",
+        "mention"
+      ]
+    },
+    {
+      "from": "andreaparmeggi4",
+      "to": "Pinperepette",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "lvmrevolution",
+      "to": "Pinperepette",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "xtrazz",
+      "to": "Pinperepette",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "ggpower177",
+      "to": "Pinperepette",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "massimo_san",
+      "to": "Pinperepette",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "griso135",
+      "to": "Pinperepette",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "lagoria",
+      "to": "Pinperepette",
+      "weight": 2.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "lawndoc",
+      "to": "Pinperepette",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "guforosso2",
+      "to": "Pinperepette",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "pinolallo",
+      "to": "Pinperepette",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "meksone",
+      "to": "Pinperepette",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "arcipiero",
+      "to": "Pinperepette",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "antifemgrandma",
+      "to": "Pinperepette",
+      "weight": 1.0,
+      "types": [
+        "reply"
+      ]
+    },
+    {
+      "from": "cinicomateriale",
+      "to": "Pinperepette",
+      "weight": 4.5,
+      "types": [
+        "mention"
+      ]
+    },
+    {
+      "from": "maus0303",
+      "to": "Pinperepette",
+      "weight": 1.0,
+      "types": [
+        "mention"
+      ]
+    },
+    {
+      "from": "tovarishm5s",
+      "to": "Pinperepette",
+      "weight": 0.5,
+      "types": [
+        "mention"
+      ]
+    },
+    {
+      "from": "pignottone",
+      "to": "Pinperepette",
+      "weight": 0.5,
+      "types": [
+        "mention"
+      ]
+    },
+    {
+      "from": "unbuey",
+      "to": "Pinperepette",
+      "weight": 0.5,
+      "types": [
+        "mention"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "StefanoStraus",
+      "weight": 1.0,
+      "types": [
+        "thread"
+      ]
+    },
+    {
+      "from": "Pinperepette",
+      "to": "picosback",
+      "weight": 1.0,
+      "types": [
+        "thread"
+      ]
+    }
+  ],
+  "metrics_summary": {
+    "n_nodes": 155,
+    "n_edges": 179,
+    "n_mutual_engagement": 22,
+    "n_gateway_nodes": 16,
+    "n_potential_amplifiers": 0,
+    "top_amplifiers_by_followers": [
+      {
+        "handle": "PandemicaMente",
+        "followers": null,
+        "n_interactions": 12
+      },
+      {
+        "handle": "mellospank",
+        "followers": null,
+        "n_interactions": 7
+      },
+      {
+        "handle": "seralf",
+        "followers": null,
+        "n_interactions": 7
+      },
+      {
+        "handle": "stradainsalita",
+        "followers": null,
+        "n_interactions": 6
+      },
+      {
+        "handle": "21lettere",
+        "followers": null,
+        "n_interactions": 5
+      }
+    ],
+    "top_gateway_nodes": [
+      {
+        "handle": "PandemicaMente",
+        "n_interactions": 12,
+        "reason": "high mutual + total>=3 (followers unknown, soft criterion)"
+      },
+      {
+        "handle": "mellospank",
+        "n_interactions": 7,
+        "reason": "high mutual + total>=3 (followers unknown, soft criterion)"
+      },
+      {
+        "handle": "seralf",
+        "n_interactions": 7,
+        "reason": "high mutual + total>=3 (followers unknown, soft criterion)"
+      },
+      {
+        "handle": "stradainsalita",
+        "n_interactions": 6,
+        "reason": "high mutual + total>=3 (followers unknown, soft criterion)"
+      },
+      {
+        "handle": "21lettere",
+        "n_interactions": 5,
+        "reason": "high mutual + total>=3 (followers unknown, soft criterion)"
+      },
+      {
+        "handle": "andreafspeziale",
+        "n_interactions": 5,
+        "reason": "high mutual + total>=3 (followers unknown, soft criterion)"
+      },
+      {
+        "handle": "DanMan_010101",
+        "n_interactions": 5,
+        "reason": "high mutual + total>=3 (followers unknown, soft criterion)"
+      },
+      {
+        "handle": "eliosh",
+        "n_interactions": 5,
+        "reason": "high mutual + total>=3 (followers unknown, soft criterion)"
+      },
+      {
+        "handle": "il_Malpensante",
+        "n_interactions": 5,
+        "reason": "high mutual + total>=3 (followers unknown, soft criterion)"
+      },
+      {
+        "handle": "Economini",
+        "n_interactions": 4,
+        "reason": "high mutual + total>=3 (followers unknown, soft criterion)"
+      }
+    ],
+    "cluster_distribution": {
+      "unknown": 145,
+      "tech": 6,
+      "business": 4
+    }
+  },
+  "audience_insight": "Audience core osservata: PandemicaMente (12 interaz.), cinicomateriale (9 interaz.), IlCastiga (8 interaz.). Gateway nodes potenziali (mutual + interazioni >=3, followers ignoti): PandemicaMente, mellospank, seralf. Limite chiave: senza follower count dei terzi non possiamo classificare amplifier per reach; il grafo cattura SOLO chi si è espresso nel sample da 14 giorni."
+}

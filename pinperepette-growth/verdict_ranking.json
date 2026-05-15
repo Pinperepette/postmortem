@@ -1,0 +1,21 @@
+{
+  "verdict": "ok",
+  "confidence": 0.78,
+  "downstream_signal": "profilo conversational con leverage attivo: cr=0.507 reliable genera reply_engaged_by_author (peso 75, leva suprema L1); densità reply 0.82 e prime_hours 0.66 sostengono cascata Hawkes vicino-critica tipica del tier niche; stickiness mixed (mean 141.71, p90 248.8 su originals) è il punto da consolidare verso sticky per spingere dwell head Phoenix",
+  "diagnosis": {
+    "conversation_density": "conversational",
+    "reply_leverage_usage": "active",
+    "content_stickiness": "mixed",
+    "engagement_velocity": "high"
+  },
+  "primary_issue": "stickiness mixed sotto soglia sticky originals",
+  "secondary_issue": "cr 0.507 nella fascia bassa di active",
+  "key_evidence": [
+    {"text": "reply_mine_to_other=0.8233 → profilo nettamente conversational, allineato a leva L1 reply_engaged_by_author peso 75", "source": "empirical"},
+    {"text": "comment_response_rate=0.507 con reliable=TRUE → leverage active (range 0.5-0.9), non più unknown", "source": "code"},
+    {"text": "originals: mean=141.71 (<150) e p90=248.8 (<250) → stickiness mixed, vicino a sticky ma non sopra soglia", "source": "code"},
+    {"text": "prime_hours_post_rate=0.6591 ≥0.6 → engagement velocity high, finestra cold-start 15s sfruttata", "source": "code"},
+    {"text": "tier niche con branching critical e cluster_focus=1.0 → setup coerente con specialization phase L1+L11+L2", "source": "code"},
+    {"text": "burst_rate_30min=0.6895 e consecutive_burst=15 → rischio author-diversity decay (×0.5→×0.25) che erode stickiness", "source": "code"}
+  ]
+}

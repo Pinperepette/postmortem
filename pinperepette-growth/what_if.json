@@ -1,0 +1,351 @@
+{
+  "method": "propensity-score nearest-neighbor matching (3-NN), bootstrap CI 95% (n=1000)",
+  "sample_size": {
+    "total_tweets_analyzed": 249,
+    "originals_only": 17,
+    "tweets_in_burst": 171,
+    "tweets_in_low_cluster": 35,
+    "tweets_with_link_root": 11
+  },
+  "counterfactual_estimates": {
+    "burst_penalty": {
+      "treatment_group_n": 171,
+      "control_group_n": 77,
+      "mean_reach_treated": 26.35,
+      "mean_reach_controlled_estimate": 25.69,
+      "delta_per_tweet": {
+        "point_estimate": -0.66,
+        "ci_low": -23.54,
+        "ci_high": 15.83
+      },
+      "delta_pct": {
+        "point_estimate": "-2.5%",
+        "ci_low": "-89.3%",
+        "ci_high": "60.1%"
+      },
+      "total_reach_lost_estimate": 3192.3,
+      "total_reach_lost_ci": [
+        2199.3,
+        4196.0
+      ],
+      "interpretation": "Stimiamo che 0.0% di reach addizionale per tweet sarebbe stato guadagnato senza burst (CI: -89.3% → 60.1%).",
+      "confidence": "medium",
+      "sample_size_warning": "n_treated=171, n_control=77 — CI bootstrap, leggere come ordine di grandezza."
+    },
+    "cluster_coerence": {
+      "treatment_group_n": 35,
+      "control_group_n": 77,
+      "mean_reach_treated": 8.77,
+      "mean_reach_controlled_estimate": 30.3,
+      "delta_per_tweet": {
+        "point_estimate": 21.52,
+        "ci_low": 9.54,
+        "ci_high": 34.09
+      },
+      "delta_pct": {
+        "point_estimate": "245.4%",
+        "ci_low": "108.8%",
+        "ci_high": "388.6%"
+      },
+      "total_reach_lost_estimate": 853.0,
+      "total_reach_lost_ci": [
+        462.3,
+        1249.3
+      ],
+      "interpretation": "Tweets su 'vita_societa_tech' avrebbero guadagnato ~245.4% di reach se pubblicati sul cluster forte (security/llm). CI: 108.8% → 388.6%.",
+      "confidence": "medium-low",
+      "sample_size_warning": "n_low=35, n_high=77. Cluster assignment via keyword heuristic, residual confounding."
+    },
+    "link_policy": {
+      "treatment_group_n": 11,
+      "control_group_n": 6,
+      "mean_reach_treated": 153.55,
+      "mean_reach_controlled_estimate": 329.33,
+      "delta_per_tweet": {
+        "point_estimate": 175.79,
+        "ci_low": 107.06,
+        "ci_high": 246.79
+      },
+      "delta_pct": {
+        "point_estimate": "114.5%",
+        "ci_low": "69.7%",
+        "ci_high": "160.7%"
+      },
+      "total_reach_lost_estimate": 1933.7,
+      "total_reach_lost_ci": [
+        1181.7,
+        2708.7
+      ],
+      "interpretation": "SPECULATIVE: senza link, gli original avrebbero guadagnato ~114.5% (CI: 69.7% → 160.7%). Phoenix link policy non confermata.",
+      "confidence": "speculative",
+      "sample_size_warning": "n_with_link=11, n_no_link=6 — sample minuscolo (originals only), CI extreme."
+    }
+  },
+  "top_tweets_what_if": [
+    {
+      "tweet_id": "2050603892589642218",
+      "actual_reach": 256,
+      "kind": "original",
+      "in_burst": false,
+      "in_low_cluster": false,
+      "has_link": true,
+      "cluster": "agents_llm",
+      "counterfactual_estimates": {
+        "no_burst": null,
+        "high_cluster": null,
+        "no_link": {
+          "reach_estimate": 431.8,
+          "ci": [
+            363.1,
+            502.8
+          ],
+          "delta_pct": "68.7%"
+        }
+      },
+      "best_case_reach_estimate": 431.8,
+      "improvement_pct": "68.7%"
+    },
+    {
+      "tweet_id": "2050635104565797263",
+      "actual_reach": 64,
+      "kind": "original",
+      "in_burst": true,
+      "in_low_cluster": false,
+      "has_link": true,
+      "cluster": "other",
+      "counterfactual_estimates": {
+        "no_burst": {
+          "reach_estimate": 63.3,
+          "ci": [
+            40.5,
+            79.8
+          ],
+          "delta_pct": "-1.0%"
+        },
+        "high_cluster": null,
+        "no_link": {
+          "reach_estimate": 239.8,
+          "ci": [
+            171.1,
+            310.8
+          ],
+          "delta_pct": "274.7%"
+        }
+      },
+      "best_case_reach_estimate": 239.8,
+      "improvement_pct": "274.7%"
+    },
+    {
+      "tweet_id": "2050962566629711884",
+      "actual_reach": 214,
+      "kind": "original",
+      "in_burst": true,
+      "in_low_cluster": false,
+      "has_link": true,
+      "cluster": "other",
+      "counterfactual_estimates": {
+        "no_burst": {
+          "reach_estimate": 213.3,
+          "ci": [
+            190.5,
+            229.8
+          ],
+          "delta_pct": "-0.3%"
+        },
+        "high_cluster": null,
+        "no_link": {
+          "reach_estimate": 389.8,
+          "ci": [
+            321.1,
+            460.8
+          ],
+          "delta_pct": "82.1%"
+        }
+      },
+      "best_case_reach_estimate": 389.8,
+      "improvement_pct": "82.1%"
+    },
+    {
+      "tweet_id": "2051563174445363220",
+      "actual_reach": 77,
+      "kind": "original",
+      "in_burst": false,
+      "in_low_cluster": false,
+      "has_link": true,
+      "cluster": "other",
+      "counterfactual_estimates": {
+        "no_burst": null,
+        "high_cluster": null,
+        "no_link": {
+          "reach_estimate": 252.8,
+          "ci": [
+            184.1,
+            323.8
+          ],
+          "delta_pct": "228.3%"
+        }
+      },
+      "best_case_reach_estimate": 252.8,
+      "improvement_pct": "228.3%"
+    },
+    {
+      "tweet_id": "2051995215993401786",
+      "actual_reach": 117,
+      "kind": "original",
+      "in_burst": true,
+      "in_low_cluster": false,
+      "has_link": true,
+      "cluster": "other",
+      "counterfactual_estimates": {
+        "no_burst": {
+          "reach_estimate": 116.3,
+          "ci": [
+            93.5,
+            132.8
+          ],
+          "delta_pct": "-0.6%"
+        },
+        "high_cluster": null,
+        "no_link": {
+          "reach_estimate": 292.8,
+          "ci": [
+            224.1,
+            363.8
+          ],
+          "delta_pct": "150.2%"
+        }
+      },
+      "best_case_reach_estimate": 292.8,
+      "improvement_pct": "150.3%"
+    },
+    {
+      "tweet_id": "2053171492276281582",
+      "actual_reach": 121,
+      "kind": "original",
+      "in_burst": false,
+      "in_low_cluster": false,
+      "has_link": true,
+      "cluster": "agents_llm",
+      "counterfactual_estimates": {
+        "no_burst": null,
+        "high_cluster": null,
+        "no_link": {
+          "reach_estimate": 296.8,
+          "ci": [
+            228.1,
+            367.8
+          ],
+          "delta_pct": "145.3%"
+        }
+      },
+      "best_case_reach_estimate": 296.8,
+      "improvement_pct": "145.3%"
+    },
+    {
+      "tweet_id": "2053221682559496200",
+      "actual_reach": 110,
+      "kind": "original",
+      "in_burst": false,
+      "in_low_cluster": false,
+      "has_link": true,
+      "cluster": "agents_llm",
+      "counterfactual_estimates": {
+        "no_burst": null,
+        "high_cluster": null,
+        "no_link": {
+          "reach_estimate": 285.8,
+          "ci": [
+            217.1,
+            356.8
+          ],
+          "delta_pct": "159.8%"
+        }
+      },
+      "best_case_reach_estimate": 285.8,
+      "improvement_pct": "159.8%"
+    },
+    {
+      "tweet_id": "2053473084032606340",
+      "actual_reach": 205,
+      "kind": "original",
+      "in_burst": true,
+      "in_low_cluster": false,
+      "has_link": true,
+      "cluster": "agents_llm",
+      "counterfactual_estimates": {
+        "no_burst": {
+          "reach_estimate": 204.3,
+          "ci": [
+            181.5,
+            220.8
+          ],
+          "delta_pct": "-0.3%"
+        },
+        "high_cluster": null,
+        "no_link": {
+          "reach_estimate": 380.8,
+          "ci": [
+            312.1,
+            451.8
+          ],
+          "delta_pct": "85.8%"
+        }
+      },
+      "best_case_reach_estimate": 380.8,
+      "improvement_pct": "85.8%"
+    },
+    {
+      "tweet_id": "2053906236542689679",
+      "actual_reach": 81,
+      "kind": "original",
+      "in_burst": false,
+      "in_low_cluster": false,
+      "has_link": true,
+      "cluster": "agents_llm",
+      "counterfactual_estimates": {
+        "no_burst": null,
+        "high_cluster": null,
+        "no_link": {
+          "reach_estimate": 256.8,
+          "ci": [
+            188.1,
+            327.8
+          ],
+          "delta_pct": "217.0%"
+        }
+      },
+      "best_case_reach_estimate": 256.8,
+      "improvement_pct": "217.0%"
+    },
+    {
+      "tweet_id": "2054983202968600734",
+      "actual_reach": 88,
+      "kind": "original",
+      "in_burst": false,
+      "in_low_cluster": false,
+      "has_link": true,
+      "cluster": "security_opsec",
+      "counterfactual_estimates": {
+        "no_burst": null,
+        "high_cluster": null,
+        "no_link": {
+          "reach_estimate": 263.8,
+          "ci": [
+            195.1,
+            334.8
+          ],
+          "delta_pct": "199.8%"
+        }
+      },
+      "best_case_reach_estimate": 263.8,
+      "improvement_pct": "199.8%"
+    }
+  ],
+  "warnings": [
+    "Sample piccolo: n=17 original — CI molto ampi.",
+    "Matching imperfetto: features categoriche poche, residual confounding probabile.",
+    "Link policy è speculative — Phoenix closed source, treatment effect non causale.",
+    "Cluster coerence: assignment via keyword heuristic (no embedding stabile), tweet ambigui in 'other'.",
+    "delta_prev_tweet_min derivato in-script (non presente nel dataset); cross-day boundary considerato come distanza temporale reale."
+  ]
+}

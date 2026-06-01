@@ -1,0 +1,1000 @@
+{
+  "corpus": {
+    "raw_rows": 250,
+    "unique_tweets": 197,
+    "ontopic_tweets": 191,
+    "offtopic_tweets": 6,
+    "date_min": "2020-09-26T09:09:29+00:00",
+    "date_max": "2026-06-01T09:25:11+00:00",
+    "queries_used": 6
+  },
+  "kpis": {
+    "tweets": 191,
+    "sum_likes": 17587,
+    "sum_rt": 3095,
+    "sum_replies": 4117,
+    "sum_quotes": 495,
+    "sum_views": 706302,
+    "sum_bookmarks": 898,
+    "sum_engagement": 25294,
+    "avg_engagement": 132.43,
+    "median_engagement": 1,
+    "verified_count": 31,
+    "verified_pct": 16.2,
+    "video_count": 22,
+    "video_pct": 11.5
+  },
+  "timeline_daily": [
+    {
+      "date": "2026-05-27",
+      "count": 2,
+      "likes": 267,
+      "views": 18227,
+      "engagement": 402
+    },
+    {
+      "date": "2026-05-28",
+      "count": 4,
+      "likes": 4054,
+      "views": 119767,
+      "engagement": 5611
+    },
+    {
+      "date": "2026-05-29",
+      "count": 6,
+      "likes": 1707,
+      "views": 70222,
+      "engagement": 2348
+    },
+    {
+      "date": "2026-05-30",
+      "count": 18,
+      "likes": 4232,
+      "views": 226614,
+      "engagement": 6078
+    },
+    {
+      "date": "2026-05-31",
+      "count": 50,
+      "likes": 6926,
+      "views": 264743,
+      "engagement": 10300
+    },
+    {
+      "date": "2026-06-01",
+      "count": 111,
+      "likes": 401,
+      "views": 6729,
+      "engagement": 555
+    }
+  ],
+  "timeline_hourly": [
+    0,
+    0,
+    0,
+    6,
+    2,
+    12,
+    21,
+    18,
+    46,
+    32,
+    3,
+    5,
+    7,
+    3,
+    1,
+    1,
+    3,
+    2,
+    6,
+    4,
+    5,
+    9,
+    4,
+    1
+  ],
+  "sentiment": {
+    "pro": 33,
+    "anti": 26,
+    "neutral": 132,
+    "offtopic": 6
+  },
+  "sentiment_engagement": {
+    "pro": 3965,
+    "anti": 3539,
+    "neutral": 10083
+  },
+  "sentiment_pct": {
+    "pro": 17.3,
+    "anti": 13.6,
+    "neutral": 69.1
+  },
+  "top_authors_by_count": [
+    {
+      "handle": "stacce2021",
+      "name": "Stacce",
+      "verified": false,
+      "followers": 17924,
+      "tweets": 5,
+      "sum_engagement": 19,
+      "sum_likes": 11
+    },
+    {
+      "handle": "repubblica",
+      "name": "Repubblica",
+      "verified": true,
+      "followers": 3430782,
+      "tweets": 4,
+      "sum_engagement": 1777,
+      "sum_likes": 850
+    },
+    {
+      "handle": "MiuccioPrado",
+      "name": "il Computer Amedeus",
+      "verified": false,
+      "followers": 1599,
+      "tweets": 3,
+      "sum_engagement": 3,
+      "sum_likes": 1
+    },
+    {
+      "handle": "sibilla75",
+      "name": "Simona Urso 🍉🍉🍉",
+      "verified": false,
+      "followers": 5230,
+      "tweets": 2,
+      "sum_engagement": 1634,
+      "sum_likes": 1200
+    },
+    {
+      "handle": "fdragoni",
+      "name": "Fabio Dragoni",
+      "verified": true,
+      "followers": 94639,
+      "tweets": 2,
+      "sum_engagement": 692,
+      "sum_likes": 557
+    },
+    {
+      "handle": "Corriere",
+      "name": "Corriere della Sera",
+      "verified": true,
+      "followers": 2689257,
+      "tweets": 2,
+      "sum_engagement": 686,
+      "sum_likes": 304
+    },
+    {
+      "handle": "maurizioacerbo",
+      "name": "Maurizio Acerbo",
+      "verified": true,
+      "followers": 11194,
+      "tweets": 2,
+      "sum_engagement": 623,
+      "sum_likes": 425
+    },
+    {
+      "handle": "maurorizzi_mr",
+      "name": "m a u r o",
+      "verified": true,
+      "followers": 30603,
+      "tweets": 2,
+      "sum_engagement": 296,
+      "sum_likes": 262
+    },
+    {
+      "handle": "Sntgvn",
+      "name": "Giovanni Santoni",
+      "verified": false,
+      "followers": 736,
+      "tweets": 2,
+      "sum_engagement": 2,
+      "sum_likes": 1
+    },
+    {
+      "handle": "MarcoP66302",
+      "name": "Marco",
+      "verified": false,
+      "followers": 8,
+      "tweets": 2,
+      "sum_engagement": 2,
+      "sum_likes": 1
+    },
+    {
+      "handle": "Asilesworld2022",
+      "name": "Asile",
+      "verified": false,
+      "followers": 19,
+      "tweets": 2,
+      "sum_engagement": 1,
+      "sum_likes": 0
+    },
+    {
+      "handle": "GiovanniPaciol3",
+      "name": "Giovanni Paciolla",
+      "verified": false,
+      "followers": 186,
+      "tweets": 2,
+      "sum_engagement": 1,
+      "sum_likes": 1
+    },
+    {
+      "handle": "storicolettore",
+      "name": "T.P. alter ego",
+      "verified": false,
+      "followers": 387,
+      "tweets": 2,
+      "sum_engagement": 0,
+      "sum_likes": 0
+    },
+    {
+      "handle": "EnricoMantecati",
+      "name": "Enrico Mantecati",
+      "verified": false,
+      "followers": 54,
+      "tweets": 2,
+      "sum_engagement": 0,
+      "sum_likes": 0
+    },
+    {
+      "handle": "Orgoglioitalia3",
+      "name": "CAESO QUIINCTIUS",
+      "verified": true,
+      "followers": 13797,
+      "tweets": 1,
+      "sum_engagement": 2861,
+      "sum_likes": 2126
+    }
+  ],
+  "top_authors_by_engagement": [
+    {
+      "handle": "Orgoglioitalia3",
+      "name": "CAESO QUIINCTIUS",
+      "verified": true,
+      "followers": 13797,
+      "tweets": 1,
+      "sum_engagement": 2861,
+      "sum_likes": 2126
+    },
+    {
+      "handle": "Giorgioaki",
+      "name": "giorgio bianchi",
+      "verified": true,
+      "followers": 42968,
+      "tweets": 1,
+      "sum_engagement": 2766,
+      "sum_likes": 1905
+    },
+    {
+      "handle": "marattin",
+      "name": "Luigi Marattin",
+      "verified": true,
+      "followers": 127048,
+      "tweets": 1,
+      "sum_engagement": 2635,
+      "sum_likes": 1830
+    },
+    {
+      "handle": "repubblica",
+      "name": "Repubblica",
+      "verified": true,
+      "followers": 3430782,
+      "tweets": 4,
+      "sum_engagement": 1777,
+      "sum_likes": 850
+    },
+    {
+      "handle": "avila92796",
+      "name": "Roberto Avila",
+      "verified": false,
+      "followers": 13080,
+      "tweets": 1,
+      "sum_engagement": 1639,
+      "sum_likes": 1342
+    },
+    {
+      "handle": "sibilla75",
+      "name": "Simona Urso 🍉🍉🍉",
+      "verified": false,
+      "followers": 5230,
+      "tweets": 2,
+      "sum_engagement": 1634,
+      "sum_likes": 1200
+    },
+    {
+      "handle": "PBerizzi",
+      "name": "Paolo Berizzi",
+      "verified": false,
+      "followers": 93742,
+      "tweets": 1,
+      "sum_engagement": 1378,
+      "sum_likes": 655
+    },
+    {
+      "handle": "strange_days_82",
+      "name": "Davide Scifo",
+      "verified": true,
+      "followers": 45929,
+      "tweets": 1,
+      "sum_engagement": 1057,
+      "sum_likes": 815
+    },
+    {
+      "handle": "EBustreo",
+      "name": "Bettybus",
+      "verified": false,
+      "followers": 3147,
+      "tweets": 1,
+      "sum_engagement": 911,
+      "sum_likes": 737
+    },
+    {
+      "handle": "CarloGarzia",
+      "name": "Carlo Garzia",
+      "verified": false,
+      "followers": 5802,
+      "tweets": 1,
+      "sum_engagement": 898,
+      "sum_likes": 728
+    },
+    {
+      "handle": "FrancescoBecco",
+      "name": "Gegge ® 🇮🇹",
+      "verified": false,
+      "followers": 3350,
+      "tweets": 1,
+      "sum_engagement": 772,
+      "sum_likes": 576
+    },
+    {
+      "handle": "fdragoni",
+      "name": "Fabio Dragoni",
+      "verified": true,
+      "followers": 94639,
+      "tweets": 2,
+      "sum_engagement": 692,
+      "sum_likes": 557
+    },
+    {
+      "handle": "Corriere",
+      "name": "Corriere della Sera",
+      "verified": true,
+      "followers": 2689257,
+      "tweets": 2,
+      "sum_engagement": 686,
+      "sum_likes": 304
+    },
+    {
+      "handle": "Tiziana_DR",
+      "name": "Tiziana Della Rocca 🎗️",
+      "verified": true,
+      "followers": 9955,
+      "tweets": 1,
+      "sum_engagement": 644,
+      "sum_likes": 534
+    },
+    {
+      "handle": "Virna25marzo",
+      "name": "Virna",
+      "verified": true,
+      "followers": 41326,
+      "tweets": 1,
+      "sum_engagement": 628,
+      "sum_likes": 353
+    }
+  ],
+  "top_tweets": [
+    {
+      "id": "2059968365221871704",
+      "url": "https://x.com/Orgoglioitalia3/status/2059968365221871704",
+      "handle": "Orgoglioitalia3",
+      "name": "CAESO QUIINCTIUS",
+      "verified": true,
+      "date": "2026-05-28T12:01:45+00:00",
+      "text": "Sempre amato De Gregori, risposta al giornalista da applausi. 😂😂 https://t.co/fogfaaWd9L",
+      "likes": 2126,
+      "retweets": 484,
+      "replies": 188,
+      "quotes": 63,
+      "views": 66475,
+      "media_type": "video",
+      "sentiment": "pro"
+    },
+    {
+      "id": "2060953484472590564",
+      "url": "https://x.com/Giorgioaki/status/2060953484472590564",
+      "handle": "Giorgioaki",
+      "name": "giorgio bianchi",
+      "verified": true,
+      "date": "2026-05-31T05:16:16+00:00",
+      "text": "Definisci \"Buffoni di corte\". https://t.co/I4koMPDdaj",
+      "likes": 1905,
+      "retweets": 383,
+      "replies": 422,
+      "quotes": 56,
+      "views": 37481,
+      "media_type": "video",
+      "sentiment": "neutral"
+    },
+    {
+      "id": "2059888030056321381",
+      "url": "https://x.com/marattin/status/2059888030056321381",
+      "handle": "marattin",
+      "name": "Luigi Marattin",
+      "verified": true,
+      "date": "2026-05-28T06:42:31+00:00",
+      "text": "E dopo Erri De Luca - lapidato dal tribunale del popolo perché ha spiegato che a Gaza non c’è nessun genocidio - ecco i nazisti di nuovo in azione contro Francesco De Gregori.\n\nLa cui colpa, da punire con violenza (per ora verbale, in futuro chissà) è quella di aver detto che sulla questione mediorientale non si sente in grado di esprimere una posizione.\n\nMa i nazisti propal - perché così si chiamano - non lo possono certo tollerare: tutti devono avere una posizione, e deve essere necessariamente uguale alla loro. Sennò giù botte !",
+      "likes": 1830,
+      "retweets": 359,
+      "replies": 412,
+      "quotes": 34,
+      "views": 50441,
+      "media_type": "text",
+      "sentiment": "anti"
+    },
+    {
+      "id": "2060966806173422039",
+      "url": "https://x.com/avila92796/status/2060966806173422039",
+      "handle": "avila92796",
+      "name": "Roberto Avila",
+      "verified": false,
+      "date": "2026-05-31T06:09:12+00:00",
+      "text": "Caro Francesco, sei un grande, un vero artista e un vero uomo con la sua dignità, diciamo un \"pesce fuor d'acqua.\" Non hai bisogno di slinguettare oppure allungare il cappello come fanno certi pseudo artisti per esibirsi.\nGli italiani veri ti adorano. https://t.co/32YF2fcAnC",
+      "likes": 1342,
+      "retweets": 207,
+      "replies": 77,
+      "quotes": 13,
+      "views": 17036,
+      "media_type": "video",
+      "sentiment": "neutral"
+    },
+    {
+      "id": "2060786921379365258",
+      "url": "https://x.com/sibilla75/status/2060786921379365258",
+      "handle": "sibilla75",
+      "name": "Simona Urso 🍉🍉🍉",
+      "verified": false,
+      "date": "2026-05-30T18:14:24+00:00",
+      "text": "Ho detto peste e corna di Morgan, per vari motivi.\nÈ sempre stato uno degli artisti che più ho detestato, ma oggettivamente questa sua critica a #DeGregori è semplicemente perfetta. https://t.co/Dvu32B8hd5",
+      "likes": 1126,
+      "retweets": 218,
+      "replies": 164,
+      "quotes": 36,
+      "views": 56675,
+      "media_type": "video",
+      "sentiment": "neutral"
+    },
+    {
+      "id": "2060410337896038858",
+      "url": "https://x.com/strange_days_82/status/2060410337896038858",
+      "handle": "strange_days_82",
+      "name": "Davide Scifo",
+      "verified": true,
+      "date": "2026-05-29T17:17:59+00:00",
+      "text": "Francesco De Gregori ieri a Milano: «Provo imbarazzo quando un artista si schiera in modo netto su questioni internazionali. Non faccio proclami dal palco su Gaza o Israele, non mi sento superiore a nessuno. Ho le idee confuse anch’io. Sensibilizzo con le canzoni, non con le lezioni. #DeGregori #MusicaEPolitica #Palestina #propal",
+      "likes": 815,
+      "retweets": 157,
+      "replies": 74,
+      "quotes": 11,
+      "views": 13632,
+      "media_type": "video",
+      "sentiment": "neutral"
+    },
+    {
+      "id": "2060708238023090184",
+      "url": "https://x.com/EBustreo/status/2060708238023090184",
+      "handle": "EBustreo",
+      "name": "Bettybus",
+      "verified": false,
+      "date": "2026-05-30T13:01:44+00:00",
+      "text": "Belli quegli artisti che non hanno le idee confuse come Francesco De Gregori e prendono posizione su Gaza.\nL'intera intervista di Sabina Guzzanti a Francesca Albanese nel suo canale Youtube per Generazione Perennial https://t.co/XjYWNd16q6",
+      "likes": 737,
+      "retweets": 158,
+      "replies": 9,
+      "quotes": 7,
+      "views": 21495,
+      "media_type": "video",
+      "sentiment": "neutral"
+    },
+    {
+      "id": "2060801066044707028",
+      "url": "https://x.com/CarloGarzia/status/2060801066044707028",
+      "handle": "CarloGarzia",
+      "name": "Carlo Garzia",
+      "verified": false,
+      "date": "2026-05-30T19:10:36+00:00",
+      "text": "Il discorso di De Gregori non fa una piega, dice cose lucidissime e dimostra di essere un vero intellettuale perché usa la ragione, non la sua posizione di artista per manipolare il pensiero del pubblico su temi sui quali non ci si può ergere a maestri. Chapeau 🎩",
+      "likes": 728,
+      "retweets": 100,
+      "replies": 62,
+      "quotes": 8,
+      "views": 10031,
+      "media_type": "text",
+      "sentiment": "pro"
+    },
+    {
+      "id": "2060790049579360277",
+      "url": "https://x.com/repubblica/status/2060790049579360277",
+      "handle": "repubblica",
+      "name": "Repubblica",
+      "verified": true,
+      "date": "2026-05-30T18:26:50+00:00",
+      "text": "Gino Castaldo scrive una lettera aperta a Francesco De Gregori dopo le sue dichiarazioni sugli artisti che si schierano: “In un mondo in cui sembra che il silenzio sia l’opzione più conveniente, che proprio da te venga un invito al silenzio è sconfortante”\n\nLa lettera completa di Gino Castaldo su Repubblica Spettacoli\n\n#rep",
+      "likes": 670,
+      "retweets": 135,
+      "replies": 506,
+      "quotes": 45,
+      "views": 73993,
+      "media_type": "video",
+      "sentiment": "neutral"
+    },
+    {
+      "id": "2061159848255922611",
+      "url": "https://x.com/PBerizzi/status/2061159848255922611",
+      "handle": "PBerizzi",
+      "name": "Paolo Berizzi",
+      "verified": false,
+      "date": "2026-05-31T18:56:16+00:00",
+      "text": "De Gregori ovviamente è libero di (non) dire e di (non) fare quello che vuole. Magari qualcuno gli spieghi che l'ignavia è complicità. A maggior ragione nel tempo che stiamo vivendo. C'era una volta il principe dei cantautori.",
+      "likes": 655,
+      "retweets": 84,
+      "replies": 588,
+      "quotes": 51,
+      "views": 37574,
+      "media_type": "text",
+      "sentiment": "anti"
+    },
+    {
+      "id": "2060800932430873050",
+      "url": "https://x.com/FrancescoBecco/status/2060800932430873050",
+      "handle": "FrancescoBecco",
+      "name": "Gegge ® 🇮🇹",
+      "verified": false,
+      "date": "2026-05-30T19:10:04+00:00",
+      "text": "Francesco De Gregori, con la sua solita lucidità e coraggio, ha scelto di non inginocchiarsi al pensiero unico della sinistra e al coro pro Gaza, confermando ancora una volta di essere un artista libero, non un cantautore di regime.\n🤝🤝👏👏👏👏👏👏🤝🤝 https://t.co/sBZq74xwFD",
+      "likes": 576,
+      "retweets": 100,
+      "replies": 89,
+      "quotes": 7,
+      "views": 11777,
+      "media_type": "video",
+      "sentiment": "pro"
+    },
+    {
+      "id": "2060963526206722349",
+      "url": "https://x.com/Tiziana_DR/status/2060963526206722349",
+      "handle": "Tiziana_DR",
+      "name": "Tiziana Della Rocca 🎗️",
+      "verified": true,
+      "date": "2026-05-31T05:56:10+00:00",
+      "text": "E niente, De Gregori perseguitato non solo dalla feccia di X, ma anche da cantanti e giornalisti, perché rivendica di non voler prendere posizione su Gaza e di voler continuare a fare l’artista e scrivere canzoni. La verità è che le sue parole li smascherano per quello che sono.",
+      "likes": 534,
+      "retweets": 71,
+      "replies": 36,
+      "quotes": 3,
+      "views": 4787,
+      "media_type": "text",
+      "sentiment": "neutral"
+    },
+    {
+      "id": "2061089330735579366",
+      "url": "https://x.com/fdragoni/status/2061089330735579366",
+      "handle": "fdragoni",
+      "name": "Fabio Dragoni",
+      "verified": true,
+      "date": "2026-05-31T14:16:04+00:00",
+      "text": "Un Artista che non si prende sul serio...pur essendo uno straordinario ARTISTA https://t.co/1Drpj7UbPt",
+      "likes": 463,
+      "retweets": 66,
+      "replies": 48,
+      "quotes": 5,
+      "views": 8479,
+      "media_type": "video",
+      "sentiment": "neutral"
+    },
+    {
+      "id": "2060319309239287852",
+      "url": "https://x.com/Valeria93113820/status/2060319309239287852",
+      "handle": "Valeria93113820",
+      "name": "Valeria Neri",
+      "verified": false,
+      "date": "2026-05-29T11:16:16+00:00",
+      "text": "Vasco Rossi, De Gregori. Ma anche Baglioni, Venditti, Cocciante, Guccini, Bennato. Nessuno dei cantautori che hanno fatto la storia della musica italiana  ha preso posizione su Gaza, anzi.\nE pensare che ci avevano illuso coi loro testi impegnati. Impegnati a tenersi la carriera!",
+      "likes": 419,
+      "retweets": 64,
+      "replies": 107,
+      "quotes": 12,
+      "views": 23724,
+      "media_type": "text",
+      "sentiment": "neutral"
+    },
+    {
+      "id": "2060998199091863802",
+      "url": "https://x.com/Virna25marzo/status/2060998199091863802",
+      "handle": "Virna25marzo",
+      "name": "Virna",
+      "verified": true,
+      "date": "2026-05-31T08:13:56+00:00",
+      "text": "Ci sono gli ARTISTI , abbiamo sentito in questi giorni FRANCESCO DE GREGORI, ENRICO RUGGERI...\nPoi c'è  lui...che pena ragazzi!\nVideo di Adnkronos⬇️ https://t.co/iutZ5jvWav",
+      "likes": 353,
+      "retweets": 57,
+      "replies": 208,
+      "quotes": 10,
+      "views": 14995,
+      "media_type": "video",
+      "sentiment": "anti"
+    },
+    {
+      "id": "2061129612298506662",
+      "url": "https://x.com/maurorizzi_mr/status/2061129612298506662",
+      "handle": "maurorizzi_mr",
+      "name": "m a u r o",
+      "verified": true,
+      "date": "2026-05-31T16:56:08+00:00",
+      "text": "Non ci si crede, stanno ancora a discutere su De Gregori.",
+      "likes": 261,
+      "retweets": 15,
+      "replies": 18,
+      "quotes": 0,
+      "views": 3656,
+      "media_type": "text",
+      "sentiment": "neutral"
+    },
+    {
+      "id": "2059633743489343762",
+      "url": "https://x.com/maurizioacerbo/status/2059633743489343762",
+      "handle": "maurizioacerbo",
+      "name": "Maurizio Acerbo",
+      "verified": true,
+      "date": "2026-05-27T13:52:05+00:00",
+      "text": "Francesco De Gregori non ha le idee chiare su Gaza e non intende prendere posizione. E' un suo diritto. Non comprendo però perché critichi gli artisti che hanno messo la propria visibilità pubblica al servizio della denuncia dei crimini israeliani. Piuttosto qualunquistico accusarli di usare Gaza per farsi pubblicità. \n#stopgenocidio #freepalestine",
+      "likes": 249,
+      "retweets": 29,
+      "replies": 97,
+      "quotes": 5,
+      "views": 17923,
+      "media_type": "text",
+      "sentiment": "anti"
+    },
+    {
+      "id": "2060832621068730830",
+      "url": "https://x.com/gisellaruccia/status/2060832621068730830",
+      "handle": "gisellaruccia",
+      "name": "Gisella Ruccia 🇵🇸",
+      "verified": true,
+      "date": "2026-05-30T21:15:59+00:00",
+      "text": "\"Sembrate fascisti che ti devi iscrivere al partito fascista\" https://t.co/PugBhWZoKQ",
+      "likes": 245,
+      "retweets": 42,
+      "replies": 44,
+      "quotes": 6,
+      "views": 11962,
+      "media_type": "photo",
+      "sentiment": "neutral"
+    },
+    {
+      "id": "2061327926931423555",
+      "url": "https://x.com/MT_Meli_/status/2061327926931423555",
+      "handle": "MT_Meli_",
+      "name": "Maria Teresa Melì",
+      "verified": true,
+      "date": "2026-06-01T06:04:10+00:00",
+      "text": "Sembra quasi che il non-comico Enzo Iacchetti, nel pronunciare quelle parole, lasci intendere di pensare di far parte della stessa categoria di De Gregori, e cioè quella degli artisti. Ebbene, segnalo non è così. https://t.co/ZPynmRfRU0",
+      "likes": 233,
+      "retweets": 24,
+      "replies": 57,
+      "quotes": 2,
+      "views": 2564,
+      "media_type": "photo",
+      "sentiment": "anti"
+    },
+    {
+      "id": "2060285793734627633",
+      "url": "https://x.com/maurizioacerbo/status/2060285793734627633",
+      "handle": "maurizioacerbo",
+      "name": "Maurizio Acerbo",
+      "verified": true,
+      "date": "2026-05-29T09:03:06+00:00",
+      "text": "Ringrazio @ilfoglio_it per l'attenzione ma non mi chiamo Massimo, non sono stalinista e sono dylaniano. Detto questo: De Gregori dovrebbe riflettere sul plauso che riceve dai complici del genocidio. Non ho capito quale sia la sua opinione su Gaza ma di certo è chiara quella di @maurizio_crippa.",
+      "likes": 176,
+      "retweets": 41,
+      "replies": 23,
+      "quotes": 3,
+      "views": 5272,
+      "media_type": "photo",
+      "sentiment": "anti"
+    },
+    {
+      "id": "2060967006489207290",
+      "url": "https://x.com/Corriere/status/2060967006489207290",
+      "handle": "Corriere",
+      "name": "Corriere della Sera",
+      "verified": true,
+      "date": "2026-05-31T06:09:59+00:00",
+      "text": "De Gregori, Erri De Luca e l'intolleranza della nuova «sinistra illiberale» su Israele e Gaza https://t.co/08pP1W9K7a",
+      "likes": 174,
+      "retweets": 38,
+      "replies": 165,
+      "quotes": 18,
+      "views": 26153,
+      "media_type": "text",
+      "sentiment": "neutral"
+    },
+    {
+      "id": "2060976702877028853",
+      "url": "https://x.com/oceanswon/status/2060976702877028853",
+      "handle": "oceanswon",
+      "name": "Kambiz Shadmehr",
+      "verified": true,
+      "date": "2026-05-31T06:48:31+00:00",
+      "text": "De Gregori non nega di avere una propria opinione, ma ribadisce che non sia compito di un artista orientare il pubblico. Riconosce l'enorme potere mediatico di cui gode chi sale su un palco e ritiene che questo privilegio non debba essere strumentalizzato per fare proselitismo.\n\n#gaza #degregori",
+      "likes": 171,
+      "retweets": 33,
+      "replies": 31,
+      "quotes": 4,
+      "views": 3657,
+      "media_type": "text",
+      "sentiment": "neutral"
+    },
+    {
+      "id": "2061155062525620726",
+      "url": "https://x.com/rodcostakiwi/status/2061155062525620726",
+      "handle": "rodcostakiwi",
+      "name": "Rodolfo",
+      "verified": false,
+      "date": "2026-05-31T18:37:15+00:00",
+      "text": "🫆Non mi interessa se De Gregori sia di Destra o di Sinistra, però mi inchino a chi ha il coraggio di rifiutarsi di fare il portavoce di una certa politica, mi sarei aspettato lo stesso da Vasco, che invece ha preferito allinearsi.🤔",
+      "likes": 142,
+      "retweets": 27,
+      "replies": 18,
+      "quotes": 2,
+      "views": 2107,
+      "media_type": "text",
+      "sentiment": "pro"
+    },
+    {
+      "id": "2060323399549796753",
+      "url": "https://x.com/Saturnino69/status/2060323399549796753",
+      "handle": "Saturnino69",
+      "name": "Saturnino Celani",
+      "verified": true,
+      "date": "2026-05-29T11:32:32+00:00",
+      "text": "I ❤️ #FrancescoDeGregori ! https://t.co/2hGuclZ9i3",
+      "likes": 134,
+      "retweets": 27,
+      "replies": 17,
+      "quotes": 11,
+      "views": 17959,
+      "media_type": "video",
+      "sentiment": "neutral"
+    },
+    {
+      "id": "2060280958192935082",
+      "url": "https://x.com/repubblica/status/2060280958192935082",
+      "handle": "repubblica",
+      "name": "Repubblica",
+      "verified": true,
+      "date": "2026-05-29T08:43:53+00:00",
+      "text": "“Per il supporto agli attivisti della Flotilla ho subito la mia prima ‘shitstorm'“, racconta Elisa, trent’anni di carriera e un debutto come prima artista donna a Campovolo alle porte.\n\n“Per una volta non sono d’accordo con De Gregori - ammette poi, commentando le dichiarazioni del cantautore romano sull’opportunità di esporsi su temi politici, come Gaza, per un artista-. Magari è una provocazione, la sua generazione ha vissuto un momento in cui la musica è stata cardine dei movimenti giovanili più rivoluzionari di sempre. Se c’è una questione che conta è importante ci siano tante voci diverse a sottolinearla e farne parlare, artisti compresi”.\n\nL’articolo completo di Luca Bortolotti su Repubblica\n\n#rep",
+      "likes": 132,
+      "retweets": 17,
+      "replies": 64,
+      "quotes": 7,
+      "views": 9091,
+      "media_type": "video",
+      "sentiment": "neutral"
+    }
+  ],
+  "hashtags": [
+    {
+      "tag": "#degregori",
+      "count": 5
+    },
+    {
+      "tag": "#gaza",
+      "count": 5
+    },
+    {
+      "tag": "#francescodegregori",
+      "count": 3
+    },
+    {
+      "tag": "#rep",
+      "count": 2
+    },
+    {
+      "tag": "#lastampa",
+      "count": 1
+    },
+    {
+      "tag": "#musicaepolitica",
+      "count": 1
+    },
+    {
+      "tag": "#palestina",
+      "count": 1
+    },
+    {
+      "tag": "#propal",
+      "count": 1
+    },
+    {
+      "tag": "#israelegenocida",
+      "count": 1
+    },
+    {
+      "tag": "#giornalai",
+      "count": 1
+    },
+    {
+      "tag": "#circoletto",
+      "count": 1
+    },
+    {
+      "tag": "#iostocondegregori",
+      "count": 1
+    },
+    {
+      "tag": "#ucraina",
+      "count": 1
+    },
+    {
+      "tag": "#veltroni",
+      "count": 1
+    },
+    {
+      "tag": "#ambosecco",
+      "count": 1
+    },
+    {
+      "tag": "#stopgenocidio",
+      "count": 1
+    },
+    {
+      "tag": "#freepalestine",
+      "count": 1
+    },
+    {
+      "tag": "#errideluca",
+      "count": 1
+    },
+    {
+      "tag": "#lgbtq",
+      "count": 1
+    },
+    {
+      "tag": "#romapride",
+      "count": 1
+    }
+  ],
+  "entities": {
+    "springsteen": 5,
+    "iacchetti": 5,
+    "elisa": 3,
+    "ruggeri": 6,
+    "vasco": 3,
+    "guccini": 3,
+    "castaldo": 9,
+    "berizzi": 16,
+    "roger waters": 1,
+    "gaza": 35,
+    "palestina": 4,
+    "flotilla": 1,
+    "sanremo": 1,
+    "tenco": 1,
+    "israele": 17,
+    "genocidio": 10,
+    "pensiero unico": 5,
+    "ignavia": 3
+  },
+  "media_split": {
+    "text": 153,
+    "photo": 16,
+    "video": 22
+  },
+  "engagement_buckets": {
+    "0": 83,
+    "1-9": 59,
+    "10-99": 20,
+    "100-999": 24,
+    "1000+": 5
+  },
+  "followers_buckets": {
+    "<1k": 91,
+    "1k-10k": 54,
+    "10k-100k": 21,
+    "100k+": 5
+  },
+  "quote_vs_original": {
+    "original": 180,
+    "quote": 11
+  },
+  "thesis": {
+    "merged_tweets": 235,
+    "added_vs_v1": 44,
+    "sum_likes": 18442,
+    "sum_views": 737663,
+    "sum_replies": 4221,
+    "axis": {
+      "coercion": 22,
+      "freedom": 52,
+      "neutral": 161
+    },
+    "axis_pct": {
+      "coercion": 9.4,
+      "freedom": 22.1,
+      "neutral": 68.5
+    },
+    "thesis_relevant": 74,
+    "thesis_relevant_pct": 31.5,
+    "coercion_lexicon": [
+      [
+        "fascista (accusa)",
+        12
+      ],
+      [
+        "ignavia",
+        8
+      ],
+      [
+        "silenzio (accusa)",
+        6
+      ],
+      [
+        "complice / complicità",
+        3
+      ],
+      [
+        "deve / serve schierarsi",
+        3
+      ],
+      [
+        "vigliacco / codardo / vile",
+        3
+      ],
+      [
+        "emarginare / gulag / rieducare",
+        2
+      ],
+      [
+        "vergogna",
+        1
+      ]
+    ],
+    "freedom_lexicon": [
+      [
+        "libero pensiero / libertà",
+        23
+      ],
+      [
+        "pensiero unico",
+        21
+      ],
+      [
+        "intolleranza / non si accetta",
+        12
+      ],
+      [
+        "Orwell / Stasi / Stalin / totalitario",
+        9
+      ],
+      [
+        "dissenso / dissentire",
+        7
+      ],
+      [
+        "conformismo",
+        5
+      ],
+      [
+        "omologati / pecoroni",
+        2
+      ],
+      [
+        "strumentalizzare",
+        2
+      ]
+    ]
+  }
+}

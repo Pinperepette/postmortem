@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PostMortem — Trending Topic: De Gregori · Twitter/X Edition</title>
+<style>
+:root{
+  --bg:#000;--surface:#16181c;--surface2:#1f2328;--border:#2f3336;
+  --text:#e7e9ea;--muted:#71767b;--green:#00ba7c;--blue:#1d9bf0;
+  --orange:#f28228;--red:#f4212e;--purple:#8b5cf6;--yellow:#ffd400;
+  --x-blue:#1d9bf0;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,'Segoe UI','Helvetica Neue',sans-serif;font-size:14px;line-height:1.5}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+
+.pm-banner{background:linear-gradient(135deg,#000 0%,#0a1a2f 50%,#000 100%);border-bottom:1px solid var(--border);padding:18px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.pm-logo{font-size:18px;font-weight:800;letter-spacing:-0.5px;color:var(--text)}
+.pm-logo span.brand{color:var(--x-blue)}
+.pm-tagline{font-size:12px;color:var(--muted);margin-top:2px}
+.pm-cta-text{font-size:12px;color:var(--muted)}
+
+nav{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;display:flex;gap:0;overflow-x:auto;white-space:nowrap;position:sticky;top:0;z-index:10}
+nav a{display:inline-block;padding:12px 16px;font-size:13px;font-weight:500;color:var(--muted);border-bottom:2px solid transparent;transition:color .15s}
+nav a:hover{color:var(--text);text-decoration:none}
+nav a.active{color:var(--x-blue);border-bottom-color:var(--x-blue)}
+
+.container{max-width:1200px;margin:0 auto;padding:24px 20px}
+.section{margin-bottom:48px}
+.section-title{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:20px;padding-bottom:8px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.section-title::before{content:'';width:3px;height:14px;background:var(--x-blue);border-radius:2px;display:inline-block}
+
+.profile-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:24px;display:grid;grid-template-columns:auto 1fr auto;gap:20px;align-items:center}
+.profile-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--x-blue),var(--purple));display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:800;color:#fff}
+.profile-name{font-size:20px;font-weight:800;color:var(--text);margin-bottom:2px}
+.profile-handle{font-size:14px;color:var(--muted);margin-bottom:8px}
+.profile-bio{font-size:13px;color:var(--text);margin-bottom:10px;max-width:640px}
+.profile-stats{display:flex;gap:18px;font-size:13px;color:var(--muted);flex-wrap:wrap}
+.profile-stats strong{color:var(--text)}
+.profile-badge{font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;background:rgba(29,155,240,.12);color:var(--x-blue);border:1px solid rgba(29,155,240,.3);white-space:nowrap}
+
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+.kpi-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 20px}
+.kpi-label{font-size:11px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.6px}
+.kpi-value{font-size:26px;font-weight:800;letter-spacing:-0.5px;color:var(--text)}
+.kpi-sub{font-size:11px;color:var(--muted);margin-top:4px}
+.kpi-value.warn{color:var(--orange)}
+.kpi-value.bad{color:var(--red)}
+.kpi-value.good{color:var(--green)}
+.kpi-value.blue{color:var(--x-blue)}
+
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.chart-grid.thirds{grid-template-columns:1fr 1fr 1fr}
+.chart-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px}
+.chart-card.full{grid-column:1/-1}
+.chart-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px}
+.chart-sub{font-size:11px;color:var(--muted);margin-bottom:16px}
+.chart-wrap{position:relative}
+
+.post-list{display:flex;flex-direction:column;gap:10px}
+.post-item{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 16px;display:grid;grid-template-columns:34px 1fr auto;gap:12px;align-items:start;transition:border-color .15s;cursor:pointer;text-decoration:none;color:inherit}
+.post-item:hover{border-color:var(--x-blue);text-decoration:none}
+.post-rank{font-size:13px;font-weight:800;color:var(--muted);padding-top:2px;text-align:center}
+.post-rank.top{background:var(--x-blue);color:#fff;border-radius:6px;padding:3px 0;font-size:12px}
+.post-head{display:flex;align-items:center;gap:6px;margin-bottom:4px;flex-wrap:wrap}
+.post-author{font-size:13px;font-weight:700;color:var(--text)}
+.post-handle{font-size:12px;color:var(--muted)}
+.post-date{font-size:11px;color:var(--muted)}
+.post-text{font-size:13px;color:var(--text);line-height:1.5;margin-bottom:6px}
+.post-meta{display:flex;gap:10px;flex-wrap:wrap;font-size:11px;color:var(--muted)}
+.post-stat{display:flex;align-items:center;gap:3px}
+.post-imp{font-size:15px;font-weight:800;color:var(--text);text-align:right;white-space:nowrap;padding-top:2px}
+.post-imp-sub{font-size:10px;color:var(--muted);text-align:right}
+.verified{color:var(--x-blue);font-size:13px}
+.pill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600}
+.pill.text{background:#1f2e3e;color:var(--blue)}
+.pill.photo{background:#3d2c00;color:var(--orange)}
+.pill.video{background:#1a3a1f;color:var(--green)}
+.pill.pro{background:rgba(0,186,124,.15);color:var(--green)}
+.pill.anti{background:rgba(244,33,46,.15);color:var(--red)}
+.pill.neutral{background:rgba(113,118,123,.18);color:var(--muted)}
+
+.rt-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.rt-author{display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--surface2);border-radius:12px;margin-bottom:8px;text-decoration:none;color:inherit;transition:background .15s}
+.rt-author:hover{background:#2a2e33;text-decoration:none}
+.rt-author-avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#555,#777);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0;object-fit:cover}
+.post-avatar{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#555,#777);display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0;object-fit:cover;vertical-align:middle}
+.rt-author-info{flex:1;min-width:0}
+.rt-author-name{font-size:13px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rt-author-handle{font-size:11px;color:var(--muted)}
+.rt-author-count{font-size:13px;font-weight:800;color:var(--x-blue);text-align:right}
+.rt-author-count small{display:block;font-size:10px;color:var(--muted);font-weight:500}
+
+.diag-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 22px;margin-bottom:12px;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start}
+.diag-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.diag-icon.critical{background:rgba(244,33,46,.15);color:var(--red)}
+.diag-icon.warn{background:rgba(242,130,40,.15);color:var(--orange)}
+.diag-icon.info{background:rgba(29,155,240,.15);color:var(--x-blue)}
+.diag-icon.good{background:rgba(0,186,124,.15);color:var(--green)}
+.diag-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px}
+.diag-body{font-size:13px;color:var(--muted);line-height:1.55}
+.diag-body strong{color:var(--text)}
+.diag-body code{background:var(--surface2);padding:1px 6px;border-radius:4px;font-size:12px;color:var(--text)}
+
+.inv-banner{background:linear-gradient(135deg,rgba(244,33,46,.10),rgba(29,155,240,.05));border:1px solid var(--border);border-left:3px solid var(--x-blue);border-radius:14px;padding:18px 22px;margin-bottom:20px;display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center}
+.inv-banner-date{font-size:30px;font-weight:900;color:var(--x-blue);letter-spacing:-1px;line-height:1.05;text-align:center;white-space:nowrap}
+.inv-banner-date small{display:block;font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.5px;margin-top:4px}
+.inv-banner-title{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.inv-banner-sub{font-size:14px;color:var(--text);line-height:1.55}
+.inv-banner-sub strong{color:var(--text)}
+
+.quote-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.quote-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;border-left:3px solid var(--muted)}
+.quote-card.pro{border-left-color:var(--green)}
+.quote-card.anti{border-left-color:var(--red)}
+.quote-card.neutral{border-left-color:var(--blue)}
+.quote-text{font-size:13px;color:var(--text);font-style:italic;line-height:1.5;margin-bottom:8px}
+.quote-author{font-size:12px;color:var(--muted)}
+.quote-author strong{color:var(--text);font-style:normal}
+
+.foot{font-size:11px;color:var(--muted);line-height:1.7;border-top:1px solid var(--border);padding-top:18px;margin-top:24px}
+.foot code{background:var(--surface2);padding:1px 5px;border-radius:4px}
+
+/* word clouds */
+.wc-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.wc-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px}
+.wc-card.pro{border-top:3px solid var(--green)}
+.wc-card.contro{border-top:3px solid var(--red)}
+.wc-head{font-size:14px;font-weight:800;margin-bottom:4px}
+.wc-head.pro{color:var(--green)} .wc-head.contro{color:var(--red)}
+.wc-sub{font-size:11px;color:var(--muted);margin-bottom:14px}
+.wc-cloud{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:baseline;line-height:1.1}
+.wc-word{font-weight:800;letter-spacing:-.3px}
+/* viral table */
+.vtable{width:100%;border-collapse:collapse;font-size:13px}
+.vtable th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);padding:8px 10px;border-bottom:1px solid var(--border)}
+.vtable td{padding:9px 10px;border-bottom:1px solid var(--border);color:var(--text)}
+.vtable tr:hover td{background:var(--surface2)}
+.vtag{display:inline-block;font-size:10px;font-weight:700;padding:2px 9px;border-radius:10px}
+.vtag.PRO{background:rgba(0,186,124,.15);color:var(--green)} .vtag.CONTRO{background:rgba(244,33,46,.15);color:var(--red)}
+.vbar{height:7px;border-radius:4px;background:var(--x-blue);display:inline-block;vertical-align:middle}
+/* network */
+.net-wrap{background:radial-gradient(circle at 50% 40%,#0c1620,#000);border:1px solid var(--border);border-radius:16px;position:relative}
+#netCanvas{display:block;width:100%;border-radius:16px;cursor:grab}
+.net-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);padding:12px 16px}
+.net-legend .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:middle}
+/* interpretation block */
+.interp-wrap{background:linear-gradient(135deg,rgba(139,92,246,.10),rgba(29,155,240,.04));border:1px solid var(--border);border-left:4px solid var(--purple);border-radius:16px;padding:8px 20px 20px}
+.interp-flag{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--purple);background:rgba(139,92,246,.12);padding:7px 14px;border-radius:0 0 10px 10px;margin-bottom:14px}
+.lit-hero{display:flex;align-items:baseline;gap:10px}
+.lit-hero .big{font-size:54px;font-weight:900;color:var(--red);letter-spacing:-2px;line-height:1}
+@media(max-width:760px){
+  .wc-grid{grid-template-columns:1fr}
+  .chart-grid,.chart-grid.thirds,.rt-grid,.quote-grid{grid-template-columns:1fr}
+  .profile-card{grid-template-columns:1fr;text-align:center}
+  .profile-avatar{margin:0 auto}
+  .inv-banner{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="pm-banner">
+  <div>
+    <div class="pm-logo"><span class="brand">PostMortem</span> — Trending Topic</div>
+    <div class="pm-tagline">Anatomia di un TT · Twitter/X Edition</div>
+  </div>
+  <div class="pm-cta-text">Snapshot · 1 giugno 2026</div>
+</div>
+
+<nav>
+  <a href="#overview" class="active">Panoramica</a>
+  <a href="#timeline">Timeline</a>
+  <a href="#litig">Litigiosità</a>
+  <a href="#network">Network</a>
+  <a href="#sentiment">Sentiment</a>
+  <a href="#attenzione">Attenzione</a>
+  <a href="#thesis">Schieramenti</a>
+  <a href="#tweets">Top Tweet</a>
+  <a href="#authors">Protagonisti</a>
+  <a href="#topics">Hashtag &amp; Entità</a>
+  <a href="#diag">Diagnosi</a>
+  <a href="#interp">Interpretazione</a>
+  <a href="#autore">Autore</a>
+</nav>
+
+<div class="container">
+
+  <!-- OVERVIEW -->
+  <section class="section" id="overview">
+    <div class="section-title">Panoramica del Trending Topic</div>
+
+    <div class="inv-banner">
+      <div class="inv-banner-date">28–31<small>MAG 2026</small></div>
+      <div>
+        <div class="inv-banner-title">Perché &ldquo;De Gregori&rdquo; è diventato TT</div>
+        <div class="inv-banner-sub">
+          A Milano (~28 maggio), <strong>Francesco De Gregori</strong> dichiara di provare
+          <em>&laquo;imbarazzo quando un artista si schiera in modo netto su questioni internazionali&raquo;</em>
+          e di non voler fare <em>&laquo;proclami dal palco su Gaza o Israele&raquo;</em> — una implicita critica
+          all'attivismo &agrave; la Springsteen. La frase spacca X: la destra lo celebra come
+          <strong>&laquo;artista libero&raquo;</strong>, la sinistra/pro-Pal lo accusa di <strong>&laquo;ignavia&raquo;</strong>.
+          Il caso esplode il 30–31 maggio con la lettera aperta di <strong>Gino Castaldo</strong> (Repubblica),
+          la replica di <strong>Elisa</strong> (&laquo;serve schierarsi&raquo;) e l'affondo di <strong>Paolo Berizzi</strong>.
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-card">
+      <div class="profile-avatar">DG</div>
+      <div>
+        <div class="profile-name">De Gregori</div>
+        <div class="profile-handle">Trending Topic · Italia · politica &amp; cultura</div>
+        <div class="profile-bio">
+          Dibattito sul ruolo politico dell'artista innescato dalle dichiarazioni di Francesco De Gregori
+          sul rifiuto di prendere posizione pubblica su Gaza/Israele. Campione analizzato via X Search
+          (6 query, lingua italiana).
+        </div>
+        <div class="profile-stats">
+          <span><strong id="s-tweets">235</strong> tweet analizzati</span>
+          <span><strong id="s-views">737K</strong> visualizzazioni</span>
+          <span><strong id="s-likes">18.442</strong> like</span>
+          <span>finestra <strong>27 mag → 1 giu</strong></span>
+        </div>
+      </div>
+      <div class="profile-badge">🔥 PICCO 31 MAG</div>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card"><div class="kpi-label">Tweet analizzati</div><div class="kpi-value" id="k-tweets">235</div><div class="kpi-sub">9 query · campione esteso</div></div>
+      <div class="kpi-card"><div class="kpi-label">Like totali</div><div class="kpi-value blue" id="k-likes">18.442</div><div class="kpi-sub">grafici base: 191 tweet</div></div>
+      <div class="kpi-card"><div class="kpi-label">Visualizzazioni</div><div class="kpi-value" id="k-views">737.663</div><div class="kpi-sub">stimate (X views)</div></div>
+      <div class="kpi-card"><div class="kpi-label">Tweet che prendono posizione</div><div class="kpi-value bad" id="k-thesis">91,5%</div><div class="kpi-sub">solo 8 su 235 neutri</div></div>
+      <div class="kpi-card"><div class="kpi-label">Reply totali</div><div class="kpi-value warn" id="k-reply">4.221</div><div class="kpi-sub">tema molto litigioso</div></div>
+      <div class="kpi-card"><div class="kpi-label">Retweet totali</div><div class="kpi-value" id="k-rt">3.095</div><div class="kpi-sub">amplificazione</div></div>
+      <div class="kpi-card"><div class="kpi-label">Account verificati</div><div class="kpi-value" id="k-ver">16,2%</div><div class="kpi-sub">31 su 191</div></div>
+      <div class="kpi-card"><div class="kpi-label">Contenuti video</div><div class="kpi-value good" id="k-vid">11,5%</div><div class="kpi-sub">clip della conferenza</div></div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section class="section" id="timeline">
+    <div class="section-title">Timeline &amp; Ritmo</div>
+    <div class="chart-grid">
+      <div class="chart-card full">
+        <div class="chart-title">Volume giornaliero vs visualizzazioni · eventi annotati</div>
+        <div class="chart-sub">Numero di tweet (barre) e visualizzazioni cumulate (linea), con i marker degli eventi che hanno innescato i picchi.</div>
+        <div class="chart-wrap" style="height:300px"><canvas id="cDaily"></canvas></div>
+        <div class="net-legend" id="evtLegend" style="padding:12px 4px 0"></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Distribuzione oraria (UTC)</div>
+        <div class="chart-sub">Quando si tweetta: mattina italiana (≈08–11 UTC = 10–13 ora locale) è la fascia calda.</div>
+        <div class="chart-wrap" style="height:240px"><canvas id="cHours"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Engagement medio per giorno</div>
+        <div class="chart-sub">Like+RT+reply+quote diviso il numero di tweet del giorno.</div>
+        <div class="chart-wrap" style="height:240px"><canvas id="cEngAvg"></canvas></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LITIGIOSITÀ -->
+  <section class="section" id="litig">
+    <div class="section-title">Indice di litigiosità</div>
+    <div class="chart-grid">
+      <div class="chart-card">
+        <div class="lit-hero"><span class="big" id="lit-big">1,31</span><div><div class="chart-title">reply per retweet</div><div class="chart-sub">Più <strong>risposte</strong> che <strong>retweet</strong>: si discute/litiga invece di condividere. Calcolato sul campione raccolto (235 tweet).</div></div></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Confronto con altri Trending Topic</div>
+        <div class="chart-sub">reply / retweet su campioni «top» comparabili (≈40 tweet ciascuno). Indicativo, non normalizzato.</div>
+        <div class="chart-wrap" style="height:200px"><canvas id="cLitig"></canvas></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NETWORK -->
+  <section class="section" id="network">
+    <div class="section-title">Network del dibattito · chi amplifica chi</div>
+    <div class="net-wrap">
+      <div class="net-legend">
+        <span><span class="dot" style="background:#00ba7c"></span>Pro De Gregori</span>
+        <span><span class="dot" style="background:#f4212e"></span>Contro</span>
+        <span><span class="dot" style="background:#71767b"></span>Neutro / News</span>
+        <span style="margin-left:auto">nodo = account · dimensione = engagement · arco = reply / quote / mention</span>
+      </div>
+      <canvas id="netCanvas" height="460"></canvas>
+    </div>
+    <div class="chart-sub" style="margin-top:10px">
+      Grafo delle interazioni ricostruite da reply, citazioni e menzioni (campione di <strong id="net-n">197</strong> tweet, <strong>48 nodi</strong>). Trascina i nodi per esplorare.
+      <br><em>Metriche (in-degree, archi) calcolate sul sottografo ricostruito dal campione raccolto, non sull'intera conversazione X.</em>
+    </div>
+    <div class="diag-card" style="margin-top:16px">
+      <div class="diag-icon info">🕸️</div>
+      <div>
+        <div class="diag-title">Cosa mostra il grafo</div>
+        <div class="diag-body">
+          <strong>@PBerizzi</strong> (contro) è il nodo con più interazioni in entrata (<strong>19</strong>): il suo tweet sull'«ignavia» diventa il punto di raccolta delle repliche.
+          <strong>@repubblica</strong> fa da <strong>ponte neutro</strong> (in-degree 13) tra i due fronti, rilanciando Castaldo ed Elisa.
+          I tweet a più alto engagement (<strong>@Orgoglioitalia3</strong>, <strong>@marattin</strong>, <strong>@Giorgioaki</strong>) sono invece <strong>nodi-broadcast isolati</strong>: enormi numeri, pochissime connessioni in entrata — dichiarazioni che vengono amplificate ma non «discusse».
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SENTIMENT -->
+  <section class="section" id="sentiment">
+    <div class="section-title">Sentiment &amp; Polarizzazione</div>
+    <div class="chart-grid thirds">
+      <div class="chart-card">
+        <div class="chart-title">Schieramento (n. tweet)</div>
+        <div class="chart-sub">Classificazione per lettura del testo, tweet per tweet. Neutro solo per notizie/citazioni fattuali.</div>
+        <div class="chart-wrap" style="height:230px"><canvas id="cSent"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Like per schieramento</div>
+        <div class="chart-sub">Dove si concentra l'engagement.</div>
+        <div class="chart-wrap" style="height:230px"><canvas id="cSentEng"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Tipo di contenuto</div>
+        <div class="chart-sub">Testo / foto / video.</div>
+        <div class="chart-wrap" style="height:230px"><canvas id="cMedia"></canvas></div>
+      </div>
+    </div>
+    <div style="height:14px"></div>
+    <div class="quote-grid">
+      <div class="quote-card pro">
+        <div class="quote-text">&ldquo;Francesco De Gregori, con la sua solita lucidità e coraggio, ha scelto di non inginocchiarsi al pensiero unico della sinistra e al coro pro Gaza… un artista libero, non un cantautore di regime.&rdquo;</div>
+        <div class="quote-author"><strong>@FrancescoBecco</strong> · 576 like · <span class="pill pro">PRO</span></div>
+      </div>
+      <div class="quote-card anti">
+        <div class="quote-text">&ldquo;De Gregori è libero di (non) dire e (non) fare quello che vuole. Magari qualcuno gli spieghi che l'ignavia è complicità… C'era una volta il principe dei cantautori.&rdquo;</div>
+        <div class="quote-author"><strong>@PBerizzi</strong> (Repubblica) · 655 like · <span class="pill anti">CONTRO</span></div>
+      </div>
+      <div class="quote-card neutral">
+        <div class="quote-text">&ldquo;Gino Castaldo scrive una lettera aperta… 'che proprio da te venga un invito al silenzio è sconfortante'.&rdquo;</div>
+        <div class="quote-author"><strong>@repubblica</strong> · 670 like · <span class="pill neutral">NEWS</span></div>
+      </div>
+      <div class="quote-card anti">
+        <div class="quote-text">&ldquo;Per una volta non sono d'accordo con De Gregori… se c'è una questione che conta è importante ci siano tante voci diverse, artisti compresi.&rdquo;</div>
+        <div class="quote-author"><strong>Elisa</strong> via @repubblica · 132 like · <span class="pill anti">CONTRO</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BATTAGLIA DELL'ATTENZIONE -->
+  <section class="section" id="attenzione">
+    <div class="section-title">Chi ha vinto la battaglia dell'attenzione?</div>
+    <div class="chart-card">
+      <table class="vtable"><thead><tr><th>Frame</th><th>Tweet</th><th>Like</th><th>Like / tweet</th></tr></thead><tbody id="attBody"></tbody></table>
+    </div>
+    <div class="diag-card" style="margin-top:14px">
+      <div class="diag-icon good">📸</div>
+      <div>
+        <div class="diag-title" id="att-h">Nel campione analizzato il fronte PRO raccoglie più engagement</div>
+        <div class="diag-body" id="att-body">—</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THESIS: STRUMENTALIZZAZIONE & DISSENSO -->
+  <section class="section" id="thesis">
+    <div class="section-title">Schieramenti e argomenti ricorrenti</div>
+
+    <div class="inv-banner" style="border-left-color:var(--red)">
+      <div class="inv-banner-date" style="color:var(--red)">91,5%<small>PRENDE POSIZIONE</small></div>
+      <div>
+        <div class="inv-banner-title">Discussione sul ruolo politico dell'artista</div>
+        <div class="inv-banner-sub">
+          Su <strong>235 tweet</strong> solo <strong>8 (3,4%)</strong> sono genuinamente neutri: il tema quasi non lascia spazio all'indifferenza.
+          Il fronte che <strong>difende il diritto di De Gregori a non schierarsi</strong> è maggioritario (<strong>145 tweet, ~64% degli schierati</strong>); quello critico è <strong>82 (~36%)</strong>.
+          Tra i critici, una parte <strong>sostiene che il silenzio equivalga a complicità</strong> — <em>«schierarsi è un dovere»</em>, <em>«l'ignavia è complicità»</em> — fino all'insulto (<em>«vigliacco»</em>, <em>«codardo»</em>, <em>«complice»</em>).
+          Chi lo difende legge in quelle reazioni un <em>«pensiero unico»</em> che <em>«non accetta che si pensi diversamente»</em>.
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-grid">
+      <div class="chart-card">
+        <div class="chart-title">Lessico della coercizione</div>
+        <div class="chart-sub">Quante volte ricorre il vocabolario dell'obbligo e della delegittimazione.</div>
+        <div class="chart-wrap" style="height:230px"><canvas id="cCoercion"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Lessico della libertà di pensiero</div>
+        <div class="chart-sub">Il vocabolario di chi denuncia il conformismo imposto.</div>
+        <div class="chart-wrap" style="height:230px"><canvas id="cFreedom"></canvas></div>
+      </div>
+    </div>
+
+    <div style="height:18px"></div>
+    <div class="rt-grid">
+      <div>
+        <div class="chart-title" style="margin-bottom:12px;color:var(--red)">▸ «Devi schierarti»: la pressione ad allinearsi</div>
+        <div class="quote-card anti">
+          <div class="quote-text">&ldquo;De Gregori è libero di (non) dire e (non) fare quello che vuole. Magari qualcuno gli spieghi che <strong>l'ignavia è complicità</strong>. C'era una volta il principe dei cantautori.&rdquo;</div>
+          <div class="quote-author"><strong>@PBerizzi</strong> (Repubblica) · 655 like · 588 reply</div>
+        </div>
+        <div class="quote-card anti">
+          <div class="quote-text">&ldquo;a De Gregori dico che <strong>serve schierarsi</strong>… se c'è una questione che conta è importante ci siano tante voci diverse, artisti compresi.&rdquo;</div>
+          <div class="quote-author"><strong>Elisa</strong> via @repubblica · 426 like</div>
+        </div>
+        <div class="quote-card anti">
+          <div class="quote-text">&ldquo;che proprio da te venga <strong>un invito al silenzio</strong> è sconfortante.&rdquo;</div>
+          <div class="quote-author"><strong>Gino Castaldo</strong> via @repubblica · 670 like</div>
+        </div>
+        <div class="quote-card anti">
+          <div class="quote-text">&ldquo;De Gregori è un <strong>vigliacco</strong>… ha il dovere di criticare aspramente Trump.&rdquo; · &ldquo;È solo un vile, un <strong>codardo</strong>. Il menestrello di stocazzo.&rdquo;</div>
+          <div class="quote-author"><strong>@kikinouri</strong> · <strong>@trabs62</strong></div>
+        </div>
+        <div class="quote-card anti">
+          <div class="quote-text">&ldquo;de gregori e de luca sono 2 pezzi di merda sionisti, e <strong>chi lo nega è complice</strong>.&rdquo;</div>
+          <div class="quote-author"><strong>@elio1416097</strong></div>
+        </div>
+      </div>
+      <div>
+        <div class="chart-title" style="margin-bottom:12px;color:var(--green)">▸ «Non accettano che si pensi diversamente»</div>
+        <div class="quote-card pro">
+          <div class="quote-text">&ldquo;non si piegano ai dogmi e al <strong>pensiero unico</strong> di un'area politica che non accetta sfumature: <strong>o ti allinei, o sei un nemico</strong>.&rdquo;</div>
+          <div class="quote-author"><strong>@LadyAfro17</strong></div>
+        </div>
+        <div class="quote-card pro">
+          <div class="quote-text">&ldquo;Chi non si schiera <strong>deve essere emarginato</strong>. Colpirne uno per educarne 100… Se sul palco non dai del fascista a chi non la pensa come la sinistra <strong>saltano tutti i contratti</strong>. Diventi un lebbroso.&rdquo;</div>
+          <div class="quote-author"><strong>@MenteSplen23687</strong></div>
+        </div>
+        <div class="quote-card pro">
+          <div class="quote-text">&ldquo;tu non vuoi che de Gregori esprima la sua opinione, <strong>vuoi che esprima la tua</strong>, perché <strong>le opinioni difformi non sono ammesse</strong>.&rdquo;</div>
+          <div class="quote-author"><strong>@MaurizioARicci</strong></div>
+        </div>
+        <div class="quote-card pro">
+          <div class="quote-text">&ldquo;Se uno non la pensa come voi lo marchiate subito come <strong>fascista</strong> o ignorante!! De Gregori è un uomo dal <strong>libero pensiero</strong>.&rdquo;</div>
+          <div class="quote-author"><strong>@ziomaxranza</strong></div>
+        </div>
+        <div class="quote-card pro">
+          <div class="quote-text">&ldquo;L'intolleranza che i comunisti hanno delle opinioni altrui è imbarazzante. Vogliono il pensiero unico sovietico. Cosa propone per de gregori? <strong>Un gulag per rieducarlo?</strong>&rdquo;</div>
+          <div class="quote-author"><strong>@saveriolorusso</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="height:22px"></div>
+    <div class="chart-title" style="margin-bottom:4px">Word cloud dei due schieramenti</div>
+    <div class="chart-sub" style="margin-bottom:14px">Parole più frequenti nei tweet classificati (esclusi nome e stopword). Dimensione ∝ frequenza.</div>
+    <div class="wc-grid">
+      <div class="wc-card pro">
+        <div class="wc-head pro">▸ PRO De Gregori</div>
+        <div class="wc-sub">«lo difendono»: lessico della libertà</div>
+        <div class="wc-cloud" id="wcPro"></div>
+      </div>
+      <div class="wc-card contro">
+        <div class="wc-head contro">▸ CONTRO De Gregori</div>
+        <div class="wc-sub">«lo criticano»: lessico della causa</div>
+        <div class="wc-cloud" id="wcContro"></div>
+      </div>
+    </div>
+
+    <div style="height:22px"></div>
+    <div class="chart-card">
+      <div class="chart-title">Frasi più virali per frame</div>
+      <div class="chart-sub">Ricorrenza nel campione e like cumulati dei tweet che contengono ciascuna espressione.</div>
+      <table class="vtable"><thead><tr><th>Frame</th><th>Espressione</th><th>Tweet</th><th>Like cumulati</th></tr></thead><tbody id="viralBody"></tbody></table>
+    </div>
+  </section>
+
+  <!-- TOP TWEETS -->
+  <section class="section" id="tweets">
+    <div class="section-title">Top Tweet per Like</div>
+    <div class="post-list" id="postList"></div>
+  </section>
+
+  <!-- AUTHORS -->
+  <section class="section" id="authors">
+    <div class="section-title">Protagonisti del dibattito</div>
+    <div class="rt-grid">
+      <div>
+        <div class="chart-title" style="margin-bottom:12px">Top account per engagement</div>
+        <div id="authEng"></div>
+      </div>
+      <div>
+        <div class="chart-title" style="margin-bottom:12px">Più attivi (n. tweet)</div>
+        <div id="authCount"></div>
+      </div>
+    </div>
+    <div style="height:16px"></div>
+    <div class="chart-grid">
+      <div class="chart-card">
+        <div class="chart-title">Distribuzione like per tweet</div>
+        <div class="chart-sub">La long tail: 74% dei tweet sotto i 10 like, ma una manciata di post fa il grosso del rumore.</div>
+        <div class="chart-wrap" style="height:240px"><canvas id="cBuckets"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Dimensione degli account coinvolti</div>
+        <div class="chart-sub">Per follower. Il dibattito è dominato da micro/medi account; pochi grandi media.</div>
+        <div class="chart-wrap" style="height:240px"><canvas id="cFoll"></canvas></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOPICS -->
+  <section class="section" id="topics">
+    <div class="section-title">Hashtag &amp; Entità citate</div>
+    <div class="chart-grid">
+      <div class="chart-card">
+        <div class="chart-title">Hashtag più usati</div>
+        <div class="chart-sub">L'hashtag #DeGregori convive con #Gaza/#Palestina: il TT musicale è di fatto un TT politico.</div>
+        <div class="chart-wrap" style="height:300px"><canvas id="cHash"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Entità / parole chiave (n. tweet)</div>
+        <div class="chart-sub">Quanto pesa il frame politico: &ldquo;Gaza&rdquo;, &ldquo;Israele&rdquo;, &ldquo;genocidio&rdquo; più del lessico musicale.</div>
+        <div class="chart-wrap" style="height:300px"><canvas id="cEnt"></canvas></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIAGNOSI -->
+  <section class="section" id="diag">
+    <div class="section-title">Diagnosi del Trend</div>
+
+    <div class="diag-card">
+      <div class="diag-icon info">🎤</div>
+      <div>
+        <div class="diag-title">Innesco: la frase dal palco</div>
+        <div class="diag-body">Il TT nasce da un singolo soundbite — <code>«non faccio proclami dal palco su Gaza o Israele»</code> — ripreso in clip video (il <strong>11,5%</strong> dei tweet è video, contro un'enorme prevalenza di reazioni testuali). Il video più visto (@Orgoglioitalia3, <strong>66K view / 2.126 like</strong>) è la miccia.</div>
+      </div>
+    </div>
+
+    <div class="diag-card">
+      <div class="diag-icon critical">⚔️</div>
+      <div>
+        <div class="diag-title">Dal tema musicale allo scontro politico</div>
+        <div class="diag-body">Le entità più citate non sono canzoni ma <strong>Gaza (35)</strong>, <strong>Israele (17)</strong>, <strong>genocidio (10)</strong>. De Gregori è il pretesto di uno scontro destra/sinistra: <code>«pensiero unico»</code> vs <code>«ignavia = complicità»</code>. Il rapporto <strong>reply (4.117) &gt; retweet (3.095)</strong> conferma un tema da rissa più che da condivisione.</div>
+      </div>
+    </div>
+
+    <div class="diag-card">
+      <div class="diag-icon warn">📰</div>
+      <div>
+        <div class="diag-title">I media innescano, gli schierati polarizzano</div>
+        <div class="diag-body">I tweet genuinamente neutri sono solo <strong>8 (3,4%)</strong>: quasi tutti prendono posizione. Il fronte <strong>PRO De Gregori è nettamente maggioritario (145 vs 82)</strong> e a più alta intensità di like (85 vs 59 per tweet), trainato da account di area destra/liberale e da nomi come Marattin, Dragoni, Giorgio Bianchi. Le testate (Repubblica, Corriere) restano la fonte &ldquo;neutra&rdquo; che però fa da innesco alle repliche.</div>
+      </div>
+    </div>
+
+    <div class="diag-card">
+      <div class="diag-icon good">🔭</div>
+      <div>
+        <div class="diag-title">Catalizzatori dell'escalation</div>
+        <div class="diag-body">Tre eventi alzano il volume tra 30 e 31 maggio: la <strong>lettera di Gino Castaldo</strong> (@repubblica, 670 like / 73K view), la replica di <strong>Elisa</strong> (&laquo;serve schierarsi&raquo;), e l'affondo di <strong>Paolo Berizzi</strong> (655 like, 588 reply). Da qui il confronto si allarga a Springsteen, Iacchetti, Ruggeri, Vasco, Guccini.</div>
+      </div>
+    </div>
+
+    <div class="diag-card">
+      <div class="diag-icon info">⏱️</div>
+      <div>
+        <div class="diag-title">Ciclo di vita: già in coda</div>
+        <div class="diag-body">Picco netto il <strong>31 maggio (50 tweet, 6.926 like)</strong>. Il <strong>1 giugno</strong> il numero di tweet sale a 111 ma con appena <strong>401 like</strong> totali: tante repliche a bassissimo impatto = il TT sta esaurendo la sua spinta virale e degrada in chiacchiericcio.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERPRETAZIONE -->
+  <section class="section" id="interp">
+    <div class="section-title">Interpretazione dell'autore</div>
+    <div class="interp-wrap">
+      <div class="interp-flag">⬇ qui finiscono i numeri, inizia la lettura</div>
+      <div class="diag-card" style="background:transparent;border:none;padding:8px 0">
+        <div class="diag-icon critical">🎯</div>
+        <div>
+          <div class="diag-title">L'artista come bandiera</div>
+          <div class="diag-body">Una parte significativa dei tweet <strong>interpreta le critiche a De Gregori come una richiesta di conformità ideologica</strong>: la libertà di non esporsi viene riletta prima come colpa morale (<code>ignavia</code>, <code>complicità</code>, <code>silenzio</code>) e poi come colpa politica (<code>fascista</code>, <code>sionista</code>, <code>vigliacco</code>). Letta così, la vicenda assomiglia al tentativo di <strong>arruolare un simbolo</strong>: o sta nella narrazione, o va delegittimato. È una chiave di lettura, non un dato.</div>
+        </div>
+      </div>
+      <div class="diag-card" style="background:transparent;border:none;padding:8px 0">
+        <div class="diag-icon good">🗣️</div>
+        <div>
+          <div class="diag-title">Il dissenso che si autodefinisce</div>
+          <div class="diag-body">Il vocabolario più ricorrente del trend non è musicale ma politico-identitario (<strong>«pensiero unico» 21</strong>, <strong>«libertà» 23</strong>, <strong>«intolleranza/non si accetta» 12</strong>, <strong>«Orwell/Stasi» 9</strong>). Si può <em>leggere</em> il caso come l'emblema usato da chi sostiene che oggi non sia più ammesso pensarla diversamente — interpretazione coerente con i conteggi, ma che resta una tesi dell'autore.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUTORE -->
+  <section class="section" id="autore">
+    <div class="section-title">Autore dell'analisi</div>
+    <div class="profile-card">
+      <img class="profile-avatar" style="object-fit:cover" src="https://pbs.twimg.com/profile_images/1709892057819422720/K06B6_l__normal.jpg" alt="@Pinperepette">
+      <div>
+        <div class="profile-name">🏴‍☠️ The Pirate 🏴‍☠️ <span class="verified" style="font-size:15px">✔</span></div>
+        <div class="profile-handle"><a href="https://x.com/Pinperepette" target="_blank" rel="noopener">@Pinperepette</a> · Andrea Amani</div>
+        <div class="profile-bio">#Security engineer · P(Bug | Fix) ≠ P(Fix | Bug) · Debugging → ∞ · Classe '76, Σ(errors²) ≠ 0</div>
+        <div class="profile-stats">
+          <span><strong>17.695</strong> follower</span>
+          <span><strong>132.612</strong> tweet</span>
+          <span>su X dal <strong>2010</strong></span>
+        </div>
+      </div>
+      <a class="pm-btn" href="https://x.com/Pinperepette" target="_blank" rel="noopener" style="display:inline-block;background:var(--x-blue);color:#fff;font-size:12px;font-weight:700;padding:8px 18px;border-radius:20px;white-space:nowrap">Vai al profilo →</a>
+    </div>
+    <div class="diag-card">
+      <div class="diag-icon info">🔎</div>
+      <div>
+        <div class="diag-title">Ricerca <code>De Gregori from:Pinperepette</code></div>
+        <div class="diag-body">
+          Nella finestra analizzata (27 mag–1 giu 2026) non risultano interventi dell'autore sulla vicenda. L'unico match storico del termine risale al <a href="https://x.com/Pinperepette/status/1309782133116932096" target="_blank" rel="noopener">2020</a>, fuori contesto, ed è escluso dal campione.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">
+    <strong>Metodologia.</strong> Campione raccolto via <code>X / snare-x</code> con <strong>9 query</strong> (<code>lang:it</code>) su angoli diversi del dibattito (Gaza, Castaldo, artista/cantautore, Springsteen, sinistra/destra, schierarsi/silenzio/complicità, insulti, pensiero unico/strumentalizzazione) — sort <code>top</code> e <code>latest</code>.
+    I grafici di base (Timeline, Sentiment, Top tweet) sono calcolati su <strong>191 tweet on-topic</strong>; la sezione <em>Strumentalizzazione &amp; Dissenso</em> su un <strong>campione esteso a 235 tweet</strong>.
+    Lo <strong>schieramento</strong> (pro / contro / neutro) è assegnato leggendo il testo di ciascun tweet, non per parole chiave: il &ldquo;neutro&rdquo; è riservato a notizie, citazioni fattuali e commenti realmente non schierati (solo 8 su 235). Una prima versione a euristica gonfiava i &ldquo;neutri&rdquo; ed è stata corretta. Il <strong>lessico</strong> (coercizione / libertà) e l'<strong>indice di litigiosità</strong> sono conteggi deterministici. Restano scelte di classificazione opinabili sui casi-limite (ironia, sarcasmo).
+    Le visualizzazioni sono i <em>views</em> dichiarati da X. Dati sorgente: <code>dataset.json</code> / <code>stats.json</code> / <code>thesis_extra.json</code>. Snapshot del 1 giugno 2026.
+  </div>
+
+</div>
+
+<script src="chart.umd.min.js"></script>
+<script src="network_data.js"></script>
+<script>
+const DATA = {
+  timeline_daily: [
+    {date:"27 mag",count:2,likes:267,views:18227,eng:402},
+    {date:"28 mag",count:4,likes:4054,views:119767,eng:5611},
+    {date:"29 mag",count:6,likes:1707,views:70222,eng:2348},
+    {date:"30 mag",count:18,likes:4232,views:226614,eng:6078},
+    {date:"31 mag",count:50,likes:6926,views:264743,eng:10300},
+    {date:"1 giu",count:111,likes:401,views:6729,eng:555}
+  ],
+  hours: [0,0,0,6,2,12,21,18,46,32,3,5,7,3,1,1,3,2,6,4,5,9,4,1],
+  sentiment: {pro:33,anti:26,neutral:132},
+  sentiment_eng: {pro:3965,anti:3539,neutral:10083},
+  media: {Testo:153,Foto:16,Video:22},
+  axis: {coercion:22,freedom:52,neutral:161},
+  coercion_lex: [["fascista (accusa)",12],["ignavia",8],["silenzio (accusa)",6],["complice / complicità",3],["deve / serve schierarsi",3],["vigliacco / codardo / vile",3],["emarginare / gulag",2],["vergogna",1]],
+  freedom_lex: [["libero pensiero / libertà",23],["pensiero unico",21],["intolleranza / non si accetta",12],["Orwell / Stasi / totalitario",9],["dissenso / dissentire",7],["conformismo",5],["omologati / pecoroni",2],["strumentalizzare",2]],
+  buckets: {"0":83,"1-9":59,"10-99":20,"100-999":24,"1000+":5},
+  foll: {"<1k":91,"1k-10k":54,"10k-100k":21,"100k+":5},
+  hashtags: [["#degregori",5],["#gaza",5],["#francescodegregori",3],["#rep",2],["#palestina",1],["#propal",1],["#musicaepolitica",1],["#israelegenocida",1],["#stopgenocidio",1],["#freepalestine",1],["#iostocondegregori",1],["#errideluca",1]],
+  entities: [["gaza",35],["israele",17],["berizzi",16],["genocidio",10],["castaldo",9],["ruggeri",6],["springsteen",5],["iacchetti",5],["pensiero unico",5],["palestina",4],["elisa",3],["vasco",3],["guccini",3],["ignavia",3]],
+  authors_eng: [
+    {h:"Orgoglioitalia3",n:"CAESO QUIINCTIUS",v:true,e:2861,t:1},
+    {h:"Giorgioaki",n:"Giorgio Bianchi",v:true,e:2766,t:1},
+    {h:"marattin",n:"Luigi Marattin",v:true,e:2635,t:1},
+    {h:"repubblica",n:"Repubblica",v:true,e:1777,t:4},
+    {h:"avila92796",n:"Roberto Avila",v:false,e:1639,t:1},
+    {h:"sibilla75",n:"Simona Urso",v:false,e:1634,t:2},
+    {h:"PBerizzi",n:"Paolo Berizzi",v:false,e:1378,t:1},
+    {h:"strange_days_82",n:"Davide Scifo",v:true,e:1057,t:1},
+    {h:"EBustreo",n:"Bettybus",v:false,e:911,t:1},
+    {h:"CarloGarzia",n:"Carlo Garzia",v:false,e:898,t:1}
+  ],
+  authors_count: [
+    {h:"stacce2021",n:"Stacce",v:false,t:5,e:19},
+    {h:"repubblica",n:"Repubblica",v:true,t:4,e:1777},
+    {h:"MiuccioPrado",n:"il Computer Amedeus",v:false,t:3,e:3},
+    {h:"sibilla75",n:"Simona Urso",v:false,t:2,e:1634},
+    {h:"fdragoni",n:"Fabio Dragoni",v:true,t:2,e:692},
+    {h:"Corriere",n:"Corriere della Sera",v:true,t:2,e:686},
+    {h:"maurizioacerbo",n:"Maurizio Acerbo",v:true,t:2,e:623},
+    {h:"maurorizzi_mr",n:"mauro",v:true,t:2,e:296}
+  ],
+  top_tweets: [
+    {r:1,h:"Orgoglioitalia3",n:"CAESO QUIINCTIUS",v:true,d:"28 mag",s:"pro",m:"video",likes:2126,rt:484,rp:188,vw:66475,url:"https://x.com/Orgoglioitalia3/status/2059968365221871704",txt:"Sempre amato De Gregori, risposta al giornalista da applausi. 😂😂"},
+    {r:2,h:"Giorgioaki",n:"Giorgio Bianchi",v:true,d:"31 mag",s:"pro",m:"video",likes:1905,rt:383,rp:422,vw:37481,url:"https://x.com/Giorgioaki/status/2060953484472590564",txt:"Definisci «Buffoni di corte»."},
+    {r:3,h:"marattin",n:"Luigi Marattin",v:true,d:"28 mag",s:"pro",m:"text",likes:1830,rt:359,rp:412,vw:50441,url:"https://x.com/marattin/status/2059888030056321381",txt:"E dopo Erri De Luca… ecco i nazisti di nuovo in azione contro Francesco De Gregori. La cui colpa è aver detto che sulla questione mediorientale non si sente in grado di esprimere una posizione. Ma i nazisti propal non lo possono tollerare: tutti devono avere una posizione, uguale alla loro."},
+    {r:4,h:"avila92796",n:"Roberto Avila",v:false,d:"31 mag",s:"pro",m:"video",likes:1342,rt:207,rp:77,vw:17036,url:"https://x.com/avila92796/status/2060966806173422039",txt:"Caro Francesco, sei un grande, un vero artista e un vero uomo con la sua dignità… Gli italiani veri ti adorano."},
+    {r:5,h:"sibilla75",n:"Simona Urso",v:false,d:"30 mag",s:"anti",m:"video",likes:1126,rt:218,rp:164,vw:56675,url:"https://x.com/sibilla75/status/2060786921379365258",txt:"Ho detto peste e corna di Morgan… ma oggettivamente questa sua critica a #DeGregori è semplicemente perfetta."},
+    {r:6,h:"strange_days_82",n:"Davide Scifo",v:true,d:"29 mag",s:"neutral",m:"video",likes:815,rt:157,rp:74,vw:13632,url:"https://x.com/strange_days_82/status/2060410337896038858",txt:"Francesco De Gregori ieri a Milano: «Provo imbarazzo quando un artista si schiera in modo netto su questioni internazionali. Non faccio proclami dal palco su Gaza o Israele… Sensibilizzo con le canzoni, non con le lezioni.»"},
+    {r:7,h:"EBustreo",n:"Bettybus",v:false,d:"30 mag",s:"anti",m:"video",likes:737,rt:158,rp:9,vw:21495,url:"https://x.com/EBustreo/status/2060708238023090184",txt:"Belli quegli artisti che non hanno le idee confuse come Francesco De Gregori e prendono posizione su Gaza. [intervista Guzzanti ad Albanese]"},
+    {r:8,h:"CarloGarzia",n:"Carlo Garzia",v:false,d:"30 mag",s:"pro",m:"text",likes:728,rt:100,rp:62,vw:10031,url:"https://x.com/CarloGarzia/status/2060801066044707028",txt:"Il discorso di De Gregori non fa una piega… un vero intellettuale perché usa la ragione, non la sua posizione di artista per manipolare il pensiero del pubblico. Chapeau 🎩"},
+    {r:9,h:"repubblica",n:"Repubblica",v:true,d:"30 mag",s:"anti",m:"video",likes:670,rt:135,rp:506,vw:73993,url:"https://x.com/repubblica/status/2060790049579360277",txt:"Gino Castaldo scrive una lettera aperta a De Gregori: «che proprio da te venga un invito al silenzio è sconfortante». #rep"},
+    {r:10,h:"PBerizzi",n:"Paolo Berizzi",v:false,d:"31 mag",s:"anti",m:"text",likes:655,rt:84,rp:588,vw:37574,url:"https://x.com/PBerizzi/status/2061159848255922611",txt:"De Gregori è libero di (non) dire e (non) fare quello che vuole. Magari qualcuno gli spieghi che l'ignavia è complicità… C'era una volta il principe dei cantautori."},
+    {r:11,h:"FrancescoBecco",n:"Gegge 🇮🇹",v:false,d:"30 mag",s:"pro",m:"video",likes:576,rt:100,rp:89,vw:11777,url:"https://x.com/FrancescoBecco/status/2060800932430873050",txt:"Francesco De Gregori… ha scelto di non inginocchiarsi al pensiero unico della sinistra e al coro pro Gaza… un artista libero, non un cantautore di regime."},
+    {r:12,h:"Tiziana_DR",n:"Tiziana Della Rocca",v:true,d:"31 mag",s:"pro",m:"text",likes:534,rt:71,rp:36,vw:4787,url:"https://x.com/Tiziana_DR/status/2060963526206722349",txt:"De Gregori perseguitato non solo dalla feccia di X ma anche da cantanti e giornalisti, perché rivendica di non voler prendere posizione su Gaza… le sue parole li smascherano."},
+    {r:13,h:"fdragoni",n:"Fabio Dragoni",v:true,d:"31 mag",s:"pro",m:"video",likes:463,rt:66,rp:48,vw:8479,url:"https://x.com/fdragoni/status/2061089330735579366",txt:"Un Artista che non si prende sul serio… pur essendo uno straordinario ARTISTA"},
+    {r:14,h:"Valeria93113820",n:"Valeria Neri",v:false,d:"29 mag",s:"anti",m:"text",likes:419,rt:64,rp:107,vw:23724,url:"https://x.com/Valeria93113820/status/2060319309239287852",txt:"Vasco, De Gregori, Baglioni, Venditti, Guccini, Bennato. Nessuno ha preso posizione su Gaza. E pensare che ci avevano illuso coi loro testi impegnati. Impegnati a tenersi la carriera!"},
+    {r:15,h:"Virna25marzo",n:"Virna",v:true,d:"31 mag",s:"pro",m:"video",likes:353,rt:57,rp:208,vw:14995,url:"https://x.com/Virna25marzo/status/2060998199091863802",txt:"Ci sono gli ARTISTI: FRANCESCO DE GREGORI, ENRICO RUGGERI… Poi c'è lui… che pena ragazzi! [video Adnkronos]"}
+  ]
+};
+
+const AVATARS={
+ "Orgoglioitalia3":"https://pbs.twimg.com/profile_images/1917459825941762048/ORsrcoZr_normal.jpg",
+ "Giorgioaki":"https://pbs.twimg.com/profile_images/1848763428199895041/aVzGRbcE_normal.jpg",
+ "marattin":"https://pbs.twimg.com/profile_images/1763981234412150786/OvSN3PrW_normal.jpg",
+ "avila92796":"https://pbs.twimg.com/profile_images/2056679046390452224/E_OXds4q_normal.jpg",
+ "sibilla75":"https://pbs.twimg.com/profile_images/1812734041495359488/O-a0VAdU_normal.jpg",
+ "strange_days_82":"https://pbs.twimg.com/profile_images/1770494010047463424/0NpitdcT_normal.jpg",
+ "EBustreo":"https://pbs.twimg.com/profile_images/787184840445665280/iyzgIxSw_normal.jpg",
+ "CarloGarzia":"https://pbs.twimg.com/profile_images/2058028072708841474/ROxULCdY_normal.jpg",
+ "repubblica":"https://pbs.twimg.com/profile_images/2013154944656764928/iFyQjpYV_normal.jpg",
+ "PBerizzi":"https://pbs.twimg.com/profile_images/1136213829673766918/9ZyoSUxk_normal.jpg",
+ "FrancescoBecco":"https://pbs.twimg.com/profile_images/1747630393098936320/ViwZRnds_normal.jpg",
+ "Tiziana_DR":"https://pbs.twimg.com/profile_images/1951561907883692032/WAUEvq_u_normal.jpg",
+ "fdragoni":"https://pbs.twimg.com/profile_images/2057246844980207616/R1lZFFqY_normal.jpg",
+ "Valeria93113820":"https://pbs.twimg.com/profile_images/1965716934026014720/cC7bvcre_normal.jpg",
+ "Virna25marzo":"https://pbs.twimg.com/profile_images/1872501778115158016/CnpYhfOz_normal.jpg",
+ "stacce2021":"https://pbs.twimg.com/profile_images/1760767596972920832/ah4QisEp_normal.jpg",
+ "MiuccioPrado":"https://pbs.twimg.com/profile_images/1467134497/image_normal.jpg",
+ "Corriere":"https://pbs.twimg.com/profile_images/1533695387344805890/26AV8vGl_normal.jpg",
+ "maurizioacerbo":"https://pbs.twimg.com/profile_images/1836732112772218880/Wuxg_beH_normal.jpg",
+ "maurorizzi_mr":"https://pbs.twimg.com/profile_images/1039081097160798208/hVd2Wrh3_normal.jpg",
+ "Pinperepette":"https://pbs.twimg.com/profile_images/1709892057819422720/K06B6_l__normal.jpg"
+};
+function avatarImg(h,name,cls){
+  const url=AVATARS[h];
+  const init=(name||h||'?').slice(0,2).toUpperCase();
+  if(url) return `<img class="${cls}" src="${url}" alt="@${h}" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'${cls}',textContent:'${init}'}))">`;
+  return `<div class="${cls}">${init}</div>`;
+}
+const C={blue:'#1d9bf0',green:'#00ba7c',red:'#f4212e',orange:'#f28228',purple:'#8b5cf6',yellow:'#ffd400',muted:'#71767b',grid:'#2f3336',text:'#e7e9ea'};
+Chart.defaults.color=C.muted;Chart.defaults.font.family="-apple-system,'Segoe UI',sans-serif";Chart.defaults.font.size=11;
+const fmt=n=>n.toLocaleString('it-IT');
+const noLegend={legend:{display:false}};
+const baseScale=g=>({grid:{color:C.grid},ticks:{color:C.muted}});
+
+// Daily volume + views + annotated events
+const EVENTS=[
+  {i:1,label:'Dichiarazione De Gregori (Milano)'},
+  {i:2,label:'Elisa: «serve schierarsi»'},
+  {i:3,label:'Lettera aperta di Gino Castaldo'},
+  {i:4,label:'Tweet Berizzi «ignavia» · picco'}
+];
+const evtPlugin={id:'evt',afterDatasetsDraw(chart){
+  const {ctx,chartArea:{top,bottom},scales:{x}}=chart;
+  ctx.save();
+  EVENTS.forEach(e=>{
+    const px=x.getPixelForValue(e.i);
+    ctx.strokeStyle='rgba(244,33,46,.55)';ctx.lineWidth=1.5;ctx.setLineDash([4,4]);
+    ctx.beginPath();ctx.moveTo(px,top);ctx.lineTo(px,bottom);ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle='#f4212e';ctx.beginPath();ctx.arc(px,top+9,9,0,7);ctx.fill();
+    ctx.fillStyle='#fff';ctx.font='bold 11px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(e.i,px,top+9);
+  });
+  ctx.restore();
+}};
+new Chart(document.getElementById('cDaily'),{
+  plugins:[evtPlugin],
+  data:{labels:DATA.timeline_daily.map(d=>d.date),
+    datasets:[
+      {type:'bar',label:'Tweet',data:DATA.timeline_daily.map(d=>d.count),backgroundColor:C.blue,borderRadius:5,yAxisID:'y',order:2},
+      {type:'line',label:'Views',data:DATA.timeline_daily.map(d=>d.views),borderColor:C.orange,backgroundColor:C.orange,tension:.35,yAxisID:'y1',pointRadius:4,order:1}
+    ]},
+  options:{maintainAspectRatio:false,interaction:{mode:'index',intersect:false},layout:{padding:{top:8}},
+    plugins:{legend:{labels:{usePointStyle:true}}},
+    scales:{y:{...baseScale(),position:'left',title:{display:true,text:'n. tweet'}},
+            y1:{position:'right',grid:{drawOnChartArea:false},ticks:{color:C.orange,callback:v=>v/1000+'K'},title:{display:true,text:'views'}},
+            x:{grid:{display:false}}}}
+});
+document.getElementById('evtLegend').innerHTML=EVENTS.map(e=>`<span><span class="dot" style="background:#f4212e;color:#fff;width:16px;height:16px;font-size:10px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;border-radius:50%">${e.i}</span> ${e.label}</span>`).join('');
+
+// Hours
+new Chart(document.getElementById('cHours'),{
+  type:'bar',
+  data:{labels:DATA.hours.map((_,i)=>i),datasets:[{data:DATA.hours,backgroundColor:DATA.hours.map(v=>v>=20?C.blue:'#1d9bf088'),borderRadius:3}]},
+  options:{maintainAspectRatio:false,plugins:noLegend,scales:{y:baseScale(),x:{grid:{display:false},ticks:{maxRotation:0,callback:(v,i)=>i%3===0?i:''}}}}
+});
+
+// Engagement avg per day
+const avg=DATA.timeline_daily.map(d=>Math.round(d.eng/d.count));
+new Chart(document.getElementById('cEngAvg'),{
+  type:'bar',
+  data:{labels:DATA.timeline_daily.map(d=>d.date),datasets:[{data:avg,backgroundColor:avg.map(v=>v>800?C.red:v>300?C.orange:C.muted),borderRadius:5}]},
+  options:{maintainAspectRatio:false,plugins:noLegend,scales:{y:baseScale(),x:{grid:{display:false}}}}
+});
+
+// Sentiment doughnut
+new Chart(document.getElementById('cSent'),{
+  type:'doughnut',
+  data:{labels:['Pro De Gregori','Contro','Neutro / News'],datasets:[{data:[NET.stance.pro,NET.stance.contro,NET.stance.neutro],backgroundColor:[C.green,C.red,C.muted],borderColor:'#000',borderWidth:2}]},
+  options:{maintainAspectRatio:false,cutout:'62%',plugins:{legend:{position:'bottom',labels:{usePointStyle:true,boxWidth:8}}}}
+});
+
+// Sentiment engagement
+new Chart(document.getElementById('cSentEng'),{
+  type:'doughnut',
+  data:{labels:['Pro','Contro','Neutro'],datasets:[{data:[NET.stance_likes.pro,NET.stance_likes.contro,NET.stance_likes.neutro],backgroundColor:[C.green,C.red,C.muted],borderColor:'#000',borderWidth:2}]},
+  options:{maintainAspectRatio:false,cutout:'62%',plugins:{legend:{position:'bottom',labels:{usePointStyle:true,boxWidth:8}}}}
+});
+
+// Media
+new Chart(document.getElementById('cMedia'),{
+  type:'doughnut',
+  data:{labels:Object.keys(DATA.media),datasets:[{data:Object.values(DATA.media),backgroundColor:[C.blue,C.orange,C.green],borderColor:'#000',borderWidth:2}]},
+  options:{maintainAspectRatio:false,cutout:'62%',plugins:{legend:{position:'bottom',labels:{usePointStyle:true,boxWidth:8}}}}
+});
+
+// Buckets
+new Chart(document.getElementById('cBuckets'),{
+  type:'bar',
+  data:{labels:Object.keys(DATA.buckets),datasets:[{data:Object.values(DATA.buckets),backgroundColor:[C.muted,'#3a6ea5',C.blue,C.orange,C.red],borderRadius:5}]},
+  options:{maintainAspectRatio:false,plugins:noLegend,scales:{y:baseScale(),x:{grid:{display:false},title:{display:true,text:'like per tweet'}}}}
+});
+
+// Followers
+new Chart(document.getElementById('cFoll'),{
+  type:'bar',
+  data:{labels:Object.keys(DATA.foll),datasets:[{data:Object.values(DATA.foll),backgroundColor:C.purple,borderRadius:5}]},
+  options:{maintainAspectRatio:false,plugins:noLegend,scales:{y:baseScale(),x:{grid:{display:false}}}}
+});
+
+// Hashtags horizontal
+new Chart(document.getElementById('cHash'),{
+  type:'bar',
+  data:{labels:DATA.hashtags.map(h=>h[0]),datasets:[{data:DATA.hashtags.map(h=>h[1]),backgroundColor:DATA.hashtags.map(h=>/gaza|palestin|genocid|propal|freepale|stopgen/.test(h[0])?C.red:C.blue),borderRadius:4}]},
+  options:{indexAxis:'y',maintainAspectRatio:false,plugins:noLegend,scales:{x:baseScale(),y:{grid:{display:false}}}}
+});
+
+// Entities horizontal
+new Chart(document.getElementById('cEnt'),{
+  type:'bar',
+  data:{labels:DATA.entities.map(e=>e[0]),datasets:[{data:DATA.entities.map(e=>e[1]),backgroundColor:DATA.entities.map(e=>/gaza|israele|genocid|palestin|ignavia|pensiero/.test(e[0])?C.red:C.orange),borderRadius:4}]},
+  options:{indexAxis:'y',maintainAspectRatio:false,plugins:noLegend,scales:{x:baseScale(),y:{grid:{display:false}}}}
+});
+
+// Coercion lexicon
+new Chart(document.getElementById('cCoercion'),{
+  type:'bar',
+  data:{labels:DATA.coercion_lex.map(x=>x[0]),datasets:[{data:DATA.coercion_lex.map(x=>x[1]),backgroundColor:C.red,borderRadius:4}]},
+  options:{indexAxis:'y',maintainAspectRatio:false,plugins:noLegend,scales:{x:baseScale(),y:{grid:{display:false},ticks:{font:{size:10}}}}}
+});
+// Freedom lexicon
+new Chart(document.getElementById('cFreedom'),{
+  type:'bar',
+  data:{labels:DATA.freedom_lex.map(x=>x[0]),datasets:[{data:DATA.freedom_lex.map(x=>x[1]),backgroundColor:C.green,borderRadius:4}]},
+  options:{indexAxis:'y',maintainAspectRatio:false,plugins:noLegend,scales:{x:baseScale(),y:{grid:{display:false},ticks:{font:{size:10}}}}}
+});
+
+// Authors lists
+function authorRow(a,metricLabel,metricVal){
+  return `<a class="rt-author" href="https://x.com/${a.h}" target="_blank" rel="noopener">
+    ${avatarImg(a.h,a.n,'rt-author-avatar')}
+    <div class="rt-author-info">
+      <div class="rt-author-name">${a.n}${a.v?' <span class="verified">✔</span>':''}</div>
+      <div class="rt-author-handle">@${a.h}</div>
+    </div>
+    <div class="rt-author-count">${fmt(metricVal)}<small>${metricLabel}</small></div>
+  </a>`;
+}
+document.getElementById('authEng').innerHTML=DATA.authors_eng.map(a=>authorRow(a,'engagement',a.e)).join('');
+document.getElementById('authCount').innerHTML=DATA.authors_count.map(a=>authorRow(a,a.t+' tweet',a.t)).join('');
+
+// Top tweets
+const sLabel={pro:'PRO',anti:'CONTRO',neutral:'NEUTRO'};
+document.getElementById('postList').innerHTML=DATA.top_tweets.map(t=>`
+  <a class="post-item" href="${t.url}" target="_blank" rel="noopener">
+    <div class="post-rank ${t.r<=3?'top':''}">${t.r}</div>
+    <div>
+      <div class="post-head">
+        ${avatarImg(t.h,t.n,'post-avatar')}
+        <span class="post-author">${t.n}${t.v?' <span class="verified">✔</span>':''}</span>
+        <span class="post-handle">@${t.h}</span>
+        <span class="post-date">· ${t.d}</span>
+        <span class="pill ${t.m}">${t.m}</span>
+        <span class="pill ${t.s}">${sLabel[t.s]}</span>
+      </div>
+      <div class="post-text">${t.txt}</div>
+      <div class="post-meta">
+        <span class="post-stat">♥ ${fmt(t.likes)}</span>
+        <span class="post-stat">🔁 ${fmt(t.rt)}</span>
+        <span class="post-stat">💬 ${fmt(t.rp)}</span>
+        <span class="post-stat">👁 ${fmt(t.vw)}</span>
+      </div>
+    </div>
+    <div>
+      <div class="post-imp">${fmt(t.likes)}</div>
+      <div class="post-imp-sub">like</div>
+    </div>
+  </a>`).join('');
+
+// ---- Litigiosità ----
+document.getElementById('lit-big').textContent=(NET.litigiosita.reply_per_rt+'').replace('.',',');
+(function(){
+  const rows=[{k:'De Gregori',v:NET.litigiosita.reply_per_rt,me:true}];
+  for(const [k,b] of Object.entries(NET.benchmark||{})) rows.push({k,v:b.reply_per_rt});
+  rows.sort((a,b)=>b.v-a.v);
+  new Chart(document.getElementById('cLitig'),{
+    type:'bar',
+    data:{labels:rows.map(r=>r.k),datasets:[{data:rows.map(r=>r.v),backgroundColor:rows.map(r=>r.me?C.red:C.muted),borderRadius:5}]},
+    options:{indexAxis:'y',maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.x+' reply per RT'}}},
+      scales:{x:{...baseScale(),title:{display:true,text:'reply / retweet'}},y:{grid:{display:false}}}}
+  });
+})();
+
+// ---- Word clouds ----
+function cloud(el,pairs,color){
+  const max=Math.max(...pairs.map(p=>p[1])), min=Math.min(...pairs.map(p=>p[1]));
+  el.innerHTML=pairs.map(([w,c])=>{
+    const sz=Math.round(13+(c-min)/(max-min||1)*23);
+    const op=0.55+(c-min)/(max-min||1)*0.45;
+    return `<span class="wc-word" style="font-size:${sz}px;color:${color};opacity:${op}" title="${c}">${w}</span>`;
+  }).join('');
+}
+cloud(document.getElementById('wcPro'),NET.wc_freedom,'#00ba7c');
+cloud(document.getElementById('wcContro'),NET.wc_coercion,'#f4212e');
+
+// ---- Viral phrases ----
+(function(){
+  const max=Math.max(...NET.viral.map(v=>v.likes));
+  document.getElementById('viralBody').innerHTML=NET.viral.map(v=>`
+    <tr>
+      <td><span class="vtag ${v.frame}">${v.frame}</span></td>
+      <td>&ldquo;${v.phrase}&rdquo;</td>
+      <td>${v.count}</td>
+      <td><span class="vbar" style="width:${Math.max(6,Math.round(v.likes/max*120))}px;background:${v.frame==='PRO'?C.green:C.red}"></span> ${fmt(v.likes)}</td>
+    </tr>`).join('');
+})();
+
+// ---- Battaglia dell'attenzione ----
+(function(){
+  const A=NET.attention, mx=Math.max(...A.map(r=>r.likes));
+  const col={pro:C.green,contro:C.red,neutro:C.muted};
+  document.getElementById('attBody').innerHTML=A.map(r=>`
+    <tr>
+      <td><span class="dot" style="display:inline-block;width:9px;height:9px;border-radius:50%;background:${col[r.key]};margin-right:6px"></span>${r.frame}</td>
+      <td>${fmt(r.n)}</td>
+      <td><span class="vbar" style="width:${Math.max(6,Math.round(r.likes/mx*120))}px;background:${col[r.key]}"></span> ${fmt(r.likes)}</td>
+      <td><strong>${(r.per_tweet+'').replace('.',',')}</strong></td>
+    </tr>`).join('');
+  const k=NET.attention_takeaway;
+  document.getElementById('att-body').innerHTML=
+    `Il <strong>${(k.schierati_pct_tweet+'').replace('.',',')}%</strong> dei tweet prende posizione: la neutralità è marginale. `+
+    `Escludendo gli account dei media, il fronte <strong>PRO De Gregori</strong> è il <strong>${(k.pro_pct_of_schierati_tweet+'').replace('.',',')}%</strong> dei tweet schierati `+
+    `ma raccoglie il <strong>${(k.pro_pct_of_schierati_likes+'').replace('.',',')}%</strong> dei loro like — `+
+    `e vince anche per intensità: <strong>${(A[0].per_tweet+'').replace('.',',')} like/tweet</strong> contro <strong>${(A[1].per_tweet+'').replace('.',',')}</strong> del fronte critico. `+
+    `Nota: i pochi tweet "neutri" hanno like/tweet alto perché sono soprattutto lanci di testate ad alta diffusione.`;
+})();
+
+// ---- Network force graph ----
+(function(){
+  const cv=document.getElementById('netCanvas'); if(!cv) return;
+  const ctx=cv.getContext('2d');
+  const dpr=window.devicePixelRatio||1;
+  function resize(){const w=cv.clientWidth; cv.width=w*dpr; cv.height=460*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);}
+  const col={pro:'#00ba7c',contro:'#f4212e',neutral:'#71767b'};
+  const idx={}; const N=NET.nodes.map((n,k)=>{idx[n.id]=k;return {...n,x:0,y:0,vx:0,vy:0};});
+  const maxE=Math.max(...N.map(n=>n.eng),1);
+  N.forEach(n=>{n.r=Math.max(4,Math.min(28,4+Math.sqrt(n.eng/maxE)*26+n.indeg*0.9));});
+  const L=NET.links.map(l=>({s:idx[l.s],t:idx[l.t],w:l.w})).filter(l=>l.s!=null&&l.t!=null);
+  let W=cv.clientWidth||800, H=460, cx=W/2, cy=H/2;
+  // seed positions on a circle
+  N.forEach((n,i)=>{const a=i/N.length*6.283; n.x=cx+Math.cos(a)*180+Math.random()*20; n.y=cy+Math.sin(a)*140+Math.random()*20;});
+  function step(){
+    W=cv.clientWidth; cx=W/2; cy=H/2;
+    // repulsion
+    for(let i=0;i<N.length;i++)for(let j=i+1;j<N.length;j++){
+      let dx=N[i].x-N[j].x, dy=N[i].y-N[j].y, d2=dx*dx+dy*dy+0.01, d=Math.sqrt(d2);
+      let f=2600/d2; let fx=dx/d*f, fy=dy/d*f;
+      N[i].vx+=fx;N[i].vy+=fy;N[j].vx-=fx;N[j].vy-=fy;
+    }
+    // springs
+    L.forEach(l=>{const a=N[l.s],b=N[l.t];let dx=b.x-a.x,dy=b.y-a.y,d=Math.sqrt(dx*dx+dy*dy)||1;
+      let f=(d-70)*0.015; let fx=dx/d*f,fy=dy/d*f; a.vx+=fx;a.vy+=fy;b.vx-=fx;b.vy-=fy;});
+    // gravity to center + integrate
+    N.forEach(n=>{ if(n===drag) return;
+      n.vx+=(cx-n.x)*0.008; n.vy+=(cy-n.y)*0.008;
+      n.vx*=0.82; n.vy*=0.82; n.x+=n.vx; n.y+=n.vy;
+      n.x=Math.max(n.r,Math.min(W-n.r,n.x)); n.y=Math.max(n.r,Math.min(H-n.r,n.y));
+    });
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.lineWidth=1;
+    L.forEach(l=>{const a=N[l.s],b=N[l.t];
+      ctx.strokeStyle='rgba(120,140,160,'+Math.min(.5,.12+l.w*0.12)+')';
+      ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();});
+    N.forEach(n=>{
+      ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,7);
+      ctx.fillStyle=col[n.stance]||col.neutral; ctx.globalAlpha=.9; ctx.fill(); ctx.globalAlpha=1;
+      ctx.lineWidth=1.2;ctx.strokeStyle='rgba(0,0,0,.5)';ctx.stroke();
+      if(n.r>=11||n.indeg>=3){
+        ctx.fillStyle='#e7e9ea';ctx.font='600 11px sans-serif';ctx.textAlign='center';ctx.textBaseline='top';
+        ctx.fillText('@'+n.id,n.x,n.y+n.r+2);
+      }
+    });
+  }
+  let drag=null;
+  function pos(ev){const r=cv.getBoundingClientRect();const t=ev.touches?ev.touches[0]:ev;return {x:t.clientX-r.left,y:t.clientY-r.top};}
+  function pick(p){let best=null,bd=1e9;N.forEach(n=>{const d=Math.hypot(n.x-p.x,n.y-p.y);if(d<n.r+4&&d<bd){bd=d;best=n;}});return best;}
+  cv.addEventListener('mousedown',e=>{drag=pick(pos(e)); if(drag)cv.style.cursor='grabbing';});
+  window.addEventListener('mousemove',e=>{if(drag){const p=pos(e);drag.x=p.x;drag.y=p.y;drag.vx=drag.vy=0;}});
+  window.addEventListener('mouseup',()=>{drag=null;cv.style.cursor='grab';});
+  resize(); window.addEventListener('resize',()=>{resize();});
+  let frames=0;
+  (function loop(){ step(); draw(); if(frames++<100000) requestAnimationFrame(loop); })();
+})();
+
+// Nav active on scroll
+const navLinks=[...document.querySelectorAll('nav a')];
+const secs=navLinks.map(a=>document.querySelector(a.getAttribute('href')));
+window.addEventListener('scroll',()=>{
+  let idx=0;secs.forEach((s,i)=>{if(s&&s.getBoundingClientRect().top<120)idx=i;});
+  navLinks.forEach((a,i)=>a.classList.toggle('active',i===idx));
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,880 @@
+{
+  "nodes": [
+    {
+      "id": "Orgoglioitalia3",
+      "eng": 2861,
+      "indeg": 1,
+      "outdeg": 0,
+      "stance": "pro"
+    },
+    {
+      "id": "Giorgioaki",
+      "eng": 2766,
+      "indeg": 1,
+      "outdeg": 0,
+      "stance": "pro"
+    },
+    {
+      "id": "marattin",
+      "eng": 2635,
+      "indeg": 0,
+      "outdeg": 0,
+      "stance": "pro"
+    },
+    {
+      "id": "repubblica",
+      "eng": 1787,
+      "indeg": 13,
+      "outdeg": 0,
+      "stance": "contro"
+    },
+    {
+      "id": "PBerizzi",
+      "eng": 1346,
+      "indeg": 19,
+      "outdeg": 0,
+      "stance": "contro"
+    },
+    {
+      "id": "avila92796",
+      "eng": 1639,
+      "indeg": 3,
+      "outdeg": 0,
+      "stance": "pro"
+    },
+    {
+      "id": "sibilla75",
+      "eng": 1634,
+      "indeg": 1,
+      "outdeg": 1,
+      "stance": "contro"
+    },
+    {
+      "id": "strange_days_82",
+      "eng": 1056,
+      "indeg": 1,
+      "outdeg": 0,
+      "stance": "neutral"
+    },
+    {
+      "id": "CarloGarzia",
+      "eng": 893,
+      "indeg": 1,
+      "outdeg": 1,
+      "stance": "pro"
+    },
+    {
+      "id": "EBustreo",
+      "eng": 908,
+      "indeg": 0,
+      "outdeg": 0,
+      "stance": "contro"
+    },
+    {
+      "id": "fdragoni",
+      "eng": 801,
+      "indeg": 2,
+      "outdeg": 2,
+      "stance": "pro"
+    },
+    {
+      "id": "Corriere",
+      "eng": 671,
+      "indeg": 6,
+      "outdeg": 0,
+      "stance": "pro"
+    },
+    {
+      "id": "FrancescoBecco",
+      "eng": 772,
+      "indeg": 1,
+      "outdeg": 0,
+      "stance": "pro"
+    },
+    {
+      "id": "Virna25marzo",
+      "eng": 628,
+      "indeg": 1,
+      "outdeg": 0,
+      "stance": "pro"
+    },
+    {
+      "id": "Tiziana_DR",
+      "eng": 644,
+      "indeg": 0,
+      "outdeg": 0,
+      "stance": "pro"
+    },
+    {
+      "id": "maurizioacerbo",
+      "eng": 623,
+      "indeg": 0,
+      "outdeg": 2,
+      "stance": "contro"
+    },
+    {
+      "id": "Valeria93113820",
+      "eng": 602,
+      "indeg": 0,
+      "outdeg": 0,
+      "stance": "contro"
+    },
+    {
+      "id": "gisellaruccia",
+      "eng": 337,
+      "indeg": 1,
+      "outdeg": 0,
+      "stance": "contro"
+    },
+    {
+      "id": "Ci1812",
+      "eng": 35,
+      "indeg": 8,
+      "outdeg": 1,
+      "stance": "pro"
+    },
+    {
+      "id": "oceanswon",
+      "eng": 239,
+      "indeg": 1,
+      "outdeg": 1,
+      "stance": "pro"
+    },
+    {
+      "id": "Saturnino69",
+      "eng": 186,
+      "indeg": 2,
+      "outdeg": 0,
+      "stance": "pro"
+    },
+    {
+      "id": "rodcostakiwi",
+      "eng": 186,
+      "indeg": 1,
+      "outdeg": 1,
+      "stance": "pro"
+    },
+    {
+      "id": "laura_ceruti",
+      "eng": 0,
+      "indeg": 7,
+      "outdeg": 0,
+      "stance": "neutral"
+    },
+    {
+      "id": "Asilesworld2022",
+      "eng": 1,
+      "indeg": 6,
+      "outdeg": 5,
+      "stance": "contro"
+    },
+    {
+      "id": "stacce2021",
+      "eng": 19,
+      "indeg": 5,
+      "outdeg": 14,
+      "stance": "contro"
+    },
+    {
+      "id": "LiberoPetrucci",
+      "eng": 95,
+      "indeg": 2,
+      "outdeg": 1,
+      "stance": "pro"
+    },
+    {
+      "id": "gfggram",
+      "eng": 1,
+      "indeg": 4,
+      "outdeg": 3,
+      "stance": "contro"
+    },
+    {
+      "id": "dorinileonardo",
+      "eng": 0,
+      "indeg": 4,
+      "outdeg": 0,
+      "stance": "neutral"
+    },
+    {
+      "id": "LaStampa",
+      "eng": 66,
+      "indeg": 1,
+      "outdeg": 0,
+      "stance": "neutral"
+    },
+    {
+      "id": "bettafiorito",
+      "eng": 0,
+      "indeg": 3,
+      "outdeg": 0,
+      "stance": "neutral"
+    },
+    {
+      "id": "enricoruggeri",
+      "eng": 0,
+      "indeg": 3,
+      "outdeg": 0,
+      "stance": "neutral"
+    },
+    {
+      "id": "angelo_cennamo",
+      "eng": 55,
+      "indeg": 1,
+      "outdeg": 1,
+      "stance": "pro"
+    },
+    {
+      "id": "Cartabellotta",
+      "eng": 0,
+      "indeg": 2,
+      "outdeg": 0,
+      "stance": "neutral"
+    },
+    {
+      "id": "boni_castellane",
+      "eng": 0,
+      "indeg": 2,
+      "outdeg": 0,
+      "stance": "neutral"
+    },
+    {
+      "id": "antonellocapor2",
+      "eng": 0,
+      "indeg": 2,
+      "outdeg": 0,
+      "stance": "neutral"
+    },
+    {
+      "id": "mariamasi14",
+      "eng": 0,
+      "indeg": 2,
+      "outdeg": 0,
+      "stance": "contro"
+    },
+    {
+      "id": "StefanoPutinati",
+      "eng": 0,
+      "indeg": 2,
+      "outdeg": 0,
+      "stance": "neutral"
+    },
+    {
+      "id": "maurizio_crippa",
+      "eng": 0,
+      "indeg": 2,
+      "outdeg": 0,
+      "stance": "neutral"
+    },
+    {
+      "id": "MarianoFroldi",
+      "eng": 28,
+      "indeg": 1,
+      "outdeg": 0,
+      "stance": "neutral"
+    },
+    {
+      "id": "unvermouth",
+      "eng": 55,
+      "indeg": 0,
+      "outdeg": 1,
+      "stance": "pro"
+    },
+    {
+      "id": "GretaSalve",
+      "eng": 49,
+      "indeg": 0,
+      "outdeg": 1,
+      "stance": "pro"
+    },
+    {
+      "id": "LBiglione",
+      "eng": 37,
+      "indeg": 0,
+      "outdeg": 1,
+      "stance": "pro"
+    },
+    {
+      "id": "JohnNas93625435",
+      "eng": 1,
+      "indeg": 1,
+      "outdeg": 4,
+      "stance": "pro"
+    },
+    {
+      "id": "dgiorgio73",
+      "eng": 1,
+      "indeg": 1,
+      "outdeg": 4,
+      "stance": "pro"
+    },
+    {
+      "id": "LellaPasto",
+      "eng": 24,
+      "indeg": 0,
+      "outdeg": 1,
+      "stance": "pro"
+    },
+    {
+      "id": "aa4323801448919",
+      "eng": 2,
+      "indeg": 0,
+      "outdeg": 3,
+      "stance": "contro"
+    },
+    {
+      "id": "MarcoP66302",
+      "eng": 2,
+      "indeg": 0,
+      "outdeg": 4,
+      "stance": "contro"
+    },
+    {
+      "id": "4everAnnina",
+      "eng": 0,
+      "indeg": 0,
+      "outdeg": 3,
+      "stance": "pro"
+    }
+  ],
+  "links": [
+    {
+      "s": "LiberoPetrucci",
+      "t": "Giorgioaki",
+      "type": "quote",
+      "w": 1
+    },
+    {
+      "s": "CarloGarzia",
+      "t": "Saturnino69",
+      "type": "quote",
+      "w": 1
+    },
+    {
+      "s": "GretaSalve",
+      "t": "LaStampa",
+      "type": "quote",
+      "w": 1
+    },
+    {
+      "s": "unvermouth",
+      "t": "repubblica",
+      "type": "quote",
+      "w": 1
+    },
+    {
+      "s": "sibilla75",
+      "t": "gisellaruccia",
+      "type": "quote",
+      "w": 1
+    },
+    {
+      "s": "oceanswon",
+      "t": "Saturnino69",
+      "type": "quote",
+      "w": 1
+    },
+    {
+      "s": "rodcostakiwi",
+      "t": "MarianoFroldi",
+      "type": "quote",
+      "w": 1
+    },
+    {
+      "s": "fdragoni",
+      "t": "Orgoglioitalia3",
+      "type": "quote",
+      "w": 1
+    },
+    {
+      "s": "Asilesworld2022",
+      "t": "stacce2021",
+      "type": "mention",
+      "w": 2
+    },
+    {
+      "s": "4everAnnina",
+      "t": "boni_castellane",
+      "type": "reply",
+      "w": 1
+    },
+    {
+      "s": "4everAnnina",
+      "t": "enricoruggeri",
+      "type": "mention",
+      "w": 1
+    },
+    {
+      "s": "stacce2021",
+      "t": "gfggram",
+      "type": "reply",
+      "w": 4
+    },
+    {
+      "s": "stacce2021",
+      "t": "Asilesworld2022",
+      "type": "mention",
+      "w": 5
+    },
+    {
+      "s": "stacce2021",
+      "t": "laura_ceruti",
+      "type": "mention",
+      "w": 4
+    },
+    {
+      "s": "gfggram",
+      "t": "stacce2021",
+      "type": "reply",
+      "w": 1
+    },
+    {
+      "s": "gfggram",
+      "t": "Asilesworld2022",
+      "type": "mention",
+      "w": 1
+    },
+    {
+      "s": "gfggram",
+      "t": "laura_ceruti",
+      "type": "mention",
+      "w": 1
+    },
+    {
+      "s": "Asilesworld2022",
+      "t": "laura_ceruti",
+      "type": "mention",
+      "w": 1
+    },
+    {
+      "s": "dgiorgio73",
+      "t": "JohnNas93625435",
+      "type": "reply",
+      "w": 1
+    },
+    {
+      "s": "dgiorgio73",
+      "t": "Cartabellotta",
+      "type": "mention",
+      "w": 1
+    },
+    {
+      "s": "dgiorgio73",
+      "t": "StefanoPutinati",
+      "type": "mention",
+      "w": 1
+    },
+    {
+      "s": "dgiorgio73",
+      "t": "dorinileonardo",
+      "type": "mention",
+      "w": 1
+    },
+    {
+      "s": "aa4323801448919",
+      "t": "bettafiorito",
+      "type": "reply",
+      "w": 1
+    },
+    {
+      "s": "MarcoP66302",
+      "t": "bettafiorito",
+      "type": "mention",
+      "w": 1
+    },
+    {
+      "s": "MarcoP66302",
+      "t": "antonellocapor2",
+      "type": "mention",
+      "w": 1
+    },
+    {
+      "s": "maurizioacerbo",
+      "t": "maurizio_crippa",
+      "type": "mention",
+      "w": 1
+    },
+    {
+      "s": "JohnNas93625435",
+      "t": "dgiorgio73",
+      "type": "reply",
+      "w": 1
+    },
+    {
+      "s": "JohnNas93625435",
+      "t": "dorinileonardo",
+      "type": "mention",
+      "w": 1
+    },
+    {
+      "s": "JohnNas93625435",
+      "t": "mariamasi14",
+      "type": "mention",
+      "w": 2
+    },
+    {
+      "s": "angelo_cennamo",
+      "t": "PBerizzi",
+      "type": "quote",
+      "w": 1
+    },
+    {
+      "s": "Ci1812",
+      "t": "PBerizzi",
+      "type": "quote",
+      "w": 1
+    },
+    {
+      "s": "LBiglione",
+      "t": "antonellocapor2",
+      "type": "reply",
+      "w": 1
+    },
+    {
+      "s": "LellaPasto",
+      "t": "repubblica",
+      "type": "quote",
+      "w": 1
+    },
+    {
+      "s": "MarcoP66302",
+      "t": "bettafiorito",
+      "type": "reply",
+      "w": 1
+    }
+  ],
+  "wc_freedom": [
+    [
+      "pensiero",
+      35
+    ],
+    [
+      "sinistra",
+      32
+    ],
+    [
+      "unico",
+      21
+    ],
+    [
+      "artisti",
+      19
+    ],
+    [
+      "artista",
+      17
+    ],
+    [
+      "gaza",
+      15
+    ],
+    [
+      "libero",
+      12
+    ],
+    [
+      "cantautore",
+      11
+    ],
+    [
+      "israele",
+      10
+    ],
+    [
+      "liberta",
+      10
+    ],
+    [
+      "parte",
+      9
+    ],
+    [
+      "invece",
+      9
+    ],
+    [
+      "fascista",
+      9
+    ],
+    [
+      "grande",
+      8
+    ],
+    [
+      "palco",
+      8
+    ],
+    [
+      "altri",
+      8
+    ],
+    [
+      "posizione",
+      7
+    ],
+    [
+      "pubblico",
+      7
+    ],
+    [
+      "hanno",
+      7
+    ],
+    [
+      "quelli",
+      7
+    ],
+    [
+      "dubbio",
+      7
+    ],
+    [
+      "politica",
+      7
+    ]
+  ],
+  "wc_coercion": [
+    [
+      "gaza",
+      16
+    ],
+    [
+      "artista",
+      12
+    ],
+    [
+      "artisti",
+      10
+    ],
+    [
+      "schierarsi",
+      10
+    ],
+    [
+      "hanno",
+      9
+    ],
+    [
+      "posizione",
+      8
+    ],
+    [
+      "nessuno",
+      8
+    ],
+    [
+      "israele",
+      8
+    ],
+    [
+      "genocidio",
+      7
+    ],
+    [
+      "quanto",
+      7
+    ],
+    [
+      "castaldo",
+      6
+    ],
+    [
+      "silenzio",
+      6
+    ],
+    [
+      "trump",
+      6
+    ],
+    [
+      "gino",
+      5
+    ],
+    [
+      "pensiero",
+      5
+    ],
+    [
+      "idee",
+      5
+    ],
+    [
+      "dovrebbe",
+      5
+    ],
+    [
+      "springsteen",
+      4
+    ],
+    [
+      "repubblica",
+      4
+    ],
+    [
+      "anni",
+      4
+    ],
+    [
+      "musica",
+      4
+    ],
+    [
+      "sinistra",
+      4
+    ]
+  ],
+  "viral": [
+    {
+      "frame": "CONTRO",
+      "phrase": "Gaza / genocidio",
+      "count": 40,
+      "likes": 6118
+    },
+    {
+      "frame": "CONTRO",
+      "phrase": "è complicità / complice",
+      "count": 3,
+      "likes": 831
+    },
+    {
+      "frame": "CONTRO",
+      "phrase": "ignavia",
+      "count": 8,
+      "likes": 702
+    },
+    {
+      "frame": "PRO",
+      "phrase": "pensiero unico",
+      "count": 21,
+      "likes": 694
+    },
+    {
+      "frame": "CONTRO",
+      "phrase": "silenzio",
+      "count": 6,
+      "likes": 693
+    },
+    {
+      "frame": "PRO",
+      "phrase": "artista libero",
+      "count": 4,
+      "likes": 577
+    },
+    {
+      "frame": "PRO",
+      "phrase": "Orwell / Stasi / totalitario",
+      "count": 7,
+      "likes": 317
+    },
+    {
+      "frame": "PRO",
+      "phrase": "libero pensiero / libertà",
+      "count": 17,
+      "likes": 194
+    },
+    {
+      "frame": "PRO",
+      "phrase": "conformismo",
+      "count": 5,
+      "likes": 135
+    },
+    {
+      "frame": "CONTRO",
+      "phrase": "vigliacco / codardo / vile",
+      "count": 3,
+      "likes": 7
+    },
+    {
+      "frame": "PRO",
+      "phrase": "pecoroni / omologati",
+      "count": 2,
+      "likes": 0
+    },
+    {
+      "frame": "CONTRO",
+      "phrase": "serve / deve schierarsi",
+      "count": 3,
+      "likes": 0
+    }
+  ],
+  "litigiosita": {
+    "sum_likes": 18442,
+    "sum_rt": 3213,
+    "sum_replies": 4221,
+    "sum_quotes": 505,
+    "reply_per_rt": 1.31,
+    "reply_per_rt_like": 0.195
+  },
+  "stance": {
+    "contro": 82,
+    "pro": 145,
+    "neutro": 8
+  },
+  "stance_likes": {
+    "contro": 4863,
+    "pro": 12336,
+    "neutro": 1243
+  },
+  "attention": [
+    {
+      "frame": "Pro De Gregori",
+      "key": "pro",
+      "n": 145,
+      "likes": 12336,
+      "per_tweet": 85.1
+    },
+    {
+      "frame": "Contro",
+      "key": "contro",
+      "n": 82,
+      "likes": 4863,
+      "per_tweet": 59.3
+    },
+    {
+      "frame": "Neutro / Meno schierati",
+      "key": "neutro",
+      "n": 8,
+      "likes": 1243,
+      "per_tweet": 155.4
+    }
+  ],
+  "attention_takeaway": {
+    "schierati_n": 215,
+    "schierati_pct_tweet": 91.5,
+    "schierati_likes": 15004,
+    "schierati_pct_likes": 81.4,
+    "pro_pct_of_schierati_tweet": 63.9,
+    "pro_pct_of_schierati_likes": 71.7
+  },
+  "graph_meta": {
+    "n_nodes": 48,
+    "n_links": 34,
+    "from_raw_tweets": 197
+  },
+  "benchmark": {
+    "Sanremo (no DeGregori)": {
+      "n": 39,
+      "reply_per_rt": 0.67,
+      "reply_per_rt_like": 0.058,
+      "likes": 5718,
+      "rt": 534,
+      "replies": 360
+    },
+    "Champions": {
+      "n": 40,
+      "reply_per_rt": 0.17,
+      "reply_per_rt_like": 0.016,
+      "likes": 62889,
+      "rt": 6690,
+      "replies": 1116
+    },
+    "Meloni": {
+      "n": 40,
+      "reply_per_rt": 0.71,
+      "reply_per_rt_like": 0.09,
+      "likes": 47382,
+      "rt": 6918,
+      "replies": 4881
+    }
+  }
+}

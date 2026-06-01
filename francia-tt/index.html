@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PostMortem — Francia ↔ Italia · La notte della finale</title>
+<style>
+:root{
+  --bg:#000;--surface:#16181c;--surface2:#1f2328;--border:#2f3336;
+  --text:#e7e9ea;--muted:#71767b;--green:#00ba7c;--blue:#1d9bf0;
+  --orange:#f28228;--red:#f4212e;--purple:#8b5cf6;--yellow:#ffd400;--pink:#e0245e;
+  --fr:#0055A4;--it:#008C45;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,'Segoe UI','Helvetica Neue',sans-serif;font-size:14px;line-height:1.5}
+a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+.pm-banner{background:linear-gradient(135deg,#0055A4 0%,#000 50%,#008C45 100%);border-bottom:1px solid var(--border);padding:18px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.pm-logo{font-size:18px;font-weight:800;letter-spacing:-0.5px}
+.pm-tagline{font-size:12px;color:#cfd9e3;margin-top:2px}
+.pm-cta-text{font-size:12px;color:#cfd9e3}
+nav{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;display:flex;overflow-x:auto;white-space:nowrap;position:sticky;top:0;z-index:10}
+nav a{display:inline-block;padding:12px 14px;font-size:13px;font-weight:500;color:var(--muted);border-bottom:2px solid transparent}
+nav a:hover{color:var(--text);text-decoration:none}nav a.active{color:var(--blue);border-bottom-color:var(--blue)}
+.container{max-width:1200px;margin:0 auto;padding:24px 20px}
+.section{margin-bottom:46px}
+.section-title{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:20px;padding-bottom:8px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.section-title::before{content:'';width:3px;height:14px;background:var(--blue);border-radius:2px;display:inline-block}
+.inv-banner{background:linear-gradient(135deg,rgba(244,33,46,.10),rgba(29,155,240,.05));border:1px solid var(--border);border-left:3px solid var(--red);border-radius:14px;padding:18px 22px;margin-bottom:20px;display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center}
+.inv-date{font-size:26px;font-weight:900;color:var(--red);letter-spacing:-1px;line-height:1.05;text-align:center;white-space:nowrap}
+.inv-date small{display:block;font-size:11px;color:var(--muted);font-weight:600;margin-top:4px}
+.inv-title{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.inv-sub{font-size:14px;line-height:1.55}
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px}
+.hero-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;text-align:center}
+.hero-card .flag{font-size:30px}
+.hero-card .big{font-size:46px;font-weight:900;color:var(--red);letter-spacing:-2px;line-height:1.1}
+.hero-card .lab{font-size:12px;color:var(--muted);margin-top:4px}
+.synthbox{background:linear-gradient(135deg,rgba(0,85,164,.12),rgba(0,140,69,.12));border:1px solid var(--border);border-radius:14px;padding:16px 20px;font-size:14px;line-height:1.6}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.kpi-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 18px}
+.kpi-card.fr{border-top:3px solid var(--fr)}.kpi-card.it{border-top:3px solid var(--it)}
+.kpi-label{font-size:11px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.6px}
+.kpi-value{font-size:25px;font-weight:800;letter-spacing:-0.5px}
+.kpi-sub{font-size:11px;color:var(--muted);margin-top:4px}
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.chart-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px}
+.chart-card.full{grid-column:1/-1}
+.chart-title{font-size:14px;font-weight:700;margin-bottom:4px}
+.chart-sub{font-size:11px;color:var(--muted);margin-bottom:14px}
+/* emergency counters */
+.em-head{font-size:22px;font-weight:800;text-align:center;margin-bottom:4px}
+.em-sub{font-size:13px;color:var(--muted);text-align:center;margin-bottom:20px}
+.em-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
+.em-card{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--red);border-radius:14px;padding:20px 16px;text-align:center}
+.em-ico{font-size:30px;line-height:1}
+.em-num{font-size:38px;font-weight:900;letter-spacing:-1.5px;color:var(--red);margin-top:6px}
+.em-lab{font-size:12px;color:var(--muted);margin-top:2px}
+/* timeline */
+.tl{position:relative;margin:24px 0 0;padding-left:26px}
+.tl::before{content:'';position:absolute;left:7px;top:4px;bottom:4px;width:2px;background:var(--border)}
+.tl-item{position:relative;margin-bottom:16px}
+.tl-item::before{content:'';position:absolute;left:-23px;top:3px;width:12px;height:12px;border-radius:50%;background:var(--red);border:2px solid #000}
+.tl-time{font-size:11px;color:var(--red);font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.tl-txt{font-size:13px;color:var(--text)}
+/* map */
+.map-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;align-items:center}
+.map-svg{width:100%;height:auto;background:radial-gradient(circle at 50% 35%,#0c1620,#000);border:1px solid var(--border);border-radius:16px}
+.map-city{font:600 3px sans-serif;fill:#e7e9ea}
+.map-leg{font-size:13px;color:var(--muted);line-height:1.7}
+/* funnel */
+.funnel{display:flex;flex-direction:column;align-items:center;gap:7px}
+.fn-row{border-radius:10px;padding:12px 18px;text-align:center;color:#fff;font-weight:700;transition:transform .15s}
+.fn-row small{display:block;font-weight:500;opacity:.85;font-size:11px}
+.fn-arrow{color:var(--muted);font-size:16px;line-height:.6}
+/* consensus table */
+.ct{width:100%;border-collapse:collapse;font-size:13px}
+.ct th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);padding:9px 10px;border-bottom:1px solid var(--border)}
+.ct td{padding:9px 10px;border-bottom:1px solid var(--border)}
+.ct .bar{height:8px;border-radius:4px;display:inline-block;vertical-align:middle}
+.ct .delta{font-weight:800;font-variant-numeric:tabular-nums}
+.frag{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px}
+.frag div{background:var(--surface2);border-radius:10px;padding:10px 16px;font-size:13px}
+.frag strong{font-size:18px}
+/* bipartite */
+.bp-leg{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.6}
+/* cols / tweets */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.colhead{font-size:14px;font-weight:800;margin-bottom:12px}
+.colhead.fr{color:#5b9bd5}.colhead.it{color:#4ec07a}
+.post-list{display:flex;flex-direction:column;gap:10px}
+.post-item{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:12px 14px;display:block;text-decoration:none;color:inherit;transition:border-color .15s}
+.post-item:hover{border-color:var(--blue);text-decoration:none}
+.post-head{display:flex;align-items:center;gap:7px;margin-bottom:5px;flex-wrap:wrap}
+.post-av{width:24px;height:24px;border-radius:50%;object-fit:cover;background:linear-gradient(135deg,#555,#777);display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0}
+.post-author{font-size:13px;font-weight:700}.verified{color:var(--blue)}
+.post-handle{font-size:12px;color:var(--muted)}.post-date{font-size:11px;color:var(--muted)}
+.post-text{font-size:13px;line-height:1.45;margin-bottom:6px}
+.post-meta{display:flex;gap:12px;flex-wrap:wrap;font-size:11px;color:var(--muted)}
+.fr-pill{margin-left:auto;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px}
+.diag-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 20px;margin-bottom:12px;display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start}
+.diag-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;background:rgba(29,155,240,.15)}
+.diag-title{font-size:14px;font-weight:700;margin-bottom:4px}
+.diag-body{font-size:13px;color:var(--muted);line-height:1.55}.diag-body strong{color:var(--text)}.diag-body code{background:var(--surface2);padding:1px 6px;border-radius:4px;color:var(--text)}
+.interp-wrap{background:linear-gradient(135deg,rgba(139,92,246,.10),rgba(29,155,240,.04));border:1px solid var(--border);border-left:4px solid var(--purple);border-radius:16px;padding:8px 20px 18px}
+.interp-flag{display:inline-flex;gap:8px;font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--purple);background:rgba(139,92,246,.12);padding:7px 14px;border-radius:0 0 10px 10px;margin-bottom:8px}
+.interp-txt{font-size:14px;line-height:1.7}.interp-txt p{margin-bottom:12px}
+/* perché conta */
+.why{background:linear-gradient(135deg,#1a0406,#000);border:1px solid var(--border);border-radius:18px;padding:30px 22px}
+.why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:18px;margin-top:18px}
+.why-num{font-size:50px;font-weight:900;letter-spacing:-2px;line-height:1;color:var(--red)}
+.why-lab{font-size:13px;color:#cfd9e3;margin-top:6px}
+.profile-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center}
+.profile-avatar{width:64px;height:64px;border-radius:50%;object-fit:cover}
+.profile-name{font-size:18px;font-weight:800}.profile-handle{font-size:13px;color:var(--muted);margin:2px 0 8px}
+.profile-bio{font-size:13px;max-width:600px}
+.pm-btn{background:var(--blue);color:#fff;font-size:12px;font-weight:700;padding:8px 18px;border-radius:20px;white-space:nowrap}
+.foot{font-size:11px;color:var(--muted);line-height:1.7;border-top:1px solid var(--border);padding-top:18px;margin-top:24px}
+.foot code{background:var(--surface2);padding:1px 5px;border-radius:4px}
+/* paradox */
+.paradox{background:linear-gradient(135deg,#1a0406,#0a0a0a);border:1px solid var(--border);border-radius:16px;padding:22px;margin-bottom:18px}
+.paradox-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:center}
+.paradox-grid .vs{font-size:22px;color:var(--muted);font-weight:800}
+.pdx-l div{font-size:15px;font-weight:700;color:#e7e9ea}
+.pdx-r{text-align:center}
+.pdx-r .big{font-size:64px;font-weight:900;color:var(--red);letter-spacing:-3px;line-height:1}
+.pdx-r .lab{font-size:13px;color:var(--muted)}
+.paradox-cap{font-size:15px;font-weight:600;text-align:center;margin-top:16px;color:#e7e9ea;line-height:1.5}
+/* gauge + metric cards */
+.met-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
+.met-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+.met-name{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.met-vals{display:flex;gap:16px;align-items:baseline;margin-top:8px}
+.met-v{font-size:30px;font-weight:900;letter-spacing:-1px}
+.met-foot{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.5}
+.formula{font-family:ui-monospace,monospace;font-size:11px;color:var(--muted);background:var(--surface2);padding:2px 6px;border-radius:4px}
+@media(max-width:820px){.hero,.chart-grid,.cols,.inv-banner,.profile-card,.map-wrap,.paradox-grid,.met-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="pm-banner">
+  <div><div class="pm-logo">PostMortem — 🇫🇷 Francia ↔ Italia 🇮🇹</div><div class="pm-tagline">La notte della finale · come se ne parla su X · confronto FR/IT</div></div>
+  <div class="pm-cta-text">Snapshot · 1 giugno 2026</div>
+</div>
+<nav>
+  <a href="#overview" class="active">Panoramica</a>
+  <a href="#tesi">La tesi</a>
+  <a href="#bilancio">Bilancio</a>
+  <a href="#mappa">Mappa</a>
+  <a href="#progressione">Progressione</a>
+  <a href="#frames">I frame</a>
+  <a href="#metriche">Metriche</a>
+  <a href="#flussi">Flussi</a>
+  <a href="#guida">Chi guida</a>
+  <a href="#tweets">Top Tweet</a>
+  <a href="#interp">Interpretazione</a>
+  <a href="#conta">Perché conta</a>
+  <a href="#autore">Autore</a>
+</nav>
+<div class="container">
+
+  <!-- OVERVIEW -->
+  <section class="section" id="overview">
+    <div class="section-title">Panoramica</div>
+    <div class="inv-banner">
+      <div class="inv-date">30 MAG<small>2026 · notte</small></div>
+      <div>
+        <div class="inv-title">Cosa è successo</div>
+        <div class="inv-sub">Il <strong>PSG vince la Champions League</strong> contro l'Arsenal. I festeggiamenti a Parigi e in decine di città degenerano in scontri, auto incendiate, saccheggi e attacchi alle forze dell'ordine.</div>
+      </div>
+    </div>
+    <div class="hero">
+      <div class="hero-card"><div class="flag">🇫🇷</div><div class="big" id="h-fr">63%</div><div class="lab">dei <strong>like</strong> va a tweet che leggono l'evento come <strong>colpa dell'immigrazione</strong></div></div>
+      <div class="hero-card"><div class="flag">🇮🇹</div><div class="big" id="h-it">58%</div><div class="lab">idem in Italia — stesso verdetto virale nei due paesi</div></div>
+    </div>
+    <div class="synthbox">
+      <strong>In una riga:</strong> i dati non mostrano una <strong>Francia più divisa</strong> dell'Italia. Mostrano una <strong>Francia che attribuisce la responsabilità altrove</strong> — stessa intensità di dibattito, stessa concentrazione, ma puntando il dito in una direzione diversa.
+    </div>
+    <div style="height:16px"></div>
+    <div class="kpi-grid">
+      <div class="kpi-card fr"><div class="kpi-label">🇫🇷 Tweet analizzati</div><div class="kpi-value" id="k-fr-n">324</div><div class="kpi-sub"><span id="k-fr-auth">278</span> account · <span id="k-fr-for">22</span> esteri</div></div>
+      <div class="kpi-card it"><div class="kpi-label">🇮🇹 Tweet analizzati</div><div class="kpi-value" id="k-it-n">210</div><div class="kpi-sub"><span id="k-it-auth">168</span> account · <span id="k-it-for">24</span> esteri</div></div>
+      <div class="kpi-card"><div class="kpi-label">Corpus totale</div><div class="kpi-value" id="k-tot">534</div><div class="kpi-sub">on-topic · 30 mag → 1 giu</div></div>
+      <div class="kpi-card"><div class="kpi-label">Immigrazione (n° tweet)</div><div class="kpi-value" style="color:var(--red)">FR 21% · IT 53%</div><div class="kpi-sub">la divergenza chiave</div></div>
+    </div>
+  </section>
+
+  <!-- TESI (moved up) -->
+  <section class="section" id="tesi">
+    <div class="section-title">La tesi del confronto</div>
+    <div class="paradox">
+      <div style="font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--red);text-align:center;margin-bottom:14px">Il paradosso francese</div>
+      <div class="paradox-grid">
+        <div class="pdx-l"><div>🚓 780 fermi</div><div>🤕 219 feriti</div><div>👮 57 agenti feriti</div><div>📍 71 comuni</div><div>⚰️ 1 morto</div></div>
+        <div class="vs">→</div>
+        <div class="pdx-r"><div class="big">21%</div><div class="lab">della conversazione francese<br>discute l'immigrazione come causa</div></div>
+      </div>
+      <div class="paradox-cap">Più grande è il bilancio della notte, più piccola diventa la quota della conversazione che <strong>attribuisce l'evento all'immigrazione</strong>.</div>
+    </div>
+    <div class="diag-card"><div class="diag-icon" style="color:var(--red)">⚖️</div><div><div class="diag-title">Stesso verdetto virale, in entrambe le lingue</div><div class="diag-body">I tweet più <strong>likeati</strong> in tutti e due i paesi attribuiscono la notte all'immigrazione: <strong>FR 63%</strong> dei like, <strong>IT 58%</strong>. Non è un riflesso italiano o francese: è transnazionale.</div></div></div>
+    <div class="diag-card"><div class="diag-icon" style="color:var(--orange)">🔀</div><div><div class="diag-title">La Francia distribuisce la colpa, l'Italia la concentra</div><div class="diag-body">In Francia solo il <strong>21%</strong> dei tweet (per numero) incolpa l'immigrazione: c'è un <strong>47% di "casseurs/hooligan"</strong> e un <strong>19% che incolpa polizia/Stato/Macron</strong>. In Italia la critica-Stato è ~0, l'hooliganismo marginale: il <strong>53%</strong> sceglie la cornice immigrazione. <code>Nota: in FR "racaille" è spesso un termine in codice → il 21% è un pavimento, non un tetto.</code></div></div></div>
+    <div class="diag-card"><div class="diag-icon" style="color:var(--it)">🇮🇹</div><div><div class="diag-title">L'Italia trasforma Parigi in monito interno</div><div class="diag-body">Una quota italiana trasla l'evento sulla politica nazionale (<em>«non facciamo diventare l'Italia come Parigi»</em>), con tag a Le Pen/Bardella. Discorso più <strong>top-down</strong>: ~21% dei tweet da media/politici (Lega in testa). La Francia è più <strong>dal basso</strong> (266 utenti su 324).</div></div></div>
+  </section>
+
+  <!-- BILANCIO -->
+  <section class="section" id="bilancio">
+    <div class="section-title">Il bilancio della notte</div>
+    <div class="em-head">Una notte di festeggiamenti, o una crisi di ordine pubblico?</div>
+    <div class="em-sub">Cifre riferite dalle autorità e rilanciate sui media, per la notte 30→31 maggio 2026.</div>
+    <div class="em-grid">
+      <div class="em-card"><div class="em-ico">🚓</div><div class="em-num" id="e-arr">780</div><div class="em-lab">fermi (480 a Parigi)</div></div>
+      <div class="em-card"><div class="em-ico">🤕</div><div class="em-num" id="e-inj">219</div><div class="em-lab">feriti</div></div>
+      <div class="em-card"><div class="em-ico">👮</div><div class="em-num" id="e-pol">57</div><div class="em-lab">agenti feriti</div></div>
+      <div class="em-card"><div class="em-ico">⚰️</div><div class="em-num" id="e-dead">1</div><div class="em-lab">morto (24 anni)</div></div>
+      <div class="em-card"><div class="em-ico">📍</div><div class="em-num" id="e-com">71</div><div class="em-lab">comuni coinvolti</div></div>
+      <div class="em-card"><div class="em-ico">🛍️</div><div class="em-num" id="e-loot">15</div><div class="em-lab">città con saccheggi</div></div>
+    </div>
+    <div class="tl" id="timeline"></div>
+  </section>
+
+  <!-- MAPPA -->
+  <section class="section" id="mappa">
+    <div class="section-title">Ampiezza geografica</div>
+    <div class="map-wrap">
+      <svg class="map-svg" id="mapSvg" viewBox="0 0 100 122" preserveAspectRatio="xMidYMid meet"></svg>
+      <div class="map-leg">
+        <div style="font-size:30px;font-weight:900;color:var(--red);letter-spacing:-1px">71 comuni</div>
+        <div style="margin:6px 0 14px">colpiti dai disordini in una sola notte — non solo Parigi.</div>
+        <div><span style="color:var(--red)">●</span> <strong>Parigi</strong> — epicentro, ≈480 dei 780 fermi (Champs-Élysées, Trocadéro, Parc des Princes).</div>
+        <div><span style="color:var(--orange)">●</span> Città citate nei tweet: Nizza, Lione, Marsiglia, Grenoble, Rennes, Lille…</div>
+        <div style="font-size:11px;margin-top:12px;color:var(--muted)">Marker proiettati da lat/long reali. Sono rappresentate le principali città citate; gli altri ~60 comuni non sono geolocalizzati singolarmente.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRESSIONE -->
+  <section class="section" id="progressione">
+    <div class="section-title">La progressione · dalla festa al morto</div>
+    <div class="chart-card">
+      <div class="chart-sub">Sequenza narrativa della notte (non una scala proporzionale): come una vittoria sportiva è diventata un bilancio da ordine pubblico.</div>
+      <div class="funnel" id="funnel"></div>
+    </div>
+  </section>
+
+  <!-- FRAMES -->
+  <section class="section" id="frames">
+    <div class="section-title">I frame · indice di consenso</div>
+    <div class="chart-card full">
+      <div class="chart-title">Quanto pesa ogni cornice — 🇫🇷 vs 🇮🇹 (% dei tweet domestici)</div>
+      <div class="chart-sub">Il delta evidenzia dove i due paesi divergono di più. L'Italia concentra sull'immigrazione (+32); la Francia carica hooliganismo (−39) e critica allo Stato (−16).</div>
+      <table class="ct"><thead><tr><th>Frame</th><th>🇫🇷 Francia</th><th>🇮🇹 Italia</th><th>Δ (IT−FR)</th></tr></thead><tbody id="ctBody"></tbody></table>
+      <div class="frag" id="frag"></div>
+    </div>
+    <div style="height:16px"></div>
+    <div class="chart-grid">
+      <div class="chart-card"><div class="chart-title">🇫🇷 Francia — composizione</div><div class="chart-sub">Più plurale: nessuna cornice oltre il 47%.</div><div class="chart-wrap" style="height:240px"><canvas id="cFrFr"></canvas></div></div>
+      <div class="chart-card"><div class="chart-title">🇮🇹 Italia — composizione</div><div class="chart-sub">Più mono-tematica: immigrazione 53%.</div><div class="chart-wrap" style="height:240px"><canvas id="cFrIt"></canvas></div></div>
+    </div>
+  </section>
+
+  <!-- METRICHE -->
+  <section class="section" id="metriche">
+    <div class="section-title">Metriche del dibattito</div>
+    <div class="paradox" style="background:linear-gradient(135deg,#06121a,#0a0a0a);margin-bottom:18px">
+      <div style="font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--blue);text-align:center;margin-bottom:10px">La scoperta controintuitiva</div>
+      <div class="paradox-cap" style="font-size:18px;margin-top:0">Il mito della «Francia pluralista» non compare nei dati.</div>
+      <div style="text-align:center;color:var(--muted);margin-top:8px;font-size:14px;line-height:1.6">I due dibattiti hanno <strong style="color:var(--text)">concentrazione quasi identica</strong> (entropia 2,13 vs 2,17 · HHI 0,30 vs 0,33). Non è vero che la Francia discute «di più» o «meglio»: discute con la stessa intensità su <strong style="color:var(--text)">un bersaglio diverso</strong>.</div>
+    </div>
+
+    <div class="chart-card" style="margin-bottom:18px;border-top:3px solid var(--red)">
+      <div class="chart-title">Conversazione vs Interesse — ciò che si scrive ≠ ciò che si premia</div>
+      <div class="chart-sub">Frame immigrazione: quota di <strong>tweet</strong> (produzione del discorso) contro quota di <strong>like</strong> (consumo).</div>
+      <table class="ct"><thead><tr><th></th><th>Tweet</th><th>Like</th><th>Gap</th></tr></thead><tbody>
+        <tr><td>🇫🇷 Francia</td><td><span class="bar" style="width:38px;background:#0055A4"></span> 21%</td><td><span class="bar" style="width:114px;background:#0055A4"></span> 63%</td><td class="delta" style="color:var(--red)">+42</td></tr>
+        <tr><td>🇮🇹 Italia</td><td><span class="bar" style="width:95px;background:#008C45"></span> 53%</td><td><span class="bar" style="width:104px;background:#008C45"></span> 58%</td><td class="delta" style="color:var(--muted)">+5</td></tr>
+      </tbody></table>
+      <div style="font-size:14px;margin-top:12px;line-height:1.5"><strong>Ciò che i francesi scrivono e ciò che i francesi premiano non coincidono.</strong> Il frame immigrazione è il <strong>21%</strong> di ciò che si scrive ma il <strong>63%</strong> di ciò che si premia. In Italia produzione e consumo quasi coincidono (53% → 58%).</div>
+    </div>
+    <div class="met-grid">
+      <div class="met-card" style="border-top:3px solid var(--red)">
+        <div class="met-name">Distanza narrativa (euclidea)</div>
+        <div class="met-vals"><span class="met-v" id="m-dist" style="color:var(--red)">0,55</span></div>
+        <div class="met-foot"><span class="formula">d = √Σ(pᵢ−qᵢ)²</span><br>Pur partendo dagli <strong>stessi eventi</strong>, FR e IT hanno distribuzioni di frame lontane (½·Σ|p−q| = 0,57). È <em>questo</em> il dato forte, non la frammentazione.</div>
+      </div>
+      <div class="met-card">
+        <div class="met-name">Entropia del dibattito (bit)</div>
+        <div class="met-vals"><span class="met-v" style="color:#5b9bd5">🇫🇷 <span id="m-ent-fr">2,13</span></span><span class="met-v" style="color:#4ec07a">🇮🇹 <span id="m-ent-it">2,17</span></span></div>
+        <div class="met-foot"><span class="formula">H = −Σ pᵢ·log₂(pᵢ)</span><br><strong>Quasi identiche.</strong> Controintuitivamente nessun dibattito è più frammentato dell'altro: sono ugualmente concentrati, ma su frame diversi.</div>
+      </div>
+      <div class="met-card">
+        <div class="met-name">Monocultura narrativa (HHI)</div>
+        <div class="met-vals"><span class="met-v" style="color:#5b9bd5">🇫🇷 <span id="m-hhi-fr">0,30</span></span><span class="met-v" style="color:#4ec07a">🇮🇹 <span id="m-hhi-it">0,33</span></span></div>
+        <div class="met-foot"><span class="formula">HHI = Σ pᵢ²</span><br>Indice di concentrazione (più alto = più mono-cornice). Quasi pari: l'Italia solo di un soffio più concentrata.</div>
+      </div>
+    </div>
+    <div style="height:16px"></div>
+    <div class="chart-grid">
+      <div class="chart-card">
+        <div class="chart-title">Gap di attenzione (engagement − volume)</div>
+        <div class="chart-sub">Differenza tra quota di <strong>like</strong> e quota di <strong>tweet</strong> sul frame immigrazione (<span class="formula">like% − tweet%</span>): quanto un tema viene <em>premiato</em> rispetto a quanto viene <em>scritto</em>. In Francia il divario è enorme (+42): la minoranza che attribuisce all'immigrazione raccoglie la maggioranza dei like.</div>
+        <div class="chart-wrap" style="height:230px"><canvas id="cGauge"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Curva di Lorenz del dibattito</div>
+        <div class="chart-sub">Quota cumulata dei frame (ordinati). Più la curva si stacca dalla diagonale = più concentrato. Le due curve sono quasi sovrapposte → concentrazione simile.</div>
+        <div class="chart-wrap" style="height:230px"><canvas id="cLorenz"></canvas></div>
+      </div>
+    </div>
+    <div style="height:16px"></div>
+    <div class="chart-card full">
+      <div class="chart-title">🇫🇷 Quando si tweetta, per cornice (ora UTC)</div>
+      <div class="chart-sub">Intensità = n° di tweet. È tempo di <em>reazione</em> (non dell'evento): mostra come le diverse cornici si accendono nell'arco della giornata post-finale.</div>
+      <div id="cHeat" style="overflow-x:auto;font-size:11px"></div>
+    </div>
+  </section>
+
+  <!-- FLUSSI / SANKEY -->
+  <section class="section" id="flussi">
+    <div class="section-title">Flussi narrativi · dall'evento alle interpretazioni</div>
+    <div class="chart-sub" style="margin-bottom:14px">La stessa violenza, incanalata in cornici diverse nei due paesi. Spessore della banda = quota di tweet.</div>
+    <div class="chart-grid">
+      <div class="chart-card"><div class="chart-title">🇫🇷 Francia</div><svg id="skFr" viewBox="0 0 100 60" preserveAspectRatio="xMidYMid meet" style="width:100%;height:auto"></svg></div>
+      <div class="chart-card"><div class="chart-title">🇮🇹 Italia</div><svg id="skIt" viewBox="0 0 100 60" preserveAspectRatio="xMidYMid meet" style="width:100%;height:auto"></svg></div>
+    </div>
+  </section>
+
+  <!-- CHI GUIDA -->
+  <section class="section" id="guida">
+    <div class="section-title">Chi guida il discorso · amplificatori esteri</div>
+    <div class="chart-card">
+      <div class="chart-title">Network: amplificatore estero → account che lo rilancia</div>
+      <div class="chart-sub">Nodi grandi = amplificatori internazionali (dim. ≈ like). Nodi piccoli = account 🇫🇷/🇮🇹 che ne citano il post. Archi reali ricostruiti dai <em>quote tweet</em> nel campione.</div>
+      <svg id="netSvg" viewBox="0 0 100 70" preserveAspectRatio="xMidYMid meet" style="width:100%;height:auto"></svg>
+      <div class="bp-leg" id="bpLeg"></div>
+      <table class="ct" id="ampTable" style="margin-top:14px"><thead><tr><th>Amplificatore estero</th><th>🇫🇷 reach in FR</th><th>🇮🇹 reach in IT</th></tr></thead><tbody></tbody></table>
+      <div class="chart-sub" style="margin-top:6px">"reach" = like del post così come visto nella rispettiva timeline (— = non comparso in quel campione).</div>
+    </div>
+  </section>
+
+  <!-- TWEETS -->
+  <section class="section" id="tweets">
+    <div class="section-title">Top Tweet per like (voci autoctone)</div>
+    <div class="cols">
+      <div><div class="colhead fr">🇫🇷 Francia</div><div class="post-list" id="frTop"></div></div>
+      <div><div class="colhead it">🇮🇹 Italia</div><div class="post-list" id="itTop"></div></div>
+    </div>
+  </section>
+
+  <!-- INTERPRETAZIONE -->
+  <section class="section" id="interp">
+    <div class="section-title">Interpretazione dell'autore</div>
+    <div class="interp-wrap">
+      <div class="interp-flag">⬇ qui finiscono i numeri, inizia la lettura</div>
+      <div class="interp-txt">
+        <p>Il dato più sorprendente non è che ci siano stati <strong>780 fermi in una notte</strong>. È che, di fronte a 780 fermi, 219 feriti, 57 agenti feriti e disordini in 71 comuni, il <strong>frame immigrazione rappresenti appena il 21%</strong> della conversazione francese. Non perché i francesi non vedano ciò che accade, ma perché <strong>ciò che per un osservatore esterno appare straordinario, per molti francesi è ormai ordinario</strong>.</p>
+        <p>La differenza tra Italia e Francia non è nella <em>gravità dei fatti</em>, ma nella <strong>soglia di tolleranza</strong>. Gli italiani guardano Parigi e vedono <strong>un futuro da evitare</strong>. Molti francesi guardano gli stessi eventi e discutono quale ufficio, quale ministro o quale reparto di polizia abbia gestito male una situazione che <strong>considerano già parte del paesaggio</strong>.</p>
+        <p>In altri termini: la Francia non sta più discutendo <em>se</em> il problema esista, ma soltanto <em>come gestirlo</em> — e quando l'attenzione si sposta dalle cause alla gestione delle conseguenze, è il segnale di un fenomeno entrato stabilmente nel paesaggio.</p>
+        <p style="font-size:16px;font-weight:700;color:#e7e9ea;border-left:3px solid var(--purple);padding-left:14px">In sintesi: Francia e Italia hanno dibattiti sorprendentemente <strong>simili nella struttura</strong>. Divergono soprattutto nell'<strong>attribuzione delle responsabilità</strong>.</p>
+        <p style="color:var(--muted);font-size:13px">È un'interpretazione dei dati, non una loro dimostrazione — e nemmeno un giudizio sui francesi. I numeri qui sopra misurano il <em>discorso su X</em>, dove destra e voci identitarie sono sovra-rappresentate; non l'opinione reale dei due paesi.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PERCHÉ CONTA -->
+  <section class="section" id="conta">
+    <div class="section-title">Perché questa notte conta</div>
+    <div class="why" style="text-align:center">
+      <div style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted)">Quanto pesa l'immigrazione nella conversazione francese</div>
+      <div style="display:flex;justify-content:center;gap:30px;flex-wrap:wrap;margin:22px 0 6px">
+        <div><div style="font-size:42px;font-weight:900;color:#e7e9ea;letter-spacing:-2px;line-height:1">780</div><div class="why-lab">FERMI</div></div>
+        <div><div style="font-size:42px;font-weight:900;color:#e7e9ea;letter-spacing:-2px;line-height:1">219</div><div class="why-lab">FERITI</div></div>
+        <div><div style="font-size:42px;font-weight:900;color:#e7e9ea;letter-spacing:-2px;line-height:1">71</div><div class="why-lab">COMUNI</div></div>
+      </div>
+      <div style="font-size:30px;color:var(--muted);line-height:.8;margin:6px 0">↓</div>
+      <div style="font-size:96px;font-weight:900;color:var(--red);letter-spacing:-5px;line-height:1">21%</div>
+      <div class="why-lab" style="font-size:14px;max-width:520px;margin:8px auto 0">della conversazione francese attribuisce l'evento all'immigrazione. Stessa storia dell'Italia (53%), dito puntato in direzione diversa.</div>
+    </div>
+  </section>
+
+  <!-- AUTORE -->
+  <section class="section" id="autore">
+    <div class="section-title">Autore dell'analisi</div>
+    <div class="profile-card">
+      <img class="profile-avatar" src="https://pbs.twimg.com/profile_images/1709892057819422720/K06B6_l__normal.jpg" alt="@Pinperepette">
+      <div>
+        <div class="profile-name">🏴‍☠️ The Pirate 🏴‍☠️ <span class="verified">✔</span></div>
+        <div class="profile-handle"><a href="https://x.com/Pinperepette" target="_blank" rel="noopener">@Pinperepette</a> · Andrea Amani</div>
+        <div class="profile-bio">#Security engineer · analisi del discorso su X · metodo e dati verificabili negli allegati.</div>
+      </div>
+      <a class="pm-btn" href="https://x.com/Pinperepette" target="_blank" rel="noopener">Vai al profilo →</a>
+    </div>
+  </section>
+
+  <div class="foot">
+    <strong>Metodologia.</strong> Raccolta via <code>X / snare-x</code> con <strong>15 query</strong> (8 <code>lang:fr</code> + 7 <code>lang:it</code>), sort <code>top</code> e <code>latest</code>. Dedup per id, filtro on-topic sull'evento, finestra 29 mag–1 giu 2026. <strong>534 tweet on-topic</strong> (324 FR + 210 IT); gli <em>amplificatori stranieri</em> sono separati ed esclusi dalle percentuali per-paese. Il <strong>frame</strong> di ogni tweet è assegnato leggendo il testo, con scelte opinabili sui casi-limite (es. "racaille"). Le cifre del bilancio sono claim ripresi dai post citanti le autorità; la mappa proietta lat/long reali delle città citate (non un rilievo esaustivo dei 71 comuni). Dati: <code>fr_dataset.json</code> / <code>it_dataset.json</code> / <code>compare.json</code>. È il discorso su X, non l'opinione dei due paesi.
+  </div>
+</div>
+
+<script src="chart.umd.min.js"></script>
+<script src="compare_data.js"></script>
+<script>
+const C={red:'#f4212e',orange:'#f28228',blue:'#1d9bf0',green:'#00ba7c',purple:'#8b5cf6',yellow:'#ffd400',pink:'#e0245e',muted:'#71767b',grid:'#2f3336'};
+Chart.defaults.color=C.muted;Chart.defaults.font.family="-apple-system,'Segoe UI',sans-serif";Chart.defaults.font.size=11;
+const fmt=n=>(n||0).toLocaleString('it-IT');
+const M=CMP.meta, T=CMP.toll;
+const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+set('k-fr-n',M.fr_ontopic);set('k-fr-auth',M.fr_authors);set('k-fr-for',M.fr_foreign);
+set('k-it-n',M.it_ontopic);set('k-it-auth',M.it_authors);set('k-it-for',M.it_foreign);set('k-tot',M.total);
+set('h-fr',CMP.fr.imm.like_pct+'%');set('h-it',CMP.it.imm.like_pct+'%');
+set('e-arr',fmt(T.arrests));set('e-inj',T.injured);set('e-pol',T.police_injured);set('e-dead',T.dead);set('e-com',T.communes);set('e-loot',T.loot_cities);
+
+// timeline
+const EVENTS=[
+ {t:'30 mag · 21:00',x:'Fischio finale: il PSG batte l\'Arsenal e vince la 2ª Champions di fila.'},
+ {t:'30 mag · sera',x:'Fino a 20.000 persone sui Champs-Élysées; negozi chiusi dalle 17, ~8.000 agenti schierati.'},
+ {t:'notte 30→31',x:'Auto incendiate, saccheggi, mortai d\'artificio contro la polizia in 71 comuni.'},
+ {t:'31 mag',x:'Bilancio: 780 fermi (480 a Parigi), 219 feriti (57 agenti), un morto di 24 anni.'},
+ {t:'31 mag–1 giu',x:'La polemica politica: RN in Francia, Lega in Italia; rilancio internazionale (Musk).'}
+];
+document.getElementById('timeline').innerHTML=EVENTS.map(e=>`<div class="tl-item"><div class="tl-time">${e.t}</div><div class="tl-txt">${e.x}</div></div>`).join('');
+
+// MAP
+(function(){
+  const svg=document.getElementById('mapSvg');const NS='http://www.w3.org/2000/svg';
+  const prj=(lon,lat)=>[ (lon+5)/13.3*90+5 , (51.1-lat)/9.8*110+6 ];
+  const BORDER=[[2.0,51.0],[7.8,48.9],[7.5,47.6],[6.1,46.2],[6.9,43.9],[5.4,43.3],[3.0,42.5],[-1.8,43.35],[-1.2,45.0],[-2.2,47.3],[-4.8,48.4],[-1.6,48.7],[-1.6,49.75],[0.2,49.5],[1.6,50.95]];
+  const poly=document.createElementNS(NS,'polygon');
+  poly.setAttribute('points',BORDER.map(p=>prj(p[0],p[1]).join(',')).join(' '));
+  poly.setAttribute('fill','rgba(29,155,240,.08)');poly.setAttribute('stroke','#3a6ea5');poly.setAttribute('stroke-width','.5');
+  svg.appendChild(poly);
+  const CITIES=[
+   {n:'Parigi',lon:2.35,lat:48.86,r:6,c:C.red,lab:true},
+   {n:'Lille',lon:3.07,lat:50.63,r:2.4,c:C.orange},
+   {n:'Rennes',lon:-1.68,lat:48.11,r:2.4,c:C.orange},
+   {n:'Strasburgo',lon:7.75,lat:48.58,r:2.4,c:C.orange},
+   {n:'Lione',lon:4.83,lat:45.76,r:2.8,c:C.orange,lab:true},
+   {n:'Bordeaux',lon:-0.58,lat:44.84,r:2.4,c:C.orange},
+   {n:'Grenoble',lon:5.72,lat:45.19,r:2.4,c:C.orange},
+   {n:'Tolosa',lon:1.44,lat:43.60,r:2.4,c:C.orange},
+   {n:'Marsiglia',lon:5.37,lat:43.30,r:2.6,c:C.orange,lab:true},
+   {n:'Nizza',lon:7.27,lat:43.70,r:2.8,c:C.orange,lab:true}
+  ];
+  CITIES.forEach(ct=>{const [x,y]=prj(ct.lon,ct.lat);
+    const pulse=document.createElementNS(NS,'circle');pulse.setAttribute('cx',x);pulse.setAttribute('cy',y);pulse.setAttribute('r',ct.r+1.6);pulse.setAttribute('fill',ct.c);pulse.setAttribute('opacity','.18');svg.appendChild(pulse);
+    const c=document.createElementNS(NS,'circle');c.setAttribute('cx',x);c.setAttribute('cy',y);c.setAttribute('r',ct.r);c.setAttribute('fill',ct.c);c.setAttribute('opacity','.85');svg.appendChild(c);
+    if(ct.lab){const tx=document.createElementNS(NS,'text');tx.setAttribute('x',x+ct.r+1);tx.setAttribute('y',y+1.2);tx.setAttribute('class','map-city');tx.textContent=ct.n;svg.appendChild(tx);}
+  });
+})();
+
+// FUNNEL
+(function(){
+  const rows=[
+   {t:'Vittoria PSG in Champions',s:'30 maggio, ore 21',w:96,c:'#0a6e3a'},
+   {t:'Festeggiamenti di massa',s:'fino a 20.000 sui Champs-Élysées',w:86,c:'#1d6fa5'},
+   {t:'71 comuni in disordine',s:'auto incendiate, saccheggi',w:70,c:'#b06a00'},
+   {t:'780 fermi',s:'480 solo a Parigi · 277 in stato di fermo',w:54,c:'#c44a16'},
+   {t:'219 feriti',s:'di cui 57 agenti',w:38,c:'#d4321f'},
+   {t:'1 morto',s:'un uomo di 24 anni',w:24,c:'#f4212e'}
+  ];
+  document.getElementById('funnel').innerHTML=rows.map((r,i)=>
+   `<div class="fn-row" style="width:${r.w}%;background:${r.c}">${r.t}<small>${r.s}</small></div>`+
+   (i<rows.length-1?'<div class="fn-arrow">▼</div>':'')).join('');
+})();
+
+// FRAME labels/colors
+const FLAB={immigration:'Immigrazione',hooliganism:'Hooliganismo',police_state:'Critica polizia/Stato',mockery:'Scherno',antisemitism:'Antisemitismo',news:'News/fatti',counter:'Contro-narrazione',italy_link:'Monito Italia',other:'Altro'};
+const FCOL={immigration:C.red,hooliganism:C.orange,police_state:C.blue,mockery:C.purple,antisemitism:C.yellow,news:C.muted,counter:C.green,italy_link:C.pink,other:'#3a4048'};
+
+// CONSENSUS table
+(function(){
+  const rows=CMP.consensus.filter(r=>r.fr||r.it);
+  const mx=Math.max(...rows.map(r=>Math.max(r.fr,r.it)));
+  document.getElementById('ctBody').innerHTML=rows.map(r=>{
+    const dcol=Math.abs(r.delta)>=15?C.red:(Math.abs(r.delta)>=8?C.orange:C.muted);
+    const sign=r.delta>0?'+':'';
+    return `<tr>
+      <td><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:${FCOL[r.frame]};margin-right:6px"></span>${FLAB[r.frame]||r.frame}</td>
+      <td><span class="bar" style="width:${r.fr/mx*90}px;background:#0055A4"></span> ${r.fr}%</td>
+      <td><span class="bar" style="width:${r.it/mx*90}px;background:#008C45"></span> ${r.it}%</td>
+      <td class="delta" style="color:${dcol}">${sign}${r.delta}</td></tr>`;
+  }).join('');
+  const F=CMP.frag;
+  document.getElementById('frag').innerHTML=
+    `<div>🇫🇷 cornice dominante <strong>${F.fr_top}%</strong> (hooliganismo)</div>`+
+    `<div>🇮🇹 cornice dominante <strong>${F.it_top}%</strong> (immigrazione)</div>`+
+    `<div style="color:var(--muted)">Non cambia <em>quanto</em> è concentrato il dibattito (vedi Metriche) ma <em>su cosa</em>: in IT l'immigrazione, in FR l'hooliganismo.</div>`;
+})();
+
+function donut(cv,frames){
+  const ks=Object.keys(frames).sort((a,b)=>frames[b].n-frames[a].n);
+  new Chart(document.getElementById(cv),{type:'doughnut',
+    data:{labels:ks.map(k=>FLAB[k]),datasets:[{data:ks.map(k=>frames[k].n),backgroundColor:ks.map(k=>FCOL[k]),borderColor:'#000',borderWidth:2}]},
+    options:{maintainAspectRatio:false,cutout:'58%',plugins:{legend:{position:'right',labels:{usePointStyle:true,boxWidth:8,font:{size:10}}}}}});
+}
+donut('cFrFr',CMP.fr.frames);donut('cFrIt',CMP.it.frames);
+
+// METRICS fill
+const MET=CMP.metrics;
+set('m-dist',(MET.distance_eucl+'').replace('.',','));
+set('m-ent-fr',(MET.entropy_fr+'').replace('.',','));set('m-ent-it',(MET.entropy_it+'').replace('.',','));
+set('m-hhi-fr',(MET.hhi_fr+'').replace('.',','));set('m-hhi-it',(MET.hhi_it+'').replace('.',','));
+
+// GAP DI ATTENZIONE (like% - tweet%, horizontal bars)
+new Chart(document.getElementById('cGauge'),{type:'bar',
+  data:{labels:['🇫🇷 Francia','🇮🇹 Italia'],datasets:[{data:[MET.gap_fr,MET.gap_it],backgroundColor:['#0055A4','#008C45'],borderRadius:6}]},
+  options:{indexAxis:'y',maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'gap = +'+c.parsed.x+' punti'}}},
+    scales:{x:{grid:{color:C.grid},suggestedMax:50,title:{display:true,text:'like% − tweet% (immigrazione)'}},y:{grid:{display:false}}}}});
+
+// LORENZ
+const lf=MET.lorenz_fr, li=MET.lorenz_it;
+new Chart(document.getElementById('cLorenz'),{type:'line',
+  data:{datasets:[
+    {label:'Equidistribuzione',data:[{x:0,y:0},{x:1,y:1}],borderColor:C.muted,borderDash:[4,4],pointRadius:0,borderWidth:1},
+    {label:'🇫🇷 Francia',data:lf.x.map((x,i)=>({x,y:lf.y[i]})),borderColor:'#5b9bd5',tension:.15,pointRadius:0,borderWidth:2},
+    {label:'🇮🇹 Italia',data:li.x.map((x,i)=>({x,y:li.y[i]})),borderColor:'#4ec07a',tension:.15,pointRadius:0,borderWidth:2}]},
+  options:{maintainAspectRatio:false,plugins:{legend:{labels:{usePointStyle:true,boxWidth:8,font:{size:10}}}},
+    scales:{x:{type:'linear',min:0,max:1,grid:{color:C.grid},title:{display:true,text:'frame (quota cumulata)'}},y:{min:0,max:1,grid:{color:C.grid}}}}});
+
+// HEATMAP (HTML grid, FR)
+(function(){const H=CMP.heat_fr;const FL={immigration:'Immigrazione',hooliganism:'Hooligan',police_state:'Polizia/Stato',counter:'Contro',news:'News'};
+  const max=Math.max(1,...H.frames.flatMap(f=>H.mat[f]));
+  let html='<table style="border-collapse:collapse"><tr><th></th>'+H.hours.map(h=>`<th style="padding:1px 3px;color:var(--muted);font-weight:600">${h}</th>`).join('')+'</tr>';
+  H.frames.forEach(f=>{html+=`<tr><td style="padding:2px 8px 2px 0;color:var(--muted);white-space:nowrap">${FL[f]}</td>`+H.hours.map((h,i)=>{const v=H.mat[f][i];const a=(v/max);return `<td title="${v} tweet · h${h}" style="width:16px;height:16px;background:rgba(244,33,46,${a.toFixed(2)});outline:1px solid #000;text-align:center;color:${a>.55?'#fff':'#777'};font-size:8px">${v||''}</td>`;}).join('')+'</tr>';});
+  html+='</table><div style="color:var(--muted);margin-top:6px">colonna = ora UTC · cella più rossa = più tweet</div>';
+  document.getElementById('cHeat').innerHTML=html;})();
+
+// SANKEY (FR & IT)
+function sankey(svgId,frames){
+  const svg=document.getElementById(svgId);const NS='http://www.w3.org/2000/svg';
+  const ks=Object.keys(frames).filter(k=>frames[k].n>0).sort((a,b)=>frames[b].n-frames[a].n);
+  const total=ks.reduce((a,k)=>a+frames[k].n,0)||1;
+  const top=4, Hh=50, xL=12, xR=66, gap=1.2;
+  const scale=(Hh-(ks.length-1)*gap)/Hh;
+  const sb=document.createElementNS(NS,'rect');sb.setAttribute('x',xL-4);sb.setAttribute('y',top);sb.setAttribute('width',4);sb.setAttribute('height',Hh);sb.setAttribute('fill','#9aa6b2');sb.setAttribute('rx',1);svg.appendChild(sb);
+  const st=document.createElementNS(NS,'text');st.setAttribute('x',xL-4);st.setAttribute('y',top-1.4);st.setAttribute('style','font:600 3px sans-serif;fill:#e7e9ea');st.textContent='Violenza';svg.appendChild(st);
+  let sy=top, ty=top, mx=(xL+xR)/2;
+  ks.forEach(k=>{const h=frames[k].n/total*Hh, th=h*scale;
+    const d=`M ${xL} ${sy} C ${mx} ${sy}, ${mx} ${ty}, ${xR} ${ty} L ${xR} ${ty+th} C ${mx} ${ty+th}, ${mx} ${sy+h}, ${xL} ${sy+h} Z`;
+    const p=document.createElementNS(NS,'path');p.setAttribute('d',d);p.setAttribute('fill',FCOL[k]);p.setAttribute('opacity','.5');svg.appendChild(p);
+    const seg=document.createElementNS(NS,'rect');seg.setAttribute('x',xR);seg.setAttribute('y',ty);seg.setAttribute('width',4);seg.setAttribute('height',Math.max(th,.5));seg.setAttribute('fill',FCOL[k]);svg.appendChild(seg);
+    const tl=document.createElementNS(NS,'text');tl.setAttribute('x',xR+5.5);tl.setAttribute('y',ty+th/2+1);tl.setAttribute('style','font:500 2.7px sans-serif;fill:#e7e9ea');tl.textContent=(FLAB[k]||k)+' '+Math.round(frames[k].n/total*100)+'%';svg.appendChild(tl);
+    sy+=h; ty+=th+gap;});
+}
+sankey('skFr',CMP.fr.frames);sankey('skIt',CMP.it.frames);
+
+// NETWORK amplifier -> quoter
+(function(){
+  const svg=document.getElementById('netSvg');const NS='http://www.w3.org/2000/svg';
+  const amps=CMP.ampnet.amps, edges=CMP.ampnet.edges, quoters=CMP.ampnet.quoters;
+  const ampPos={}; amps.forEach((a,i)=>ampPos[a.h.toLowerCase()]=[28, 5+i*(60/Math.max(1,amps.length-1))]);
+  const qPos={}; quoters.forEach((q,i)=>qPos[q.h.toLowerCase()]=[72, 4+i*(62/Math.max(1,quoters.length-1))]);
+  edges.forEach(e=>{const a=ampPos[e.amp];const q=qPos[e.q.toLowerCase()];if(!a||!q)return;
+    const l=document.createElementNS(NS,'line');l.setAttribute('x1',a[0]);l.setAttribute('y1',a[1]);l.setAttribute('x2',q[0]);l.setAttribute('y2',q[1]);l.setAttribute('stroke',e.lang==='it'?'#008C45':'#0055A4');l.setAttribute('stroke-width','.4');l.setAttribute('opacity','.5');svg.appendChild(l);});
+  const wmax=Math.max(...amps.map(a=>a.likes),1);
+  amps.forEach(a=>{const [x,y]=ampPos[a.h.toLowerCase()];const r=1.4+Math.sqrt(a.likes/wmax)*3.2;
+    const c=document.createElementNS(NS,'circle');c.setAttribute('cx',x);c.setAttribute('cy',y);c.setAttribute('r',r);c.setAttribute('fill',C.yellow);c.setAttribute('stroke','#000');c.setAttribute('stroke-width','.3');svg.appendChild(c);
+    const t=document.createElementNS(NS,'text');t.setAttribute('x',x-r-1);t.setAttribute('y',y+1);t.setAttribute('text-anchor','end');t.setAttribute('style','font:600 2.5px sans-serif;fill:#e7e9ea');t.textContent='@'+a.h;svg.appendChild(t);});
+  quoters.forEach(q=>{const [x,y]=qPos[q.h.toLowerCase()];
+    const c=document.createElementNS(NS,'circle');c.setAttribute('cx',x);c.setAttribute('cy',y);c.setAttribute('r',1.2);c.setAttribute('fill',q.lang==='it'?'#4ec07a':'#5b9bd5');svg.appendChild(c);
+    const t=document.createElementNS(NS,'text');t.setAttribute('x',x+2);t.setAttribute('y',y+.9);t.setAttribute('style','font:400 2.2px sans-serif;fill:#9aa6b2');t.textContent='@'+q.h;svg.appendChild(t);});
+  document.getElementById('bpLeg').innerHTML=
+    `<div><span style="color:${C.yellow}">●</span> amplificatore estero (dim. ≈ like) · <span style="color:#5b9bd5">●</span> rilanciato da 🇫🇷 · <span style="color:#4ec07a">●</span> rilanciato da 🇮🇹</div>`+
+    `<div style="margin-top:6px;color:var(--muted)"><strong>${edges.length} quote-tweet</strong> ricostruiti dal campione. Le due timeline pescano in larga parte da <strong>cluster esteri diversi</strong> — anglofono (Musk, MAGA) verso la Francia, ispanofono (Liberfach0, Negre, Laje) verso l'Italia; solo pochi account (EndWokeness, Tommy Robinson, Fdesouche) le alimentano entrambe.</div>`;
+})();
+
+// AMP table (companion to network)
+(function(){
+  const kf=v=>v>=1000?Math.round(v/1000)+'K':(v||'—');
+  const rows=CMP.amps.slice(0,9);
+  document.querySelector('#ampTable tbody').innerHTML=rows.map(a=>`<tr>
+    <td><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${C.yellow};margin-right:6px"></span>@${a.h}</td>
+    <td style="color:#5b9bd5;font-weight:700">${a.fr?kf(a.fr_likes):'—'}</td>
+    <td style="color:#4ec07a;font-weight:700">${a.it?kf(a.it_likes):'—'}</td></tr>`).join('');
+})();
+
+// TOP tweets
+function av(t){const i=(t.n||t.h||'?').slice(0,2).toUpperCase();
+  return t.av?`<img class="post-av" src="${t.av}" alt="" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'post-av',textContent:'${i}'}))">`:`<div class="post-av">${i}</div>`;}
+function renderTop(el,arr){document.getElementById(el).innerHTML=arr.map(t=>`
+  <a class="post-item" href="${t.url}" target="_blank" rel="noopener">
+    <div class="post-head">${av(t)}<span class="post-author">${t.n}${t.v?' <span class="verified">✔</span>':''}</span><span class="post-handle">@${t.h}</span><span class="post-date">· ${t.date}</span>
+      <span class="fr-pill" style="background:${FCOL[t.frame]}22;color:${FCOL[t.frame]}">${FLAB[t.frame]||t.frame}</span></div>
+    <div class="post-text">${(t.txt||'').replace(/</g,'&lt;')}</div>
+    <div class="post-meta"><span>♥ ${fmt(t.likes)}</span><span>🔁 ${fmt(t.rt)}</span><span>💬 ${fmt(t.rp)}</span><span>👁 ${fmt(t.vw)}</span></div>
+  </a>`).join('');}
+renderTop('frTop',CMP.fr.top);renderTop('itTop',CMP.it.top);
+
+// nav scroll
+const nl=[...document.querySelectorAll('nav a')],secs=nl.map(a=>document.querySelector(a.getAttribute('href')));
+window.addEventListener('scroll',()=>{let i=0;secs.forEach((s,k)=>{if(s&&s.getBoundingClientRect().top<120)i=k;});nl.forEach((a,k)=>a.classList.toggle('active',k===i));});
+</script>
+</body>
+</html>

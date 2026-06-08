@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Referendum Giustizia su X — il dibattito Sì/No (marzo 2026)</title>
+
+<!-- Anteprima social (Open Graph + Twitter Card) — URL pubblici GitHub Pages -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Referendum Giustizia su X — il dibattito Sì/No">
+<meta property="og:description" content="613 post, 402 autori: chi spinge per il Sì, chi per il No. Contando le voci, il dibattito pende per il No.">
+<meta property="og:image" content="https://pinperepette.github.io/postmortem/referendum-giustizia-tt/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://pinperepette.github.io/postmortem/referendum-giustizia-tt/">
+<meta property="og:site_name" content="postmortem">
+<meta property="og:locale" content="it_IT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Referendum Giustizia su X — il dibattito Sì/No">
+<meta name="twitter:description" content="613 post, 402 autori: chi spinge per il Sì, chi per il No. Contando le voci, il dibattito pende per il No.">
+<meta name="twitter:image" content="https://pinperepette.github.io/postmortem/referendum-giustizia-tt/og-cover.png">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#0d1117; --panel:#161b22; --panel2:#1c2530; --bord:#2a3340;
+    --txt:#e6edf3; --muted:#8b98a5; --accent:#58a6ff;
+    --si:#3fb950; --no:#f85149; --neu:#d29922;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--txt);line-height:1.55;padding:0 0 80px}
+  a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+  .wrap{max-width:1320px;margin:0 auto;padding:0 32px}
+  header{background:linear-gradient(135deg,#161f2e,#0d1117);border-bottom:1px solid var(--bord);padding:48px 0 38px;margin-bottom:30px}
+  header h1{font-size:2.1rem;line-height:1.15;letter-spacing:-.5px}
+  header h1 .em{color:var(--accent)}
+  header .sub{color:var(--muted);margin-top:12px;font-size:1.02rem;max-width:840px}
+  .badges{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap}
+  .badge{background:var(--panel2);border:1px solid var(--bord);border-radius:30px;padding:6px 14px;font-size:.82rem;color:var(--muted)}
+  .badge b{color:var(--txt)}
+  h2{font-size:1.45rem;margin:42px 0 6px;letter-spacing:-.3px}
+  h2 .pre{color:var(--accent);font-size:.8rem;display:block;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
+  .lead{color:var(--muted);margin-bottom:20px;max-width:880px}
+  .tldr{background:linear-gradient(135deg,#1c2530,#161b22);border:1px solid var(--bord);border-radius:16px;padding:24px 26px;margin-top:10px}
+  .tldr h3{font-size:.8rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  .tldr ul{margin:0;padding-left:4px;list-style:none}
+  .tldr li{margin:11px 0;color:#d3dce4;font-size:1.05rem;padding-left:30px;position:relative}
+  .tldr li::before{content:"→";position:absolute;left:0;color:var(--accent);font-weight:700}
+  .tldr li b{color:#fff}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:16px}
+  .kpi{background:var(--panel);border:1px solid var(--bord);border-radius:14px;padding:20px}
+  .kpi .n{font-size:2.0rem;font-weight:700;letter-spacing:-1px}
+  .kpi .l{color:var(--muted);font-size:.85rem;margin-top:4px}
+  .kpi.no .n{color:var(--no)} .kpi.si .n{color:var(--si)}
+  .lettura{background:rgba(88,166,255,.07);border:1px solid #244;border-left:4px solid var(--accent);border-radius:12px;padding:16px 20px;margin-top:16px}
+  .lettura h3{font-size:.78rem;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+  .lettura p{color:#d3dce4;margin:0}
+  .method{margin-top:16px;background:var(--panel2);border:1px solid var(--bord);border-radius:10px;padding:13px 17px;font-size:.85rem;color:var(--muted);line-height:1.55}
+  .method b{color:var(--txt)}
+  .quadro{display:grid;grid-template-columns:340px 1fr;gap:20px;align-items:center;margin-top:8px}
+  .quadro .cbox{height:280px}
+  .quadro .takeaway{background:var(--panel);border:1px solid var(--bord);border-left:4px solid var(--accent);border-radius:12px;padding:18px 22px;font-size:1.05rem;line-height:1.5}
+  .quadro .takeaway b{color:#fff}
+  .charts{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:8px}
+  .chartcard{background:var(--panel);border:1px solid var(--bord);border-radius:14px;padding:18px}
+  .chartcard.wide{grid-column:1 / -1}
+  .chartcard h4{font-size:.98rem;margin-bottom:4px}
+  .chartcard .cap{color:var(--muted);font-size:.8rem;margin-bottom:12px}
+  .cbox{position:relative;height:300px} .cbox.tall{height:360px}
+  .legend{display:flex;gap:18px;color:var(--muted);font-size:.85rem;flex-wrap:wrap;margin:14px 0 0}
+  .dot{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px;vertical-align:middle}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:8px}
+  .argbox{background:var(--panel);border:1px solid var(--bord);border-radius:14px;overflow:hidden}
+  .argbox h3{padding:16px 18px;font-size:1.05rem}
+  .argbox.si h3{background:rgba(63,185,80,.12);border-bottom:1px solid #1f6f33}
+  .argbox.no h3{background:rgba(248,81,73,.12);border-bottom:1px solid #8c2b27}
+  .arg{padding:13px 18px;border-bottom:1px solid var(--bord)} .arg:last-child{border-bottom:none}
+  .arg .t{font-weight:600;margin-bottom:3px} .arg .d{color:var(--muted);font-size:.9rem}
+  .av{width:40px;height:40px;border-radius:50%;object-fit:cover;background:var(--panel2);border:1px solid var(--bord);flex:none}
+  .av.sm{width:30px;height:30px}
+  table{width:100%;border-collapse:collapse;margin-top:8px;font-size:.9rem}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--bord);vertical-align:middle}
+  th{color:var(--muted);font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:.5px}
+  .who{display:flex;align-items:center;gap:10px}
+  .who .nm b{display:block;line-height:1.2} .who .nm small{color:var(--muted)}
+  .who .nm small a{color:var(--muted)} .who .nm b a{color:var(--accent)}
+  td .pill{font-size:.7rem;padding:3px 9px;border-radius:20px;white-space:nowrap;font-weight:600}
+  .pill.si{background:rgba(63,185,80,.15);color:var(--si)} .pill.no{background:rgba(248,81,73,.15);color:var(--no)} .pill.neu{background:rgba(210,153,34,.15);color:var(--neu)}
+  .tweets{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:8px}
+  a.tw{display:block;background:var(--panel);border:1px solid var(--bord);border-left:4px solid var(--neu);border-radius:10px;padding:16px;color:inherit;transition:transform .12s,border-color .12s,background .12s}
+  a.tw:hover{transform:translateY(-2px);background:#1a2230;text-decoration:none;border-color:var(--accent)}
+  a.tw.si{border-left-color:var(--si)} a.tw.no{border-left-color:var(--no)} a.tw.neu{border-left-color:var(--neu)}
+  .tw .hd{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .tw .hd .nm{flex:1;min-width:0}
+  .tw .hd .nm b{display:block;font-size:.9rem;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tw .hd .nm small{color:var(--muted);font-size:.78rem}
+  .tw .tag{font-size:.64rem;padding:3px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;font-weight:700}
+  .tag.si{background:rgba(63,185,80,.15);color:var(--si)} .tag.no{background:rgba(248,81,73,.15);color:var(--no)} .tag.neu{background:rgba(210,153,34,.15);color:var(--neu)}
+  .tw .bd{font-size:.88rem;color:#d3dce4} .tw .ft{margin-top:12px;padding-top:10px;border-top:1px solid var(--bord);font-size:.76rem;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .tw .ft b{color:var(--txt)} .tw .ft .open{margin-left:auto;color:var(--accent);font-weight:600}
+  .netwrap{background:#11161d;border:1px solid var(--bord);border-radius:14px;padding:14px;margin-top:8px;overflow-x:auto}
+  .netwrap svg{width:100%;min-width:760px;height:auto;display:block}
+  .net-legend{display:flex;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:.82rem;margin-top:8px;padding:0 4px}
+  .ds{background:#11161d;border:1px solid var(--bord);border-radius:14px;padding:6px 22px 18px}
+  .note{background:var(--panel2);border:1px solid var(--bord);border-left:4px solid var(--accent);border-radius:8px;padding:14px 18px;color:var(--muted);font-size:.88rem;margin-top:24px}
+  .note b{color:var(--txt)}
+  footer{margin-top:50px;padding-top:24px;border-top:1px solid var(--bord);color:var(--muted);font-size:.83rem}
+  code{background:var(--panel2);padding:1px 6px;border-radius:5px;font-size:.85em}
+  @media(max-width:900px){.tweets{grid-template-columns:1fr 1fr}}
+  @media(max-width:760px){
+    .wrap{padding:0 16px}header{padding:32px 0 26px}header h1{font-size:1.55rem}header .sub{font-size:16px}
+    h2{font-size:1.22rem;margin-top:34px}.tldr{padding:18px}.tldr li{font-size:.98rem}
+    .kpis{grid-template-columns:repeat(2,1fr);gap:12px}.kpi{padding:15px}.kpi .n{font-size:1.7rem}
+    .quadro{grid-template-columns:1fr}
+    .charts,.cols,.tweets{grid-template-columns:1fr}.chartcard.wide{grid-column:auto}.chartcard{padding:14px}
+    .cbox{height:260px}.cbox.tall{height:300px}.quadro .cbox{height:240px}
+    th,td{padding:9px 8px;font-size:.86rem}
+    #leaders th:nth-child(2),#leaders td:nth-child(2){display:none}
+    .ds{padding:4px 12px 12px}
+    .netwrap{position:relative}
+    .netwrap::before{content:"scorri lateralmente →";position:absolute;top:8px;right:14px;font-size:.72rem;color:var(--muted);background:rgba(13,17,23,.7);padding:2px 8px;border-radius:10px;z-index:2}
+    .netwrap svg{min-width:680px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>Referendum <span class="em">Giustizia</span> su X<br>Il dibattito Sì / No nella campagna</h1>
+    <p class="sub">Cosa si è detto su X/Twitter della riforma sulla separazione delle carriere nelle due settimane di
+    campagna. Chi spinge per il Sì, chi per il No, con quali argomenti — letto con la nostra metrica: <b>contare le voci</b>.</p>
+    <div class="badges">
+      <span class="badge">📅 Campagna: <b>6–21 marzo 2026</b></span>
+      <span class="badge">🔎 Fonte: <b>X / Twitter</b></span>
+      <span class="badge">🗂️ <b>613 post · 402 autori</b></span>
+      <span class="badge">✅ Top post <b>verificati</b></span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section>
+    <div class="tldr">
+      <h3>In sintesi — i fatti</h3>
+      <ul>
+        <li>Sul referendum (separazione delle carriere) <b>613 post di 402 autori</b> nelle due settimane di campagna.</li>
+        <li>Contando le voci c'è una <b>lieve prevalenza del No</b>: 53% degli schierati vs 47% (≈6 punti; con «1 autore = 1 voto» 54% vs 46%). È una differenza piccola su un campione limitato e <b>non probabilistico</b>: va letta come <b>tendenza</b>, non come misura precisa del consenso — di fatto un <b>testa a testa</b> che pende un po' verso il No.</li>
+        <li>Il dato più solido non è "chi vince" ma <b>come</b>: il Sì sembra più forte solo guardando i <b>like</b>, gonfiati da pochi post virali (Meloni 8.051 like). Contando le <b>persone</b>, quel vantaggio del Sì si riduce fino a diventare un lieve vantaggio del No.</li>
+        <li>Dibattito <b>molto militante e in crescita</b>: il volume esplode avvicinandosi al voto (325 post solo il 21 marzo).</li>
+      </ul>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><div class="n">613</div><div class="l">Post analizzati · 402 autori</div></div>
+      <div class="kpi no"><div class="n">53%</div><div class="l">Fronte NO (voci tra schierati)</div></div>
+      <div class="kpi si"><div class="n">47%</div><div class="l">Fronte SÌ (voci tra schierati)</div></div>
+      <div class="kpi"><div class="n">21 mar</div><div class="l">Picco del dibattito (325 post)</div></div>
+    </div>
+    <div class="lettura">
+      <h3>La nostra lettura</h3>
+      <p>Sul nostro campione il dibattito è in <b>sostanziale equilibrio, con una lieve prevalenza del No</b> (53% vs 47%
+      tra gli schierati) — una differenza di circa 6 punti che, su un campione limitato e <b>non probabilistico</b>, va
+      letta come <b>tendenza</b> e non come misura precisa del consenso: un testa a testa più che un distacco. La cosa più
+      solida non è chi è davanti, ma <b>come</b>: il Sì appare in vantaggio solo se si guardano i
+      <b>like</b> (gonfiati da pochi post virali, Meloni in testa); contando le <b>persone</b> quel vantaggio si riduce
+      fino a diventare un lieve vantaggio del No. Resta la fotografia del <b>dibattito su X</b>, non dell'elettorato.</p>
+    </div>
+    <div class="method">
+      <b>Metodo.</b> Finestra <b>6–21 marzo 2026</b> · ricerca nativa su X (<code>lang:it</code>), <b>613 post / 402 autori</b>
+      deduplicati per ID · classificazione automatica (AI) a passaggio singolo, Sì / No / Neutro · <b>metrica principale: conteggio delle voci</b>
+      (volume e «1 autore = 1 voto»); l'engagement è solo contesto, perché lo muovono pochi post virali · top post verificati
+      uno a uno · <b>Limite</b>: è X, non l'intero elettorato (campione non probabilistico).
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="pre">Il quadro</span>Come si divide la conversazione</h2>
+    <div class="quadro">
+      <div class="cbox"><canvas id="cSent"></canvas></div>
+      <div class="takeaway">
+        Tra i post schierati il <b>No</b> è leggermente più presente del <b>Sì</b> (269 vs 238); circa un sesto del
+        dibattito è cronaca/neutro. È una conversazione <b>polarizzata e militante</b>, fatta di partiti, testate e tanti
+        cittadini — con le voci che pendono <b>di poco</b> verso il No: una differenza piccola (~6 pt), da leggere come tendenza.
+      </div>
+    </div>
+    <div class="legend">
+      <span><span class="dot" style="background:var(--si)"></span>Sì (pro-riforma)</span>
+      <span><span class="dot" style="background:var(--no)"></span>No</span>
+      <span><span class="dot" style="background:var(--neu)"></span>Neutro / news</span>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="pre">Perché Sì, perché No</span>Gli argomenti in campo</h2>
+    <div class="cols">
+      <div class="argbox si">
+        <h3>✅ Le ragioni del SÌ</h3>
+        <div class="arg"><div class="t">«Riforma di buonsenso, non di parte»</div><div class="d">Meloni: già proposta in passato da chi oggi la combatte; «non è di destra né di sinistra».</div></div>
+        <div class="arg"><div class="t">Giustizia più libera e indipendente</div><div class="d">Salvini: «più veloce, libera da partiti e correnti». Borghi: «la separazione la volevano tutti».</div></div>
+        <div class="arg"><div class="t">Contro il correntismo della magistratura</div><div class="d">FdI: «liberare le toghe dalla piaga del correntismo politicizzato».</div></div>
+        <div class="arg"><div class="t">«Paese che dice No a ogni cambiamento»</div><div class="d">Calenda: il No è conformismo, l'Italia è la più conservatrice d'Europa.</div></div>
+      </div>
+      <div class="argbox no">
+        <h3>❌ Le ragioni del NO</h3>
+        <div class="arg"><div class="t">Difesa dell'indipendenza della magistratura</div><div class="d">Salis: «ridurla è il tratto distintivo dei regimi autoritari». Tema di democrazia, non di efficienza.</div></div>
+        <div class="arg"><div class="t">«Smantella il CSM», non separa e basta</div><div class="d">Il cuore della riforma sarebbe l'indebolimento dell'organo di garanzia, non la sola separazione.</div></div>
+        <div class="arg"><div class="t">«Non rende la giustizia più veloce»</div><div class="d">M5S: «referendum Salva-Casta», non tocca il vero problema (la lentezza dei processi).</div></div>
+        <div class="arg"><div class="t">Fronte trasversale di cultura e toghe</div><div class="d">Travaglio con Davigo, Gratteri, Scarpinato; appelli di scrittori e attori (Maraini, Germano, Guanciale).</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="pre">Voci vs like</span>Perché contiamo le persone, non i cuori</h2>
+    <p class="lead">La stessa conversazione cambia faccia a seconda di cosa misuri. Contando le <b>voci</b> (le persone) è
+      avanti il <b>No</b>; contando i <b>like</b> sembra avanti il Sì — ma è l'effetto di <b>pochi post molto virali</b>
+      (Meloni in testa), non di più gente. Per questo la nostra fotografia si basa sulle voci.</p>
+    <div class="charts">
+      <div class="chartcard wide"><div class="cbox"><canvas id="cVociLike"></canvas></div></div>
+      <div class="chartcard wide">
+        <h4>L'andamento giorno per giorno</h4>
+        <div class="cap">post al giorno per posizione (barre) e like generati (linea): la mobilitazione esplode verso il voto</div>
+        <div class="cbox"><canvas id="cDaily"></canvas></div>
+      </div>
+      <div class="chartcard wide">
+        <h4>Top post per like (verificati)</h4>
+        <div class="cap">l'engagement è dominato da pochi virali · colore = posizione</div>
+        <div class="cbox tall"><canvas id="cTop"></canvas></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="pre">I due fronti</span>Schema degli schieramenti</h2>
+    <p class="lead">A sinistra il fronte del Sì (governo e leader politici), a destra il fronte del No (opposizioni,
+      magistratura, mondo della cultura e satira); al centro le testate. <b>Nota</b>: è uno <b>schema illustrativo</b> di
+      chi sta da che parte, <b>non un'analisi di rete</b> — non misura retweet, menzioni, centralità o community.</p>
+    <div class="netwrap"><svg id="net" viewBox="0 0 1000 420" role="img" aria-label="i due fronti"></svg></div>
+    <div class="net-legend">
+      <span style="color:var(--si)">— fronte del Sì</span>
+      <span style="color:var(--no)">— fronte del No</span>
+      <span style="color:var(--muted)">— testate / neutro</span>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="pre">Le voci</span>Post della campagna (cliccabili)</h2>
+    <div class="tweets" id="gallery"></div>
+  </section>
+
+  <section>
+    <h2><span class="pre">Chi spinge</span>I protagonisti</h2>
+    <p class="lead">Clicca il <b>nome ↗</b> per il post citato, l'<b>avatar</b>/<b>@handle</b> per il profilo.</p>
+    <table id="leaders"><thead><tr><th>Account</th><th>Ruolo</th><th>Schieramento</th><th>Sintesi</th></tr></thead><tbody></tbody></table>
+  </section>
+
+  <section>
+    <h2><span class="pre">Dataset sintetico</span>I numeri esatti</h2>
+    <div class="cols">
+      <div class="ds">
+        <table>
+          <thead><tr><th>Metrica</th><th>NO</th><th>SÌ</th></tr></thead>
+          <tbody>
+            <tr><td><b>Voci (volume)</b></td><td>53,1%</td><td>46,9%</td></tr>
+            <tr><td><b>1 autore = 1 voto</b></td><td>54,3%</td><td>45,7%</td></tr>
+            <tr><td>Like (contesto)</td><td>46,7%</td><td>53,3%</td></tr>
+            <tr><td colspan="3" style="color:var(--muted);font-size:.82rem">Differenza ~6 pt: tendenza, non misura precisa (campione non probabilistico).</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="ds">
+        <table>
+          <thead><tr><th>Dato</th><th>Valore</th></tr></thead>
+          <tbody>
+            <tr><td>Post / autori unici</td><td>613 / 402</td></tr>
+            <tr><td>Posizione: Sì / No / Neutro</td><td>238 / 269 / 106</td></tr>
+            <tr><td>Like: Sì / No / Neutro</td><td>43.668 / 38.268 / 9.326</td></tr>
+            <tr><td>Post più virale</td><td>Meloni — 8.051 like (Sì)</td></tr>
+            <tr><td>Giorno di picco</td><td>21 marzo — 325 post</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <div class="note">
+    🧭 <b>La nostra lettura, in una riga.</b> Su X la campagna è un <b>sostanziale testa a testa con lieve prevalenza del No</b>
+    (differenza ~6 pt, da leggere come tendenza non come misura): contando le persone i due fronti sono vicini, il Sì sembra avanti solo nei like per via di
+    pochi post virali. È un <b>termometro del dibattito online</b> (campione non probabilistico), non un sondaggio né una
+    previsione del voto.
+  </div>
+
+  <section>
+    <h2><span class="pre">Limiti &amp; affidabilità</span>Cosa NON dice questo report</h2>
+    <p class="lead">In trasparenza, i punti deboli da tenere a mente leggendo i numeri sopra:</p>
+    <div class="cols">
+      <div class="argbox no">
+        <h3>⚠️ Incertezza e campione</h3>
+        <div class="arg"><div class="t">La differenza (~6 pt) è una tendenza, non una misura</div><div class="d">Campione <b>non probabilistico</b>: non valgono gli intervalli di confidenza "da sondaggio". L'errore dominante non è il campionamento casuale ma il <b>bias di selezione</b> (cosa intercettano le query). Quindi: indicazione di direzione, non stima del consenso.</div></div>
+        <div class="arg"><div class="t">Perché 613 (e non migliaia)</div><div class="d">È il <b>sottoinsieme recuperato dalle query usate</b>, deduplicato e verificato — non il volume totale della conversazione, che fu molto maggiore. Una fetta del dibattito su X, non l'elettorato.</div></div>
+      </div>
+      <div class="argbox no">
+        <h3>⚠️ Metodo</h3>
+        <div class="arg"><div class="t">Classificazione a passaggio singolo (AI)</div><div class="d">L'assegnazione Sì/No/Neutro è stata effettuata da un modello AI a passaggio singolo e non è stata validata da più annotatori indipendenti. Alcuni casi limite possono essere classificati diversamente (es. la satira di Crozza → No, il lament di Calenda → Sì).</div></div>
+        <div class="arg"><div class="t">Lo "schema dei fronti" non è analisi di rete</div><div class="d">Non ci sono retweet/menzioni, centralità o community detection: è illustrativo.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p><b>Metodo.</b> Dati via ricerca nativa su X (<code>since:2026-03-06 until:2026-03-22</code>, <code>lang:it</code>),
+    dedup per ID: <b>613 post / 402 autori</b> (sottoinsieme recuperato dalle query usate, non il volume totale). Classificazione automatica (AI) a passaggio singolo, Sì / No / Neutro. <b>Metrica principale</b>: conteggio
+    delle voci (volume e «1 autore = 1 voto»); l'engagement è riportato solo come contesto perché dominato da pochi post
+    virali. Top post per like verificati sulla piattaforma. Conteggi e date esatti; la classificazione delle posizioni è
+    qualitativa. Campione non probabilistico: fotografa il dibattito su X, non l'intero elettorato.</p>
+    <p style="margin-top:10px">Generato l'8 giugno 2026 · <i>postmortem</i></p>
+  </footer>
+
+</div>
+
+<script>
+const C={si:'#3fb950',no:'#f85149',neu:'#d29922',accent:'#58a6ff'};
+const AVATAR={
+ GiorgiaMeloni:'https://pbs.twimg.com/profile_images/1642074709503115265/cdXsdR2V.jpg',
+ grande_flagello:'https://pbs.twimg.com/profile_images/1463858060854800393/NO1u587j.jpg',
+ matteosalvinimi:'https://pbs.twimg.com/profile_images/1581333609146900481/UJD84jRx.jpg',
+ Mov5Stelle:'https://pbs.twimg.com/profile_images/1818256136698470400/A9m6c8Wm.jpg',
+ repubblica:'https://pbs.twimg.com/profile_images/2013154944656764928/iFyQjpYV.jpg',
+ marcotravaglio:'https://pbs.twimg.com/profile_images/1160106626721943552/2jNtZsVf.jpg',
+ forza_italia:'https://pbs.twimg.com/profile_images/1556935538195763202/hlQJ7_uT.jpg',
+ espressonline:'https://pbs.twimg.com/profile_images/1888934937232896000/6RDUU9AQ.jpg',
+ Corriere:'https://pbs.twimg.com/profile_images/1533695387344805890/26AV8vGl.jpg',
+ LaStampa:'https://pbs.twimg.com/profile_images/1673284520550834176/R7U9kCE4.jpg',
+ CarloCalenda:'https://pbs.twimg.com/profile_images/2039753052358598656/4SJVN1Cy.jpg',
+ SalisIlaria:'https://pbs.twimg.com/profile_images/1808841734929199105/0ndD9VCS.jpg',
+ ClaudioBorghi:'https://pbs.twimg.com/profile_images/1449240289/manliorho_-_giusto.jpg',
+ FratellidItalia:'https://pbs.twimg.com/profile_images/1801316120789438464/3wMGNYwT.jpg',
+};
+const av=(h)=>AVATAR[h]||`https://unavatar.io/x/${h}`;
+const FB=(n)=>`https://ui-avatars.com/api/?name=${encodeURIComponent(n)}&background=1c2530&color=8b98a5&size=64&bold=true`;
+
+const LEADERS=[
+ {n:'Giorgia Meloni',h:'GiorgiaMeloni',post:'GiorgiaMeloni/status/2033467346069704734',role:'Premier (FdI)',pos:'si',pl:'SÌ',s:'«Riforma di puro buonsenso»: il post più virale della campagna (8.051 like).'},
+ {n:'Carlo Calenda',h:'CarloCalenda',post:'CarloCalenda/status/2033127998228931039',role:'Azione',pos:'si',pl:'SÌ',s:'Sostenitore del Sì: «l\'Italia è il paese più conservatore d\'Europa».'},
+ {n:'Matteo Salvini',h:'matteosalvinimi',post:'matteosalvinimi/status/2032788471157318141',role:'Lega',pos:'si',pl:'SÌ',s:'«Votare Sì è una scelta di libertà». 1.500 gazebo in piazza.'},
+ {n:'Fratelli d\'Italia',h:'FratellidItalia',post:'FratellidItalia/status/2031013069292265769',role:'Partito (gov.)',pos:'si',pl:'SÌ',s:'«Occasione storica per modernizzare la giustizia: votiamo Sì».'},
+ {n:'Claudio Borghi',h:'ClaudioBorghi',post:'ClaudioBorghi/status/2032558783122035108',role:'Lega',pos:'si',pl:'SÌ',s:'Countdown «un motivo al giorno per votare Sì».'},
+ {n:'Forza Italia',h:'forza_italia',post:'forza_italia/status/2033266606155972713',role:'Partito (gov.)',pos:'si',pl:'SÌ',s:'«Voteremo convintamente Sì».'},
+ {n:'Ilaria Salis',h:'SalisIlaria',post:'SalisIlaria/status/2034971264025026776',role:'AVS',pos:'no',pl:'NO',s:'«Ridurre l\'indipendenza della magistratura è il tratto dei regimi autoritari». #IoVotoNo'},
+ {n:'Movimento 5 Stelle',h:'Mov5Stelle',post:'Mov5Stelle/status/2030591858414362810',role:'Partito',pos:'no',pl:'NO',s:'«Vota No al referendum Salva-Casta».'},
+ {n:'Marco Travaglio',h:'marcotravaglio',post:'marcotravaglio/status/2033847629168226481',role:'Il Fatto Quotidiano',pos:'no',pl:'NO',s:'«La Costituzione è nostra»: serate per il No con Davigo, Gratteri, Scarpinato.'},
+ {n:'L\'Espresso',h:'espressonline',post:'espressonline/status/2032072837448536549',role:'Testata',pos:'no',pl:'NO',s:'«Questa riforma è un golpe»: tra i post No più virali.'},
+ {n:'Il Grande Flagello',h:'grande_flagello',post:'grande_flagello/status/2035406024031519139',role:'Account satirico',pos:'no',pl:'NO',s:'Clip di Crozza: il singolo post più virale del fronte No (7.022 like).'},
+ {n:'Repubblica',h:'repubblica',post:'repubblica/status/2033591600559841586',role:'Testata',pos:'neu',pl:'NEUTRO',s:'Cronaca: la studentessa fuorisede che protesta per il diritto di voto.'},
+];
+
+const TWEETS=[
+ {n:'Giorgia Meloni',h:'GiorgiaMeloni',id:'2033467346069704734',sent:'si',l:8051,r:1170,c:1194,d:'16 mar',t:'Questa riforma non è di destra né di sinistra. È di semplice e puro buonsenso. Dopo decenni di rinvii siamo all\'ultimo miglio: lo taglieremo solo se i cittadini ci daranno una mano.'},
+ {n:'Il Grande Flagello',h:'grande_flagello',id:'2035406024031519139',sent:'no',l:7022,r:1494,c:78,d:'21 mar',t:'Crozza: «Ma vi sembra normale che la riforma della giustizia sia in mano a persone così? Io sono per la separazione delle carriere: o fai il politico o fai l\'imputato». #fratellidiCrozza'},
+ {n:'Carlo Calenda',h:'CarloCalenda',id:'2033127998228931039',sent:'si',l:4713,r:578,c:1203,d:'15 mar',t:'Ho l\'impressione che l\'Italia sia fondamentalmente per il No. Non solo su questo referendum: siamo il paese più conservatore d\'Europa, troviamo sempre una ragione per non cambiare.'},
+ {n:'L\'Espresso',h:'espressonline',id:'2032072837448536549',sent:'no',l:2875,r:1060,c:293,d:'12 mar',t:'«Mio fratello pensava che la separazione delle carriere avrebbe portato i magistrati sotto l\'influenza del potere politico, un pericolo da scongiurare. Questa riforma è un golpe.»'},
+ {n:'Fratelli d\'Italia',h:'FratellidItalia',id:'2031013069292265769',sent:'si',l:879,r:154,c:265,d:'09 mar',t:'Non è un referendum sul Governo, ma sulla giustizia: un\'occasione storica per modernizzarla e sottrarla al correntismo politicizzato. Votiamo Sì.'},
+ {n:'Ilaria Salis',h:'SalisIlaria',id:'2034971264025026776',sent:'no',l:577,r:127,c:532,d:'20 mar',t:'Non facciamo il favore a questo Governo di lasciargli «riformare» la giustizia per aumentare i propri poteri. Ridurre l\'indipendenza della magistratura è il tratto distintivo dei regimi autoritari. #IoVotoNo'},
+ {n:'Claudio Borghi',h:'ClaudioBorghi',id:'2032558783122035108',sent:'si',l:798,r:247,c:145,d:'13 mar',t:'MENO NOVE. Un motivo al giorno per votare Sì: la separazione delle carriere. Tutti la volevano ed era ovvio perché. Adesso come si fa ad avere dubbi?'},
+ {n:'Matteo Salvini',h:'matteosalvinimi',id:'2032788471157318141',sent:'si',l:670,r:135,c:639,d:'14 mar',t:'Chi sceglie di votare Sì vota per una giustizia più veloce, più libera, indipendente dai partiti e dalle correnti. Votare Sì è una scelta di libertà.'},
+ {n:'Movimento 5 Stelle',h:'Mov5Stelle',id:'2030591858414362810',sent:'no',l:427,r:145,c:266,d:'08 mar',t:'Questa riforma non renderà la giustizia più veloce né più efficace. Non lasciarti ingannare dalla propaganda. Vota No al referendum Salva-Casta.'},
+ {n:'Marco Travaglio',h:'marcotravaglio',id:'2033847629168226481',sent:'no',l:341,r:121,c:109,d:'17 mar',t:'A pochi giorni dal voto, un ultimo sforzo per le ragioni del No: serate con Davigo, Scarpinato, Gratteri e la comunità del Fatto. «La Costituzione è nostra».'},
+ {n:'Repubblica',h:'repubblica',id:'2033591600559841586',sent:'neu',l:1605,r:492,c:344,d:'16 mar',t:'Veronica, studentessa fuorisede, sit-in davanti al Ministero della Giustizia: «chiedo solo di poter esercitare un diritto fondamentale: votare».'},
+ {n:'Forza Italia',h:'forza_italia',id:'2033266606155972713',sent:'si',l:475,r:149,c:239,d:'15 mar',t:'Tommaso Cerno ricorda al fronte del No quali Paesi non hanno la separazione delle carriere. Noi voteremo convintamente Sì.'},
+];
+
+const TOP=[['Meloni',8051,'si'],['grande_flagello',7022,'no'],['L\'Espresso',2875,'no'],['Alluce_di_Tarso',2373,'no'],
+ ['Pamelo1313',2119,'no'],['oliviarodrigITA',2038,'neu'],['Calenda',1706,'si'],['SaP011',1615,'si'],
+ ['repubblica',1605,'neu'],['FratellidItalia',1507,'si']];
+
+const DAILY={
+ labels:['6','7','9','10','11','12','13','14','15','16','17','18','19','20','21'],
+ si:[2,3,6,3,3,3,5,3,2,5,6,10,24,40,123],
+ no:[0,0,2,3,1,7,5,2,2,5,10,14,25,50,143],
+ neu:[1,1,0,4,0,0,0,1,1,6,2,5,11,15,59],
+ like:[1174,2381,2678,2746,1952,6448,3274,914,1834,13105,3112,5126,4440,10683,31395]
+};
+
+/* fronti */
+const NODES={
+ quesito:{x:500,y:200,g:'q',l:'IL QUESITO',big:1},
+ meloni:{x:140,y:60,g:'si',l:'Meloni'}, fdi:{x:80,y:140,g:'si',l:'FdI'}, salvini:{x:180,y:140,g:'si',l:'Salvini'},
+ borghi:{x:110,y:230,g:'si',l:'Borghi'}, fi:{x:210,y:235,g:'si',l:'Forza Italia'}, calenda:{x:150,y:320,g:'si',l:'Calenda'},
+ salis:{x:860,y:60,g:'no',l:'Salis (AVS)'}, m5s:{x:920,y:140,g:'no',l:'M5S'}, travaglio:{x:830,y:140,g:'no',l:'Travaglio'},
+ espresso:{x:900,y:230,g:'no',l:"L'Espresso"}, flagello:{x:800,y:235,g:'no',l:'Crozza/satira'}, toghe:{x:860,y:320,g:'no',l:'Davigo/Gratteri'},
+ repubblica:{x:420,y:330,g:'neu',l:'Repubblica'}, corriere:{x:560,y:330,g:'neu',l:'Corriere'},
+};
+const EDGES=[
+ ['meloni','si'],['fdi','si'],['salvini','si'],['borghi','si'],['fi','si'],['calenda','si'],
+ ['salis','no'],['m5s','no'],['travaglio','no'],['espresso','no'],['flagello','no'],['toghe','no'],
+ ['repubblica','neu'],['corriere','neu'],
+].map(([n,k])=>['quesito',n,k]);
+
+/* render */
+const lb=document.querySelector('#leaders tbody');
+LEADERS.forEach(p=>{const tr=document.createElement('tr');
+ tr.innerHTML=`<td><div class="who">
+   <a href="https://x.com/${p.h}" target="_blank" rel="noopener" title="Profilo"><img class="av sm" src="${av(p.h)}" onerror="this.onerror=null;this.src='${FB(p.n)}'" alt=""></a>
+   <div class="nm"><b><a href="https://x.com/${p.post}" target="_blank" rel="noopener" title="Apri il post citato">${p.n} ↗</a></b><small><a href="https://x.com/${p.h}" target="_blank" rel="noopener">@${p.h}</a></small></div>
+  </div></td><td>${p.role}</td><td><span class="pill ${p.pos}">${p.pl}</span></td><td>${p.s}</td>`;
+ lb.appendChild(tr);});
+
+const g=document.querySelector('#gallery');
+TWEETS.forEach(w=>{const a=document.createElement('a');a.className='tw '+w.sent;a.href=`https://x.com/${w.h}/status/${w.id}`;a.target='_blank';a.rel='noopener';
+ const lab={si:'Sì',no:'No',neu:'Neutro'}[w.sent];
+ a.innerHTML=`<div class="hd"><img class="av" src="${av(w.h)}" onerror="this.onerror=null;this.src='${FB(w.n)}'" alt="">
+   <div class="nm"><b>${w.n}</b><small>@${w.h}</small></div><span class="tag ${w.sent}">${lab}</span></div>
+   <div class="bd">${w.t}</div>
+   <div class="ft"><span>❤️ <b>${w.l.toLocaleString('it')}</b></span><span>🔁 ${w.r}</span><span>💬 ${w.c}</span><span>${w.d}</span><span class="open">apri ↗</span></div>`;
+ g.appendChild(a);});
+
+Chart.defaults.color='#8b98a5';Chart.defaults.font.family='-apple-system,Segoe UI,Roboto,sans-serif';Chart.defaults.font.size=12;
+const GRID='rgba(138,152,165,.12)';
+
+new Chart(document.getElementById('cSent'),{type:'doughnut',
+ data:{labels:['Sì (238)','No (269)','Neutro (106)'],datasets:[{data:[238,269,106],backgroundColor:[C.si,C.no,C.neu],borderColor:'#0d1117',borderWidth:3}]},
+ options:{cutout:'58%',plugins:{legend:{position:'bottom',labels:{padding:12,usePointStyle:true}},tooltip:{callbacks:{label:c=>` ${c.label}: ${(100*c.parsed/613).toFixed(1)}%`}}}}});
+
+/* voci vs like — stacked 100% NO/SI */
+new Chart(document.getElementById('cVociLike'),{type:'bar',
+ data:{labels:['Per VOCI (persone)','Per 1 autore = 1 voto','Per LIKE (engagement)'],datasets:[
+   {label:'NO',data:[53.1,54.3,46.7],backgroundColor:C.no,borderRadius:4},
+   {label:'SÌ',data:[46.9,45.7,53.3],backgroundColor:C.si,borderRadius:4}]},
+ options:{indexAxis:'y',plugins:{legend:{position:'bottom',labels:{usePointStyle:true,padding:16}},
+   tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.x}%`}}},
+   scales:{x:{stacked:true,max:100,grid:{color:GRID},ticks:{callback:v=>v+'%'}},y:{stacked:true,grid:{display:false}}}}});
+
+/* daily */
+new Chart(document.getElementById('cDaily'),{
+ data:{labels:DAILY.labels.map(x=>x+' mar'),datasets:[
+   {type:'bar',label:'No',data:DAILY.no,backgroundColor:C.no,stack:'s',borderRadius:2,yAxisID:'y'},
+   {type:'bar',label:'Sì',data:DAILY.si,backgroundColor:C.si,stack:'s',borderRadius:2,yAxisID:'y'},
+   {type:'bar',label:'Neutro',data:DAILY.neu,backgroundColor:C.neu,stack:'s',borderRadius:2,yAxisID:'y'},
+   {type:'line',label:'Like / giorno',data:DAILY.like,borderColor:C.accent,backgroundColor:C.accent,tension:.3,pointRadius:3,yAxisID:'y1'}]},
+ options:{plugins:{legend:{position:'bottom',labels:{usePointStyle:true,padding:14}}},
+   scales:{y:{stacked:true,position:'left',grid:{color:GRID},title:{display:true,text:'post'}},
+     y1:{position:'right',grid:{display:false},title:{display:true,text:'like'},ticks:{callback:v=>v.toLocaleString('it')}},x:{stacked:true,grid:{display:false}}}}});
+
+new Chart(document.getElementById('cTop'),{type:'bar',
+ data:{labels:TOP.map(t=>t[0]),datasets:[{data:TOP.map(t=>t[1]),backgroundColor:TOP.map(t=>C[t[2]]),borderRadius:5}]},
+ options:{indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.parsed.x.toLocaleString('it')} like`}}},
+   scales:{x:{grid:{color:GRID},ticks:{callback:v=>v.toLocaleString('it')}},y:{grid:{display:false}}}}});
+
+/* network: due fronti */
+(function(){const NS='http://www.w3.org/2000/svg';const svg=document.getElementById('net');
+ const col={si:'#3fb950',no:'#f85149',neu:'#8b98a5',q:'#58a6ff'};
+ EDGES.forEach(([a,b,k])=>{const A=NODES[a],B=NODES[b];const ln=document.createElementNS(NS,'line');
+   ln.setAttribute('x1',A.x);ln.setAttribute('y1',A.y);ln.setAttribute('x2',B.x);ln.setAttribute('y2',B.y);
+   ln.setAttribute('stroke',col[k]);ln.setAttribute('stroke-width',k==='neu'?1.2:1.8);ln.setAttribute('opacity',.6);svg.appendChild(ln);});
+ Object.values(NODES).forEach(n=>{const r=n.big?15:8;const cc=document.createElementNS(NS,'circle');
+   cc.setAttribute('cx',n.x);cc.setAttribute('cy',n.y);cc.setAttribute('r',r);cc.setAttribute('fill',col[n.g]);
+   cc.setAttribute('stroke','#0d1117');cc.setAttribute('stroke-width',n.big?3:2);svg.appendChild(cc);
+   const tx=document.createElementNS(NS,'text');tx.setAttribute('x',n.x+(n.big?0:11));tx.setAttribute('y',n.big?n.y+5:n.y+4);
+   if(n.big){tx.setAttribute('text-anchor','middle');tx.setAttribute('font-weight','800');tx.setAttribute('font-size','14')}else tx.setAttribute('font-size','13');
+   tx.setAttribute('fill','#e6edf3');tx.textContent=n.l;svg.appendChild(tx);});
+ [['FRONTE DEL SÌ',120,28,'#3fb950'],['FRONTE DEL NO',830,28,'#f85149']].forEach(([t,x,y,c])=>{
+   const tx=document.createElementNS(NS,'text');tx.setAttribute('x',x);tx.setAttribute('y',y);tx.setAttribute('fill',c);
+   tx.setAttribute('font-size','12');tx.setAttribute('font-weight','700');tx.setAttribute('letter-spacing','1');tx.setAttribute('text-anchor','middle');tx.textContent=t;svg.appendChild(tx);});
+})();
+</script>
+</body>
+</html>

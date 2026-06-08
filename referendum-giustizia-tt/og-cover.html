@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="it"><head><meta charset="UTF-8">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1200px;height:630px;overflow:hidden}
+  body{background:radial-gradient(circle at 18% 0%,#161f2e,#0d1117 60%);color:#e6edf3;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    padding:46px 50px;display:flex;flex-direction:column;justify-content:space-between}
+  .top{display:flex;justify-content:space-between;gap:34px}
+  .kick{color:#58a6ff;font-size:18px;font-weight:700;letter-spacing:3px;text-transform:uppercase}
+  h1{font-size:60px;line-height:1.02;letter-spacing:-1.5px;margin:8px 0 6px}
+  h1 .em{color:#58a6ff}
+  .sub{color:#8b98a5;font-size:21px;max-width:560px;margin-top:8px}
+  .kpis{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:26px;max-width:560px}
+  .kpi{background:#161b22;border:1px solid #2a3340;border-radius:14px;padding:14px 18px}
+  .kpi .n{font-size:34px;font-weight:800;letter-spacing:-1px}
+  .kpi .l{color:#8b98a5;font-size:14px;margin-top:2px}
+  .kpi.no .n{color:#f85149}.kpi.si .n{color:#3fb950}.kpi.b .n{color:#58a6ff}
+  .right{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:4px}
+  .donut{width:290px;height:290px;border-radius:50%;
+    background:conic-gradient(#f85149 0 53.1%,#3fb950 53.1% 100%);
+    display:flex;align-items:center;justify-content:center;position:relative}
+  .donut::after{content:"";position:absolute;width:172px;height:172px;border-radius:50%;background:#0d1117}
+  .donut .ctr{position:relative;z-index:1;text-align:center}
+  .donut .ctr b{font-size:30px;font-weight:800;display:block;line-height:1.1}
+  .donut .ctr span{color:#8b98a5;font-size:14px;letter-spacing:1px}
+  .leg{display:flex;gap:22px;margin-top:18px;font-size:17px;color:#c9d4de}
+  .leg i{display:inline-block;width:13px;height:13px;border-radius:3px;margin-right:7px;vertical-align:middle}
+  .insight{background:#1c2530;border:1px solid #2a3340;border-left:5px solid #58a6ff;border-radius:12px;
+    padding:16px 22px;font-size:21px;margin-top:22px;line-height:1.4}
+  .insight b{color:#fff}
+  .foot{display:flex;justify-content:space-between;align-items:center;color:#8b98a5;font-size:15px;
+    border-top:1px solid #2a3340;padding-top:16px;margin-top:10px}
+  .foot b{color:#e6edf3}
+</style></head>
+<body>
+  <div class="top">
+    <div style="flex:1">
+      <div class="kick">Analisi del dibattito · X / Twitter</div>
+      <h1>Referendum <span class="em">Giustizia</span><br>su X</h1>
+      <div class="sub">Il dibattito Sì / No nella campagna referendaria. Chi spinge, con quali argomenti — letto contando le voci.</div>
+      <div class="kpis">
+        <div class="kpi b"><div class="n">613</div><div class="l">post analizzati</div></div>
+        <div class="kpi"><div class="n">402</div><div class="l">autori unici</div></div>
+        <div class="kpi no"><div class="n">53%</div><div class="l">fronte NO (voci)</div></div>
+        <div class="kpi si"><div class="n">47%</div><div class="l">fronte SÌ (voci)</div></div>
+      </div>
+    </div>
+    <div class="right">
+      <div class="donut"><div class="ctr"><b>NO 53%<br>SÌ 47%</b><span>TRA GLI SCHIERATI</span></div></div>
+      <div class="leg">
+        <span><i style="background:#f85149"></i>No</span>
+        <span><i style="background:#3fb950"></i>Sì</span>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="insight">Testa a testa con una <b>lieve prevalenza del No</b> (entro il margine d'errore). Il Sì sembra avanti solo nei <b>like</b>, gonfiati da pochi post virali — contando le <b>persone</b> il quadro si pareggia.</div>
+    <div class="foot"><span>Fonte: ricerca su X · campagna <b>6–21 marzo 2026</b></span><span>613 post · top verificati · campione non probabilistico</span></div>
+  </div>
+</body></html>

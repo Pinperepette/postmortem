@@ -96,7 +96,25 @@
   footer{margin-top:50px;padding-top:24px;border-top:1px solid var(--bord);color:var(--muted);font-size:.83rem}
   code{background:var(--panel2);padding:1px 6px;border-radius:5px;font-size:.85em}
   @media(max-width:900px){.tweets{grid-template-columns:1fr 1fr}}
-  @media(max-width:760px){.kpis{grid-template-columns:repeat(2,1fr)}.charts,.cols,.tweets{grid-template-columns:1fr}.chartcard.wide{grid-column:auto}header h1{font-size:1.6rem}}
+  @media(max-width:760px){
+    .wrap{padding:0 16px}
+    header{padding:32px 0 26px}
+    header h1{font-size:1.7rem}
+    header .sub{font-size:17px}
+    h2{font-size:1.22rem;margin-top:38px}
+    .kpis{grid-template-columns:repeat(2,1fr);gap:12px}
+    .kpi{padding:15px}.kpi .n{font-size:1.7rem}
+    .charts,.cols,.tweets{grid-template-columns:1fr}
+    .chartcard.wide{grid-column:auto}.chartcard{padding:14px}
+    .cbox{height:260px}.cbox.tall{height:320px}
+    th,td{padding:9px 8px;font-size:.86rem}
+    #leaders th:nth-child(2),#leaders td:nth-child(2){display:none}
+    .who .nm b{font-size:.86rem}
+    .ds{padding:4px 12px 12px}
+    .netwrap{position:relative}
+    .netwrap::before{content:"scorri lateralmente →";position:absolute;top:8px;right:14px;font-size:.72rem;color:var(--muted);background:rgba(13,17,23,.7);padding:2px 8px;border-radius:10px;z-index:2}
+    .netwrap svg{min-width:680px}
+  }
 </style>
 </head>
 <body>

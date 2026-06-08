@@ -465,7 +465,7 @@ new Chart(document.getElementById('cTop'),{type:'bar',
 
 const FRONTI={
  pro:[['Meloni / FdI','FratellidItalia'],['Lega','matteosalvinimi'],['Azione / Calenda','CarloCalenda'],['Luciano Capone','lucianocapone'],['Avv. dell\'Atomo','AvvocatoAtomico'],['R. Kersevan','KersevanRoberto'],['A. Monteleone','a_monteleone']],
- con:[['AVS / Fratoianni','NFratoianni'],['Europa Verde','europaverde_it'],['PD','Deputatipd'],['M5S','Mov5Stelle'],['M. Cantamessa','MarcoCantamessa'],['G. Onufrio','gonufrio'],['F. Ferrante','FranFerrante']],
+ con:[['AVS / Fratoianni','NFratoianni'],['Europa Verde','europaverde_it'],['PD','Deputatipd'],['M5S','Mov5Stelle'],['G. Onufrio','gonufrio'],['F. Ferrante','FranFerrante']],
 };
 const chip=([n,h])=>`<a class="chip" href="https://x.com/${h}" target="_blank" rel="noopener"><img class="av sm" src="${av(h)}" onerror="this.onerror=null;this.src='${FB(n)}'" alt=""><span class="nm"><b>${n}</b><small>@${h}</small></span></a>`;
 document.getElementById('fronte-pro').innerHTML=FRONTI.pro.map(chip).join('');

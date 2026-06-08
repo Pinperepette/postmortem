@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nucleare su X — il dibattito Pro/Contro (giugno 2026)</title>
+<meta name="description" content="1.006 post, 708 autori: chi è favorevole e chi contrario al ritorno del nucleare in Italia, dopo l'ok della Camera al ddl. Contando le voci, non i like.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Il Nucleare su X — il dibattito Pro / Contro">
+<meta property="og:description" content="1.006 post · 708 autori. Per voci i favorevoli sono leggermente avanti (~54/46 tra gli schierati), ma il fronte pro domina i like (82%). Contando le persone, non i cuori.">
+<meta property="og:image" content="https://pinperepette.github.io/postmortem/nucleare-tt/og-cover.png">
+<meta property="og:url" content="https://pinperepette.github.io/postmortem/nucleare-tt/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Il Nucleare su X — il dibattito Pro / Contro">
+<meta name="twitter:description" content="1.006 post · 708 autori. Favorevoli leggermente avanti per voci (~54/46), ma il fronte pro domina i like (82%).">
+<meta name="twitter:image" content="https://pinperepette.github.io/postmortem/nucleare-tt/og-cover.png">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#0d1117; --panel:#161b22; --panel2:#1c2530; --bord:#2a3340;
+    --txt:#e6edf3; --muted:#8b98a5; --accent:#58a6ff;
+    --pro:#3fb950; --con:#f85149; --neu:#d29922;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--txt);line-height:1.55;padding:0 0 80px}
+  a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+  .wrap{max-width:1320px;margin:0 auto;padding:0 32px}
+  header{background:linear-gradient(135deg,#13241c,#0d1117);border-bottom:1px solid var(--bord);padding:48px 0 38px;margin-bottom:30px}
+  header h1{font-size:2.1rem;line-height:1.15;letter-spacing:-.5px}
+  header h1 .em{color:var(--pro)}
+  header .sub{color:var(--muted);margin-top:12px;font-size:1.02rem;max-width:840px}
+  .badges{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap}
+  .badge{background:var(--panel2);border:1px solid var(--bord);border-radius:30px;padding:6px 14px;font-size:.82rem;color:var(--muted)}
+  .badge b{color:var(--txt)}
+  h2{font-size:1.45rem;margin:42px 0 6px;letter-spacing:-.3px}
+  h2 .pre{color:var(--pro);font-size:.8rem;display:block;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
+  .lead{color:var(--muted);margin-bottom:20px;max-width:880px}
+  .tldr{background:linear-gradient(135deg,#1c2530,#161b22);border:1px solid var(--bord);border-radius:16px;padding:24px 26px;margin-top:10px}
+  .tldr h3{font-size:.8rem;letter-spacing:2px;text-transform:uppercase;color:var(--pro);margin-bottom:14px}
+  .tldr ul{margin:0;padding-left:4px;list-style:none}
+  .tldr li{margin:11px 0;color:#d3dce4;font-size:1.05rem;padding-left:30px;position:relative}
+  .tldr li::before{content:"→";position:absolute;left:0;color:var(--pro);font-weight:700}
+  .tldr li b{color:#fff}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:16px}
+  .kpi{background:var(--panel);border:1px solid var(--bord);border-radius:14px;padding:20px}
+  .kpi .n{font-size:2.0rem;font-weight:700;letter-spacing:-1px}
+  .kpi .l{color:var(--muted);font-size:.85rem;margin-top:4px}
+  .kpi.pro .n{color:var(--pro)} .kpi.con .n{color:var(--con)} .kpi.neu .n{color:var(--neu)}
+  .lettura{background:rgba(88,166,255,.07);border:1px solid #244;border-left:4px solid var(--accent);border-radius:12px;padding:16px 20px;margin-top:16px}
+  .lettura h3{font-size:.78rem;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+  .lettura p{color:#d3dce4;margin:0}
+  .method{margin-top:16px;background:var(--panel2);border:1px solid var(--bord);border-radius:10px;padding:13px 17px;font-size:.85rem;color:var(--muted);line-height:1.55}
+  .method b{color:var(--txt)}
+  .quadro{display:grid;grid-template-columns:340px 1fr;gap:20px;align-items:center;margin-top:8px}
+  .quadro .cbox{height:280px}
+  .quadro .takeaway{background:var(--panel);border:1px solid var(--bord);border-left:4px solid var(--pro);border-radius:12px;padding:18px 22px;font-size:1.05rem;line-height:1.5}
+  .quadro .takeaway b{color:#fff}
+  .charts{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:8px}
+  .chartcard{background:var(--panel);border:1px solid var(--bord);border-radius:14px;padding:18px}
+  .chartcard.wide{grid-column:1 / -1}
+  .chartcard h4{font-size:.98rem;margin-bottom:4px}
+  .chartcard .cap{color:var(--muted);font-size:.8rem;margin-bottom:12px}
+  .cbox{position:relative;height:300px} .cbox.tall{height:360px}
+  .legend{display:flex;gap:18px;color:var(--muted);font-size:.85rem;flex-wrap:wrap;margin:14px 0 0}
+  .dot{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px;vertical-align:middle}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:8px}
+  .argbox{background:var(--panel);border:1px solid var(--bord);border-radius:14px;overflow:hidden}
+  .argbox h3{padding:16px 18px;font-size:1.05rem}
+  .argbox.pro h3{background:rgba(63,185,80,.12);border-bottom:1px solid #1f6f33}
+  .argbox.con h3{background:rgba(248,81,73,.12);border-bottom:1px solid #8c2b27}
+  .arg{padding:13px 18px;border-bottom:1px solid var(--bord)} .arg:last-child{border-bottom:none}
+  .arg .t{font-weight:600;margin-bottom:3px} .arg .d{color:var(--muted);font-size:.9rem}
+  .av{width:40px;height:40px;border-radius:50%;object-fit:cover;background:var(--panel2);border:1px solid var(--bord);flex:none}
+  .av.sm{width:30px;height:30px}
+  table{width:100%;border-collapse:collapse;margin-top:8px;font-size:.9rem}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--bord);vertical-align:middle}
+  th{color:var(--muted);font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:.5px}
+  .who{display:flex;align-items:center;gap:10px}
+  .who .nm b{display:block;line-height:1.2} .who .nm small{color:var(--muted)}
+  .who .nm small a{color:var(--muted)} .who .nm b a{color:var(--accent)}
+  td .pill{font-size:.7rem;padding:3px 9px;border-radius:20px;white-space:nowrap;font-weight:600}
+  .pill.pro{background:rgba(63,185,80,.15);color:var(--pro)} .pill.con{background:rgba(248,81,73,.15);color:var(--con)} .pill.neu{background:rgba(210,153,34,.15);color:var(--neu)}
+  .tweets{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:8px}
+  a.tw{display:block;background:var(--panel);border:1px solid var(--bord);border-left:4px solid var(--neu);border-radius:10px;padding:16px;color:inherit;transition:transform .12s,border-color .12s,background .12s}
+  a.tw:hover{transform:translateY(-2px);background:#1a2230;text-decoration:none;border-color:var(--accent)}
+  a.tw.pro{border-left-color:var(--pro)} a.tw.con{border-left-color:var(--con)} a.tw.neu{border-left-color:var(--neu)}
+  .tw .hd{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .tw .hd .nm{flex:1;min-width:0}
+  .tw .hd .nm b{display:block;font-size:.9rem;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tw .hd .nm small{color:var(--muted);font-size:.78rem}
+  .tw .tag{font-size:.64rem;padding:3px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;font-weight:700}
+  .tag.pro{background:rgba(63,185,80,.15);color:var(--pro)} .tag.con{background:rgba(248,81,73,.15);color:var(--con)} .tag.neu{background:rgba(210,153,34,.15);color:var(--neu)}
+  .tw .bd{font-size:.88rem;color:#d3dce4} .tw .ft{margin-top:12px;padding-top:10px;border-top:1px solid var(--bord);font-size:.76rem;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .tw .ft b{color:var(--txt)} .tw .ft .open{margin-left:auto;color:var(--accent);font-weight:600}
+  .netwrap{background:#11161d;border:1px solid var(--bord);border-radius:14px;padding:14px;margin-top:8px;overflow-x:auto}
+  .netwrap svg{width:100%;min-width:760px;height:auto;display:block}
+  .net-legend{display:flex;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:.82rem;margin-top:8px;padding:0 4px}
+  .ds{background:#11161d;border:1px solid var(--bord);border-radius:14px;padding:6px 22px 18px}
+  .warn{background:rgba(248,81,73,.10);border:1px solid var(--con);border-left:5px solid var(--con);border-radius:12px;padding:14px 20px;margin-top:18px;color:#f6d3d0;font-size:.95rem}
+  .warn b{color:#fff}
+  .fronti{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:8px}
+  .fronte{background:var(--panel);border:1px solid var(--bord);border-radius:14px;padding:6px 8px 12px}
+  .fronte>h4{padding:12px 14px 8px;font-size:1.02rem}
+  .fronte.pro{border-top:3px solid var(--pro)} .fronte.pro>h4{color:var(--pro)}
+  .fronte.con{border-top:3px solid var(--con)} .fronte.con>h4{color:var(--con)}
+  .chip{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:10px}
+  .chip:hover{background:var(--panel2)}
+  .chip .nm b{font-size:.9rem;display:block;line-height:1.15} .chip .nm small{color:var(--muted);font-size:.76rem}
+  .fronte-neu{margin-top:14px;background:var(--panel);border:1px solid var(--bord);border-left:3px solid var(--neu);border-radius:12px;padding:12px 16px;color:var(--muted);font-size:.92rem}
+  .fronte-neu b{color:var(--txt)}
+  .note{background:var(--panel2);border:1px solid var(--bord);border-left:4px solid var(--accent);border-radius:8px;padding:14px 18px;color:var(--muted);font-size:.88rem;margin-top:24px}
+  .note b{color:var(--txt)}
+  footer{margin-top:50px;padding-top:24px;border-top:1px solid var(--bord);color:var(--muted);font-size:.83rem}
+  code{background:var(--panel2);padding:1px 6px;border-radius:5px;font-size:.85em}
+  @media(max-width:900px){.tweets{grid-template-columns:1fr 1fr}}
+  @media(max-width:760px){
+    .wrap{padding:0 16px}header{padding:32px 0 26px}header h1{font-size:1.55rem}header .sub{font-size:16px}
+    h2{font-size:1.22rem;margin-top:34px}.tldr{padding:18px}.tldr li{font-size:.98rem}
+    .kpis{grid-template-columns:repeat(2,1fr);gap:12px}.kpi{padding:15px}.kpi .n{font-size:1.7rem}
+    .quadro{grid-template-columns:1fr}
+    .charts,.cols,.tweets{grid-template-columns:1fr}.chartcard.wide{grid-column:auto}.chartcard{padding:14px}
+    .cbox{height:260px}.cbox.tall{height:300px}.quadro .cbox{height:240px}
+    th,td{padding:9px 8px;font-size:.86rem}
+    #leaders th:nth-child(2),#leaders td:nth-child(2){display:none}
+    .ds{padding:4px 12px 12px}
+    .netwrap{position:relative}
+    .netwrap::before{content:"scorri lateralmente →";position:absolute;top:8px;right:14px;font-size:.72rem;color:var(--muted);background:rgba(13,17,23,.7);padding:2px 8px;border-radius:10px;z-index:2}
+    .netwrap svg{min-width:680px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>Il <span class="em">Nucleare</span> su X<br>Il dibattito Pro / Contro nella settimana del ddl</h1>
+    <p class="sub">Cosa si è detto su X/Twitter del ritorno all'energia nucleare in Italia dopo il via libera della Camera
+    al ddl delega. Chi è favorevole, chi contrario, con quali argomenti — letto con la nostra metrica: <b>contare le voci</b>.</p>
+    <div class="badges">
+      <span class="badge">📅 <b>1–8 giugno 2026</b></span>
+      <span class="badge">🔎 Fonte: <b>X / Twitter</b></span>
+      <span class="badge">🗂️ <b>1.006 post · 708 autori</b></span>
+      <span class="badge">✅ Verifica: <b>150 post · ~89%</b></span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="warn">⚠️ <b>Attenzione al campione.</b> Questi 1.006 post sono solo il <b>sottoinsieme recuperabile via ricerca</b> su X, <b>non</b> una fotografia completa del dibattito italiano (il volume reale è molto maggiore). Non leggere «~54% favorevoli» come il dato di X Italia o dell'opinione pubblica: è una <b>tendenza</b> su un campione parziale e non probabilistico. Per numero di voci il fronte favorevole è <b>leggermente avanti</b> (~54/46 tra gli schierati): un vantaggio osservato ma contenuto.</div>
+
+  <section>
+    <div class="tldr">
+      <h3>In sintesi — i fatti</h3>
+      <ul>
+        <li>Sul nucleare <b>1.006 post di 708 autori</b> nella settimana del voto della Camera al ddl delega (155 sì, 86 no).</li>
+        <li>Contando le voci i <b>favorevoli sono leggermente avanti</b>: ~54% vs ~46% tra gli schierati (con «1 autore = 1 voto» ~52/48). Vantaggio osservato ma contenuto, nel campione analizzato.</li>
+        <li>Per <b>like</b> invece i favorevoli stravincono (<b>~82% vs ~18%</b>): il fronte pro-nucleare è molto più <b>amplificato</b> (Calenda, Salvini, esperti, account ad alto seguito). Ma è engagement concentrato in pochi profili, non più persone.</li>
+        <li>Picco di attenzione il <b>4 giugno</b> (voto in Camera): oltre 11.000 like in un giorno. Il volume cresce fino all'8.</li>
+      </ul>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><div class="n">1.006</div><div class="l">Post analizzati · 708 autori</div></div>
+      <div class="kpi pro"><div class="n">54%</div><div class="l">Favorevoli (voci tra schierati)</div></div>
+      <div class="kpi con"><div class="n">46%</div><div class="l">Contrari (voci tra schierati)</div></div>
+      <div class="kpi neu"><div class="n">82%</div><div class="l">dei like è del fronte PRO (pochi virali)</div></div>
+    </div>
+    <p style="color:var(--muted);font-size:.82rem;margin:10px 2px 0">Le % <b>Favorevoli/Contrari</b> sono calcolate sui soli <b>schierati</b> (796 = 428 pro + 368 contro); i <b>210 post neutri</b> non entrano nel confronto. Sul totale dei 1.006: 42,5% pro · 36,6% contro · 20,9% neutri.</p>
+    <div class="lettura">
+      <h3>La nostra lettura</h3>
+      <p>Sul nostro campione i <b>favorevoli sono leggermente avanti per numero di persone</b> (~54/46), un margine che si
+      assottiglia con «1 autore = 1 voto» (~52/48): un vantaggio osservato, non schiacciante. Il dato più netto è un altro: il
+      fronte favorevole è <b>molto più amplificato</b>, domina i like ~4 a 1 grazie a pochi grandi account — guardare solo
+      l'engagement sovrastimerebbe il distacco.</p>
+    </div>
+    <div class="method">
+      <b>Metodo.</b> Finestra <b>1–8 giugno 2026</b> · ricerca nativa su X (<code>lang:it</code>), <b>1.006 post / 708 autori</b>
+      (sottoinsieme recuperato dalle query usate per giorno, non il volume totale) deduplicati per ID · classificazione automatica (AI)
+      a passaggio singolo, Pro / Contro / Neutro · <b>metrica principale: conteggio delle voci</b> (volume e «1 autore = 1 voto»,
+      che equipara prolifici e occasionali); l'engagement è solo contesto · <b>validazione</b>: riclassifica cieca di 150 post →
+      concordanza <b>~89%</b> · i post di vertice <b>verificati direttamente sulla piattaforma</b>
+      (gli altri dai risultati di ricerca) · escluso il nucleare militare · <b>Limite</b>: è X, non l'opinione pubblica.
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="pre">Il quadro</span>Come si divide la conversazione</h2>
+    <div class="quadro">
+      <div class="cbox"><canvas id="cSent"></canvas></div>
+      <div class="takeaway">
+        I favorevoli sono <b>un po' più numerosi</b> (428 vs 368); circa un quarto del dibattito è
+        cronaca/neutro o "sì, ma non così". È una conversazione <b>tecnica e polarizzata</b> — partiti, esperti di energia e
+        cittadini — in cui i favorevoli hanno un <b>lieve vantaggio</b> per numero e sono <b>molto più amplificati</b> nell'engagement.
+      </div>
+    </div>
+    <div class="legend">
+      <span><span class="dot" style="background:var(--pro)"></span>Favorevoli al nucleare</span>
+      <span><span class="dot" style="background:var(--con)"></span>Contrari</span>
+      <span><span class="dot" style="background:var(--neu)"></span>Neutro / news / "sì ma…"</span>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="pre">Perché Pro, perché Contro</span>Gli argomenti in campo</h2>
+    <div class="cols">
+      <div class="argbox pro">
+        <h3>✅ Le ragioni del SÌ al nucleare</h3>
+        <div class="arg"><div class="t">Energia pulita, continua e «baseload»</div><div class="d">Bassa CO2, fornitura stabile che le rinnovabili intermittenti non garantiscono; autonomia energetica.</div></div>
+        <div class="arg"><div class="t">«Le rinnovabili da sole non bastano»</div><div class="d">Serve un mix; il nucleare affianca, non sostituisce. La Cina installa entrambi.</div></div>
+        <div class="arg"><div class="t">Costi e ipocrisia della «lobby green»</div><div class="d">Capone: «coi 238 mld di Superbonus avremmo costruito 15 reattori». Kersevan: ~220 mld di sussidi alle rinnovabili.</div></div>
+        <div class="arg"><div class="t">«Decisione scientifica, non ideologica»</div><div class="d">Monteleone: «la scienza dice minor impatto CO2». Assurdo che i Verdi lo rifiutino.</div></div>
+      </div>
+      <div class="argbox con">
+        <h3>❌ Le ragioni del NO</h3>
+        <div class="arg"><div class="t">Costa di più e ci vogliono decenni</div><div class="d">PD: «più caro delle rinnovabili»; primi reattori non prima del 2034-2035. L'emergenza bollette è adesso.</div></div>
+        <div class="arg"><div class="t">Scorie e depositi irrisolti</div><div class="d">78.000 m³ di scorie senza deposito, nessun comune disponibile. «Prima smaltiamo le vecchie».</div></div>
+        <div class="arg"><div class="t">«Delega in bianco / propaganda»</div><div class="d">Faraone (IV, astenuto): «nucleare di carta»: nessuna centrale, cronoprogramma o copertura nel testo.</div></div>
+        <div class="arg"><div class="t">La strada è rinnovabili + accumuli</div><div class="d">Onufrio: «servono tecnologie flessibili, non il baseload». E i 23 mld UE sono per le rinnovabili.</div></div>
+      </div>
+    </div>
+    <div class="note">
+      ⚖️ <b>La terza posizione.</b> Una quota cita "<b>sì, ma non così</b>": Italia Viva si è astenuta («favorevoli al nucleare,
+      ma non a un ddl senza siti, costi e tempi»), e diversi tecnici ricordano che <b>pro-rinnovabili e pro-nucleare non si
+      escludono</b> — i sistemi elettrici più puliti usano entrambi.
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="pre">Voci vs like</span>Perché contiamo le persone, non i cuori</h2>
+    <p class="lead">Qui si vede benissimo perché la metrica conta. Per <b>voci</b> (le persone) i favorevoli sono di poco avanti;
+      per <b>like</b> sembra un trionfo del Sì — ma quel 82% lo fanno <b>pochi post molto virali</b> di account ad alto seguito,
+      non più gente. Per questo la nostra fotografia si basa sulle voci.</p>
+    <div class="charts">
+      <div class="chartcard wide"><div class="cbox"><canvas id="cVociLike"></canvas></div></div>
+      <div class="chartcard wide">
+        <h4>L'andamento giorno per giorno</h4>
+        <div class="cap">post al giorno per posizione (barre) e like generati (linea): picco di attenzione il 4/6, giorno del voto</div>
+        <div class="cbox"><canvas id="cDaily"></canvas></div>
+      </div>
+      <div class="chartcard wide">
+        <h4>Top post per like</h4>
+        <div class="cap">l'engagement è dominato da pochi virali · colore = posizione</div>
+        <div class="cbox tall"><canvas id="cTop"></canvas></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="pre">I due fronti</span>Mappa degli schieramenti</h2>
+    <p class="lead">Chi si è schierato da che parte nel dibattito. È una <b>mappa politica</b> (chi sostiene cosa),
+      <b>non un'analisi di rete</b>: <b>non</b> indica collegamenti, retweet o menzioni tra gli account.</p>
+    <div class="fronti">
+      <div class="fronte pro"><h4>✅ Fronte del Sì</h4><div id="fronte-pro"></div></div>
+      <div class="fronte con"><h4>❌ Fronte del No</h4><div id="fronte-con"></div></div>
+    </div>
+    <div class="fronte-neu" id="fronte-neu"></div>
+  </section>
+
+  <section>
+    <h2><span class="pre">Le voci</span>Post della settimana (cliccabili)</h2>
+    <div class="tweets" id="gallery"></div>
+  </section>
+
+  <section>
+    <h2><span class="pre">Chi spinge</span>I protagonisti</h2>
+    <p class="lead">Clicca il <b>nome ↗</b> per il post citato, l'<b>avatar</b>/<b>@handle</b> per il profilo.</p>
+    <table id="leaders"><thead><tr><th>Account</th><th>Ruolo</th><th>Posizione</th><th>Sintesi</th></tr></thead><tbody></tbody></table>
+  </section>
+
+  <section>
+    <h2><span class="pre">Dataset sintetico</span>I numeri esatti</h2>
+    <div class="cols">
+      <div class="ds">
+        <table>
+          <thead><tr><th>Metrica</th><th>PRO</th><th>CONTRO</th></tr></thead>
+          <tbody>
+            <tr><td><b>Voci (volume)</b></td><td>~54%</td><td>~46%</td></tr>
+            <tr><td><b>1 autore = 1 voto</b></td><td>~52%</td><td>~48%</td></tr>
+            <tr><td>Like (contesto)</td><td>~82%</td><td>~18%</td></tr>
+            <tr><td colspan="3" style="color:var(--muted);font-size:.82rem">«1 autore = 1 voto» equipara chi scrive 30 post a chi ne scrive 1: con questa metrica il vantaggio favorevole (~54/46) si assottiglia a ~52/48.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="ds">
+        <table>
+          <thead><tr><th>Dato</th><th>Valore</th></tr></thead>
+          <tbody>
+            <tr><td>Post / autori unici</td><td>1.006 / 708</td></tr>
+            <tr><td>Posizione: Pro / Contro / Neutro</td><td>428 / 368 / 210</td></tr>
+            <tr><td>Like: Pro / Contro / Neutro</td><td>16.414 / 3.532 / 5.646</td></tr>
+            <tr><td>Post più virale</td><td>news del voto — 2.230 like (neutro)</td></tr>
+            <tr><td>Picco attenzione / volume</td><td>4 giu (11.646 like) / 6 giu (194 post)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <div class="note">
+    🧭 <b>In una riga.</b> Su X il fronte favorevole è <b>leggermente avanti per numero di persone</b> (~54/46) ed è
+    <b>molto più amplificato</b> nell'engagement (82% dei like, trainati da pochi account ad alto seguito).
+  </div>
+
+  <section>
+    <h2><span class="pre">Limiti &amp; affidabilità</span>Cosa NON dice questo report</h2>
+    <div class="cols">
+      <div class="argbox con">
+        <h3>⚠️ Incertezza e campione</h3>
+        <div class="arg"><div class="t">Vantaggio reale ma contenuto</div><div class="d">Per voci i favorevoli sono avanti di ~8 punti (~54/46 tra gli schierati), meno con «1 autore = 1 voto» (~52/48): un vantaggio osservato, non schiacciante. Campione <b>non probabilistico</b>: niente intervalli di confidenza "da sondaggio", è una tendenza non una misura del consenso.</div></div>
+        <div class="arg"><div class="t">Il limite vero: le query (non il classificatore)</div><div class="d">I 1.006 post sono il <b>sottoinsieme intercettato dalle parole chiave usate</b>, non il volume totale: è qui il rischio maggiore. Abbiamo usato termini neutri e temi di <b>entrambi</b> i fronti (scorie, rinnovabili, costi, referendum), ma un set di query diverso darebbe proporzioni un po' diverse. È una fetta del dibattito su X, non l'opinione pubblica.</div></div>
+        <div class="arg"><div class="t">«1 autore = 1 voto» è una semplificazione forte</div><div class="d">Equipara chi pubblica 30 post a chi ne pubblica 1: riduce il peso dei più prolifici, ma resta una scelta discutibile.</div></div>
+      </div>
+      <div class="argbox con">
+        <h3>⚠️ Metodo &amp; affidabilità</h3>
+        <div class="arg"><div class="t">Classificazione AI — verifica di coerenza ~89%</div><div class="d">Riclassifica cieca di 150 post → <b>concordanza ~89%</b>. I rari disaccordi sono sul confine "neutro": Pro e Contro non si confondono quasi mai. Classificazione solida.</div></div>
+        <div class="arg"><div class="t">Da dove vengono i dati (e cosa è stato ri-controllato)</div><div class="d">Tutti i dati (id, autore, testo, like) provengono dalla ricerca su X, non sono inventati. Solo i <b>pochi post di vertice</b> che reggono le conclusioni sono stati <b>verificati direttamente sulla piattaforma</b>; gli altri arrivano dai risultati di ricerca e non sono stati ri-verificati uno per uno. L'intero processo è <b>automatico</b>.</div></div>
+        <div class="arg"><div class="t">La «mappa dei fronti» non è analisi di rete</div><div class="d">È una rappresentazione politica di chi sta da che parte: niente retweet/menzioni, centralità o community detection.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p><b>Metodo.</b> Dati via ricerca nativa su X (<code>since:2026-06-01</code>, <code>lang:it</code>), dedup per ID:
+    <b>1.006 post / 708 autori</b> (sottoinsieme recuperato dalle query usate, finestra affettata per giorno, non il volume totale). Classificazione automatica
+    (AI) a passaggio singolo, Pro / Contro / Neutro. <b>Metrica principale</b>: conteggio delle voci (volume e «1 autore = 1 voto»);
+    l'engagement è riportato solo come contesto perché dominato da pochi post virali. I post di vertice sono stati verificati
+    direttamente sulla piattaforma (autore/testo/like); gli altri vengono dai risultati di ricerca, non ri-verificati uno per uno.
+    Escluso il nucleare militare. <b>Verifica di coerenza</b> su 150 post: concordanza ~89%.
+    «1 autore = 1 voto» equipara prolifici e occasionali. Conteggi e date esatti; le posizioni sono qualitative. Campione non
+    probabilistico: fotografa il dibattito su X, non l'opinione pubblica.</p>
+    <p style="margin-top:10px">Generato l'8 giugno 2026 · <i>postmortem</i></p>
+  </footer>
+
+</div>
+
+<script>
+const C={pro:'#3fb950',con:'#f85149',neu:'#d29922',accent:'#58a6ff'};
+const AVATAR={
+ CarloCalenda:'https://pbs.twimg.com/profile_images/2039753052358598656/4SJVN1Cy.jpg',
+ FratellidItalia:'https://pbs.twimg.com/profile_images/1801316120789438464/3wMGNYwT.jpg',
+ NFratoianni:'https://pbs.twimg.com/profile_images/414393482506436608/a0q3tMK-.jpeg',
+ mandvzukic:'https://pbs.twimg.com/profile_images/2056724544472166400/sTxt_hep.jpg',
+ lucianocapone:'https://pbs.twimg.com/profile_images/1979834039335870464/9rQlu4HX.jpg',
+ Azione_it:'https://pbs.twimg.com/profile_images/2027329333539270656/VFUC3Hp9.jpg',
+ AvvocatoAtomico:'https://pbs.twimg.com/profile_images/1412386936799571969/HizMery5.jpg',
+ a_monteleone:'https://pbs.twimg.com/profile_images/328001785/6240_1173058293328_1434161211_30476563_591374_n.jpg',
+ MarcoCantamessa:'https://pbs.twimg.com/profile_images/809147098692284416/RhYNqKVM.jpg',
+ Deputatipd:'https://pbs.twimg.com/profile_images/1903028112646172672/8FAe8D-y.jpg',
+ gonufrio:'https://pbs.twimg.com/profile_images/933365769945206785/TzCkAbhl.jpg',
+ FranFerrante:'https://pbs.twimg.com/profile_images/875942333866549248/vK-msSe6.jpg',
+ davidefaraone:'https://pbs.twimg.com/profile_images/1779823172486836224/eXJ3Xoab.jpg',
+ ultimoranet:'https://pbs.twimg.com/profile_images/1302892479662956546/Lvq37Vi4.jpg',
+ europaverde_it:'https://pbs.twimg.com/profile_images/1865365951895482369/8QhrqQyk.jpg',
+ KersevanRoberto:'https://pbs.twimg.com/profile_images/1592521135371042817/WUfmzllg.jpg',
+ matteosalvinimi:'https://pbs.twimg.com/profile_images/1581333609146900481/UJD84jRx.jpg',
+ Mov5Stelle:'https://pbs.twimg.com/profile_images/1818256136698470400/A9m6c8Wm.jpg',
+};
+const av=(h)=>AVATAR[h]||`https://unavatar.io/x/${h}`;
+const FB=(n)=>`https://ui-avatars.com/api/?name=${encodeURIComponent(n)}&background=1c2530&color=8b98a5&size=64&bold=true`;
+
+const LEADERS=[
+ {n:'Carlo Calenda',h:'CarloCalenda',post:'CarloCalenda/status/2062532906065555616',role:'Azione',pos:'pro',pl:'PRO',s:'«Finalmente il primo passo per il ritorno del nucleare». Tra i più attivi sul Sì.'},
+ {n:'Fratelli d\'Italia',h:'FratellidItalia',post:'FratellidItalia/status/2062817902588256764',role:'Partito (gov.)',pos:'pro',pl:'PRO',s:'«Il Governo Meloni porta l\'Italia nel futuro»: energia pulita e autonomia.'},
+ {n:'Azione',h:'Azione_it',post:'Azione_it/status/2062569810655920571',role:'Partito',pos:'pro',pl:'PRO',s:'«Primo importante passo per il ritorno dell\'energia nucleare in Italia».'},
+ {n:'Luciano Capone',h:'lucianocapone',post:'lucianocapone/status/2063348356655534535',role:'Giornalista (Il Foglio)',pos:'pro',pl:'PRO',s:'«Coi 238 mld del Superbonus avremmo costruito 15 reattori».'},
+ {n:'L\'Avvocato dell\'Atomo',h:'AvvocatoAtomico',post:'AvvocatoAtomico/status/2062794481452101783',role:'Divulgatore',pos:'pro',pl:'PRO',s:'Precisa: «il ddl NON prevede ancora la costruzione di impianti».'},
+ {n:'Roberto Kersevan',h:'KersevanRoberto',post:'KersevanRoberto/status/2063937233913033052',role:'Fisico/esperto',pos:'pro',pl:'PRO',s:'Dati alla mano su export francese e sussidi alle rinnovabili (~220 mld).'},
+ {n:'Antonino Monteleone',h:'a_monteleone',post:'a_monteleone/status/2063185400919679371',role:'Giornalista',pos:'pro',pl:'PRO',s:'«La scienza dice: minor impatto CO2. Ignorarlo è un errore storico».'},
+ {n:'aisa',h:'mandvzukic',post:'mandvzukic/status/2062482927682810120',role:'Cittadina',pos:'pro',pl:'PRO',s:'«Assurdo che un partito di sinistra Verdi non approvi il nucleare» (1.176 like).'},
+ {n:'Nicola Fratoianni',h:'NFratoianni',post:'NFratoianni/status/2062244758517416445',role:'AVS',pos:'con',pl:'CONTRO',s:'«Il Governo è prigioniero del fossile. Il futuro è rinnovabile».'},
+ {n:'Europa Verde',h:'europaverde_it',post:'europaverde_it/status/2063947457893896507',role:'Partito (AVS)',pos:'con',pl:'CONTRO',s:'«23 mld UE per le rinnovabili: la strada è quella, non il nucleare».'},
+ {n:'Deputati PD',h:'Deputatipd',post:'Deputatipd/status/2063878694523883883',role:'PD',pos:'con',pl:'CONTRO',s:'«Delega in bianco: costa più delle rinnovabili e ci vorranno decenni».'},
+ {n:'Marco Cantamessa',h:'MarcoCantamessa',post:'MarcoCantamessa/status/2063154495459098686',role:'Docente PoliTo',pos:'con',pl:'CONTRO',s:'«Il nucleare no: la tecnologia va sviluppata. Tutto solare sì».'},
+ {n:'Giuseppe Onufrio',h:'gonufrio',post:'gonufrio/status/2063911872047288682',role:'Greenpeace/esperto',pos:'con',pl:'CONTRO',s:'«Servono tecnologie flessibili (accumuli), non il baseload nucleare».'},
+ {n:'Francesco Ferrante',h:'FranFerrante',post:'FranFerrante/status/2063167365399838760',role:'Ambientalista',pos:'con',pl:'CONTRO',s:'«Si affosserà da sé per motivi economici: distrazione dalle rinnovabili».'},
+ {n:'Davide Faraone',h:'davidefaraone',post:'davidefaraone/status/2062812173416448451',role:'Italia Viva',pos:'neu',pl:'NEUTRO',s:'«Nucleare di carta, bollette vere»: astenuti, è il nucleare della propaganda.'},
+ {n:'Ultimora.net',h:'ultimoranet',post:'ultimoranet/status/2062469298526843188',role:'Testata',pos:'neu',pl:'NEUTRO',s:'La notizia del voto: 155 sì, 86 no, 8 astenuti (post più virale).'},
+];
+
+const TWEETS=[
+ {n:'aisa',h:'mandvzukic',id:'2062482927682810120',sent:'pro',l:1176,r:25,c:38,d:'04 giu',t:'Per me pressoché assurdo che un partito di sinistra VERDI non approvi il nucleare.'},
+ {n:'Carlo Calenda',h:'CarloCalenda',id:'2062532906065555616',sent:'pro',l:1155,r:108,c:203,d:'04 giu',t:'Finalmente! Il primo passo per il ritorno del nucleare in Italia: oggi approvata la legge delega alla Camera. Un segnale positivo: energia pulita, continua e sostenibile.'},
+ {n:'Luciano Capone',h:'lucianocapone',id:'2063348356655534535',sent:'pro',l:1047,r:213,c:33,d:'06 giu',t:'È surreale che parli d\'insostenibilità dei costi del nucleare la lobby green che ha difeso il Superbonus. Coi 238 miliardi di bonus edilizi avremmo costruito 15 reattori e sarebbe avanzato il resto.'},
+ {n:'Marco Cantamessa',h:'MarcoCantamessa',id:'2063154495459098686',sent:'con',l:611,r:101,c:114,d:'06 giu',t:'Il nucleare no, perché la tecnologia deve essere sviluppata pienamente. Tutto solare sì, perché il problema dello storage sarà risolto da tecnologie in fase di sviluppo.'},
+ {n:'Fratelli d\'Italia',h:'FratellidItalia',id:'2062817902588256764',sent:'pro',l:316,r:48,c:136,d:'05 giu',t:'Il Governo Meloni porta l\'Italia nel futuro. Il via libera alla legge delega sul nucleare segna una nuova stagione energetica: energia pulita e sicura, autonomia energetica.'},
+ {n:'Nicola Fratoianni',h:'NFratoianni',id:'2062244758517416445',sent:'con',l:112,r:37,c:109,d:'03 giu',t:'Il Governo Meloni è prigioniero dell\'energia fossile e vuole tornare al nucleare. Il futuro è rinnovabile. #Avs'},
+ {n:'L\'Avvocato dell\'Atomo',h:'AvvocatoAtomico',id:'2062794481452101783',sent:'pro',l:283,r:13,c:12,d:'05 giu',t:'A latere, segnalo umilmente che il DDL disciplina l\'eventuale ritorno del nucleare in Italia, ma allo stato attuale NON PREVEDE ANCORA LA COSTRUZIONE DI IMPIANTI.'},
+ {n:'Davide Faraone',h:'davidefaraone',id:'2062812173416448451',sent:'neu',l:93,r:37,c:116,d:'05 giu',t:'Nucleare di carta, bollette vere. Ci siamo astenuti: nel testo non c\'è una centrale, un cronoprogramma, una copertura. È il nucleare che serve alla propaganda, non al Paese.'},
+ {n:'Antonino Monteleone',h:'a_monteleone',id:'2063185400919679371',sent:'pro',l:93,r:14,c:11,d:'06 giu',t:'La scienza ci dice che il nucleare è la fonte con il minor impatto in termini di CO2 e la più efficiente. Ignorare questa opportunità sarebbe, di nuovo, un grave errore storico.'},
+ {n:'Giuseppe Onufrio',h:'gonufrio',id:'2063911872047288682',sent:'con',l:21,r:5,c:6,d:'08 giu',t:'Con sempre più rinnovabili intermittenti serve flessibilità della rete (accumuli, gestione domanda). Gli impianti baseload saranno sempre meno necessari: servono tecnologie flessibili, non il nucleare.'},
+ {n:'Deputati PD',h:'Deputatipd',id:'2063878694523883883',sent:'con',l:14,r:8,c:7,d:'08 giu',t:'Delega in bianco al governo sul nucleare: niente sicurezza, niente deposito scorie, niente chiarezza sui costi. Costa più delle rinnovabili e ci vorranno decenni. L\'emergenza è adesso.'},
+ {n:'Francesco Ferrante',h:'FranFerrante',id:'2063167365399838760',sent:'con',l:45,r:15,c:26,d:'06 giu',t:'L\'ipotesi nucleare si affosserà da sé per motivi economici. Per alcuni sono "armi di distrazione di massa contro le rinnovabili".'},
+];
+
+const TOP=[['news del voto',2230,'neu'],['Calenda (Renzi astenuto)',1674,'pro'],['aisa (Verdi)',1176,'pro'],['Calenda «Finalmente»',1155,'pro'],
+ ['Capone',1047,'pro'],['Salvini',858,'pro'],['C. Borghi',832,'pro'],['Cantamessa',610,'con']];
+
+const DAILY={
+ labels:['1','2','3','4','5','6','7','8'],
+ pro:[26,26,28,67,68,86,68,59], con:[25,14,30,42,58,72,72,55], neu:[20,17,9,23,37,36,28,40],
+ like:[1123,487,2177,11646,4160,3361,1641,997]
+};
+
+const NODES={
+ quesito:{x:500,y:200,g:'q',l:'NUCLEARE',big:1},
+ meloni:{x:140,y:60,g:'pro',l:'Meloni/FdI'}, lega:{x:80,y:140,g:'pro',l:'Lega'}, azione:{x:180,y:140,g:'pro',l:'Azione/Calenda'},
+ capone:{x:110,y:230,g:'pro',l:'Capone'}, esperti:{x:210,y:235,g:'pro',l:'esperti (Kersevan…)'}, atomico:{x:150,y:320,g:'pro',l:'Avv. Atomico'},
+ avs:{x:860,y:60,g:'con',l:'AVS/Fratoianni'}, verde:{x:920,y:140,g:'con',l:'Europa Verde'}, pd:{x:830,y:140,g:'con',l:'PD'},
+ m5s:{x:900,y:230,g:'con',l:'M5S'}, greenexp:{x:800,y:235,g:'con',l:'esperti green'}, cantamessa:{x:860,y:320,g:'con',l:'Cantamessa/Onufrio'},
+ iv:{x:430,y:330,g:'neu',l:'Italia Viva'}, media:{x:560,y:330,g:'neu',l:'testate'},
+};
+const EDGES=[
+ ['meloni','pro'],['lega','pro'],['azione','pro'],['capone','pro'],['esperti','pro'],['atomico','pro'],
+ ['avs','con'],['verde','con'],['pd','con'],['m5s','con'],['greenexp','con'],['cantamessa','con'],
+ ['iv','neu'],['media','neu'],
+].map(([n,k])=>['quesito',n,k]);
+
+/* render */
+const lb=document.querySelector('#leaders tbody');
+LEADERS.forEach(p=>{const tr=document.createElement('tr');
+ tr.innerHTML=`<td><div class="who">
+   <a href="https://x.com/${p.h}" target="_blank" rel="noopener" title="Profilo"><img class="av sm" src="${av(p.h)}" onerror="this.onerror=null;this.src='${FB(p.n)}'" alt=""></a>
+   <div class="nm"><b><a href="https://x.com/${p.post}" target="_blank" rel="noopener" title="Apri il post citato">${p.n} ↗</a></b><small><a href="https://x.com/${p.h}" target="_blank" rel="noopener">@${p.h}</a></small></div>
+  </div></td><td>${p.role}</td><td><span class="pill ${p.pos}">${p.pl}</span></td><td>${p.s}</td>`;
+ lb.appendChild(tr);});
+
+const g=document.querySelector('#gallery');
+TWEETS.forEach(w=>{const a=document.createElement('a');a.className='tw '+w.sent;a.href=`https://x.com/${w.h}/status/${w.id}`;a.target='_blank';a.rel='noopener';
+ const lab={pro:'Pro',con:'Contro',neu:'Neutro'}[w.sent];
+ a.innerHTML=`<div class="hd"><img class="av" src="${av(w.h)}" onerror="this.onerror=null;this.src='${FB(w.n)}'" alt="">
+   <div class="nm"><b>${w.n}</b><small>@${w.h}</small></div><span class="tag ${w.sent}">${lab}</span></div>
+   <div class="bd">${w.t}</div>
+   <div class="ft"><span>❤️ <b>${w.l.toLocaleString('it')}</b></span><span>🔁 ${w.r}</span><span>💬 ${w.c}</span><span>${w.d}</span><span class="open">apri ↗</span></div>`;
+ g.appendChild(a);});
+
+Chart.defaults.color='#8b98a5';Chart.defaults.font.family='-apple-system,Segoe UI,Roboto,sans-serif';Chart.defaults.font.size=12;
+const GRID='rgba(138,152,165,.12)';
+
+new Chart(document.getElementById('cSent'),{type:'doughnut',
+ data:{labels:['Favorevoli (428)','Contrari (368)','Neutro (210)'],datasets:[{data:[428,368,210],backgroundColor:[C.pro,C.con,C.neu],borderColor:'#0d1117',borderWidth:3}]},
+ options:{cutout:'58%',plugins:{legend:{position:'bottom',labels:{padding:12,usePointStyle:true}},tooltip:{callbacks:{label:c=>` ${c.label}: ${Math.round(100*c.parsed/1006)}%`}}}}});
+
+new Chart(document.getElementById('cVociLike'),{type:'bar',
+ data:{labels:['Per VOCI (persone)','Per 1 autore = 1 voto','Per LIKE (engagement)'],datasets:[
+   {label:'PRO',data:[54,52,82],backgroundColor:C.pro,borderRadius:4},
+   {label:'CONTRO',data:[46,48,18],backgroundColor:C.con,borderRadius:4}]},
+ options:{indexAxis:'y',plugins:{legend:{position:'bottom',labels:{usePointStyle:true,padding:16}},
+   tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.x}%`}}},
+   scales:{x:{stacked:true,max:100,grid:{color:GRID},ticks:{callback:v=>v+'%'}},y:{stacked:true,grid:{display:false}}}}});
+
+new Chart(document.getElementById('cDaily'),{
+ data:{labels:DAILY.labels.map(x=>x+' giu'),datasets:[
+   {type:'bar',label:'Contro',data:DAILY.con,backgroundColor:C.con,stack:'s',borderRadius:2,yAxisID:'y'},
+   {type:'bar',label:'Pro',data:DAILY.pro,backgroundColor:C.pro,stack:'s',borderRadius:2,yAxisID:'y'},
+   {type:'bar',label:'Neutro',data:DAILY.neu,backgroundColor:C.neu,stack:'s',borderRadius:2,yAxisID:'y'},
+   {type:'line',label:'Like / giorno',data:DAILY.like,borderColor:C.accent,backgroundColor:C.accent,tension:.3,pointRadius:3,yAxisID:'y1'}]},
+ options:{plugins:{legend:{position:'bottom',labels:{usePointStyle:true,padding:14}}},
+   scales:{y:{stacked:true,position:'left',grid:{color:GRID},title:{display:true,text:'post'}},
+     y1:{position:'right',grid:{display:false},title:{display:true,text:'like'},ticks:{callback:v=>v.toLocaleString('it')}},x:{stacked:true,grid:{display:false}}}}});
+
+new Chart(document.getElementById('cTop'),{type:'bar',
+ data:{labels:TOP.map(t=>t[0]),datasets:[{data:TOP.map(t=>t[1]),backgroundColor:TOP.map(t=>C[t[2]]),borderRadius:5}]},
+ options:{indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.parsed.x.toLocaleString('it')} like`}}},
+   scales:{x:{grid:{color:GRID},ticks:{callback:v=>v.toLocaleString('it')}},y:{grid:{display:false}}}}});
+
+const FRONTI={
+ pro:[['Meloni / FdI','FratellidItalia'],['Lega','matteosalvinimi'],['Azione / Calenda','CarloCalenda'],['Luciano Capone','lucianocapone'],['Avv. dell\'Atomo','AvvocatoAtomico'],['R. Kersevan','KersevanRoberto'],['A. Monteleone','a_monteleone']],
+ con:[['AVS / Fratoianni','NFratoianni'],['Europa Verde','europaverde_it'],['PD','Deputatipd'],['M5S','Mov5Stelle'],['M. Cantamessa','MarcoCantamessa'],['G. Onufrio','gonufrio'],['F. Ferrante','FranFerrante']],
+};
+const chip=([n,h])=>`<a class="chip" href="https://x.com/${h}" target="_blank" rel="noopener"><img class="av sm" src="${av(h)}" onerror="this.onerror=null;this.src='${FB(n)}'" alt=""><span class="nm"><b>${n}</b><small>@${h}</small></span></a>`;
+document.getElementById('fronte-pro').innerHTML=FRONTI.pro.map(chip).join('');
+document.getElementById('fronte-con').innerHTML=FRONTI.con.map(chip).join('');
+document.getElementById('fronte-neu').innerHTML='<b>Al centro:</b> Italia Viva (astenuta — «sì al nucleare, ma non a questo ddl») e le testate, che fanno cronaca senza schierarsi.';
+</script>
+</body>
+</html>

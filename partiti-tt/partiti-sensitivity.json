@@ -1,0 +1,60 @@
+{
+ "sensitivity": {
+  "fav_share": [
+   "FN_Vannacci",
+   "FdI",
+   "Lega",
+   "IV",
+   "M5S",
+   "Azione",
+   "PD",
+   "FI",
+   "AVS"
+  ],
+  "net_sentiment": [
+   "FN_Vannacci",
+   "FdI",
+   "Lega",
+   "IV",
+   "PD",
+   "Azione",
+   "M5S",
+   "FI",
+   "AVS"
+  ],
+  "support_ratio": [
+   "FN_Vannacci",
+   "FdI",
+   "Lega",
+   "IV",
+   "M5S",
+   "Azione",
+   "PD",
+   "FI",
+   "AVS"
+  ],
+  "engagement_weighted_net": [
+   "FN_Vannacci",
+   "FdI",
+   "Lega",
+   "IV",
+   "M5S",
+   "PD",
+   "FI",
+   "Azione",
+   "AVS"
+  ],
+  "calibrated": [
+   "FN_Vannacci",
+   "FdI",
+   "Lega",
+   "IV",
+   "M5S",
+   "Azione",
+   "PD",
+   "FI",
+   "AVS"
+  ]
+ },
+ "note": "ranking sotto metriche diverse; stabilita' = quanto coincidono"
+}

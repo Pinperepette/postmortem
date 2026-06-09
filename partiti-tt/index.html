@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chi viene difeso, chi viene attaccato, e cosa scatena il dibattito su X</title>
+<meta name="description" content="8.334 post, 4.071 utenti: di cosa si parla quando si parla di partiti su X, chi viene difeso, chi viene attaccato e perché. Un'analisi del dibattito, non un sondaggio.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Chi viene difeso, chi viene attaccato, e cosa scatena il dibattito su X">
+<meta property="og:description" content="Chi viene difeso, chi viene attaccato e con che tono. Solo il 14% degli utenti si espone a favore; l'altro 86% non si schiera apertamente. Un'analisi del dibattito politico su X, non del consenso elettorale.">
+<meta property="og:image" content="https://pinperepette.github.io/postmortem/partiti-tt/og-cover.png">
+<meta property="og:url" content="https://pinperepette.github.io/postmortem/partiti-tt/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Chi viene difeso, chi viene attaccato, e cosa scatena il dibattito su X">
+<meta name="twitter:description" content="Chi viene difeso, chi viene attaccato e con che tono. Solo il 14% si espone a favore; l'altro 86% non si schiera apertamente.">
+<meta name="twitter:image" content="https://pinperepette.github.io/postmortem/partiti-tt/og-cover.png">
+<script src="chart.umd.min.js"></script>
+<script src="data.js"></script>
+<style>
+  :root{
+    --bg:#0d1117; --panel:#161b22; --panel2:#1c2530; --bord:#2a3340;
+    --txt:#e6edf3; --muted:#8b98a5; --accent:#58a6ff;
+    --pro:#3fb950; --con:#f85149; --neu:#d29922;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--txt);line-height:1.55;padding:0 0 90px}
+  a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 32px}
+  header{background:linear-gradient(135deg,#211a2b,#0d1117);border-bottom:1px solid var(--bord);padding:54px 0 40px;margin-bottom:8px}
+  header h1{font-size:2.5rem;line-height:1.1;letter-spacing:-1px;max-width:900px}
+  header h1 .em{color:var(--accent)}
+  header .sub{color:var(--muted);margin-top:14px;font-size:1.08rem;max-width:840px}
+  .badges{margin-top:20px;display:flex;gap:10px;flex-wrap:wrap}
+  .badge{background:var(--panel2);border:1px solid var(--bord);border-radius:30px;padding:6px 14px;font-size:.82rem;color:var(--muted)}
+  .badge b{color:var(--txt)}
+  /* hero stat */
+  .herostat{background:linear-gradient(135deg,#26202e,#161b22);border:1px solid var(--bord);border-radius:18px;padding:38px 28px;margin-top:26px;text-align:center}
+  .herostat .n{font-size:5.6rem;font-weight:800;letter-spacing:-3px;color:var(--accent);line-height:.95;display:block}
+  .herostat .u{display:block;font-size:1.3rem;color:#e6edf3;margin:14px auto 0;max-width:760px}
+  .herostat .u b{color:#fff}
+  .herostat .sub2{color:var(--muted);font-size:.92rem;margin-top:16px}
+  /* chapters */
+  .chapter{margin-top:70px}
+  .chapter .cn{font-size:.8rem;letter-spacing:3px;text-transform:uppercase;color:var(--accent);font-weight:700}
+  .chapter h2{font-size:2rem;margin:4px 0 2px;letter-spacing:-.5px}
+  .chapter .q{color:var(--muted);font-size:1.15rem;font-style:italic;margin:6px 0 4px}
+  .chapter .intro{color:#c7d2dd;max-width:880px;margin-top:8px}
+  .chapter>.bar{height:3px;width:64px;background:var(--accent);border-radius:3px;margin-bottom:18px;margin-top:4px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-top:18px}
+  .chartcard{background:var(--panel);border:1px solid var(--bord);border-radius:14px;padding:18px}
+  .chartcard.wide{grid-column:1 / -1}
+  .chartcard h4{font-size:1.02rem;margin-bottom:3px}
+  .chartcard .cap{color:var(--muted);font-size:.82rem;margin-bottom:12px}
+  .cbox{position:relative;width:100%}
+  .cbox.hero{height:620px} .cbox.imp{height:430px} .cbox.sup{height:280px}
+  .lead{color:var(--muted);max-width:880px}
+  .lettura{background:rgba(88,166,255,.07);border:1px solid #244;border-left:4px solid var(--accent);border-radius:12px;padding:16px 20px;margin-top:18px}
+  .lettura h3{font-size:.78rem;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+  .lettura p{color:#d3dce4;margin:0}
+  .note{background:var(--panel2);border:1px solid var(--bord);border-left:4px solid var(--neu);border-radius:8px;padding:14px 18px;color:var(--muted);font-size:.9rem;margin-top:20px}
+  .note b{color:var(--txt)}
+  /* big argument cards */
+  .bigcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;margin-top:18px}
+  .bigcard{background:var(--panel);border:1px solid var(--bord);border-radius:16px;overflow:hidden}
+  .bigcard .hd{padding:15px 18px;font-size:1.2rem;font-weight:800;border-bottom:1px solid var(--bord);display:flex;align-items:center;gap:9px}
+  .bigcard .body{display:grid;grid-template-columns:1fr 1fr}
+  .bigcard .col{padding:14px 16px}
+  .bigcard .col.pro{border-right:1px solid var(--bord)}
+  .bigcard .col h6{font-size:.72rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+  .bigcard .col.pro h6{color:var(--pro)} .bigcard .col.con h6{color:var(--con)}
+  .chip2{display:block;font-size:1rem;margin:9px 0;line-height:1.2;font-weight:600}
+  .chip2 small{display:block;font-weight:400;color:var(--muted);font-size:.8rem;margin-top:2px}
+  /* executive summary */
+  .exec{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:20px}
+  .exec .card{background:var(--panel);border:1px solid var(--bord);border-radius:14px;padding:22px}
+  .exec .ic{font-size:1.9rem;line-height:1} .exec .t{font-weight:700;font-size:1.08rem;margin:10px 0 5px}
+  .exec .d{color:var(--muted);font-size:.9rem;line-height:1.45}
+  /* insight conclusioni capitolo */
+  .insight{background:linear-gradient(135deg,#1c2530,#161b22);border:1px solid var(--bord);border-left:4px solid var(--pro);border-radius:12px;padding:18px 22px;margin-top:24px}
+  .insight h4{font-size:.76rem;letter-spacing:1px;text-transform:uppercase;color:var(--pro);margin-bottom:6px}
+  .insight p{color:#e3eaf0;margin:0;font-size:1.08rem;line-height:1.5}
+  /* podio polarizzazione */
+  .podium{display:flex;gap:14px;margin:14px 0 4px;flex-wrap:wrap}
+  .podium .pod{background:var(--panel);border:1px solid var(--bord);border-radius:12px;padding:12px 18px;display:flex;align-items:center;gap:11px;flex:1;min-width:180px}
+  .podium .md{font-size:1.7rem} .podium .pn b{display:block;font-size:1.02rem} .podium .pn small{color:var(--muted)}
+  /* bullet argument cards */
+  .bigcard ul{list-style:none;margin:0;padding:0}
+  .bigcard li{font-size:1rem;margin:9px 0;padding-left:16px;position:relative;line-height:1.3}
+  .bigcard li::before{content:"•";position:absolute;left:0;color:var(--muted)}
+  @media(max-width:760px){.exec{grid-template-columns:1fr 1fr}}
+  /* tables */
+  table{width:100%;border-collapse:collapse;font-size:.9rem}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--bord);vertical-align:middle}
+  th{color:var(--muted);font-weight:600;font-size:.76rem;text-transform:uppercase;letter-spacing:.5px}
+  td.num{text-align:right;font-variant-numeric:tabular-nums}
+  .rank{color:var(--muted);width:26px;font-variant-numeric:tabular-nums}
+  .pp{font-size:.66rem;padding:2px 8px;border-radius:20px;font-weight:700;white-space:nowrap}
+  .swatch{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:7px;vertical-align:middle}
+  details.ds{background:#11161d;border:1px solid var(--bord);border-radius:12px;padding:0 18px;margin-top:14px}
+  details.ds summary{cursor:pointer;padding:14px 0;font-weight:600;color:var(--txt)}
+  details.ds[open]{padding-bottom:14px}
+  /* tweets */
+  .tweets{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:18px}
+  a.tw{display:block;background:var(--panel);border:1px solid var(--bord);border-left:4px solid var(--neu);border-radius:10px;padding:16px;color:inherit;transition:transform .12s,border-color .12s,background .12s}
+  a.tw:hover{transform:translateY(-2px);background:#1a2230;text-decoration:none;border-color:var(--accent)}
+  a.tw.fav{border-left-color:var(--pro)} a.tw.ost{border-left-color:var(--con)}
+  .tw .hd{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .av{width:38px;height:38px;border-radius:50%;background:var(--panel2);border:1px solid var(--bord);flex:none;display:inline-flex;align-items:center;justify-content:center;position:relative;overflow:hidden;color:var(--accent);font-weight:700;font-size:.95rem}
+  .av img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .tw .hd .nm{flex:1;min-width:0}.tw .hd .nm b{display:block;font-size:.9rem;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tw .hd .nm small{color:var(--muted);font-size:.77rem}
+  .tw .tag{font-size:.6rem;padding:3px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;font-weight:700}
+  .tag.fav{background:rgba(63,185,80,.15);color:var(--pro)} .tag.ost{background:rgba(248,81,73,.15);color:var(--con)}
+  .tw .bd{font-size:.86rem;color:#d3dce4} .tw .ft{margin-top:12px;padding-top:10px;border-top:1px solid var(--bord);font-size:.76rem;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .tw .ft b{color:var(--txt)} .tw .ft .open{margin-left:auto;color:var(--accent);font-weight:600}
+  .warn{background:rgba(210,153,34,.08);border:1px solid #5a4a1f;border-left:5px solid var(--neu);border-radius:12px;padding:14px 20px;margin-top:18px;color:#e8d9b0;font-size:.95rem}
+  .warn b{color:#fff}
+  footer{margin-top:60px;padding-top:24px;border-top:1px solid var(--bord);color:var(--muted);font-size:.83rem}
+  code{background:var(--panel2);padding:1px 6px;border-radius:5px;font-size:.85em}
+  @media(max-width:900px){.tweets{grid-template-columns:1fr 1fr}}
+  @media(max-width:760px){
+    .wrap{padding:0 16px}header h1{font-size:1.7rem}.herostat .n{font-size:3.6rem}.herostat .u{font-size:1.05rem}
+    .chapter h2{font-size:1.5rem}.grid2,.grid3,.tweets{grid-template-columns:1fr}
+    .cbox.hero{height:480px}.cbox.imp{height:340px}.cbox.sup{height:260px}
+    .bigcard .body{grid-template-columns:1fr}.bigcard .col.pro{border-right:none;border-bottom:1px solid var(--bord)}
+    th,td{padding:9px 7px;font-size:.84rem}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>Chi viene <span class="em">difeso</span>, chi viene <span class="em">attaccato</span>, e cosa scatena il dibattito su X</h1>
+    <div class="sub">Quando si parla di partiti su X, di cosa si parla davvero? Un'analisi di <b>8.334 post</b> e <b>4.071 utenti</b> (3–9 giugno 2026): chi viene difeso, chi viene attaccato, e perché. Non misuriamo voti: misuriamo <b>idee e reazioni emotive</b>.</div>
+    <div class="badges" id="badges"></div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="herostat">
+    <span class="n" id="hs-n"></span>
+    <span class="u">degli utenti si <b>espone a favore</b> di un partito. Tutti gli altri <b>partecipano senza schierarsi apertamente</b>.</span>
+    <div class="sub2">Il dibattito politico su X è <b>dominato da contenuti ostili</b>: <b id="hs-host"></b> dei post è ostile, appena <b id="hs-fav"></b> favorevole.</div>
+  </div>
+
+  <section class="chapter" style="margin-top:40px">
+    <div class="cn">In breve</div>
+    <h2>Cosa abbiamo scoperto</h2>
+    <div class="bar"></div>
+    <div class="exec">
+      <div class="card"><div class="ic">🗣️</div><div class="t">Solo <span id="ev-expr"></span> prende posizione</div><div class="d">La grande maggioranza non esprime un sostegno esplicito a nessun partito.</div></div>
+      <div class="card"><div class="ic">🔥</div><div class="t">Domina la critica</div><div class="d"><span id="ev-host"></span> dei post è ostile: il confronto su X passa soprattutto per l'attacco.</div></div>
+      <div class="card"><div class="ic">⚔️</div><div class="t">Più attenzione a chi divide</div><div class="d">I contenuti divisivi attirano più reazioni dell'approvazione pacata: chi spacca fa discutere più di chi piace.</div></div>
+      <div class="card"><div class="ic">📢</div><div class="t">Discussi ≠ apprezzati</div><div class="d">I partiti di cui si parla di più non sono affatto quelli visti meglio.</div></div>
+    </div>
+  </section>
+
+  <!-- ===================== CAP 1 ===================== -->
+  <section class="chapter">
+    <div class="cn">Capitolo 1</div>
+    <h2>Il clima generale</h2>
+    <div class="q">Di cosa si parla?</div>
+    <div class="bar"></div>
+    <p class="intro">Prima di tutto il tono. Su X il confronto politico è dominato dall'ostilità, e solo una minoranza si schiera apertamente a favore di qualcuno. Ecco com'è distribuito il dibattito.</p>
+    <div class="grid3">
+      <div class="chartcard"><h4>Il tono dei post</h4><div class="cap">favorevoli / ostili / neutri sul totale.</div><div class="cbox sup"><canvas id="c_tono"></canvas></div></div>
+      <div class="chartcard"><h4>Chi popola il dibattito</h4><div class="cap">utenti che si espongono a favore di un partito vs chi non si schiera apertamente.</div><div class="cbox sup"><canvas id="c_schier"></canvas></div></div>
+      <div class="chartcard"><h4>Presenza nel dibattito</h4><div class="cap">utenti distinti coinvolti per partito.</div><div class="cbox sup"><canvas id="c_pres"></canvas></div></div>
+    </div>
+    <div class="insight"><h4>💡 Cosa ci dice questo capitolo</h4><p>La maggior parte degli utenti <b>non si espone a favore</b> di alcun partito; e tra i post prevale nettamente il <b>tono ostile</b> sull'adesione.</p></div>
+  </section>
+
+  <!-- ===================== CAP 2 ===================== -->
+  <section class="chapter">
+    <div class="cn">Capitolo 2</div>
+    <h2>Chi mobilita davvero</h2>
+    <div class="q">Quali partiti spingono la gente a esporsi?</div>
+    <div class="bar"></div>
+    <p class="intro">Non conta solo quanto se ne parla, ma <i>come</i>. C'è chi riceve soprattutto attacchi e chi mobilita più sostenitori. La matrice qui sotto è il cuore del dibattito: a destra chi è meno avversato, in alto chi è più discusso.</p>
+    <div class="chartcard wide" style="margin-top:18px"><h4>Interesse × Approvazione</h4><div class="cap">asse X = sentiment netto (→ meno criticato); asse Y = utenti coinvolti (↑ più discusso); dimensione = polarizzazione.</div><div class="cbox hero"><canvas id="c_matrix"></canvas></div></div>
+    <div class="grid2">
+      <div class="chartcard"><h4>Militanza: chi ha più difensori</h4><div class="cap">utenti distinti che si espongono a favore.</div><div class="cbox imp"><canvas id="c_mil"></canvas></div></div>
+      <div class="chartcard"><h4>Approvazione netta (con incertezza)</h4><div class="cap">favorevoli − ostili tra gli utenti schierati, intervallo di Wilson 95%.</div><div class="cbox imp"><canvas id="c_nf"></canvas></div></div>
+    </div>
+    <div class="insight"><h4>💡 Cosa ci dice questo capitolo</h4><p>Pochi partiti scatenano difensori veri; la maggioranza raccoglie soprattutto attacchi. Su X non emerge chi è più <b>apprezzato</b>, ma chi fa più <b>discutere</b>.</p></div>
+  </section>
+
+  <!-- ===================== CAP 2b — POLARIZZAZIONE ===================== -->
+  <section class="chapter">
+    <div class="cn">Capitolo 2 · focus</div>
+    <h2>Chi divide di più</h2>
+    <div class="q">Amato e odiato, o ignorato da tutti?</div>
+    <div class="bar"></div>
+    <p class="intro">La polarizzazione misura quanto un partito spacca: <b>1.0</b> = campo di battaglia, con favorevoli <i>e</i> contrari in egual misura; <b>0.0</b> = reazione quasi unanime (quasi tutti dalla stessa parte, in un verso o nell'altro). È la differenza tra chi accende posizioni opposte e chi raccoglie una reazione concorde.</p>
+    <div class="podium" id="podium"></div>
+    <div class="chartcard wide" style="margin-top:14px"><div class="cbox imp" style="height:480px"><canvas id="c_pol"></canvas></div></div>
+    <div class="lettura"><h3>La nostra lettura</h3><p id="pol_read"></p></div>
+  </section>
+
+  <!-- ===================== CAP 3 ===================== -->
+  <section class="chapter">
+    <div class="cn">Capitolo 3</div>
+    <h2>Perché</h2>
+    <div class="q">Cosa piace e cosa fa arrabbiare?</div>
+    <div class="bar"></div>
+    <p class="intro">Dietro ogni partito ci sono temi che attirano difese e temi che scatenano attacchi. Ecco, partito per partito, su <i>cosa</i> si gioca il sentiment.</p>
+    <div class="bigcards" id="bigcards"></div>
+    <div class="insight"><h4>💡 Cosa ci dice questo capitolo</h4><p>Nei post analizzati, la difesa ruota spesso intorno a pochi <b>temi-bandiera</b> (sicurezza, immigrazione, identità), mentre gli attacchi toccano più spesso <b>economia, governo e alleanze</b>.</p></div>
+  </section>
+
+  <!-- ===================== CAP 4 ===================== -->
+  <section class="chapter">
+    <div class="cn">Capitolo 4</div>
+    <h2>Le voci più influenti</h2>
+    <div class="q">Chi fa girare il dibattito?</div>
+    <div class="bar"></div>
+    <p class="intro">Prima qualche <b>esempio</b> di come suona la discussione tra gli utenti — toni e bersagli ricorrenti. Poi i post degli <b>account ufficiali e degli esponenti</b>, gli unici con un engagement davvero alto.</p>
+    <h4 style="margin-top:20px;font-size:1.05rem">Com'è il dibattito: qualche esempio</h4>
+    <div class="tweets" id="tweets"></div>
+    <h4 style="margin-top:36px;font-size:1.05rem">Classifica dei post di partiti ed esponenti <small style="color:var(--muted);font-weight:400" id="esp-meta"></small></h4>
+    <div style="overflow-x:auto"><table style="margin-top:10px"><thead><tr><th></th><th>Esponente</th><th>Area</th><th>Post</th><th class="num">❤️</th><th class="num">🔁</th><th class="num">💬</th></tr></thead><tbody id="esponenti"></tbody></table></div>
+    <div class="insight"><h4>💡 Cosa ci dice questo capitolo</h4><p>Tra i post più virali del campione prevalgono i contenuti <b>critici</b>: l'attenzione, su X, tende a seguire il conflitto più dell'adesione.</p></div>
+  </section>
+
+  <!-- ===================== CAP 5 — CHIUSURA ===================== -->
+  <section class="chapter">
+    <div class="cn">Capitolo 5 · chiusura</div>
+    <h2>Audience vs Mobilitazione</h2>
+    <div class="q">Osservati o difesi?</div>
+    <div class="bar"></div>
+    <p class="intro">Like e repost misurano quante persone <b>guardano</b>. I sostenitori distinti misurano quante persone <b>decidono di intervenire</b>. Non sono la stessa cosa: alcuni leader costruiscono <b>audience</b>, altri costruiscono <b>partecipazione</b>.</p>
+    <div class="chartcard wide" style="margin-top:18px"><h4>Attenzione vs partecipazione, leader per leader</h4><div class="cap">asse X = engagement totale dei loro post (like+repost+reply); asse Y = sostenitori distinti del partito; dimensione bolla = quanto se ne discute. <i>Engagement su un campione recente di post per account.</i></div><div class="cbox hero"><canvas id="c_lead"></canvas></div></div>
+    <div class="note">📐 <b>Come leggerlo.</b> Il numero di <b>sostenitori</b> deriva dall'analisi dell'intero dataset (utenti distinti che difendono il partito); l'<b>engagement</b> dai post degli account ufficiali e degli esponenti inclusi nel campione. Sono due misure diverse messe a confronto di proposito: una è l'attenzione ricevuta, l'altra la partecipazione attivata.</div>
+    <div class="insight"><h4>💡 La differenza che conta</h4><p><b>Meloni e Schlein vengono osservate</b>: engagement altissimo, ma pochi utenti si espongono a difenderle. <b>Vannacci viene difeso</b>: meno engagement complessivo, ma il numero più alto di sostenitori che intervengono in prima persona.</p></div>
+    <h4 style="margin-top:26px;font-size:1.05rem">Indice di mobilitazione — sostenitori ogni 1.000 interazioni</h4>
+    <p class="lead" style="font-size:.88rem;margin:4px 0 10px">Non chi riceve più like, ma quanti utenti decidono di esporsi <b>ogni 1.000 interazioni ricevute</b>. Qui emerge la sorpresa: a parità di attenzione, alcuni leader convertono molto più di altri.</p>
+    <div class="chartcard wide"><div class="cbox imp" style="height:360px"><canvas id="c_mobidx"></canvas></div></div>
+    <div class="insight"><h4>💡 In una frase</h4><p>Alcuni leader costruiscono <b>audience</b>; altri costruiscono <b>partecipazione</b>. L'attenzione e la mobilitazione sono fenomeni diversi: non sempre chi raccoglie più like mobilita più persone.</p></div>
+  </section>
+
+  <!-- ===================== METODO ===================== -->
+  <section class="chapter">
+    <div class="cn">Note</div>
+    <h2>Metodo & limiti</h2>
+    <div class="bar"></div>
+    <div class="warn">
+      <b>Cos'è e cosa non è.</b> Questa è un'analisi del <b>dibattito su X</b> — di cosa si dice e con che tono — <b>non un sondaggio</b>. Misura il comportamento di una minoranza vocale e attiva (chi commenta di politica su X), non l'opinione pubblica generale. Parla di <b>mobilitazione, approvazione, ostilità e polarizzazione</b>, non di voti.
+    </div>
+    <details class="ds">
+      <summary>Come è fatto (dati, classificazione, formule)</summary>
+      <div style="color:var(--muted);font-size:.9rem;line-height:1.6;padding-bottom:6px">
+        <b>Raccolta.</b> Ricerca su X per 10 partiti (nome+sigla+handle+leader), <code>lang:it</code>, 3–9 giu 2026, retweet esclusi, dedup → <b id="m-tweets"></b> post, <b id="m-auth"></b> utenti.<br>
+        <b>Classificazione.</b> Ogni coppia (post, partito) etichettata via LLM come favorevole / ostile / neutro / off-topic verso quel partito. Validazione: 150 casi ri-classificati in cieco → <b>86% concordanza</b> (96% sulla distinzione favorevole/non).<br>
+        <b>Attribuzione del sostegno.</b> Ogni utente viene associato al partito che difende più spesso; le sole critiche non assegnano.<br>
+        <b>Formule.</b> Approvazione netta con <b>intervallo di Wilson 95%</b>; <b>polarizzazione</b> = entropia normalizzata fav/ost; serie giornaliera con shrinkage <b>Empirical-Bayes</b> e test di trend <b>Mann–Kendall</b> (nessun trend significativo nei 7 giorni, p&gt;0.05); intervalli via bootstrap.<br>
+        <b>Limiti.</b> Solo il 14% si espone → minoranza vocale; volume "tappato" ~200 post/giorno/partito; reach approssimata con l'engagement; +Europa escluso (segnale troppo rumoroso).
+      </div>
+    </details>
+    <details class="ds">
+      <summary>Dati grezzi e file</summary>
+      <div style="padding-bottom:12px">
+        <a href="partiti-dataset.json">📥 partiti-dataset.json</a> &nbsp; <a href="partiti-calibration.json">📊 partiti-calibration.json</a> &nbsp; <a href="partiti-sensitivity.json">🧪 partiti-sensitivity.json</a>
+      </div>
+    </details>
+  </section>
+
+  <footer>
+    <p>Analisi indipendente e non commissionata del dibattito su X/Twitter (ricerca pubblica, <code>lang:it</code>), 3–9 giugno 2026; classificazione di stance assistita da LLM. Le percentuali misurano la <b>conversazione su X</b> — mobilitazione, approvazione, ostilità, polarizzazione — non l'opinione pubblica. Generato giugno 2026.</p>
+  </footer>
+</div>
+
+<script>
+const D=window.DATA, P=D.parties, sig=P.filter(p=>p.key!=="PiuEuropa");
+const C={pro:'#3fb950',con:'#f85149',neu:'#d29922',acc:'#58a6ff',mut:'#8b98a5',grid:'#2a3340'};
+const fmt=n=>(n||0).toLocaleString('it-IT');
+const S=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+const authors=p=>p.favA+p.ostA+p.neuA;
+if(window.Chart){Chart.defaults.color=C.mut;Chart.defaults.font.family="-apple-system,Segoe UI,Roboto,sans-serif";}
+
+document.getElementById('badges').innerHTML=[
+ `📅 <b>${D.meta.window}</b>`,`💬 <b>${fmt(D.meta.tweets)}</b> post`,`👤 <b>${fmt(D.meta.authors)}</b> utenti`,`🗣️ <b>${D.meta.expressive}</b> si espongono`
+].map(t=>`<span class="badge">${t}</span>`).join('');
+const exprPct=Math.round(100*D.meta.expressive/D.meta.authors);
+S('hs-n',exprPct+'%'); S('hs-host',D.meta.pct_hostile+'%'); S('hs-fav',D.meta.pct_fav+'%');
+S('ev-expr',exprPct+'%'); S('ev-host',D.meta.pct_hostile+'%');
+S('m-tweets',fmt(D.meta.tweets)); S('m-auth',fmt(D.meta.authors));
+const polTop=[...sig].sort((a,b)=>b.polariz-a.polariz);
+const _lastPol=polTop[polTop.length-1], _lastSign=_lastPol.net<0?'ostile':'favorevole';
+S('pol_read',`Il partito più divisivo è ${polTop[0].label} (H=${polTop[0].polariz}): accende favorevoli e contrari in egual misura. All'opposto ${_lastPol.label} (H=${_lastPol.polariz}) raccoglie una reazione quasi unanime, nel suo caso ${_lastSign} (è il partito con l'approvazione netta più bassa). Più alta la polarizzazione, più un partito divide il pubblico di X.`);
+const podEl=document.getElementById('podium');
+if(podEl){const md=['🥇','🥈','🥉'];
+  podEl.innerHTML=polTop.slice(0,3).map((p,i)=>`<div class="pod"><span class="md">${md[i]}</span><span class="pn"><b style="color:${p.color}">${p.label}</b><small>più divisivo · H = ${p.polariz}</small></span></div>`).join('');}
+
+if(window.Chart){
+// CAP1 — tono globale
+new Chart(c_tono,{type:'doughnut',
+ data:{labels:['Favorevoli','Neutri','Ostili'],datasets:[{data:[D.meta.climate.favorevole,D.meta.climate.neutro,D.meta.climate.ostile],backgroundColor:[C.pro,C.neu,C.con],borderColor:'#0d1117',borderWidth:2}]},
+ options:{maintainAspectRatio:false,cutout:'60%',plugins:{legend:{position:'bottom'}}}});
+// CAP1 — schierati vs critici
+new Chart(c_schier,{type:'doughnut',
+ data:{labels:['Si espongono a favore','Non si schiera a favore'],datasets:[{data:[D.meta.expressive,D.meta.only_critics],backgroundColor:[C.pro,C.con],borderColor:'#0d1117',borderWidth:2}]},
+ options:{maintainAspectRatio:false,cutout:'60%',plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:c=>`${c.label}: ${fmt(c.raw)} (${Math.round(100*c.raw/D.meta.authors)}%)`}}}}});
+// CAP1 — presenza nel dibattito
+const pres=[...sig].sort((a,b)=>authors(b)-authors(a));
+new Chart(c_pres,{type:'bar',
+ data:{labels:pres.map(p=>p.label),datasets:[{data:pres.map(authors),backgroundColor:pres.map(p=>p.color)}]},
+ options:{indexAxis:'y',maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${fmt(c.raw)} utenti coinvolti`}}},scales:{x:{grid:{color:C.grid}},y:{grid:{display:false}}}}});
+
+// CAP2 — MATRICE Interesse × Approvazione (hero)
+const maxA=Math.max(...sig.map(authors));
+const medNet=[...sig].map(p=>p.net).sort((a,b)=>a-b)[Math.floor(sig.length/2)];
+const medA=[...sig].map(authors).sort((a,b)=>a-b)[Math.floor(sig.length/2)];
+const quadLabels={plugin:'q'};
+const quadPlugin={id:'quad',beforeDraw(ch){const{ctx,chartArea:a,scales}=ch;if(!a)return;const x=scales.x.getPixelForValue(medNet),y=scales.y.getPixelForValue(medA);
+  ctx.save();ctx.strokeStyle='#3a4452';ctx.setLineDash([5,5]);ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(x,a.top);ctx.lineTo(x,a.bottom);ctx.moveTo(a.left,y);ctx.lineTo(a.right,y);ctx.stroke();
+  ctx.setLineDash([]);ctx.fillStyle='#9aa7b4';ctx.font='600 14px -apple-system';
+  ctx.textAlign='left';ctx.fillText('🔥 Bersagli del dibattito',a.left+10,a.top+20);
+  ctx.textAlign='right';ctx.fillText('❤️ Partiti che mobilitano',a.right-10,a.top+20);
+  ctx.textAlign='left';ctx.fillText('😴 Poco rilevanti',a.left+10,a.bottom-12);
+  ctx.textAlign='right';ctx.fillText('🤝 Approvati ma poco discussi',a.right-10,a.bottom-12);
+  ctx.restore();}};
+new Chart(c_matrix,{type:'bubble',
+ data:{datasets:sig.map(p=>({label:p.label,data:[{x:p.net,y:authors(p),r:8+22*p.polariz,t:p.label,pol:p.polariz}],backgroundColor:p.color+'cc',borderColor:p.color,borderWidth:1.5}))},
+ options:{maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{boxWidth:10,font:{size:11}}},
+   tooltip:{callbacks:{label:c=>`${c.raw.t}: approvazione ${c.raw.x}, ${fmt(c.raw.y)} utenti, polarizz. ${c.raw.pol}`}}},
+   scales:{x:{title:{display:true,text:'← più criticato      approvazione netta      meno criticato →'},grid:{color:C.grid},min:-1,max:0},
+           y:{title:{display:true,text:'utenti coinvolti (quanto se ne discute)'},grid:{color:C.grid},beginAtZero:true}}},plugins:[quadPlugin]});
+
+// CAP2 — militanza
+const mil=[...sig].sort((a,b)=>b.favA-a.favA);
+new Chart(c_mil,{type:'bar',
+ data:{labels:mil.map(p=>p.label),datasets:[{data:mil.map(p=>p.favA),backgroundColor:mil.map(p=>p.color)}]},
+ options:{indexAxis:'y',maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.raw} utenti favorevoli`}}},scales:{x:{grid:{color:C.grid}},y:{grid:{display:false}}}}});
+// CAP2 — net favorability Wilson (barre fluttuanti)
+const nf=[...sig].sort((a,b)=>b.nf_wilson-a.nf_wilson);
+new Chart(c_nf,{type:'bar',
+ data:{labels:nf.map(p=>p.label),datasets:[{data:nf.map(p=>[p.nf_lo,p.nf_hi]),backgroundColor:nf.map(p=>p.color)}]},
+ options:{indexAxis:'y',maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`approvazione netta ${nf[c.dataIndex].nf_wilson} (IC ${nf[c.dataIndex].nf_lo}…${nf[c.dataIndex].nf_hi})`}}},scales:{x:{min:-1,max:0,grid:{color:C.grid}},y:{grid:{display:false}}}}});
+
+// CAP2b — POLARIZZAZIONE gigante
+new Chart(c_pol,{type:'bar',
+ data:{labels:polTop.map(p=>p.label),datasets:[{data:polTop.map(p=>p.polariz),backgroundColor:polTop.map(p=>p.color)}]},
+ options:{indexAxis:'y',maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`H = ${c.raw} · ${c.raw>0.7?'campo di battaglia':c.raw<0.4?'reazione unanime':'misto'}`}}},
+   scales:{x:{min:0,max:1,grid:{color:C.grid},title:{display:true,text:'0 = reazione unanime      ·      1 = massima divisione'}},y:{grid:{display:false},ticks:{font:{size:13}}}}}});
+
+// CAP5 — Audience vs Mobilitazione (scatter leader)
+const L=D.leaders||[];
+if(L.length){
+  const medE=[...L].map(l=>l.engagement).sort((a,b)=>a-b)[Math.floor(L.length/2)];
+  const medS=[...L].map(l=>l.supporters).sort((a,b)=>a-b)[Math.floor(L.length/2)];
+  const maxVolL=Math.max(...L.map(l=>l.volume))||1;
+  const leadQuad={id:'lq',beforeDraw(ch){const{ctx,chartArea:a,scales}=ch;if(!a)return;
+    const x=scales.x.getPixelForValue(medE),y=scales.y.getPixelForValue(medS);
+    ctx.save();ctx.strokeStyle='#3a4452';ctx.setLineDash([5,5]);ctx.beginPath();
+    ctx.moveTo(x,a.top);ctx.lineTo(x,a.bottom);ctx.moveTo(a.left,y);ctx.lineTo(a.right,y);ctx.stroke();
+    ctx.setLineDash([]);ctx.fillStyle='#9aa7b4';ctx.font='600 13px -apple-system';
+    ctx.textAlign='left';ctx.fillText('🔥 base militante attiva',a.left+10,a.top+18);
+    ctx.textAlign='right';ctx.fillText('🚀 attenzione + partecipazione',a.right-10,a.top+18);
+    ctx.textAlign='left';ctx.fillText('· presenza marginale',a.left+10,a.bottom-12);
+    ctx.textAlign='right';ctx.fillText('👀 molto visti, poco difesi',a.right-10,a.bottom-12);ctx.restore();}};
+  new Chart(c_lead,{type:'bubble',
+   data:{datasets:L.map(l=>({label:l.name,data:[{x:l.engagement,y:l.supporters,r:9+22*l.volume/maxVolL,t:l.name,v:l.volume}],backgroundColor:l.color+'cc',borderColor:l.color,borderWidth:1.5}))},
+   options:{maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{boxWidth:10,font:{size:11}}},
+     tooltip:{callbacks:{label:c=>`${c.raw.t}: ${fmt(c.raw.x)} interazioni · ${c.raw.y} sostenitori · ${fmt(c.raw.v)} post`}}},
+     scales:{x:{title:{display:true,text:'engagement totale — quanti guardano →'},grid:{color:C.grid},beginAtZero:true},
+             y:{title:{display:true,text:'sostenitori distinti — quanti intervengono →'},grid:{color:C.grid},beginAtZero:true}}},plugins:[leadQuad]});
+  const mob=[...L].sort((a,b)=>b.mob_index-a.mob_index);
+  new Chart(c_mobidx,{type:'bar',
+   data:{labels:mob.map(l=>l.name),datasets:[{data:mob.map(l=>l.mob_index),backgroundColor:mob.map(l=>l.color)}]},
+   options:{indexAxis:'y',maintainAspectRatio:false,plugins:{legend:{display:false},
+     tooltip:{callbacks:{label:c=>`${c.raw} sostenitori ogni 1.000 interazioni`}}},
+     scales:{x:{grid:{color:C.grid},title:{display:true,text:'sostenitori ogni 1.000 interazioni ricevute'}},y:{grid:{display:false},ticks:{font:{size:13}}}}}});
+}
+} // end if(window.Chart)
+
+// CAP3 — big argument cards
+const bc=document.getElementById('bigcards');
+if(bc && D.themes){
+  bc.innerHTML=P.filter(p=>D.themes[p.key]).map(p=>{
+    const t=D.themes[p.key];
+    const list=arr=>`<ul>${((arr||[]).slice(0,5).map(a=>`<li>${(a.t||'').replace(/</g,'&lt;')}</li>`).join(''))||'<li style="color:var(--muted)">—</li>'}</ul>`;
+    return `<div class="bigcard"><div class="hd"><span class="swatch" style="background:${p.color}"></span>${p.label}</div>
+      <div class="body"><div class="col pro"><h6>👍 Perché viene difeso</h6>${list(t.pro)}</div><div class="col con"><h6>👎 Perché viene attaccato</h6>${list(t.con)}</div></div></div>`;
+  }).join('');
+}
+
+// CAP4 — viral tweets
+document.getElementById('tweets').innerHTML=D.tops.slice(0,9).map(t=>{
+  const cls=t.stance==='favorevole'?'fav':'ost', lbl=t.party.replace('FN_Vannacci','Vannacci/FN');
+  const aff=t.r_party?` · <b style="color:${(P.find(x=>x.key===t.r_party)||{}).color||C.mut}">${t.r_role||t.r_party}</b>`:'';
+  return `<a class="tw ${cls}" href="https://x.com/${t.author}/status/${t.id}" target="_blank" rel="noopener">
+    <div class="hd"><span class="av">${((t.name||t.author||'?').trim()[0]||'?').toUpperCase()}<img loading="lazy" src="${t.avatar||('https://unavatar.io/x/'+t.author)}" onerror="this.remove()"></span><div class="nm"><b>${t.name||t.author}</b><small>@${t.author}${aff}</small></div>
+    <span class="tag ${cls}">${t.stance} · su ${lbl}</span></div>
+    <div class="bd">${(t.text||'').replace(/</g,'&lt;')}</div>
+    <div class="ft"><span>❤️ <b>${fmt(t.likes)}</b></span><span>🔁 <b>${fmt(t.reposts)}</b></span><span>💬 <b>${fmt(t.replies)}</b></span><span class="open">apri ↗</span></div></a>`;
+}).join('');
+
+// CAP4 — esponenti
+const eb=document.getElementById('esponenti');
+if(eb && D.esponenti){
+  const pc=k=>(P.find(x=>x.key===k)||{}).color||C.mut, pl=k=>(P.find(x=>x.key===k)||{}).label||(k||'altro');
+  eb.innerHTML=D.esponenti.map((e,i)=>`<tr>
+    <td class="rank">${i+1}</td>
+    <td><div style="display:flex;align-items:center;gap:9px"><span class="av" style="width:34px;height:34px;font-size:.85rem">${((e.name||e.author||'?').trim()[0]||'?').toUpperCase()}<img loading="lazy" src="${e.avatar||('https://unavatar.io/x/'+e.author)}" onerror="this.remove()"></span><div><a href="https://x.com/${e.author}" target="_blank" rel="noopener"><b>${e.name||e.author}</b></a><br><small style="color:var(--muted)">@${e.author}${e.role?' · '+e.role:''}</small></div></div></td>
+    <td><span class="pp" style="background:${pc(e.party)}22;color:${pc(e.party)}">${pl(e.party)}</span></td>
+    <td><a href="https://x.com/${e.author}/status/${e.id}" target="_blank" rel="noopener" style="color:#c7d2dd">${(e.text||'').replace(/</g,'&lt;').slice(0,100)}…</a></td>
+    <td class="num">${fmt(e.likes)}</td><td class="num">${fmt(e.reposts)}</td><td class="num">${fmt(e.replies)}</td></tr>`).join('');
+}
+S('esp-meta',D.esp_meta?`(${D.esp_meta.n} post da ${D.esp_meta.accounts} account)`:'');
+</script>
+</body>
+</html>

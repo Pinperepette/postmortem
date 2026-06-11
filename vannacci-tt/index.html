@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vannacci su X: l'intervista da Gruber e la conversazione degli utenti</title>
+<meta name="description" content="2.143 post di 1.376 utenti su Roberto Vannacci a giugno 2026, rilevati su X (esclusi i suoi). Prima l'intervista da Gruber (10 giugno) divisa per argomenti, poi il quadro d'insieme del mese. Non rappresentativo dell'opinione pubblica.">
+<meta name="robots" content="noindex">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vannacci su X: l'intervista da Gruber e la conversazione degli utenti">
+<meta property="og:description" content="Come gli utenti di X hanno parlato di Vannacci a giugno 2026: l'intervista da Gruber divisa per argomenti, poi il quadro d'insieme del mese. 2.143 post · 1.376 utenti. Analisi della conversazione rilevata, non dell'opinione pubblica.">
+<meta property="og:url" content="https://pinperepette.github.io/postmortem/vannacci-tt/">
+<meta name="twitter:card" content="summary_large_image">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="data.js"></script>
+<style>
+  :root{
+    --bg:#0d1117; --panel:#161b22; --panel2:#1c2530; --bord:#2a3340;
+    --txt:#e6edf3; --muted:#8b98a5; --accent:#58a6ff;
+    --fav:#3fb950; --con:#f85149; --neu:#d29922; --pur:#8957e5;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--txt);line-height:1.55;padding:0 0 80px}
+  a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+  .wrap{max-width:1320px;margin:0 auto;padding:0 32px}
+  header{background:linear-gradient(135deg,#231a1a,#0d1117);border-bottom:1px solid var(--bord);padding:40px 0 36px;margin-bottom:14px}
+  header h1{font-size:2.4rem;line-height:1.12;letter-spacing:-.5px}
+  header h1 .em{color:var(--con)}
+  header .tag{font-size:1.3rem;color:var(--txt);margin-top:8px;font-weight:400;line-height:1.3}
+  header .sub{color:var(--muted);margin-top:14px;font-size:1.0rem;max-width:880px}
+  .badges{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap}
+  .badge{background:var(--panel2);border:1px solid var(--bord);border-radius:30px;padding:6px 14px;font-size:.82rem;color:var(--muted)}
+  .badge b{color:var(--txt)}
+  .partbar{display:flex;gap:0;margin:0 auto;max-width:1320px;padding:0 32px}
+  .partbar a{flex:1;text-align:center;padding:13px;font-size:.9rem;color:var(--muted);border-bottom:2px solid var(--bord)}
+  .partbar a:hover{color:var(--txt);text-decoration:none}
+  .partbar a b{color:var(--txt)}
+  .partbar a.p1{border-color:var(--accent)} .partbar a.p2{border-color:var(--neu)}
+  h2{font-size:1.5rem;margin:40px 0 6px;letter-spacing:-.3px}
+  h2 .pre{color:var(--accent);font-size:.78rem;display:block;letter-spacing:2px;text-transform:uppercase;margin-bottom:5px}
+  h2.minor{font-size:1.18rem;margin-top:30px}
+  .lead{color:var(--muted);margin-bottom:18px;max-width:900px;font-size:1.0rem}
+  .lead b{color:var(--txt)}
+  .secthead{margin:40px 0 6px;padding:22px 26px;border-radius:16px}
+  .secthead.p1{background:linear-gradient(135deg,#16243a,#0d1117);border:1px solid #244}
+  .secthead.p2{background:linear-gradient(135deg,#2a2410,#0d1117);border:1px solid #443a16}
+  .secthead .tag{font-size:.74rem;letter-spacing:2px;text-transform:uppercase;font-weight:700}
+  .secthead.p1 .tag{color:var(--accent)} .secthead.p2 .tag{color:var(--neu)}
+  .secthead h2{margin:6px 0 8px;font-size:1.9rem}
+  .secthead p{color:var(--muted);margin:0;max-width:900px}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:16px}
+  .kpi{background:var(--panel);border:1px solid var(--bord);border-radius:14px;padding:18px}
+  .kpi .n{font-size:1.9rem;font-weight:700;letter-spacing:-1px}
+  .kpi .l{color:var(--muted);font-size:.83rem;margin-top:4px}
+  .kpi.fav .n{color:var(--fav)} .kpi.con .n{color:var(--con)} .kpi.neu .n{color:var(--neu)}
+  .charts{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:14px}
+  .chartcard{background:var(--panel);border:1px solid var(--bord);border-radius:14px;padding:18px}
+  .chartcard.wide{grid-column:1 / -1}
+  .chartcard h4{font-size:.98rem;margin-bottom:4px}
+  .chartcard .cap{color:var(--muted);font-size:.8rem;margin-bottom:12px}
+  .cbox{position:relative;height:300px} .cbox.tall{height:380px} .cbox.sh{height:250px}
+  .legend{display:flex;gap:18px;color:var(--muted);font-size:.85rem;flex-wrap:wrap;margin:14px 0 0}
+  .dot{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px;vertical-align:middle}
+  .fact{background:var(--panel2);border:1px solid var(--bord);border-left:4px solid var(--accent);border-radius:12px;padding:14px 20px;margin-top:16px;color:#d3dce4;font-size:.96rem}
+  .fact b{color:#fff}
+  .disc{background:rgba(248,81,73,.10);border:1px solid var(--con);border-left:5px solid var(--con);border-radius:12px;padding:12px 18px;margin:16px 0;color:#f6d3d0;font-size:.92rem}
+  .disc b{color:#fff}
+  .tldr{background:linear-gradient(135deg,#1c2530,#161b22);border:1px solid var(--bord);border-radius:16px;padding:22px 26px;margin:8px 0}
+  .tldr h3{font-size:.78rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  .tldr ul{margin:0;padding-left:4px;list-style:none}
+  .tldr li{margin:10px 0;color:#d3dce4;padding-left:26px;position:relative}
+  .tldr li::before{content:"→";position:absolute;left:0;color:var(--accent);font-weight:700}
+  .tldr li b{color:#fff}
+  .uncert{font-size:.82rem;color:var(--muted);font-style:italic}
+  .topics{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px}
+  .topic{background:var(--panel);border:1px solid var(--bord);border-radius:14px;padding:16px 18px}
+  .topic .th{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:4px}
+  .topic .th h4{font-size:1.06rem} .topic .th .cnt{color:var(--muted);font-size:.82rem;white-space:nowrap}
+  .topic .th .ts{font-family:ui-monospace,monospace;font-size:.76rem;color:var(--accent);font-weight:400;margin-right:4px}
+  .topic .desc{color:var(--muted);font-size:.88rem;margin-bottom:10px}
+  .sbar{display:flex;height:8px;border-radius:5px;overflow:hidden;background:#0d1117;margin-bottom:12px}
+  .sbar i{display:block;height:100%}
+  .tw{display:block;background:var(--panel2);border:1px solid var(--bord);border-left:3px solid var(--neu);border-radius:9px;padding:11px 13px;color:inherit;margin-top:8px;transition:border-color .12s,background .12s}
+  .tw:hover{background:#222c3a;text-decoration:none;border-color:var(--accent)}
+  .tw.fav{border-left-color:var(--fav)} .tw.con{border-left-color:var(--con)} .tw.neu{border-left-color:var(--neu)}
+  .tw .hd{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+  .tw .hd img{width:26px;height:26px;border-radius:50%;background:var(--panel);border:1px solid var(--bord);flex:none}
+  .tw .hd .nm{flex:1;min-width:0;font-size:.8rem;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tw .hd .nm b{display:block} .tw .hd .nm small{color:var(--muted);font-size:.72rem}
+  .tw .hd .tg{font-size:.6rem;text-transform:uppercase;letter-spacing:.5px;padding:2px 7px;border-radius:12px;font-weight:700;white-space:nowrap}
+  .tg.fav{background:rgba(63,185,80,.15);color:var(--fav)} .tg.con{background:rgba(248,81,73,.15);color:var(--con)} .tg.neu{background:rgba(210,153,34,.15);color:var(--neu)}
+  .tw .bd{font-size:.85rem;color:#d3dce4} .tw .ft{margin-top:7px;font-size:.72rem;color:var(--muted);display:flex;gap:12px}
+  .tw .ft b{color:var(--txt)}
+  .tlist{display:grid;grid-template-columns:1fr 1fr;gap:8px 22px;margin-top:8px}
+  .tl{display:flex;gap:12px;align-items:baseline;padding:9px 0;border-bottom:1px solid var(--bord);font-size:.92rem;color:#d3dce4}
+  .tl .ts{font-family:ui-monospace,monospace;font-size:.78rem;color:var(--accent);flex:none;min-width:42px}
+  .tl b{color:var(--txt)}
+  .clist{margin:6px 0 4px;padding-left:20px;color:#d3dce4;font-size:.95rem} .clist li{margin:7px 0} .clist b{color:var(--txt)}
+  .pairs{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px}
+  .pair{background:var(--panel);border:1px solid var(--bord);border-radius:14px;padding:16px 18px}
+  .pair h4{font-size:1rem;margin-bottom:8px;color:var(--txt)}
+  .pair .q{border-left:3px solid var(--bord);padding:5px 0 5px 12px;margin:9px 0;font-size:.9rem;color:#d3dce4}
+  .pair .q .m{font-family:ui-monospace,monospace;font-size:.72rem;color:var(--accent);display:block;margin-bottom:2px}
+  .pair .why{margin-top:10px;padding-top:10px;border-top:1px dotted var(--bord);font-size:.82rem;color:var(--muted)}
+  details.dx{margin-top:10px} details.dx summary{cursor:pointer;color:var(--accent);font-size:.95rem;padding:8px 0;font-weight:600}
+  .dialogo{background:#11161d;border:1px solid var(--bord);border-radius:12px;padding:4px 16px;max-height:540px;overflow-y:auto;margin-top:8px}
+  .turn{padding:9px 0;border-bottom:1px solid var(--bord);font-size:.9rem;line-height:1.5}
+  .turn:last-child{border-bottom:none}
+  .turn .who{font-family:ui-monospace,monospace;font-size:.7rem;font-weight:700;letter-spacing:.5px;margin-right:7px}
+  .turn.v .who{color:var(--fav)} .turn.c .who{color:var(--accent)}
+  .turn .mm{font-family:ui-monospace,monospace;font-size:.7rem;color:var(--muted);margin-right:6px}
+  .turn .tx{color:#d3dce4}
+  .gallery{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:8px}
+  .gcol h4{margin:6px 2px 8px;font-size:1rem}
+  .colcards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px}
+  table{width:100%;border-collapse:collapse;margin-top:8px;font-size:.9rem}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--bord);vertical-align:middle}
+  th{color:var(--muted);font-weight:600;font-size:.76rem;text-transform:uppercase;letter-spacing:.5px}
+  td b{font-size:1rem}
+  .barmini{display:flex;height:10px;border-radius:5px;overflow:hidden;background:#0d1117;min-width:130px}
+  .barmini i{display:block;height:100%}
+  .colo{background:#11161d;border:1px solid var(--bord);border-radius:14px;padding:18px 22px;margin-top:14px;color:var(--muted);font-size:.86rem;line-height:1.65}
+  .colo b{color:var(--txt)} .colo code{background:var(--panel2);padding:1px 6px;border-radius:5px}
+  footer{margin-top:50px;padding-top:24px;border-top:1px solid var(--bord);color:var(--muted);font-size:.82rem}
+  @media(max-width:900px){.gallery{grid-template-columns:1fr 1fr}}
+  @media(max-width:760px){
+    .wrap{padding:0 16px}header{padding:30px 0 24px}header h1{font-size:1.5rem}header .sub{font-size:15px}
+    h2{font-size:1.25rem}.secthead h2{font-size:1.4rem}.secthead{padding:16px 18px}
+    .kpis{grid-template-columns:repeat(2,1fr);gap:12px}.kpi .n{font-size:1.6rem}
+    .charts,.topics,.gallery,.colcards{grid-template-columns:1fr}.chartcard.wide{grid-column:auto}
+    .cbox{height:260px}.cbox.tall{height:320px}
+    .partbar{padding:0 12px}.partbar a{font-size:.78rem;padding:10px 4px}
+    th,td{padding:9px 8px;font-size:.85rem}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>Come si parla di <span class="em">Vannacci</span> su X</h1>
+    <p class="tag">L'intervista da Gruber e la conversazione degli utenti</p>
+    <p class="sub">Cosa hanno scritto gli utenti di X/Twitter su Roberto Vannacci <b>nel giugno 2026</b>: prima <b>l'intervista del 10 giugno
+    a Otto e Mezzo</b> (Lilli Gruber), divisa per argomenti; poi il quadro d'insieme del mese. Protagonisti sono gli
+    <b>utenti</b>: le 1.376 persone che ne hanno parlato (esclusi i post dello stesso Vannacci).</p>
+    <div class="badges">
+      <span class="badge">🗂️ <b>2.143 post · 1.376 utenti</b></span>
+      <span class="badge">🎙️ <b>533 post sull'intervista</b></span>
+      <span class="badge">📅 <b>giugno 2026</b></span>
+      <span class="badge">🔎 Fonte: <b>X (MCP)</b></span>
+    </div>
+  </div>
+</header>
+<nav class="partbar">
+  <a href="#parte1" class="p1">Parte 1 — <b>L'intervista da Gruber</b></a>
+  <a href="#parte2" class="p2">Parte 2 — <b>Il quadro d'insieme del mese</b></a>
+</nav>
+
+<div class="wrap">
+
+  <div class="disc">⚠️ <b>Analisi della conversazione rilevata su X</b> nel giugno 2026, tramite ricerca per parole chiave: <b>non è un campione rappresentativo</b> dell'opinione pubblica italiana né una previsione di voto. Misura cosa e come si è scritto sulla piattaforma, non quanto consenso abbia Vannacci nel Paese.</div>
+
+  <div class="tldr">
+    <h3>In 30 secondi</h3>
+    <ul>
+      <li><b>2.143 post</b> di <b>1.376 utenti</b>, raccolti a <b>giugno 2026</b> (esclusi i post dello stesso Vannacci).</li>
+      <li>Posizione: <b>31% favorevoli · 44% critici · 25% neutri</b>. Tra chi si schiera <b>prevalgono i critici (59% contro 41%)</b>, e prevalgono anche per <b>utenti distinti</b> (63%) e per <b>like</b> (62%).</li>
+      <li>Il volume è quasi tutto a ridosso dell'intervista: <b>picco l'11 giugno</b>, il giorno dopo la puntata di Otto e Mezzo.</li>
+      <li>L'intervista (533 post) è discussa soprattutto per <b>la conduzione e lo scontro con Gruber</b>; sui temi di merito spiccano i <b>diritti LGBT</b>.</li>
+      <li><span class="uncert">Classificazione automatica (AI); accordo osservato ~92% (46/50) su post estratti casualmente e riletti a mano. È X, non l'urna.</span></li>
+    </ul>
+  </div>
+
+  <!-- ================= PARTE 1 ================= -->
+  <div class="secthead p1" id="parte1">
+    <div class="tag">Parte 1 · 10 giugno 2026</div>
+    <h2>L'intervista a Otto e Mezzo</h2>
+    <p>La sera del 10 giugno Vannacci è ospite di Lilli Gruber su La7. Gli utenti di X ne parlano in <b>533 post</b>,
+    quasi tutti tra il 10 e l'11 giugno: è il singolo evento più discusso del campione. Qui sotto come si distribuiscono
+    i post rilevati e, soprattutto, <b>di che cosa parlano</b>.</p>
+  </div>
+
+  <div class="kpis" id="gruKpis"></div>
+
+  <div class="chartcard wide">
+    <h4>Quando hanno scritto</h4>
+    <div class="cap">post per giorno attorno all'intervista · colore = posizione · linea = like raccolti</div>
+    <div class="cbox sh"><canvas id="cGruDaily"></canvas></div>
+  </div>
+
+  <h2 class="minor">Argomento per argomento: chi ne parla</h2>
+  <p class="lead"><b>Punti realmente trattati nell'intervista, con riferimento alla trascrizione del video</b> (non è topic modeling sui tweet): ogni voce ha il <b>minuto</b> in cui è stata discussa. Accanto, <b>quanti post di giugno</b> ne parlano e con quale posizione. La barra mostra il volume per argomento.</p>
+  <div class="chartcard wide">
+    <div class="cbox tall"><canvas id="cGruTopics"></canvas></div>
+  </div>
+  <div class="legend">
+    <span><span class="dot" style="background:var(--fav)"></span>Favorevoli a Vannacci</span>
+    <span><span class="dot" style="background:var(--con)"></span>Critici</span>
+    <span><span class="dot" style="background:var(--neu)"></span>Neutri</span>
+  </div>
+
+  <h2 class="minor">La trascrizione integrale (con i turni)</h2>
+  <p class="lead">Prima dei commenti, cosa è stato detto davvero: l'intervista parola per parola, con chi parla e il minuto. <b>Trascrizione automatica ripulita</b>; le due giornaliste non sono distinte (tutte sotto «Conduzione»). Verificabile sull'audio ai timestamp.</p>
+  <details class="dx"><summary>▸ Apri / chiudi la trascrizione completa (160 turni)</summary>
+    <div class="dialogo" id="dialogo"></div>
+  </details>
+  <p class="lead" style="font-size:.88rem;margin-top:12px">↳ Scarica: <a href="intervista/transcript-dialogo.md" download>trascrizione con i turni</a> · <a href="intervista/transcript.txt" download>versione grezza</a>.</p>
+
+  <h2 class="minor">Cosa scrivono gli utenti, argomento per argomento</h2>
+  <p class="lead">Per ogni tema toccato nell'intervista, alcuni post di giugno con la posizione di chi scrive.</p>
+  <div class="topics" id="pointCards"></div>
+
+  <h2 class="minor">Voci dal dibattito</h2>
+  <p class="lead">Una selezione di interventi che hanno animato la discussione sull'intervista (tra cui sul tema della domanda personale alla moglie).</p>
+  <div class="gallery" id="featCards"></div>
+
+  <h2 class="minor">Passaggi contestati dagli utenti</h2>
+  <p class="lead">Alcuni passaggi dell'intervista hanno generato discussione su X. Qui le frasi di Vannacci (col minuto) e, sotto, la <b>contestazione più ricorrente</b>. Le parole sono sue; il giudizio è di chi legge.</p>
+  <div class="pairs">
+    <div class="pair">
+      <h4>Legalità</h4>
+      <div class="q"><span class="m">00:12:07</span>«La legalità, per definizione, è il rispetto delle leggi: se le leggi vengono modificate, le rispettiamo tutti» — sull'abolizione dell'abuso d'ufficio e l'abbassamento del danno erariale.</div>
+      <div class="q"><span class="m">00:13:35</span>«Io farò una battaglia per aumentare le pene per i criminali» — perché «entrano in galera ed escono dopo sei anni».</div>
+      <div class="why">Contestazione più frequente: perché accettare come «sovranità popolare» l'abolizione dell'abuso d'ufficio e insieme invocare più carcere per altri reati?</div>
+    </div>
+    <div class="pair">
+      <h4>Accordi di rimpatrio</h4>
+      <div class="q"><span class="m">00:24:03</span>«Gli accordi bilaterali? Ci sono già… con quasi tutti i paesi.»</div>
+      <div class="q"><span class="m">00:28:09</span>«Anche noi oggi non riusciamo a rimpatriarli: è proprio per questa mancanza di volontà.»</div>
+      <div class="why">Contestazione più frequente: se gli accordi esistono già con quasi tutti i paesi, perché il problema sarebbe soltanto la volontà politica?</div>
+    </div>
+    <div class="pair">
+      <h4>Diritti e minoranze</h4>
+      <div class="q"><span class="m">00:18:46</span>«Le minoranze devono essere rispettate… [ma] non capisco perché un orientamento sessuale debba dar luogo a dei diritti.»</div>
+      <div class="q"><span class="m">00:18:58</span>«I gay in Italia hanno tutti i diritti: se vanno in ospedale li curano, possono guidare, a scuola li insegnano.»</div>
+      <div class="why">Contestazione più frequente: elencare come «diritti» cure e patente — che nessuno nega — mentre restano fuori reversibilità e adozione.</div>
+    </div>
+  </div>
+
+  <!-- ================= PARTE 2 ================= -->
+  <div class="secthead p2" id="parte2">
+    <div class="tag">Parte 2 · giugno 2026</div>
+    <h2>Il quadro d'insieme del mese</h2>
+    <p>Oltre all'intervista, ecco i <b>2.143 post di giugno 2026</b> nel loro insieme — il mese del partito Futuro Nazionale e
+    della puntata di Otto e Mezzo: volume giorno per giorno, posizioni, temi, chi sono gli utenti e quali politici entrano nel discorso.</p>
+  </div>
+
+  <div class="kpis" id="genKpis"></div>
+
+  <div class="chartcard wide">
+    <h4>Posizione dei post rilevati: per numero e per like</h4>
+    <div class="cap">quota favorevoli / critici / neutri, confrontando il <b>conteggio dei post</b> con i <b>like raccolti</b> · campione su X, non rappresentativo</div>
+    <div class="cbox sh"><canvas id="cSentBar"></canvas></div>
+  </div>
+  <div class="legend">
+    <span><span class="dot" style="background:var(--fav)"></span>Favorevoli</span>
+    <span><span class="dot" style="background:var(--con)"></span>Critici</span>
+    <span><span class="dot" style="background:var(--neu)"></span>Neutri</span>
+  </div>
+
+  <h2 class="minor">Il volume giorno per giorno: la settimana dell'intervista</h2>
+  <p class="lead">La settimana 5–11 giugno, attorno all'intervista: i giorni più scoperti sono stati integrati con qualche post raccolto via MCP.</p>
+  <div class="chartcard wide">
+    <h4>Post al giorno · 5–11 giugno 2026</h4>
+    <div class="cap">barre = post per posizione · linea = like raccolti al giorno · picco l'11/6, il giorno dopo l'intervista</div>
+    <div class="cbox"><canvas id="cWeek"></canvas></div>
+  </div>
+
+  <h2 class="minor">Gli argomenti del mese</h2>
+  <div class="chartcard wide">
+    <h4>Post per tema (giugno 2026)</h4>
+    <div class="cap">numero di post per argomento (esclusa la categoria «Altro»)</div>
+    <div class="cbox tall"><canvas id="cTemi"></canvas></div>
+  </div>
+
+  <h2><span class="pre">Chi sono gli utenti</span>Quante voci, e quanto pesano</h2>
+  <p class="lead">La conversazione è larga ma l'attenzione (i like) è concentrata in poche mani.</p>
+  <div class="kpis" id="concKpis"></div>
+  <div class="charts">
+    <div class="chartcard">
+      <h4>Chi pubblica di più</h4>
+      <div class="cap">numero di post per account · colore = posizione prevalente</div>
+      <div class="cbox tall"><canvas id="cVol"></canvas></div>
+    </div>
+    <div class="chartcard">
+      <h4>Chi raccoglie più like</h4>
+      <div class="cap">somma dei like per account</div>
+      <div class="cbox tall"><canvas id="cEngAuth"></canvas></div>
+    </div>
+    <div class="chartcard wide">
+      <h4>Like × risposte × reposts dei post più visti</h4>
+      <div class="cap">X = risposte · Y = like · grandezza bolla = reposts · colore = posizione</div>
+      <div class="cbox tall"><canvas id="cBub"></canvas></div>
+    </div>
+  </div>
+
+  <h2><span class="pre">Le voci</span>Post più visti dei due fronti</h2>
+  <p class="lead">Selezione dei post italiani più virali, per posizione. Cliccabili.</p>
+  <div class="colcards">
+    <div><h4 style="color:var(--fav);margin:0 2px 6px">Favorevoli</h4><div id="galPro"></div></div>
+    <div><h4 style="color:var(--con);margin:0 2px 6px">Critici</h4><div id="galCon"></div></div>
+  </div>
+
+  <h2><span class="pre">Il contesto politico</span>Quali politici entrano nel discorso</h2>
+  <p class="lead">Politici citati accanto a Vannacci e la relazione che gli utenti attribuiscono loro (alleato / neutro / critico).</p>
+  <table id="pol"><thead><tr><th>Politico</th><th>Menzioni</th><th>Alleato · neutro · critico</th></tr></thead><tbody></tbody></table>
+  <div class="legend">
+    <span><span class="dot" style="background:var(--fav)"></span>Alleato</span>
+    <span><span class="dot" style="background:var(--neu)"></span>Neutro</span>
+    <span><span class="dot" style="background:var(--con)"></span>Critico</span>
+  </div>
+
+  <h2><span class="pre">Nota metodologica</span>Dati, fonti e classificazione</h2>
+  <div class="colo" id="colophon"></div>
+
+  <footer>
+    Rigenerato l'11 giugno 2026 · Postmortem · Dati raccolti su X via MCP.
+  </footer>
+
+</div>
+
+<script>
+const C={fav:'#3fb950',con:'#f85149',neu:'#d29922',accent:'#58a6ff',pur:'#8957e5',mut:'#6e7681'};
+const AV=DATA.AVATAR||{};
+const av=(h)=>AV[h]||`https://unavatar.io/x/${h}`;
+const FB=(n)=>`https://ui-avatars.com/api/?name=${encodeURIComponent(n)}&background=1c2530&color=8b98a5&size=64&bold=true`;
+const fmt=n=>Number(n).toLocaleString('it');
+const S2L={fav:'Favorevole',con:'Critico',neu:'Neutro'};
+
+// ---- derive ----
+const st=DATA.stance, avv=DATA.author_vote, lk=DATA.like_tot;
+const schier=st.PRO+st.CONTRO, pVol=Math.round(100*st.PRO/schier);
+const aSch=avv.PRO+avv.CONTRO, pPersC=Math.round(100*avv.CONTRO/aSch);
+const lSch=lk.PRO+lk.CONTRO, pLike=Math.round(100*lk.PRO/lSch);
+const G=DATA.GRU, gst=G.stance, gSch=gst.PRO+gst.CONTRO, pGru=Math.round(100*gst.PRO/gSch);
+
+// ---- KPI ----
+document.getElementById('gruKpis').innerHTML=
+ `<div class="kpi"><div class="n">${G.total}</div><div class="l">Post sull'intervista</div></div>
+  <div class="kpi fav"><div class="n">${gst.PRO}</div><div class="l">Favorevoli a Vannacci</div></div>
+  <div class="kpi con"><div class="n">${gst.CONTRO}</div><div class="l">Critici</div></div>
+  <div class="kpi neu"><div class="n">${gst.NEUTRO}</div><div class="l">Neutri / cronaca</div></div>`;
+document.getElementById('genKpis').innerHTML=
+ `<div class="kpi"><div class="n">${fmt(DATA.total)}</div><div class="l">Post · ${fmt(DATA.authors)} utenti</div></div>
+  <div class="kpi fav"><div class="n">${fmt(st.PRO)}</div><div class="l">Favorevoli (${pVol}% tra schierati)</div></div>
+  <div class="kpi con"><div class="n">${fmt(st.CONTRO)}</div><div class="l">Critici (${100-pVol}% tra schierati)</div></div>
+  <div class="kpi neu"><div class="n">${fmt(st.NEUTRO)}</div><div class="l">Neutri / cronaca</div></div>`;
+document.getElementById('concKpis').innerHTML=
+ `<div class="kpi"><div class="n">${fmt(DATA.n_authors)}</div><div class="l">Utenti distinti</div></div>
+  <div class="kpi"><div class="n">${Math.round(100*DATA.one_post/DATA.n_authors)}%</div><div class="l">ha scritto un solo post</div></div>
+  <div class="kpi"><div class="n">${Math.round(100*DATA.top10_like/DATA.tot_like)}%</div><div class="l">dei like va ai 10 account più visti</div></div>
+  <div class="kpi"><div class="n">${fmt(DATA.tot_like)}</div><div class="l">like totali del campione</div></div>`;
+
+
+// ---- tweet card (compatta) ----
+function tw(w){
+  const dd=w.d?w.d.split('-').reverse().slice(0,2).join('/'):'';
+  return `<a class="tw ${w.sent}" href="https://x.com/${w.h}/status/${w.id}" target="_blank" rel="noopener">
+   <div class="hd"><img src="${av(w.h)}" onerror="this.onerror=null;this.src='${FB(w.n||w.h)}'" alt="">
+    <span class="nm"><b>${w.n||w.h}</b><small>@${w.h}</small></span><span class="tg ${w.sent}">${S2L[w.sent]}</span></div>
+   <div class="bd">${(w.t||'').replace(/</g,'&lt;')}</div>
+   <div class="ft"><span>❤️ <b>${fmt(w.l)}</b></span><span>🔁 ${fmt(w.r)}</span><span>${dd}</span></div></a>`;
+}
+const put=(id,arr)=>{const e=document.getElementById(id);if(e)e.innerHTML=(arr||[]).map(tw).join('');};
+put('galPro',DATA.GALLERY.filter(x=>x.sent==='fav'));
+put('galCon',DATA.GALLERY.filter(x=>x.sent==='con'));
+put('featCards',DATA.FEATURED||[]);
+
+// ---- trascrizione integrale (turni) ----
+const dl=document.getElementById('dialogo');
+if(dl) dl.innerHTML=(DATA.DIALOGO||[]).map(t=>{
+  const v=t.speaker==='VANNACCI';
+  return `<div class="turn ${v?'v':'c'}"><span class="who">${v?'VANNACCI':'CONDUZIONE'}</span><span class="mm">${t.start_ts}</span><span class="tx">${(t.text||'').replace(/</g,'&lt;')}</span></div>`;
+}).join('');
+
+// ---- card argomento-per-argomento (POINTS) ----
+const pcard=document.getElementById('pointCards');
+(DATA.POINTS||[]).forEach(tp=>{
+  const tot=tp.pro+tp.con+tp.neu||1;
+  const ts=(tp.ts && tp.ts!=='—')?`<span class="ts">${tp.ts}</span> `:'';
+  const div=document.createElement('div');div.className='topic';
+  div.innerHTML=`<div class="th"><h4>${ts}${tp.label}</h4><span class="cnt">${tp.n} post</span></div>
+   <div class="sbar" title="favorevoli ${tp.pro} · neutri ${tp.neu} · critici ${tp.con}">
+     <i style="background:var(--fav);width:${100*tp.pro/tot}%"></i>
+     <i style="background:var(--neu);width:${100*tp.neu/tot}%"></i>
+     <i style="background:var(--con);width:${100*tp.con/tot}%"></i></div>
+   ${(tp.quotes||[]).slice(0,2).map(tw).join('')}`;
+  pcard.appendChild(div);
+});
+
+// ---- politici ----
+const pb=document.querySelector('#pol tbody');
+DATA.POL.forEach(p=>{const t=p.all+p.neu+p.crit||1;
+ const tr=document.createElement('tr');
+ tr.innerHTML=`<td><b>${p.nome}</b></td><td>${p.n}</td>
+  <td><div class="barmini" title="alleato ${p.all} · neutro ${p.neu} · critico ${p.crit}">
+   <i style="background:var(--fav);width:${100*p.all/t}%"></i>
+   <i style="background:var(--neu);width:${100*p.neu/t}%"></i>
+   <i style="background:var(--con);width:${100*p.crit/t}%"></i></div></td>`;
+ pb.appendChild(tr);});
+
+// ---- colophon ----
+document.getElementById('colophon').innerHTML=
+ `<b>Fonte.</b> Raccolta via <b>MCP</b> sulla ricerca di X (query «vannacci», risultati Top + Live), deduplicata per ID
+  → <b>${fmt(DATA.total)} post / ${fmt(DATA.authors)} utenti</b> con testo, relativi a giugno 2026.
+  Sono esclusi i post pubblicati dallo stesso Vannacci (@RoVannacci): analizziamo come ne parlano gli altri utenti.<br>
+  <b>Classificazione.</b> Posizione (favorevole / critico / neutro), tema, appartenenza all'intervista e politici citati assegnati da un modello
+  AI su 42 batch paralleli, valutando anche ironia e sarcasmo. Gli argomenti dell'intervista sono raggruppati per parole chiave sui testi.<br>
+  <b>Affidabilità.</b> Rilettura manuale di <b>50 post estratti casualmente dal dataset</b> (campionamento casuale stratificato per posizione):
+  l'etichetta automatica coincide col giudizio del revisore in <b>46 casi su 50 (accordo osservato ~92%, non Cohen's kappa)</b>. I 4 scarti sono post ambigui o ironici, al confine
+  tra «neutro» e schierato — è il limite noto di questo tipo di classificazione. Resta una verifica indicativa, non una validazione su larga scala.<br>
+  <b>Limiti.</b> Il campione è ciò che è stato intercettato su X (non probabilistico, definito dalla query): misura la conversazione sulla
+  piattaforma, non l'opinione pubblica né il voto. I like indicano l'amplificazione, non il consenso.<br>
+  <b>Dati.</b> <a href="_classified.json" download>_classified.json</a> · <a href="_corpus.json" download>_corpus.json</a> ·
+  <a href="vannacci-dataset.json" download>vannacci-dataset.json</a> — ogni record ha l'ID del tweet, ricontrollabile su X.`;
+
+// ================= CHARTS =================
+Chart.defaults.color='#8b98a5';Chart.defaults.font.family='-apple-system,Segoe UI,Roboto,sans-serif';Chart.defaults.font.size=12;
+const GRID='rgba(138,152,165,.12)';
+const dough=(t)=>({cutout:'58%',plugins:{legend:{position:'bottom',labels:{padding:12,usePointStyle:true}},tooltip:{callbacks:{label:c=>` ${c.label}: ${Math.round(100*c.parsed/t)}%`}}}});
+
+// intervista: daily
+const GD=G.daily;
+new Chart(document.getElementById('cGruDaily'),{
+ data:{labels:GD.labels,datasets:[
+   {type:'bar',label:'Critici',data:GD.con,backgroundColor:C.con,stack:'s',yAxisID:'y'},
+   {type:'bar',label:'Favorevoli',data:GD.fav,backgroundColor:C.fav,stack:'s',yAxisID:'y'},
+   {type:'bar',label:'Neutri',data:GD.neu,backgroundColor:C.neu,stack:'s',yAxisID:'y'},
+   {type:'line',label:'Like',data:GD.like,borderColor:C.accent,backgroundColor:C.accent,tension:.3,pointRadius:3,yAxisID:'y1'}]},
+ options:{plugins:{legend:{position:'bottom',labels:{usePointStyle:true,padding:12}}},
+   scales:{y:{stacked:true,grid:{color:GRID},title:{display:true,text:'post'}},
+     y1:{position:'right',grid:{display:false},ticks:{callback:v=>fmt(v)}},x:{stacked:true,grid:{display:false}}}}});
+
+// intervista: argomento per argomento (stacked horizontal, da POINTS, ordinati per volume)
+const PTS=(DATA.POINTS||[]).slice().sort((a,b)=>b.n-a.n);
+new Chart(document.getElementById('cGruTopics'),{type:'bar',
+ data:{labels:PTS.map(t=>t.label),datasets:[
+   {label:'Favorevoli',data:PTS.map(t=>t.pro),backgroundColor:C.fav,stack:'s'},
+   {label:'Critici',data:PTS.map(t=>t.con),backgroundColor:C.con,stack:'s'},
+   {label:'Neutri',data:PTS.map(t=>t.neu),backgroundColor:C.neu,stack:'s'}]},
+ options:{indexAxis:'y',plugins:{legend:{position:'bottom',labels:{usePointStyle:true,padding:14}},
+   tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.x}`}}},
+   scales:{x:{stacked:true,grid:{color:GRID},title:{display:true,text:'post (giugno)'}},y:{stacked:true,grid:{display:false}}}}});
+
+// generale: posizione per numero di post vs per like (stacked bar 100%)
+const ltot=lk.PRO+lk.CONTRO+lk.NEUTRO;
+const pc=(x,t)=>Math.round(1000*x/t)/10;
+new Chart(document.getElementById('cSentBar'),{type:'bar',
+ data:{labels:['Per numero di post','Per like raccolti'],datasets:[
+   {label:'Favorevoli',data:[pc(st.PRO,DATA.total),pc(lk.PRO,ltot)],backgroundColor:C.fav,stack:'s'},
+   {label:'Critici',data:[pc(st.CONTRO,DATA.total),pc(lk.CONTRO,ltot)],backgroundColor:C.con,stack:'s'},
+   {label:'Neutri',data:[pc(st.NEUTRO,DATA.total),pc(lk.NEUTRO,ltot)],backgroundColor:C.neu,stack:'s'}]},
+ options:{indexAxis:'y',plugins:{legend:{position:'bottom',labels:{usePointStyle:true,padding:14}},
+   tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${c.parsed.x}%`}}},
+   scales:{x:{stacked:true,max:100,grid:{color:GRID},ticks:{callback:v=>v+'%'}},y:{stacked:true,grid:{display:false}}}}});
+
+// settimana dell'intervista: post/giorno per posizione + like/giorno
+const W=DATA.WEEK;
+new Chart(document.getElementById('cWeek'),{
+ data:{labels:W.labels,datasets:[
+   {type:'bar',label:'Critici',data:W.con,backgroundColor:C.con,stack:'s',yAxisID:'y'},
+   {type:'bar',label:'Favorevoli',data:W.fav,backgroundColor:C.fav,stack:'s',yAxisID:'y'},
+   {type:'bar',label:'Neutri',data:W.neu,backgroundColor:C.neu,stack:'s',yAxisID:'y'},
+   {type:'line',label:'Like / giorno',data:W.like,borderColor:C.accent,backgroundColor:C.accent,tension:.3,pointRadius:3,yAxisID:'y1'}]},
+ options:{plugins:{legend:{position:'bottom',labels:{usePointStyle:true,padding:14}}},
+   scales:{y:{stacked:true,position:'left',grid:{color:GRID},title:{display:true,text:'post'}},
+     y1:{position:'right',grid:{display:false},title:{display:true,text:'like'},ticks:{callback:v=>fmt(v)}},
+     x:{stacked:true,grid:{display:false}}}}});
+
+// temi
+new Chart(document.getElementById('cTemi'),{type:'bar',
+ data:{labels:DATA.TEMI.map(t=>t.k),datasets:[{data:DATA.TEMI.map(t=>t.n),
+   backgroundColor:DATA.TEMI.map((_,i)=>[C.pur,C.accent,C.neu,C.con,C.fav,C.mut][i%6]),borderRadius:5}]},
+ options:{indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.parsed.x} post`}}},
+   scales:{x:{grid:{color:GRID}},y:{grid:{display:false}}}}});
+
+// autori volume
+new Chart(document.getElementById('cVol'),{type:'bar',
+ data:{labels:DATA.TOPVOL.map(a=>'@'+a.h),datasets:[{data:DATA.TOPVOL.map(a=>a.v),backgroundColor:DATA.TOPVOL.map(a=>C[a.sent]),borderRadius:5}]},
+ options:{indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.parsed.x} post`}}},
+   scales:{x:{grid:{color:GRID}},y:{grid:{display:false}}}}});
+
+// autori like
+new Chart(document.getElementById('cEngAuth'),{type:'bar',
+ data:{labels:DATA.TOPENG.map(a=>'@'+a.h),datasets:[{data:DATA.TOPENG.map(a=>a.e),backgroundColor:DATA.TOPENG.map(a=>C[a.sent]),borderRadius:5}]},
+ options:{indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${fmt(c.parsed.x)} like`}}},
+   scales:{x:{grid:{color:GRID},ticks:{callback:v=>fmt(v)}},y:{grid:{display:false}}}}});
+
+// bubble
+const bg={fav:[],con:[],neu:[]};
+DATA.BUB.forEach(b=>bg[b.sent].push({x:b.x,y:b.y,r:Math.max(6,Math.sqrt(b.r)*1.3),au:b.h,rp:b.r}));
+new Chart(document.getElementById('cBub'),{type:'bubble',
+ data:{datasets:[
+   {label:'Favorevoli',data:bg.fav,backgroundColor:'rgba(63,185,80,.55)',borderColor:C.fav},
+   {label:'Critici',data:bg.con,backgroundColor:'rgba(248,81,73,.55)',borderColor:C.con},
+   {label:'Neutri',data:bg.neu,backgroundColor:'rgba(210,153,34,.5)',borderColor:C.neu}]},
+ options:{plugins:{legend:{position:'bottom',labels:{usePointStyle:true,padding:14}},
+   tooltip:{callbacks:{label:c=>` @${c.raw.au}: ${fmt(c.raw.y)} like · ${c.raw.x} risp · ${c.raw.rp} RT`}}},
+   scales:{x:{grid:{color:GRID},title:{display:true,text:'risposte'}},y:{grid:{color:GRID},title:{display:true,text:'like'},ticks:{callback:v=>fmt(v)}}}}});
+</script>
+</body>
+</html>

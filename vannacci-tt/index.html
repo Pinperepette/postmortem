@@ -90,6 +90,8 @@
   .tw .hd .tg{font-size:.6rem;text-transform:uppercase;letter-spacing:.5px;padding:2px 7px;border-radius:12px;font-weight:700;white-space:nowrap}
   .tg.fav{background:rgba(63,185,80,.15);color:var(--fav)} .tg.con{background:rgba(248,81,73,.15);color:var(--con)} .tg.neu{background:rgba(210,153,34,.15);color:var(--neu)}
   .tw .bd{font-size:.85rem;color:#d3dce4} .tw .ft{margin-top:7px;font-size:.72rem;color:var(--muted);display:flex;gap:12px}
+  .tw .bd.clamp{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+  .tw .more{display:inline-block;margin-top:6px;font-size:.74rem;color:var(--accent);cursor:pointer}
   .tw .ft b{color:var(--txt)}
   .tlist{display:grid;grid-template-columns:1fr 1fr;gap:8px 22px;margin-top:8px}
   .tl{display:flex;gap:12px;align-items:baseline;padding:9px 0;border-bottom:1px solid var(--bord);font-size:.92rem;color:#d3dce4}
@@ -361,6 +363,17 @@ function tw(w){
    <div class="bd">${(w.t||'').replace(/</g,'&lt;')}</div>
    <div class="ft"><span>❤️ <b>${fmt(w.l)}</b></span><span>🔁 ${fmt(w.r)}</span><span>${dd}</span></div></a>`;
 }
+// variante con testo accorciato ed "espandi" (per le card argomento-per-argomento)
+function twC(w){
+  const dd=w.d?w.d.split('-').reverse().slice(0,2).join('/'):'';
+  const long=(w.t||'').length>170;
+  const more=long?`<span class="more" onclick="event.preventDefault();event.stopPropagation();var b=this.parentNode.querySelector('.bd');var c=b.classList.toggle('clamp');this.textContent=c?'espandi ▾':'comprimi ▴';return false;">espandi ▾</span>`:'';
+  return `<a class="tw ${w.sent}" href="https://x.com/${w.h}/status/${w.id}" target="_blank" rel="noopener">
+   <div class="hd"><img src="${av(w.h)}" onerror="this.onerror=null;this.src='${FB(w.n||w.h)}'" alt="">
+    <span class="nm"><b>${w.n||w.h}</b><small>@${w.h}</small></span><span class="tg ${w.sent}">${S2L[w.sent]}</span></div>
+   <div class="bd${long?' clamp':''}">${(w.t||'').replace(/</g,'&lt;')}</div>${more}
+   <div class="ft"><span>❤️ <b>${fmt(w.l)}</b></span><span>🔁 ${fmt(w.r)}</span><span>${dd}</span></div></a>`;
+}
 const put=(id,arr)=>{const e=document.getElementById(id);if(e)e.innerHTML=(arr||[]).map(tw).join('');};
 put('galPro',DATA.GALLERY.filter(x=>x.sent==='fav'));
 put('galCon',DATA.GALLERY.filter(x=>x.sent==='con'));
@@ -384,7 +397,7 @@ const pcard=document.getElementById('pointCards');
      <i style="background:var(--fav);width:${100*tp.pro/tot}%"></i>
      <i style="background:var(--neu);width:${100*tp.neu/tot}%"></i>
      <i style="background:var(--con);width:${100*tp.con/tot}%"></i></div>
-   ${(tp.quotes||[]).slice(0,2).map(tw).join('')}`;
+   ${(tp.quotes||[]).slice(0,2).map(twC).join('')}`;
   pcard.appendChild(div);
 });
 

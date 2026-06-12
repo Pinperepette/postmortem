@@ -1,0 +1,175 @@
+{
+  "retorica": {
+    "totali": {
+      "analogie": 12,
+      "attacchi_personali": 7,
+      "esempi_storici": 8,
+      "citazioni_costituzionali": 2,
+      "appelli_a_principi": 15,
+      "appelli_a_conseguenze_pratiche": 14,
+      "sarcasmo_ironia": 11
+    },
+    "per_fronte": {
+      "PRO": {
+        "appelli_a_principi": 11,
+        "appelli_a_conseguenze_pratiche": 5,
+        "analogie": 3,
+        "esempi_storici": 4
+      },
+      "CONTRO": {
+        "appelli_a_principi": 3,
+        "appelli_a_conseguenze_pratiche": 8,
+        "analogie": 2,
+        "esempi_storici": 2
+      }
+    },
+    "esempi": {
+      "analogie": [
+        "MatrixEsiste: William Wallace coerente vs i nobili scozzesi con le loro giravolte",
+        "gavino_pancetta: come un piatto promesso eccezionale al ristorante che fa schifo"
+      ],
+      "attacchi_personali": [
+        "SergioFari2: E gli altri dei vigliacchi opportunisti",
+        "robertobozzi2: l'errore immenso e' stato votare l'aspen traditrice melona"
+      ],
+      "citazioni_costituzionali": [
+        "vrottn: Articolo 67, ogni membro del Parlamento rappresenta la Nazione senza vincolo di mandato",
+        "Infinity_999: introdurre nella Costituzione il VINCOLO DI MANDATO, chi e' eletto in un partito RESTI IN QUELLO"
+      ],
+      "esempi_storici": [
+        "LuisaBergoglio: Ravetto da FI a Lega a Fn, Rinaldi da Di Pietro a Mori e alla Lega nel '19",
+        "rosikone: Roma ladrona, secessionismo, il Senatur che arrivava dalla FGCI"
+      ]
+    },
+    "conclusione": "Il fronte programma (PRO) argomenta soprattutto per principi e coerenza logica (appelli a principi 11 vs 3, GiordanoRossi parla esplicitamente di 'non sequitur logico'), usando analogie morali come Braveheart e il ristorante. Il fronte coalizione (CONTRO) argomenta per conseguenze pratiche (8 vs 5): caduta del governo, ritorno del PD/Mattarella, danno d'immagine, la politica come mediazione."
+  },
+  "precedenti": [
+    {
+      "concetto": "mandato di coalizione",
+      "riferimento": "Salvini agli Interni / dinamica interna al cdx",
+      "handle": "LuisaCerutti7",
+      "quote": "Credi che a Salvini non sarebbe piaciuto tornare agli interni?"
+    },
+    {
+      "concetto": "cambio di casacca come trasformismo",
+      "riferimento": "Ravetto e Rinaldi",
+      "handle": "LuisaBergoglio",
+      "quote": "Ravetto, da FI a Lega a Fn. Rinaldi da Di Pietro a Mori e casualmente alla Lega nel '19"
+    },
+    {
+      "concetto": "alleanza che snatura il partito",
+      "riferimento": "Governo Draghi",
+      "handle": "duren_matto",
+      "quote": "se ti presenti con una piattaforma euroscettica... non puoi governare insieme a draghi"
+    },
+    {
+      "concetto": "mandato di coalizione come pretesto",
+      "riferimento": "Governo Draghi",
+      "handle": "FrancescoTrema1",
+      "quote": "Tipo Governo Draghi insomma"
+    },
+    {
+      "concetto": "promesse rivoluzionarie tradite una volta al potere",
+      "riferimento": "Lega delle origini / Bossi / Senatur (Roma ladrona, secessionismo)",
+      "handle": "rosikone",
+      "quote": "'Roma ladrona', secessionismo... promesse rivoluzionarie messe da parte appena preso il potere... il Senatur da li' arrivava... dalla FGCI"
+    },
+    {
+      "concetto": "stabilita' delle coalizioni nel tempo",
+      "riferimento": "Pentapartito (Prima Repubblica)",
+      "handle": "Lisa90135765",
+      "quote": "Il pentapartito ha governato l'Italia per 70 anni"
+    },
+    {
+      "concetto": "rottura della coalizione e crisi di governo",
+      "riferimento": "Conte 1 / crisi del 2019 (Salvini, europee, PdR)",
+      "handle": "Frances61416430",
+      "quote": "nel Conte1, dopo il successo alle europee, ci fu troppa fretta di andare ad elezioni... errore di Salvini"
+    },
+    {
+      "concetto": "coerenza ai propri ideali vs giravolte di partito",
+      "riferimento": "Braveheart / William Wallace",
+      "handle": "MatrixEsiste",
+      "quote": "William Wallace che ha sempre combattuto coerente con i suoi ideali... o i nobili partiti scozzesi con le loro giravolte"
+    },
+    {
+      "concetto": "interesse nazionale sopra quello sovranazionale",
+      "riferimento": "Orban (veti UE per l'Ungheria)",
+      "handle": "domenic34619849",
+      "quote": "Tipo orban che metteva il veto su ogni legge contraria agli interessi dell'Ungheria"
+    },
+    {
+      "concetto": "chi vince fa l'agenda (no mandato di coalizione)",
+      "riferimento": "Sistema USA / ballottaggi regionali",
+      "handle": "Massimo21705820",
+      "quote": "Facessero lo STESSO per il GOVERNO... cosi' come avviene negli USA... chi vince fa la sua agenda"
+    },
+    {
+      "concetto": "subire la maggioranza senza rompere",
+      "riferimento": "vincolo di mandato (proposta di introdurlo in Costituzione)",
+      "handle": "Infinity_999",
+      "quote": "introdurre, nella Costituzione, il VINCOLO DI MANDATO"
+    }
+  ],
+  "assenze": [
+    {
+      "finding": "Nessun difensore di area PD/M5S/sinistra: il PD compare solo come spauracchio ('se cade il governo torna il PD/Mattarella' lato CONTRO, oppure 'sono tutti uguali al PD' lato PRO), mai difeso.",
+      "evidenza": "Scorrendo tutti gli 89 text, PD/Mattarella/sinistra sono citati solo da Alberto_zz0, massimo_bad, ciceruacchio196, BIstanbul03, ilcecc88, BlockChainCaffe sempre in chiave negativa o strumentale; nessuno ne assume la posizione."
+    },
+    {
+      "finding": "Nessuno difende il cambio di partito come opportunismo personale legittimo: i PRO lo giustificano sempre con la coerenza programmatica/ideale, non con la convenienza individuale.",
+      "evidenza": "yildizziano2 e Lupo4269 (PRO) parlano di principi traditi; gli unici a evocare 'opportunismo personale' e 'poltrona' (Zanna_69, LuisaBergoglio, LouSalome___) lo usano come accusa, non come difesa."
+    },
+    {
+      "finding": "Nessuno (in nessun fronte) mette in discussione il sistema delle coalizioni in se': si litiga su chi debba prevalere dentro la coalizione, non sull'esistenza della coalizione.",
+      "evidenza": "I CONTRO la danno per necessaria (Peonia249: 'la politica e' mediazione'); i PRO contestano l'asimmetria del 'mandato di coalizione' (GiordanoRossi) ma nessun text propone di abolire le alleanze."
+    },
+    {
+      "finding": "Citazioni costituzionali effettive solo 2, su fronti opposti: nessuna escalation giuridica, il diritto resta un argomento marginale.",
+      "evidenza": "Su 89 text solo vrottn (Art.67) e Infinity_999 (richiesta di introdurre il vincolo di mandato) toccano la Costituzione; BlockChainCaffe cita il '46 solo come data di nascita del sistema, non come norma."
+    },
+    {
+      "finding": "Nessuno difende ClaudioBorghi con argomenti di merito programmatico: i suoi sostenitori (CONTRO) usano solo applausi o conseguenze pratiche/governabilita', mai una difesa nel merito delle promesse mantenute.",
+      "evidenza": "alessia_smile6 e SandraGuerzoni si limitano a complimenti; gli altri CONTRO (Alberto_zz0, massimo_bad) difendono la tenuta del governo, non i contenuti del programma realizzati."
+    }
+  ],
+  "momenti_svolta": [
+    {
+      "handle": "ClaudioBorghi",
+      "quote": "devi 'subire' l'iniziativa del partito di maggioranza relativa... senza rompere l'alleanza... tradendo il mandato elettorale di coalizione",
+      "da_tema": "tradimento / cambio di casacca",
+      "a_tema": "mandato di coalizione",
+      "perche": "Sposta la discussione dalla fedelta' al programma alla lealta' verso l'alleanza, introducendo un concetto nuovo che ridefinisce tutto il dibattito."
+    },
+    {
+      "handle": "vrottn",
+      "quote": "Articolo 67. Ogni membro del Parlamento rappresenta la Nazione ed esercita le sue funzioni senza vincolo di mandato",
+      "da_tema": "mandato di coalizione / lealta' di partito",
+      "a_tema": "Costituzione e vincolo di mandato",
+      "perche": "Porta un'autorita' normativa che rovescia l'idea di 'obbligo verso la coalizione', spostando il piano da politico a costituzionale."
+    },
+    {
+      "handle": "Infinity_999",
+      "quote": "introdurre, nella Costituzione, il VINCOLO DI MANDATO. Se sei eletto in un partito RESTI IN QUELLO",
+      "da_tema": "casacca / liberta' di cambiare",
+      "a_tema": "proposta di riforma costituzionale opposta all'Art.67",
+      "perche": "Capovolge il piano costituzionale: invece di invocare la liberta' dell'Art.67, chiede di abolirla per legge, polarizzando il tema giuridico."
+    }
+  ],
+  "simulazione": {
+    "coalizione": {
+      "principio": "conta la coalizione: chi e' in minoranza deve subire senza rompere l'alleanza",
+      "conseguenza_estrema": "Un partito eletto su un programma puo' votare l'esatto contrario di quel programma per anni, e questo e' sempre legittimo finche' regge il governo. Il voto dell'elettore minoritario non vincola a nulla.",
+      "domanda": "Se il partito che ho votato e' obbligato a sostenere le idee opposte alle mie ogni volta che e' in minoranza, cosa ho votato esattamente, e perche' dovrei rivotarlo?"
+    },
+    "programma": {
+      "principio": "conta il programma: chi tradisce gli ideali per cui e' stato eletto e' il vero traditore, non chi cambia partito per restarvi fedele",
+      "conseguenza_estrema": "Ogni dissenso interno legittima una scissione: chi non vede realizzato il programma puo' sempre uscire e rifondare, in una frammentazione potenzialmente infinita (lo nota EmanueleWT) che rende ingovernabile qualsiasi alleanza.",
+      "domanda": "Se ogni compromesso di coalizione e' un tradimento, come puo' esistere un governo dove nessuno ha la maggioranza assoluta, senza condannarsi a elezioni perpetue?"
+    }
+  },
+  "meta": {
+    "tesi": "Il thread esplode perche' mette in collisione due fedelta' entrambe positive: la fedelta' agli ideali e al programma promesso (per i PRO la coerenza e' virtu') e la fedelta' al gruppo e all'alleanza (per i CONTRO la lealta' di coalizione e' responsabilita'). Chiamiamo 'traditore' sia chi abbandona le idee sia chi abbandona il partito, e i due usi della parola si scontrano.",
+    "sviluppo": "Pinperepette evidenzia l'incoerenza semantica (perche' un partito che disattende il programma e' 'realista' ma chi cambia partito e' 'traditore'?). Borghi non risolve il paradosso ma ne propone un secondo asse, il 'mandato di coalizione', spostando la lealta' dal contenuto al contenitore. Da li' i due fronti parlano linguaggi diversi: i PRO ragionano per principi e coerenza logica (analogie morali, Art.67, non sequitur), i CONTRO per conseguenze pratiche (caduta del governo, ritorno del PD, mediazione). Nessuno dei due puo' vincere perche' difendono valori non commensurabili: coerenza vs governabilita'."
+  }
+}

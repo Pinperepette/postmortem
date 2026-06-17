@@ -125,6 +125,8 @@ table.heat td.lab{color:var(--muted);text-align:right;padding-right:10px;white-s
 .dleg .di .nm{color:#d7e0ea}
 .dleg .di .pc{margin-left:auto;color:var(--muted);font-weight:700}
 /* keywords */
+.langnote{margin-top:12px;padding-top:12px;border-top:1px solid var(--bord);color:var(--muted);font-size:.84rem;line-height:1.5}
+.langnote b{color:#d7e0ea}
 .cloud{display:flex;flex-wrap:wrap;gap:9px;align-items:center}
 .kw{background:var(--panel2);border:1px solid var(--bord);border-radius:20px;padding:5px 13px;color:#cdd9e5;line-height:1}
 .kw b{color:var(--accent);font-weight:700}
@@ -280,8 +282,9 @@ footer{margin-top:54px;padding-top:24px;border-top:1px solid var(--bord);color:v
       </div>
     </div>
     <div class="card">
-      <h3>Lingue</h3><div class="ch-sub">lingua rilevata dei tweet</div>
+      <h3>Lingue</h3><div class="ch-sub" id="langSub">lingua rilevata dei tweet</div>
       <svg id="chartLang" viewBox="0 0 460 220"></svg>
+      <div class="langnote" id="langNote"></div>
     </div>
   </div>
   <div class="card" style="margin-top:18px">
@@ -437,17 +440,24 @@ donut("#chartTopic","#topicLeg",DATA.topics.filter(t=>t.hits>0).map(t=>({name:t.
  document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();});
 })();
 
-/* LANG bars */
+/* LANG bars — scala log per rendere visibili le lingue minori */
 (function(){
- const W=460,H=220,P={t:10,r:16,b:28,l:74};const iw=W-P.l-P.r,ih=H-P.t-P.b;
- const svg=$("#chartLang");const d=DATA.langs.slice(0,6);const max=Math.max(...d.map(x=>x.n));
- const bh=ih/d.length, bar=bh*0.6;const cols=["#58a6ff","#3fb950","#bc8cff","#39c5cf","#d29922","#f85149"];
+ const d=DATA.langs;const tot=d.reduce((s,x)=>s+x.n,0);
+ const P={t:10,r:64,b:10,l:96};const rowH=24;const W=460,H=P.t+P.b+d.length*rowH;
+ const iw=W-P.l-P.r;
+ const svg=$("#chartLang");svg.setAttribute("viewBox",`0 0 ${W} ${H}`);
+ const lg=n=>Math.log(n+1);const max=lg(Math.max(...d.map(x=>x.n)));const bar=rowH*0.6;
+ const cols=["#58a6ff","#3fb950","#bc8cff","#39c5cf","#d29922","#f85149","#db61a2","#3fb9b0","#a371f7"];
  d.forEach((x,i)=>{
-  const y=P.t+bh*i+ (bh-bar)/2;const w=x.n/max*iw;
-  svg.appendChild(el("rect",{x:P.l,y:y,width:Math.max(w,2),height:bar,fill:cols[i%cols.length],rx:4}));
-  svg.appendChild(Object.assign(el("text",{x:P.l-8,y:y+bar/2+4,"text-anchor":"end",class:"glab"}),{textContent:x.name}));
-  svg.appendChild(Object.assign(el("text",{x:P.l+Math.max(w,2)+7,y:y+bar/2+4,class:"val"}),{textContent:x.n}));
+  const y=P.t+rowH*i+(rowH-bar)/2;const w=Math.max(lg(x.n)/max*iw,6);
+  svg.appendChild(el("rect",{x:P.l,y:y,width:w,height:bar,fill:cols[i%cols.length],rx:4}));
+  svg.appendChild(Object.assign(el("text",{x:P.l-10,y:y+bar/2+4,"text-anchor":"end",class:"glab"}),{textContent:x.name}));
+  const pct=Math.round(x.n/tot*100);
+  svg.appendChild(Object.assign(el("text",{x:P.l+w+8,y:y+bar/2+4,class:"val"}),{textContent:pct>=1?`${x.n} · ${pct}%`:`${x.n}`}));
  });
+ $("#langSub").innerHTML=`<b style="color:#e6edf3">${d.length} lingue</b> rilevate · larghezza in scala logaritmica`;
+ const minor=d.slice(2).map(x=>x.name).join(", ");
+ if(minor)$("#langNote").innerHTML=`Oltre a italiano e inglese, ha interagito anche in <b>${minor}</b> — sempre scambi isolati (1–3 tweet).`;
 })();
 
 /* CLOUD */

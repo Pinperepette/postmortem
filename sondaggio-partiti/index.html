@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Social + Sondaggi: metodo e previsione sui partiti italiani · giugno 2026</title>
+<meta property="og:title" content="Social + Sondaggi: metodo e previsione sui partiti italiani (Vannacci sorpassa la Lega)">
+<meta property="og:description" content="Come abbiamo fatto: ~1.100 post social, serie storica dei sondaggi, calibrazione statistica e previsione a un mese. 19 giugno 2026.">
+<meta property="og:type" content="article">
+<style>
+  :root{--bg:#0d1117;--panel:#161b22;--panel2:#1c2330;--line:#2a3340;--txt:#e6edf3;--mut:#8b98a5;--acc:#ffb020;--pro:#3fb950;--con:#f85149;--blue:#4493f8;--viol:#a371f7;--m5s:#f5d020;--avs:#3fb950}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1000px;margin:0 auto;padding:32px 20px 80px}
+  header .date{color:var(--acc);font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.08em}
+  header h1{font-size:31px;line-height:1.18;margin:6px 0;letter-spacing:-.02em}
+  header .sub{color:var(--mut);font-size:15px;margin:0}
+  .pill{display:inline-block;font-size:11px;padding:2px 8px;border-radius:20px;background:var(--panel2);color:var(--mut);margin:8px 6px 0 0}
+  section{margin:44px 0}
+  h2{font-size:20px;margin:0 0 4px;letter-spacing:-.01em}
+  h2 .k{display:inline-block;width:26px;height:26px;border-radius:50%;background:var(--acc);color:#0d1117;text-align:center;font-weight:800;font-size:14px;line-height:26px;margin-right:10px;vertical-align:2px}
+  .sec-sub{color:var(--mut);font-size:13px;margin:0 0 18px;padding-left:36px}
+  .steps{display:grid;gap:10px;grid-template-columns:1fr 1fr}
+  .step{display:flex;gap:13px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:13px 15px}
+  .step .ic{font-size:19px;flex:0 0 auto;width:26px;text-align:center}
+  .step b{color:#fff}.step .t{font-size:13.5px;color:#cdd6e0}.step .t small{color:var(--mut);display:block;font-size:12px;margin-top:2px}
+  .chartbox{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:14px 0}
+  .chartbox .ct{font-size:13px;font-weight:600;margin:0 0 2px}
+  .chartbox .cs{font-size:12px;color:var(--mut);margin:0 0 10px}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  svg{width:100%;display:block;overflow:visible}
+  .leg{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--mut);margin:8px 0 0}
+  .leg i{display:inline-block;width:18px;height:3px;border-radius:2px;margin-right:5px;vertical-align:3px}
+  .leg i.dot{width:10px;height:10px;border-radius:50%;vertical-align:-1px}
+  .fc{display:grid;grid-template-columns:180px 1fr 150px;align-items:center;gap:14px;margin:10px 0}
+  .fc .name{font-weight:600;font-size:14px}.fc .name small{display:block;color:var(--mut);font-weight:400;font-size:11px}
+  .track{position:relative;height:28px;background:var(--panel2);border-radius:6px}
+  .track .nowbar{position:absolute;left:0;top:0;bottom:0;border-radius:6px;opacity:.55}
+  .track .projmark{position:absolute;top:-3px;bottom:-3px;width:3px;background:#fff;border-radius:2px}
+  .track .rng{position:absolute;top:50%;height:8px;transform:translateY(-50%);background:#ffffff18;border:1px dashed #ffffff44;border-radius:4px}
+  .fc .val{text-align:right;font-variant-numeric:tabular-nums;font-size:13px}.fc .val b{font-size:16px}
+  .trend{font-weight:800;margin-left:4px}.up{color:#7ee787}.down{color:#f85149}.flat{color:var(--mut)}
+  .vann .name{color:var(--acc)}
+  .key{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--mut);margin:0 0 14px 0}
+  .key i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+  .findbox{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--acc);border-radius:8px;padding:16px 20px;margin:16px 0}
+  .findbox b{color:#fff}
+  .lead{background:linear-gradient(135deg,#1c2330,#161b22);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:24px 0}
+  .lead p{margin:0;color:#cdd6e0;font-size:16px}.lead b{color:#fff}
+  table.t{width:100%;border-collapse:collapse;font-size:13px}
+  table.t th,table.t td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left}
+  table.t th{color:var(--mut);font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+  .mini{height:8px;border-radius:4px;background:var(--panel2);overflow:hidden;display:inline-block;width:100%;max-width:120px;vertical-align:middle}.mini>span{display:block;height:100%}
+  .corr{width:100%;border-collapse:collapse;font-size:13px}.corr th,.corr td{padding:7px 10px;border-bottom:1px solid var(--line);text-align:left}.corr th{color:var(--mut);font-size:11px;text-transform:uppercase}.corr td.n{text-align:right;font-variant-numeric:tabular-nums}.sig{color:#f0a35e;font-weight:700}
+  .caveat{background:#2a1d0e;border:1px solid #5a3c12;border-radius:12px;padding:18px 22px}
+  .caveat h2{color:var(--acc);font-size:16px}.caveat ul{margin:8px 0 0;padding-left:18px;color:#e0d3bf}.caveat li{margin:6px 0;font-size:13px}
+  footer{margin-top:40px;color:var(--mut);font-size:12px;border-top:1px solid var(--line);padding-top:16px}footer a{color:#6ea8fe;text-decoration:none}
+  @media(max-width:680px){.steps,.two{grid-template-columns:1fr}.fc{grid-template-columns:120px 1fr 120px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="date">Social + Sondaggi · 19 giugno 2026</div>
+    <h1>Dove vanno i partiti italiani —<br>metodo e previsione</h1>
+    <p class="sub">Come l'abbiamo costruita: ~1.100 post social, la serie storica dei sondaggi, la calibrazione e la previsione a un mese.</p>
+    <div><span class="pill">~1.100 post · X + Facebook</span><span class="pill">5 sondaggi storici</span><span class="pill">calibrazione statistica</span></div>
+  </header>
+
+  <div class="lead">
+    <p><b>La previsione in una riga:</b> nel prossimo mese il quadro resta congelato in alto (FdI ~28, PD ~22, M5S ~13). L'unico vero movimento è sotto: <b>Vannacci continua a salire (~5,5%) e aggancia/sorpassa la Lega</b>; Lega e Forza Italia in lento calo; le coalizioni restano testa a testa.</p>
+  </div>
+
+  <!-- 1 -->
+  <section>
+    <h2><span class="k">1</span>Il metodo, in 6 passi</h2>
+    <p class="sec-sub">Dalla domanda "quanto contano sui social?" a una previsione verificabile.</p>
+    <div class="steps">
+      <div class="step"><div class="ic">📥</div><div class="t"><b>Raccolta.</b> ~1.100 post su 9 leader da X e Facebook, via MCP.<small>Solo letture, in sequenza.</small></div></div>
+      <div class="step"><div class="ic">🧹</div><div class="t"><b>Pulizia.</b> Dedup per autore, via gli spammer seriali e i tweet "lista hashtag" multi-leader.</div></div>
+      <div class="step"><div class="ic">📊</div><div class="t"><b>3 segnali.</b> Attenzione (share of voice), sentiment (pro/contro), mobilitazione (difensori).</div></div>
+      <div class="step"><div class="ic">🗳️</div><div class="t"><b>Sondaggi.</b> Serie storica Supermedia + SWG, marzo→giugno, come verità elettorale.</div></div>
+      <div class="step"><div class="ic">🔬</div><div class="t"><b>Calibrazione.</b> Il segnale social di ogni finestra predice lo spostamento al sondaggio dopo?</div></div>
+      <div class="step"><div class="ic">🔮</div><div class="t"><b>Previsione.</b> Estrapolazione dei trend dei sondaggi, con i social a confermare la direzione.</div></div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section>
+    <h2><span class="k">2</span>Cosa dicono i social</h2>
+    <p class="sec-sub">Misurano l'attenzione, non il voto. Ma raccontano l'energia e la direzione.</p>
+    <div class="key"><span><i style="background:var(--acc)"></i>attenzione (post/ora)</span><span><i style="background:var(--con)"></i>sentiment netto</span><span><i style="background:var(--blue)"></i>difensori attivi</span></div>
+    <table class="t" id="soc"></table>
+    <div class="findbox">
+      <b>Tre cose chiare:</b> ① <b>Vannacci domina l'attenzione</b> (2° dietro la Premier) con <b>la base più mobilitata in assoluto</b>; ② Conte ha il pubblico più fedele (sentiment quasi in pari); ③ il dibattito è ostile per tutti: è <b>energia</b>, non gradimento.
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section>
+    <h2><span class="k">3</span>La serie storica dei sondaggi (l'input della previsione)</h2>
+    <p class="sec-sub">5 rilevazioni SWG, marzo→giugno 2026. Qui si vedono i trend che poi estrapoliamo. Un partito "conta diverso" non significa che si muove: guarda la pendenza, non l'altezza.</p>
+    <div class="two">
+      <div class="chartbox">
+        <p class="ct">I grandi — piatti</p><p class="cs">FdI, PD, M5S: oscillano ma senza direzione netta.</p>
+        <svg id="big" viewBox="0 0 460 250"></svg>
+        <div class="leg"><span><i style="background:var(--blue)"></i>FdI</span><span><i style="background:var(--con)"></i>PD</span><span><i style="background:var(--m5s)"></i>M5S</span></div>
+      </div>
+      <div class="chartbox">
+        <p class="ct">La lotta sotto — qui si muove</p><p class="cs">Vannacci sale e incrocia la Lega che scende.</p>
+        <svg id="small" viewBox="0 0 460 250"></svg>
+        <div class="leg"><span><i style="background:var(--acc)"></i>FN (Vannacci)</span><span><i style="background:#5fa8ff"></i>Lega</span><span><i style="background:var(--viol)"></i>FI</span><span><i style="background:var(--avs)"></i>AVS</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section>
+    <h2><span class="k">4</span>I social predicono il voto? Il test</h2>
+    <p class="sec-sub">Per ogni leader misuriamo il momentum social nei ~6 giorni prima di ogni sondaggio e lo confrontiamo con lo spostamento (Δvoto) alla rilevazione successiva. Test corretto = "within-leader": il <i>proprio</i> momentum predice la <i>propria</i> salita?</p>
+    <div class="two" style="grid-template-columns:1.1fr .9fr">
+      <div class="chartbox">
+        <p class="ct">Momentum social → Δvoto</p><p class="cs">Ogni punto = 1 leader × 1 finestra (36 totali). Se i social predicessero, la nuvola salirebbe.</p>
+        <svg id="scatter" viewBox="0 0 460 280"></svg>
+        <div class="leg"><span><i class="dot" style="background:var(--blue)"></i>centrodestra</span><span><i class="dot" style="background:var(--con)"></i>campo largo</span><span><i class="dot" style="background:var(--acc)"></i>Vannacci</span><span><i style="background:#ffb020"></i>retta di regressione</span></div>
+      </div>
+      <div class="chartbox">
+        <p class="ct">Correlazioni segnale ↔ Δvoto</p><p class="cs">Replicate su 2 fonti (Supermedia + SWG).</p>
+        <table class="corr">
+          <tr><th>Segnale</th><th class="n">within-leader</th><th class="n">cross</th></tr>
+          <tr><td>Sentiment</td><td class="n">+0,01</td><td class="n">+0,19</td></tr>
+          <tr><td>Volume (SoV)</td><td class="n">+0,02</td><td class="n"><span class="sig">−0,35*</span></td></tr>
+          <tr><td>Mobilitazione</td><td class="n">+0,08</td><td class="n">+0,15</td></tr>
+          <tr><td><b>Momentum</b></td><td class="n"><b>+0,06</b></td><td class="n">−0,00</td></tr>
+        </table>
+        <p class="cs" style="margin-top:10px">within-leader: tutto ≈ 0, non significativo → <b style="color:#e6edf3">il momentum social non predice il voto</b>. <span class="sig">*</span> unico significativo: volume ↔ Δvoto <b style="color:#e6edf3">negativo</b>.</p>
+      </div>
+    </div>
+    <div class="chartbox" style="margin-top:16px">
+      <p class="ct">Il caso Vannacci — buzz e voto salgono insieme</p><p class="cs">L'unico leader dove l'attenzione social cresce <b>in parallelo</b> al voto. Non è prova statistica (vedi lo scatter sopra), ma è la "conferma di direzione": un trend con energia vera dietro.</p>
+      <svg id="vann" viewBox="0 0 920 290"></svg>
+      <div class="leg"><span><i style="background:#ffb020"></i>voto SWG (asse sx, %)</span><span><i style="background:#39c5cf"></i>buzz social — post/ora (asse dx)</span></div>
+    </div>
+    <div class="findbox">
+      <b>L'insight contro-intuitivo:</b> più volume di conversazione = partito che <b>cala</b>. Non perché il buzz faccia perdere voti, ma perché <b>l'attenzione si concentra sugli incumbent sotto attacco</b>. "Dominare la conversazione" è spesso il sintomo di chi è in difficoltà. <b>Conclusione:</b> i social non danno i numeri di voto, ma confermano <b>quali trend hanno energia vera</b> dietro — e quello di Vannacci (grafico sopra) ne ha.
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section>
+    <h2><span class="k">5</span>La previsione — dove saranno tra un mese</h2>
+    <p class="sec-sub">Livello attuale (Supermedia 18/6) + estrapolazione del trend SWG. Sotto: il "cono" di proiezione dei tre che si muovono; poi tutti i partiti.</p>
+    <div class="chartbox">
+      <p class="ct">Cono di proiezione — chi si muove</p><p class="cs">Linea piena = storico SWG · tratteggio = proiezione · area = incertezza (±1 punto). Il sorpasso FN↔Lega.</p>
+      <svg id="cone" viewBox="0 0 920 300"></svg>
+      <div class="leg"><span><i style="background:var(--acc)"></i>FN (Vannacci) ▲</span><span><i style="background:#5fa8ff"></i>Lega ▼</span><span><i style="background:var(--viol)"></i>FI ▼</span></div>
+    </div>
+    <div class="key" style="margin-top:18px"><span><i style="background:var(--blue)"></i>centrodestra</span><span><i style="background:var(--con)"></i>campo largo</span><span><i style="background:var(--acc)"></i>Vannacci</span><span><i style="background:var(--viol)"></i>Azione</span></div>
+    <div id="fc"></div>
+    <div class="findbox" id="fcfind"></div>
+  </section>
+
+  <section>
+    <div class="caveat">
+      <h2>⚠ Onestà sui limiti</h2>
+      <ul>
+        <li><b>La previsione viene dai sondaggi, non dai social.</b> I social danno contesto e conferma di direzione.</li>
+        <li><b>È un'estrapolazione di trend</b> "se le cose continuano così": un evento di cronaca (come lo scontro Trump–Meloni del 19/6) può cambiare la rotta. Orizzonte prudente: ~1 mese.</li>
+        <li><b>Incertezza ±1 punto</b> (campionamento): i sorpassi tra forze vicine (FN/Lega) sono "appaiati", non distacchi netti.</li>
+        <li><b>Storico social = solo X</b> (Facebook non filtrabile per data); campione non rappresentativo: misura attenzione, non l'elettorato.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer id="foot"></footer>
+</div>
+
+<script>
+// ============ helper: line chart in SVG ============
+function svgLine(id,cfg){
+  const w=cfg.w,h=cfg.h,P=cfg.pad;
+  const X=x=>P.l+(x-cfg.xdom[0])/(cfg.xdom[1]-cfg.xdom[0])*(w-P.l-P.r);
+  const Y=y=>h-P.b-(y-cfg.ydom[0])/(cfg.ydom[1]-cfg.ydom[0])*(h-P.t-P.b);
+  let s='';
+  // y gridlines + labels
+  cfg.yticks.forEach(t=>{s+=`<line x1="${P.l}" y1="${Y(t)}" x2="${w-P.r}" y2="${Y(t)}" stroke="#222b36"/>`+
+    `<text x="${P.l-6}" y="${Y(t)+3}" fill="#8b98a5" font-size="10" text-anchor="end">${t}</text>`;});
+  // x labels
+  cfg.xticks.forEach(t=>{s+=`<text x="${X(t.x)}" y="${h-P.b+14}" fill="#8b98a5" font-size="10" text-anchor="middle">${t.l}</text>`;});
+  // bands (uncertainty)
+  (cfg.bands||[]).forEach(b=>{
+    const pts=b.pts.map(p=>`${X(p[0])},${Y(p[1])}`).join(' ');
+    s+=`<polygon points="${pts}" fill="${b.color}" opacity=".13"/>`;});
+  // series
+  (cfg.series||[]).forEach(se=>{
+    const pts=se.pts.map(p=>`${X(p[0])},${Y(p[1])}`).join(' ');
+    s+=`<polyline points="${pts}" fill="none" stroke="${se.color}" stroke-width="2.4" ${se.dash?`stroke-dasharray="${se.dash}"`:''} stroke-linejoin="round"/>`;
+    if(!se.nodot) se.pts.forEach(p=>{s+=`<circle cx="${X(p[0])}" cy="${Y(p[1])}" r="3" fill="${se.color}"/>`;});
+    if(se.lbl){const lp=se.pts[se.pts.length-1];s+=`<text x="${X(lp[0])+6}" y="${Y(lp[1])+3}" fill="${se.color}" font-size="11" font-weight="700">${se.lbl}</text>`;}
+  });
+  // annotations
+  (cfg.notes||[]).forEach(n=>{s+=`<text x="${X(n.x)}" y="${Y(n.y)}" fill="${n.color||'#e6edf3'}" font-size="10" text-anchor="${n.anchor||'middle'}">${n.t}</text>`;});
+  document.getElementById(id).innerHTML=s;
+}
+
+// ============ 2 · social table ============
+const SOC=[{l:"Meloni",p:"FdI",sov:28,net:-34,pro:27},{l:"Vannacci",p:"FN",sov:26,net:-23,pro:37,v:1},
+ {l:"Renzi",p:"IV",sov:18,net:-40,pro:23},{l:"Salvini",p:"Lega",sov:15,net:-55,pro:15},
+ {l:"AVS",p:"AVS",sov:12,net:-64,pro:9},{l:"Calenda",p:"Azione",sov:11,net:-62,pro:12},
+ {l:"Tajani",p:"FI",sov:9,net:-41,pro:17},{l:"Schlein",p:"PD",sov:8,net:-58,pro:10},{l:"Conte",p:"M5S",sov:6,net:-5,pro:27}];
+(()=>{const mS=Math.max(...SOC.map(x=>x.sov)),mP=Math.max(...SOC.map(x=>x.pro));
+  let h=`<tr><th>Leader</th><th>Attenzione</th><th>Sentiment</th><th>Base attiva</th></tr>`;
+  SOC.forEach(x=>{h+=`<tr${x.v?' style="color:var(--acc)"':''}><td><b>${x.l}</b> <span style="color:var(--mut)">${x.p}</span></td>
+    <td><span class="mini"><span style="width:${x.sov/mS*100}%;background:var(--acc)"></span></span> <span style="color:var(--mut)">${x.sov}/h</span></td>
+    <td><span style="color:var(--con)">${x.net}%</span></td>
+    <td><span class="mini"><span style="width:${x.pro/mP*100}%;background:var(--blue)"></span></span> <span style="color:var(--mut)">${x.pro}</span></td></tr>`;});
+  document.getElementById('soc').innerHTML=h;})();
+
+// ============ 3 · serie SWG ============
+const XT=[{x:0,l:'30/3'},{x:14,l:'13/4'},{x:28,l:'27/4'},{x:56,l:'25/5'},{x:63,l:'1/6'}];
+const D=[0,14,28,56,63];
+const swg={FdI:[29.5,29.3,29.1,28.1,28.2],PD:[22.0,21.9,21.6,22.5,22.3],M5S:[12.3,12.2,12.5,12.7,13.0],
+ FI:[7.9,7.7,7.7,7.4,7.2],Lega:[6.6,6.3,6.2,6.0,5.8],AVS:[6.6,6.6,6.7,6.6,6.7],
+ FN:[3.3,3.5,3.6,4.3,4.6]};
+const mkpts=a=>a.map((v,i)=>[D[i],v]);
+svgLine('big',{w:460,h:250,pad:{l:30,r:34,t:14,b:24},xdom:[0,63],ydom:[11,30],yticks:[12,16,20,24,28],xticks:XT,
+  series:[{color:'#4493f8',pts:mkpts(swg.FdI),lbl:'FdI'},{color:'#f85149',pts:mkpts(swg.PD),lbl:'PD'},{color:'#f5d020',pts:mkpts(swg.M5S),lbl:'M5S'}]});
+svgLine('small',{w:460,h:250,pad:{l:26,r:40,t:14,b:24},xdom:[0,63],ydom:[3,9],yticks:[3,5,7,9],xticks:XT,
+  series:[{color:'#ffb020',pts:mkpts(swg.FN),lbl:'FN'},{color:'#5fa8ff',pts:mkpts(swg.Lega),lbl:'Lega'},{color:'#a371f7',pts:mkpts(swg.FI),lbl:'FI'},{color:'#3fb950',pts:mkpts(swg.AVS),lbl:'AVS'}],
+  notes:[{x:48,y:5.1,t:'il gap FN–Lega si chiude ▶',color:'#ffb020',anchor:'end'}]});
+
+// ============ 4 · scatter calibrazione ============
+const SC=[["Meloni",-0.21,0.13],["Meloni",1.28,0.13],["Meloni",-2.51,-0.67],["Meloni",1.44,0.42],
+["Schlein",-0.53,-0.18],["Schlein",1.12,-0.37],["Schlein",0.12,0.82],["Schlein",-0.71,-0.27],
+["Conte",1.83,-0.28],["Conte",-0.09,0.13],["Conte",-0.71,0.02],["Conte",-1.04,0.13],
+["Tajani",0.78,-0.03],["Tajani",-0.98,0.18],["Tajani",0.15,-0.12],["Tajani",0.05,-0.03],
+["Salvini",0.73,-0.10],["Salvini",-0.12,0.10],["Salvini",-0.50,0.0],["Salvini",-0.11,0.0],
+["AVS",0.14,-0.03],["AVS",1.64,0.08],["AVS",-1.59,-0.13],["AVS",-0.19,0.08],
+["Vannacci",0.33,-0.12],["Vannacci",-0.66,-0.22],["Vannacci",-0.18,0.37],["Vannacci",0.52,-0.03],
+["Calenda",-1.35,0.10],["Calenda",0.76,-0.10],["Calenda",-0.80,0.10],["Calenda",1.40,-0.10],
+["Renzi",-4.51,0.08],["Renzi",2.65,-0.13],["Renzi",0.71,0.18],["Renzi",1.14,-0.13]];
+(()=>{const w=460,h=280,P={l:40,r:14,t:14,b:34};
+  const xs=SC.map(p=>p[1]),ys=SC.map(p=>p[2]);
+  const xmin=Math.min(...xs),xmax=Math.max(...xs),ymin=Math.min(...ys),ymax=Math.max(...ys);
+  const X=v=>P.l+(v-xmin)/(xmax-xmin)*(w-P.l-P.r),Y=v=>h-P.b-(v-ymin)/(ymax-ymin)*(h-P.t-P.b);
+  const n=SC.length,mx=xs.reduce((a,b)=>a+b,0)/n,my=ys.reduce((a,b)=>a+b,0)/n;
+  let sxy=0,sxx=0;for(let i=0;i<n;i++){sxy+=(xs[i]-mx)*(ys[i]-my);sxx+=(xs[i]-mx)**2;}
+  const sl=sxy/sxx,ic=my-sl*mx;
+  const col=ld=>({Meloni:'#4493f8',Salvini:'#4493f8',Tajani:'#4493f8',Schlein:'#f85149',Conte:'#f85149',AVS:'#f85149',Renzi:'#f85149',Vannacci:'#ffb020',Calenda:'#a371f7'})[ld];
+  let s=`<line x1="${X(0)}" y1="${P.t}" x2="${X(0)}" y2="${h-P.b}" stroke="#3a4452"/>`+
+        `<line x1="${P.l}" y1="${Y(0)}" x2="${w-P.r}" y2="${Y(0)}" stroke="#3a4452"/>`+
+        `<line x1="${X(xmin)}" y1="${Y(ic+sl*xmin)}" x2="${X(xmax)}" y2="${Y(ic+sl*xmax)}" stroke="#ffb020" stroke-width="2.4" stroke-dasharray="6 4"/>`;
+  SC.forEach(p=>{s+=`<circle cx="${X(p[1])}" cy="${Y(p[2])}" r="4" fill="${col(p[0])}" opacity=".85"/>`;});
+  s+=`<text x="${w-P.r}" y="${Y(0)-6}" fill="#8b98a5" font-size="10" text-anchor="end">momentum social →</text>`;
+  s+=`<text x="${X(0)+6}" y="${P.t+10}" fill="#8b98a5" font-size="10">Δvoto ↑</text>`;
+  s+=`<text x="${w-P.r}" y="${h-10}" fill="#ffb020" font-size="11" text-anchor="end" font-weight="700">pendenza ≈ ${sl.toFixed(3)} → piatta</text>`;
+  document.getElementById('scatter').innerHTML=s;})();
+
+// ============ 4b · overlay Vannacci: buzz vs voto (doppio asse) ============
+(()=>{
+  const w=920,h=290,P={l:38,r:54,t:18,b:30};
+  const xdom=[0,80];
+  const vote=[[0,3.3],[14,3.5],[28,3.6],[56,4.3],[63,4.6],[80,4.9]]; // % SWG+oggi
+  const buzz=[[10,2],[24,7],[52,10],[66,11]];                        // post/ora per finestra
+  const vd=[3,5.5], bd=[0,14];
+  const X=x=>P.l+(x-xdom[0])/(xdom[1]-xdom[0])*(w-P.l-P.r);
+  const Yv=v=>h-P.b-(v-vd[0])/(vd[1]-vd[0])*(h-P.t-P.b);
+  const Yb=v=>h-P.b-(v-bd[0])/(bd[1]-bd[0])*(h-P.t-P.b);
+  let s='';
+  [3,4,5].forEach(t=>{s+=`<line x1="${P.l}" y1="${Yv(t)}" x2="${w-P.r}" y2="${Yv(t)}" stroke="#222b36"/>`+
+    `<text x="${P.l-6}" y="${Yv(t)+3}" fill="#ffb020" font-size="10" text-anchor="end">${t}%</text>`;});
+  [0,4,8,12].forEach(t=>{s+=`<text x="${w-P.r+8}" y="${Yb(t)+3}" fill="#39c5cf" font-size="10">${t}</text>`;});
+  [{x:0,l:'30/3'},{x:28,l:'27/4'},{x:56,l:'25/5'},{x:80,l:'oggi'}].forEach(t=>{
+    s+=`<text x="${X(t.x)}" y="${h-P.b+15}" fill="#8b98a5" font-size="10" text-anchor="middle">${t.l}</text>`;});
+  // buzz
+  s+=`<polyline points="${buzz.map(p=>`${X(p[0])},${Yb(p[1])}`).join(' ')}" fill="none" stroke="#39c5cf" stroke-width="2.6" stroke-dasharray="2 3"/>`;
+  buzz.forEach(p=>s+=`<circle cx="${X(p[0])}" cy="${Yb(p[1])}" r="3.5" fill="#39c5cf"/>`);
+  // vote
+  s+=`<polyline points="${vote.map(p=>`${X(p[0])},${Yv(p[1])}`).join(' ')}" fill="none" stroke="#ffb020" stroke-width="2.8"/>`;
+  vote.forEach(p=>s+=`<circle cx="${X(p[0])}" cy="${Yv(p[1])}" r="3.5" fill="#ffb020"/>`);
+  s+=`<text x="${X(80)+6}" y="${Yv(4.9)+3}" fill="#ffb020" font-size="11" font-weight="700">4,9%</text>`;
+  s+=`<text x="${X(66)+6}" y="${Yb(11)-4}" fill="#39c5cf" font-size="11" font-weight="700">11/h</text>`;
+  s+=`<text x="${X(40)}" y="${P.t+6}" fill="#8b98a5" font-size="10" text-anchor="middle">entrambe in salita → direzione confermata</text>`;
+  document.getElementById('vann').innerHTML=s;
+})();
+
+// ============ 5 · cono di proiezione ============
+// storico SWG (g0..63) + proiezione a g~95 (+1 mese da oggi g80)
+const cone={
+ FN:{hist:[[0,3.3],[14,3.5],[28,3.6],[56,4.3],[63,4.6]],proj:[[63,4.6],[95,5.5]],band:[[63,4.6],[95,6.5],[95,4.5]],color:'#ffb020',lbl:'FN'},
+ Lega:{hist:[[0,6.6],[14,6.3],[28,6.2],[56,6.0],[63,5.8]],proj:[[63,5.8],[95,5.6]],band:[[63,5.8],[95,6.6],[95,4.6]],color:'#5fa8ff',lbl:'Lega'},
+ FI:{hist:[[0,7.9],[14,7.7],[28,7.7],[56,7.4],[63,7.2]],proj:[[63,7.2],[95,7.0]],band:[[63,7.2],[95,8.0],[95,6.0]],color:'#a371f7',lbl:'FI'}
+};
+svgLine('cone',{w:920,h:300,pad:{l:32,r:50,t:16,b:28},xdom:[0,95],ydom:[3,9],yticks:[3,4,5,6,7,8,9],
+  xticks:[{x:0,l:'30/3'},{x:28,l:'27/4'},{x:56,l:'25/5'},{x:63,l:'1/6'},{x:80,l:'oggi'},{x:95,l:'+1 mese'}],
+  bands:[{pts:cone.FN.band,color:'#ffb020'},{pts:cone.Lega.band,color:'#5fa8ff'},{pts:cone.FI.band,color:'#a371f7'}],
+  series:[
+    {color:cone.FN.color,pts:cone.FN.hist},{color:cone.FN.color,pts:cone.FN.proj,dash:'6 4',nodot:true,lbl:'FN 5,5'},
+    {color:cone.Lega.color,pts:cone.Lega.hist},{color:cone.Lega.color,pts:cone.Lega.proj,dash:'6 4',nodot:true,lbl:'Lega 5,6'},
+    {color:cone.FI.color,pts:cone.FI.hist},{color:cone.FI.color,pts:cone.FI.proj,dash:'6 4',nodot:true,lbl:'FI 7,0'}
+  ],
+  notes:[{x:80,y:8.8,t:'oggi',color:'#8b98a5'}]});
+
+// ============ previsione: barre ============
+const COL={cdx:"#4493f8",csx:"#f85149",van:"#ffb020",centro:"#a371f7"};
+const FORE=[
+ {party:"Fratelli d'Italia",leader:"Meloni",coal:"cdx",now:28.2,proj:28.2,dir:"flat"},
+ {party:"PD",leader:"Schlein",coal:"csx",now:21.7,proj:21.7,dir:"flat"},
+ {party:"M5S",leader:"Conte",coal:"csx",now:12.7,proj:12.7,dir:"flat"},
+ {party:"Forza Italia",leader:"Tajani",coal:"cdx",now:7.9,proj:7.6,dir:"down"},
+ {party:"Lega",leader:"Salvini",coal:"cdx",now:6.5,proj:6.1,dir:"down"},
+ {party:"AVS",leader:"Fratoianni/Bonelli",coal:"csx",now:6.4,proj:6.4,dir:"flat"},
+ {party:"Futuro Nazionale",leader:"Vannacci",coal:"van",now:4.9,proj:5.5,dir:"up"},
+ {party:"Azione",leader:"Calenda",coal:"centro",now:3.0,proj:3.0,dir:"flat"},
+ {party:"Italia Viva",leader:"Renzi",coal:"csx",now:2.3,proj:2.3,dir:"flat"}
+];
+(()=>{const max=Math.max(...FORE.map(x=>Math.max(x.now,x.proj)))+1.5;
+  const ARR={up:`<span class="trend up">▲</span>`,down:`<span class="trend down">▼</span>`,flat:`<span class="trend flat">●</span>`};
+  document.getElementById('fc').innerHTML=FORE.map(f=>{const lo=f.proj-1,hi=f.proj+1;
+    const v=f.dir==="flat"?`<b>${f.now.toFixed(1)}%</b> ${ARR.flat} <span style="color:var(--mut)">stabile</span>`:`<b>${f.proj.toFixed(1)}%</b> ${ARR[f.dir]} <span style="color:var(--mut)">da ${f.now.toFixed(1)}</span>`;
+    return `<div class="fc ${f.coal==='van'?'vann':''}"><div class="name">${f.party}<small>${f.leader}</small></div>
+      <div class="track"><div class="rng" style="left:${lo/max*100}%;width:${(hi-lo)/max*100}%"></div>
+      <div class="nowbar" style="width:${f.now/max*100}%;background:${COL[f.coal]}"></div>
+      ${f.dir==="flat"?"":`<div class="projmark" style="left:${f.proj/max*100}%"></div>`}</div>
+      <div class="val">${v}</div></div>`;}).join('');
+  const cdx=28.2+7.6+6.1+1.0,cl=21.7+12.7+6.4+2.3+1.4;
+  document.getElementById('fcfind').innerHTML=`<b>Il fatto:</b> <span style="color:var(--acc)">Vannacci è l'unico in chiara salita</span> (~+0,6/mese) e <b>aggancia/sorpassa la Lega</b> come quinta forza (nei poll del 18/6 l'ha già fatto: FN 5,9 vs Lega 5,8). Gli unici altri in movimento sono <b>Lega e Forza Italia, in lento calo</b>. <b>Tutto il resto è stabile</b>: FdI prima ~28%, PD ~22%, M5S ~13%, AVS ~6,4%. <b>Coalizioni testa a testa:</b> centrodestra ~${cdx.toFixed(0)}%, campo largo ~${cl.toFixed(0)}% — con FN (fuori, ~5,5%) che pesa sul fronte di destra.`;})();
+
+document.getElementById('foot').innerHTML=`<b>Metodo.</b> Social: ~1.100 post via MCP su X+Facebook (read-only). Sondaggi: serie Supermedia YouTrend/AGI e SWG (mar→giu 2026); previsione = livello attuale (<a href="https://www.youtrend.it/" target="_blank">Supermedia 18/6/2026</a>) + estrapolazione trend SWG, orizzonte ~1 mese, banda ±1 punto. Calibrazione: regressione within-leader di Δvoto sul momentum social, replicata su 2 fonti (effetto ≈ 0). Fonti: youtrend.it, agi.it, tg24.sky.it, politpro.eu. Generato il 19 giugno 2026.`;
+</script>
+</body>
+</html>

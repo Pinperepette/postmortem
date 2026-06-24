@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Incertezze climatiche: inventario e distanza dalla misura</title>
+<meta name="description" content="Inventario di ~120 fonti di incertezza del clima, classificate per tipo e per distanza dalla misura diretta. Non per negare il riscaldamento: per mostrare dove l'incertezza si accumula tra osservazione e attribuzione.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Incertezze climatiche: dove si trovano, quanto lontano dalla misura">
+<meta property="og:description" content="~120 fonti di incertezza, classificate. Più una conclusione si allontana dal dato diretto, più assunzioni servono. La presenza di molte incertezze non rende falsa una conclusione: segnala solo che non è un fatto osservato.">
+<meta property="og:image" content="https://pinperepette.github.io/postmortem/clima-incertezze/og-cover.png">
+<meta property="og:url" content="https://pinperepette.github.io/postmortem/clima-incertezze/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Incertezze climatiche: dove si trovano, quanto lontano dalla misura">
+<meta name="twitter:description" content="~120 fonti di incertezza, classificate per tipo e per distanza dalla misura. Mostra dove l'incertezza si accumula tra osservazione e attribuzione, senza trasformare il dubbio in pseudo-probabilità.">
+<meta name="twitter:image" content="https://pinperepette.github.io/postmortem/clima-incertezze/og-cover.png">
+<style>
+  :root{--bg:#faf8f4;--ink:#1c1a17;--mut:#6b6358;--line:#e3ddd2;
+    --amber:#b3791a;--amberbg:#fbf2df;--red:#a8341f;--redbg:#fbeae6}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+  .wrap{max-width:1080px;margin:0 auto;padding:42px 20px 90px}
+  header h1{font-size:28px;line-height:1.2;margin:0 0 8px;letter-spacing:-.02em}
+  header p{color:var(--mut);font-size:15.5px;margin:0 0 6px}
+  nav{margin:18px 0 0;font-size:14px}
+  nav a{color:var(--amber);text-decoration:none;font-weight:600;margin-right:18px}
+  .group{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);
+    font-weight:800;margin:42px 0 4px;border-bottom:2px solid var(--amber);padding-bottom:6px}
+  section{margin-top:24px}
+  section h2{font-size:19px;margin:0 0 4px;letter-spacing:-.01em}
+  section h2 .c{font-size:13px;color:var(--mut);font-weight:500}
+  ul.unc{list-style:none;margin:8px 0 0;padding:0}
+  ul.unc li{background:var(--amberbg);border-left:3px solid var(--amber);
+    padding:8px 14px;margin:6px 0;border-radius:0 6px 6px 0;font-size:14.5px;line-height:1.5}
+  ul.unc li b{color:#7a5210}
+  li.invalid{background:var(--redbg);border-left-color:var(--red)}
+  li.invalid b{color:var(--red)}
+  h2.big{font-size:24px;margin:0 0 6px;letter-spacing:-.02em}
+  .formula{background:var(--amberbg);border-left:3px solid var(--amber);padding:10px 14px;
+    border-radius:0 6px 6px 0;margin:14px 0;font-size:14px}
+  .formula code{font-weight:700;color:#7a5210}
+  .scroll{overflow-x:auto}
+  table{border-collapse:collapse;width:100%;margin-top:12px;font-size:13px;background:#fff}
+  th,td{padding:7px 9px;text-align:left;border-bottom:1px solid var(--line)}
+  th{position:sticky;top:0;background:#f3eee4;cursor:pointer;user-select:none;white-space:nowrap;font-size:12px}
+  th:hover{background:#ece5d6}
+  th .ar{opacity:.4;font-size:9px}
+  td.num,th.num{text-align:center}
+  td.voce{font-weight:600;min-width:200px}
+  .tipo{display:inline-block;font-size:10.5px;font-weight:700;padding:1px 5px;border-radius:4px;background:#eee;color:#555}
+  .pill{display:inline-block;min-width:20px;text-align:center;font-weight:700;border-radius:5px;padding:1px 5px;color:#fff;font-size:12px}
+  tr.scenario td{color:#999;font-style:italic}
+  .legend{margin-top:14px;color:var(--mut);font-size:12.5px}
+  footer{margin-top:40px;color:var(--mut);font-size:12px;border-top:1px solid var(--line);padding-top:16px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Incertezze climatiche: inventario e tabella</h1>
+  <p>Dal dato grezzo all'attribuzione. Circa 120 voci, con i numeri reali dove disponibili.</p>
+  <nav><a href="#lista">↓ Elenco delle incertezze</a><a href="#distanza">↓ Distanza inferenziale</a><a href="#tabella">↓ Tabella ordinabile</a></nav>
+</header>
+
+<a id="lista"></a>
+<!-- =================== GRUPPO A =================== -->
+<div class="group">A · Come e dove si misura</div>
+
+<section>
+  <h2>1. Temperature globali di superficie</h2>
+  <ul class="unc">
+    <li><b>Periodo di riferimento:</b> la scelta della baseline climatologica cambia il valore dell'anomalia.</li>
+    <li><b>SST contro temperatura dell'aria marina:</b> due grandezze diverse usate per coprire gli oceani.</li>
+    <li><b>Metodo di prelievo storico:</b> passaggio dai secchi d'acqua sulle navi alle prese a motore, con bias da correggere.</li>
+    <li><b>Rotte navali:</b> il cambiamento delle rotte sposta la geografia delle osservazioni nel tempo.</li>
+    <li><b>Regioni polari:</b> storicamente molto poco osservate, riempite per interpolazione.</li>
+    <li><b>Omogeneizzazione:</b> aggiustamenti per spostamenti di stazione e cambi di strumento.</li>
+    <li><b>Rianalisi (ERA5 e simili):</b> prodotto di un modello che assimila osservazioni, non misura diretta.</li>
+    <li><b>Rappresentatività spaziale:</b> serie regionali costruite su poche stazioni come proxy di un'area vasta.</li>
+    <li><b>Finestra temporale:</b> una sola stagione o pochi anni amplificano il rumore sul trend.</li>
+    <li><b>Isola di calore urbana (UHI):</b> urbanizzazione ed espansione suburbana attorno alle stazioni, con uso del suolo che cambia e ricostruzione storica difficile.</li>
+    <li><b>Copertura oceanica del XIX secolo:</b> poche rotte navali, emisfero sud poco osservato, oceani australi quasi vuoti, su un pianeta in gran parte coperto da mare.</li>
+    <li><b>Selezione delle stazioni:</b> quali serie entrano, quali escono, continuità nel tempo. Tema distinto dall'omogeneizzazione.</li>
+    <li><b>Dati pre-1950:</b> guerre, copertura ridotta, strumenti diversi, oceani poco osservati. Pesa sulla parte iniziale del trend usato dal 1850 in avanti.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>2. Rappresentatività globale <span class="c">trasversale a tutto il record</span></h2>
+  <ul class="unc">
+    <li><b>Il campione contro il pianeta:</b> la temperatura media globale è una costruzione statistica ottenuta da misure sparse e fortemente interpolate. L'incertezza non riguarda solo il valore delle singole misure, ma quanto il campione rappresenti l'intero pianeta.</li>
+    <li><b>Densità che cambia nel tempo:</b> più si va indietro, meno punti ci sono, e più la media globale poggia su interpolazione.</li>
+    <li><b>Aree intere ricostruite:</b> oceani australi, poli, interno dei continenti dedotti da pochi punti vicini.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>3. Precipitazioni e umidità <span class="c">variabili più difficili della temperatura</span></h2>
+  <ul class="unc">
+    <li><b>Misura difficile:</b> precipitazioni con forte variabilità spaziale, reti eterogenee, raccolta incoerente nel tempo.</li>
+    <li><b>Umidità ed evaporazione:</b> dati radi, spesso derivati più che misurati direttamente.</li>
+    <li><b>Tendenze regionali:</b> poco vincolate, segnali deboli sotto un forte rumore.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>4. Separazione osservazione e modello</h2>
+  <ul class="unc">
+    <li><b>La catena dei dati:</b> misura, correzione, assimilazione, ricostruzione. Il confine tra dato osservato e dato modellato non è sempre netto.</li>
+    <li><b>Le rianalisi</b> sono il caso tipico in cui osservazione e modello si fondono.</li>
+    <li><b>Rischio di circolarità:</b> un dato presentato come "osservato" può contenere già assunzioni di modello.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>5. Satelliti (troposfera) <span class="c">stima della temperatura dall'alto</span></h2>
+  <ul class="unc">
+    <li><b>Deriva orbitale:</b> correzioni per lo spostamento dell'ora di passaggio del satellite.</li>
+    <li><b>Decadimento dell'orbita:</b> la quota cala lentamente e altera la misura.</li>
+    <li><b>Fusione di satelliti diversi:</b> serie cucite tra strumenti successivi.</li>
+    <li><b>Radianza in temperatura:</b> il satellite misura radiazione, la temperatura è una conversione.</li>
+    <li><b>Dataset UAH contro RSS:</b> due gruppi ottengono trend diversi dagli stessi satelliti.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>6. Contenuto di calore degli oceani <span class="c">circa +0,84 W/m²</span></h2>
+  <ul class="unc">
+    <li><b>Era pre Argo (prima del 2005):</b> copertura oceanica molto più scarsa.</li>
+    <li><b>Sonde XBT storiche:</b> richiedono correzioni di calibrazione importanti.</li>
+    <li><b>Sotto i 2000 metri:</b> contenuto di calore poco conosciuto.</li>
+    <li><b>Flussi di calore ai poli:</b> mal vincolati.</li>
+    <li><b>Fattore di scala:</b> dai soli primi 2000 metri allo squilibrio totale serve un coefficiente (circa 0,80) con suo margine.</li>
+    <li><b>Record breve:</b> serie densa disponibile solo dal 2005.</li>
+    <li><b>Stima finale:</b> data come intervallo, 0,7 fino a 1,0 W/m².</li>
+  </ul>
+</section>
+
+<section>
+  <h2>7. Paleoclima, temperatura preistorica <span class="c">Olocene, Kaufman 2020</span></h2>
+  <ul class="unc">
+    <li><b>Calibrazione dei proxy:</b> sedimenti e pollini convertiti in temperatura, ognuno con errore proprio.</li>
+    <li><b>Datazione (age model):</b> errori di decenni o secoli che spalmano il segnale.</li>
+    <li><b>Spread dell'ensemble:</b> a 5000 anni fa la banda 5 fino a 95 per cento va da +0,49 a +1,44 °C.</li>
+    <li><b>Scelta del metodo:</b> CPS contro mediana multi metodo cambiano il picco di circa 0,5 °C.</li>
+    <li><b>Bias stagionale:</b> alcuni proxy registrano solo l'estate (dibattito Osman e Bova).</li>
+    <li><b>Lisciamento centennale:</b> la ricostruzione non vede variazioni rapide.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>8. Carote di ghiaccio e CO₂ <span class="c">Law Dome più Mauna Loa</span></h2>
+  <ul class="unc">
+    <li><b>Errore di misura:</b> ghiaccio ±0,8 ppm, aria diretta ±0,12 ppm.</li>
+    <li><b>Lisciamento del firn:</b> circa 10 fino a 20 anni, risoluzione decadale.</li>
+    <li><b>Giuntura al 1996:</b> due strumenti cuciti insieme, con scarto di circa 2 ppm nella sovrapposizione.</li>
+    <li><b>Copertura:</b> il ghiaccio si ferma al 1996, il resto è misura diretta dell'aria.</li>
+  </ul>
+</section>
+
+<!-- =================== GRUPPO B =================== -->
+<div class="group">B · I processi e le cause</div>
+
+<section>
+  <h2>9. Velocità del cambiamento</h2>
+  <ul class="unc">
+    <li class="invalid"><b>Confronto di velocità della temperatura, paleo contro oggi: non eseguibile.</b> Risoluzioni diverse, strumenti diversi, incertezze di base diverse.</li>
+    <li><b>Velocità della CO₂ (circa 5 fino a 10 volte):</b> dipende dal baseline naturale scelto, con un fattore 2 di differenza.</li>
+    <li><b>Baseline naturale limitato:</b> il riferimento sono gli ultimi 2000 anni, periodo stabile.</li>
+    <li><b>Il firn liscia anche il massimo naturale:</b> il vero tasso di un tempo potrebbe risultare più alto.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>10. Ciclo del carbonio</h2>
+  <ul class="unc">
+    <li><b>Assorbimento oceanico futuro:</b> sensibilità degli oceani alla CO₂ ancora da definire.</li>
+    <li><b>Risposta delle foreste</b> al riscaldamento.</li>
+    <li><b>Saturazione dei sink naturali:</b> possibile, con tempi incerti.</li>
+    <li><b>Emissioni da uso del suolo:</b> difficili da quantificare.</li>
+    <li><b>Emissioni preindustriali storiche:</b> mal vincolate.</li>
+    <li><b>Feedback biologici:</b> fertilizzazione da CO₂, cambiamento della produttività vegetale, adattamento degli ecosistemi.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>11. Metano</h2>
+  <ul class="unc">
+    <li><b>Sorgenti naturali contro antropiche:</b> quota relativa incerta.</li>
+    <li><b>Emissioni biologiche future.</b></li>
+    <li><b>Risposta delle zone umide.</b></li>
+    <li><b>Emissioni da permafrost.</b></li>
+  </ul>
+</section>
+
+<section>
+  <h2>12. Uso del suolo come forzante climatica <span class="c">separato dalla CO₂</span></h2>
+  <ul class="unc">
+    <li><b>Deforestazione, irrigazione, desertificazione:</b> alterano flussi di energia e acqua a scala regionale.</li>
+    <li><b>Cambiamento dell'albedo superficiale.</b></li>
+    <li><b>Forzanti regionali:</b> piccole a scala globale, ma una categoria autonoma rispetto alla CO₂.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>13. Vulcanismo storico</h2>
+  <ul class="unc">
+    <li><b>Ricostruzione degli aerosol vulcanici</b> del passato.</li>
+    <li><b>Intensità reale delle eruzioni antiche.</b></li>
+    <li><b>Risposta climatica agli eventi vulcanici:</b> alla base di molte ricostruzioni del clima passato.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>14. Forzanti e aerosol <span class="c">IPCC AR6, 2019</span></h2>
+  <ul class="unc">
+    <li><b>Aerosol, da −0,41 a −1,71 W/m²:</b> circa ±60 per cento, la voce singola più incerta.</li>
+    <li><b>Gas serra, +3,84 W/m²:</b> incertezza di circa il 10 fino al 12 per cento.</li>
+    <li><b>Copertura temporale:</b> i dati ufficiali si fermano al 2019.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>15. Dipendenza dai modelli di attribuzione</h2>
+  <ul class="unc">
+    <li><b>Dall'osservazione all'attribuzione:</b> il passaggio da "osserviamo +1,2 °C" a "la quota antropica è X" non è una misura diretta. È un'inferenza basata su modelli e fingerprinting statistico.</li>
+    <li><b>Assunzioni diverse, stime diverse:</b> metodi e ipotesi differenti producono valori differenti della quota.</li>
+    <li><b>Forzanti e variabilità nel modello:</b> il risultato dipende da come il modello rappresenta i forzanti e la variabilità interna.</li>
+    <li><b>Quota contro esistenza:</b> l'incertezza sulla percentuale antropica è cosa diversa dall'incertezza sull'esistenza di un contributo umano. Sono due domande separate.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>16. Nuvole</h2>
+  <ul class="unc">
+    <li><b>Microfisica delle nuvole.</b></li>
+    <li><b>Nubi basse subtropicali:</b> evoluzione incerta, grande peso sul risultato.</li>
+    <li><b>Feedback nuvolosi regionali.</b></li>
+    <li><b>Interazioni aerosol nuvole.</b></li>
+  </ul>
+</section>
+
+<section>
+  <h2>17. Sole</h2>
+  <ul class="unc">
+    <li><b>Attività solare pre satellitare:</b> ricostruita da proxy.</li>
+    <li><b>Attività solare prima del telescopio:</b> ancora più incerta.</li>
+    <li><b>Raggi cosmici e nuvole:</b> effetto indiretto, tema ancora dibattuto.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>18. Variabilità naturale</h2>
+  <ul class="unc">
+    <li><b>Intensità reale dell'oscillazione AMO.</b></li>
+    <li><b>Ruolo della PDO.</b></li>
+    <li><b>Variabilità multidecadale interna</b> del sistema.</li>
+    <li><b>Interazioni oceano atmosfera</b> non del tutto comprese.</li>
+    <li><b>Variabilità interna a bassa frequenza:</b> oltre le etichette AMO e PDO, ancora non completamente caratterizzata. È la formulazione più robusta del problema.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>19. Teleconnessioni <span class="c">ENSO, NAO, AO</span></h2>
+  <ul class="unc">
+    <li><b>ENSO, NAO, AO:</b> oltre AMO e PDO, modulano clima e temperatura su scale diverse.</li>
+    <li><b>Interazioni reciproche:</b> soprattutto l'incertezza su come queste oscillazioni interagiscono tra loro.</li>
+  </ul>
+</section>
+
+<!-- =================== GRUPPO C =================== -->
+<div class="group">C · Modelli e proiezioni</div>
+
+<section>
+  <h2>20. Modelli climatici</h2>
+  <ul class="unc">
+    <li><b>Parametrizzazione della convezione.</b></li>
+    <li><b>Parametrizzazione delle precipitazioni.</b></li>
+    <li><b>Parametrizzazione delle nuvole.</b></li>
+    <li><b>Parametrizzazione della vegetazione.</b></li>
+    <li><b>Parametrizzazione del ghiaccio marino.</b></li>
+    <li><b>Risoluzione insufficiente</b> per molti fenomeni regionali.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>21. Sensibilità climatica <span class="c">quanto scalderà</span></h2>
+  <ul class="unc">
+    <li><b>Forchetta larga:</b> 2,5 fino a 4 °C per raddoppio di CO₂ (probabile), 2 fino a 5 (molto probabile).</li>
+    <li><b>Nuvole:</b> guidano gran parte di questa forchetta.</li>
+    <li><b>Chiusura del bilancio (λ):</b> stimata con ΔT di circa 1,1 °C, ordine di grandezza.</li>
+    <li><b>Stazionarietà dei feedback:</b> si assume che i feedback osservati nel recente passato valgano anche per il futuro. Ipotesi separata dal valore dell'ECS.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>22. Eventi estremi</h2>
+  <ul class="unc">
+    <li><b>Serie troppo brevi</b> per stimare eventi da 100 o 500 anni.</li>
+    <li><b>Tecniche di rilevamento</b> cambiate nel tempo.</li>
+    <li><b>Attribuzione probabilistica</b> invece che deterministica.</li>
+    <li><b>Differenze regionali</b> molto marcate.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>23. Livello del mare</h2>
+  <ul class="unc">
+    <li><b>Mareografi contro satelliti:</b> serie non perfettamente sovrapponibili.</li>
+    <li><b>Movimento verticale locale</b> delle coste.</li>
+    <li><b>Risposta futura delle calotte.</b></li>
+    <li><b>Dinamica dell'Antartide occidentale.</b></li>
+  </ul>
+</section>
+
+<section>
+  <h2>24. Calotte glaciali</h2>
+  <ul class="unc">
+    <li><b>Stabilità dei ghiacciai antartici.</b></li>
+    <li><b>Instabilità delle piattaforme glaciali.</b></li>
+    <li><b>Velocità futura di fusione della Groenlandia.</b></li>
+  </ul>
+</section>
+
+<section>
+  <h2>25. Scenari socioeconomici</h2>
+  <ul class="unc">
+    <li><b>Crescita della popolazione.</b></li>
+    <li><b>Consumi energetici futuri.</b></li>
+    <li><b>Evoluzione tecnologica.</b></li>
+    <li><b>Politiche climatiche future.</b></li>
+    <li><b>Diffusione del nucleare.</b></li>
+    <li><b>Diffusione della cattura della CO₂.</b></li>
+  </ul>
+</section>
+
+<section>
+  <h2>26. Metodi statistici</h2>
+  <ul class="unc">
+    <li><b>Scelta dei modelli statistici.</b></li>
+    <li><b>Scelta dei filtri temporali.</b></li>
+    <li><b>Autocorrelazione</b> delle serie climatiche.</li>
+    <li><b>Multiple testing.</b></li>
+    <li><b>Sensibilità ai criteri di omogeneizzazione.</b></li>
+    <li><b>Correlazione delle incertezze:</b> la propagazione assume errori indipendenti. Se sono correlati, il risultato cambia parecchio. È un'incertezza di secondo livello.</li>
+    <li><b>Persistenza delle revisioni:</b> quanto cambiano i trend tra una versione del dataset e la successiva, stabilità degli archivi nel tempo. Critica metodologica distinta dall'omogeneizzazione.</li>
+  </ul>
+</section>
+
+<!-- =================== APPENDICE =================== -->
+<div class="group" style="margin-top:48px;color:#7a6a8c;border-color:#7a6a8c">Appendice · incertezza epistemica</div>
+<section>
+  <h2>Possibili meccanismi non modellizzati <span class="c">non osservata, non quantificata, fuori scala</span></h2>
+  <p style="color:var(--mut);font-size:14px;margin:0 0 8px">Tenuta separata di proposito. Non è un'incertezza osservata o quantificabile come le altre, ed è vera per qualunque disciplina scientifica. Non entra nella tabella dei punteggi, perché il suo carico non è confrontabile con quello delle voci misurate.</p>
+  <ul class="unc">
+    <li style="background:#f0ecf3;border-left-color:#7a6a8c"><b style="color:#5d4f73">Assunzione implicita:</b> ogni modello suppone di non aver dimenticato un meccanismo importante.</li>
+    <li style="background:#f0ecf3;border-left-color:#7a6a8c"><b style="color:#5d4f73">Precedenti in fisica:</b> storicamente è già successo di trascurare un effetto poi rivelatosi rilevante.</li>
+    <li style="background:#f0ecf3;border-left-color:#7a6a8c"><b style="color:#5d4f73">Quantificazione:</b> difficile per natura, ma epistemicamente reale.</li>
+  </ul>
+</section>
+
+<!-- =================== DISTANZA INFERENZIALE =================== -->
+<a id="distanza"></a>
+<div class="group" style="margin-top:54px">Distanza inferenziale</div>
+<h2 class="big">Quanti passaggi separano la misura dalla conclusione</h2>
+<p style="color:var(--mut);font-size:14.5px;margin:0 0 12px">
+  Invece di discutere la probabilità finale, si conta la <b>lunghezza della catena</b>: quante inferenze stanno tra una misura diretta e una conclusione. Il numero che ne esce è un <b>carico inferenziale</b>, calcolato come Peso × (6 − Fiducia). È un'euristica, non una distanza reale e non una probabilità.
+  <br><br><b>La presenza di molte inferenze non rende falsa una conclusione.</b> Segnala soltanto che quella conclusione non è un fatto direttamente osservato, ma il risultato di una catena di assunzioni, e va trattata con la cautela che una catena lunga richiede. Più ci si allontana dalla misura diretta, più cresce il numero di assunzioni necessarie a sostenere l'affermazione.</p>
+
+<div style="display:flex;flex-direction:column;gap:6px;margin:14px 0">
+  <div style="background:#e8f2eb;border-left:4px solid #2f6d4f;padding:8px 12px;border-radius:0 6px 6px 0;font-size:14px"><b>Livello 0 · Misura diretta</b> — Mauna Loa, Law Dome, temperatura di stazione, mareografo. Misura → dato. Distanza quasi zero.</div>
+  <div style="background:#eef3e6;border-left:4px solid #6f9e5a;padding:8px 12px;border-radius:0 6px 6px 0;font-size:14px"><b>Livello 1 · Grandezza derivata</b> — temperatura media globale, OHC, trend satellitare. Misure → correzioni → dato globale. 2-3 passaggi.</div>
+  <div style="background:#fbf2df;border-left:4px solid #c9a227;padding:8px 12px;border-radius:0 6px 6px 0;font-size:14px"><b>Livello 2 · Bilancio energetico</b> — misure → dataset globali → forzanti → bilancio. 4-5 passaggi.</div>
+  <div style="background:#fbede0;border-left:4px solid #e08a2b;padding:8px 12px;border-radius:0 6px 6px 0;font-size:14px"><b>Livello 3 · Attribuzione</b> — misure → ricostruzione globale → forzanti → variabilità naturale → fingerprinting → quota antropica. 6-8 passaggi.</div>
+  <div style="background:#fbeae6;border-left:4px solid #cf4520;padding:8px 12px;border-radius:0 6px 6px 0;font-size:14px"><b>Livello 4 · Proiezione</b> — misure → attribuzione → ECS → feedback → nuvole → scenari SSP → proiezione 2100. 10+ passaggi.</div>
+</div>
+
+<div class="scroll"><table>
+  <thead><tr>
+    <th>Affermazione</th><th class="num">Livello</th><th class="num">Passi</th><th class="num">Carico inferenziale</th><th>Cancelli inferenziali aggiunti</th>
+  </tr></thead>
+  <tbody style="font-size:13.5px">
+    <tr><td class="voce">CO₂ = 421 ppm</td><td class="num">0</td><td class="num">1</td><td class="num"><span class="pill" style="background:#3f8f4a">1</span></td><td>misura diretta</td></tr>
+    <tr><td class="voce">Temperatura globale +1,2 °C</td><td class="num">1</td><td class="num">3</td><td class="num"><span class="pill" style="background:#9a9a35">≈13</span></td><td>rappresentatività globale (12)</td></tr>
+    <tr><td class="voce">Squilibrio energetico +0,85 W/m²</td><td class="num">2</td><td class="num">5</td><td class="num"><span class="pill" style="background:#c9a227">≈25</span></td><td>+ forzante GHG (2), aerosol (6), bilancio (4)</td></tr>
+    <tr><td class="voce">Stima della quota antropica (oltre la metà)</td><td class="num">3</td><td class="num">7</td><td class="num"><span class="pill" style="background:#e08a2b">≈49</span></td><td>+ variabilità naturale (12), modelli di attribuzione (12)</td></tr>
+    <tr><td class="voce">Quantificazione precisa della quota antropica</td><td class="num">3</td><td class="num">8</td><td class="num"><span class="pill" style="background:#d2511f">60&ndash;73</span></td><td>+ quota multi-causale (12), correlazione errori (12)</td></tr>
+    <tr><td class="voce">+3 °C nel 2100</td><td class="num">4</td><td class="num">12+</td><td class="num"><span class="pill" style="background:#a8341f">≫100</span></td><td>+ ECS, nuvole, feedback, scenari SSP</td></tr>
+  </tbody>
+</table></div>
+
+<p style="background:#f1ece1;border:1px solid var(--line);border-radius:8px;padding:12px 14px;font-size:13.5px;color:#4a443b;margin-top:14px">
+  <b>Due avvertenze, per non gonfiare l'indice.</b><br>
+  1. La distanza <b>non è</b> la probabilità di sbagliare. Una catena lunga può restare robusta se molte vie indipendenti portano allo stesso punto. L'indice misura il <b>carico inferenziale</b>, cioè quante assunzioni servono, non se la conclusione è giusta.<br>
+  2. Il costo dei cancelli è il loro stesso peso sull'attribuzione. Quindi sommare verso l'attribuzione è in parte auto-referenziale: questo è un <b>budget di incertezza lungo il percorso</b>, più che una distanza neutra. Il numero di passi (colonna "Passi") è invece neutro.</p>
+
+<!-- =================== TABELLA =================== -->
+<a id="tabella"></a>
+<div class="group" style="margin-top:54px">Tabella ordinabile</div>
+<h2 class="big">Voci con valore, peso e priorità</h2>
+<div class="formula">
+  <code>Prio. proiezione = Peso proiez × (6 − Fiducia)</code> &nbsp;·&nbsp;
+  <code>Prio. attribuzione = Peso attrib × (6 − Fiducia)</code><br>
+  Scala 1 a 25. Euristica di giudizio, non misura. Clicca un'intestazione per riordinare.
+</div>
+<div style="margin:14px 0;font-size:13px;display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+  <b style="color:var(--mut)">Classe:</b>
+  <span><span class="pill" style="background:#2f6d4f">MIS</span> misurata e quantificata</span>
+  <span><span class="pill" style="background:#b8902a">Q-A</span> quantificata ma ampia</span>
+  <span><span class="pill" style="background:#d98b2b">STR</span> strutturale (modello/processo)</span>
+  <span><span class="pill" style="background:#5a6b8c">SCE</span> scelta umana</span>
+</div>
+<div class="scroll"><table id="t">
+  <thead>
+    <tr>
+      <th data-k="voce">Voce <span class="ar">▲▼</span></th>
+      <th data-k="cl" class="num">Classe</th>
+      <th data-k="indip" class="num">Indip.</th>
+      <th data-k="fase" class="num">Influisce su</th>
+      <th data-k="val">Valore</th>
+      <th data-k="err">Errore</th>
+      <th data-k="fid" class="num">Fid. <span class="ar">▲▼</span></th>
+      <th data-k="att" class="num">P.attr <span class="ar">▲▼</span></th>
+      <th data-k="proj" class="num">P.proj <span class="ar">▲▼</span></th>
+      <th data-k="pa" class="num">Prio attrib <span class="ar">▲▼</span></th>
+      <th data-k="pp" class="num">Prio proiez <span class="ar">▲▼</span></th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table></div>
+<p class="legend"><b>Classe</b>: misurato (MIS), quantificato ma ampio (Q-A), strutturale (STR), scelta umana (SCE). L'incertezza epistemica (meccanismi non modellizzati) è in appendice, fuori dalla tabella perché non confrontabile. &nbsp; <b>Indip.</b>: <i>indip</i> = errore proprio e isolato, <i>corr</i> = correlato con altre voci, <i>deriv</i> = grandezza costruita sopra altre. &nbsp; <b>Influisce su</b>: <i>oss</i> osservazione, <i>attr</i> attribuzione, <i>proj</i> proiezione. La distanza dalla misura diretta cresce passando da oss a attr a proj.</p>
+
+<footer>
+  Fonti dei dati: NASA GISTEMP v4, Temperature 12k (Kaufman et al. 2020), Law Dome (Rubino et al. 2019), Mauna Loa (NOAA GML), Ocean Heat Content (NOAA NCEI), forzanti IPCC AR6 (Smith e Forster 2021). I valori di incertezza vengono dai dati analizzati localmente. I pesi 1-5 sono una valutazione, non una misura.
+</footer>
+
+</div>
+
+<script>
+const data=[
+ {voce:"Tipping points",cl:"str",indip:"derivata",fase:"proj",val:"n/q",err:"n/q",fid:1,att:1,proj:5},
+ {voce:"Feedback delle nuvole",cl:"str",indip:"correlata",fase:"proj",val:"n/q",err:"n/q",fid:2,att:1,proj:5},
+ {voce:"Calotte glaciali future",cl:"str",indip:"derivata",fase:"proj",val:"n/q",err:"n/q",fid:2,att:1,proj:5},
+ {voce:"Sensibilità climatica (ECS)",cl:"qa",indip:"derivata",fase:"proj",val:"3,25 °C",err:"±23%",fid:3,att:1,proj:5},
+ {voce:"Aerosol",cl:"qa",indip:"correlata",fase:"attr",val:"−1,06 W/m²",err:"±61%",fid:3,att:2,proj:5},
+ {voce:"Ciclo del carbonio futuro",cl:"str",indip:"derivata",fase:"proj",val:"n/q",err:"n/q",fid:2,att:1,proj:4},
+ {voce:"Metano / permafrost",cl:"str",indip:"derivata",fase:"proj",val:"n/q",err:"n/q",fid:2,att:1,proj:4},
+ {voce:"Variabilità interna a bassa frequenza (AMO/PDO e oltre)",cl:"str",indip:"correlata",fase:"attr",val:"n/q",err:"n/q",fid:2,att:3,proj:3},
+ {voce:"Teleconnessioni (ENSO/NAO/AO)",cl:"str",indip:"correlata",fase:"attr",val:"n/q",err:"n/q",fid:2,att:3,proj:3},
+ {voce:"Oceani profondi (<2000 m)",cl:"str",indip:"correlata",fase:"oss",val:"poco noto",err:"~",fid:3,att:2,proj:3},
+ {voce:"Attribuzione eventi estremi",cl:"str",indip:"derivata",fase:"attr",val:"probabilistica",err:"n/q",fid:3,att:1,proj:3},
+ {voce:"Precipitazioni e umidità",cl:"qa",indip:"indipendente",fase:"oss",val:"n/q",err:"grande",fid:2,att:2,proj:3},
+ {voce:"Proxy paleo (Olocene)",cl:"qa",indip:"derivata",fase:"oss",val:"+0,97 °C",err:"±49%",fid:2,att:2,proj:2},
+ {voce:"Satelliti (UAH/RSS)",cl:"mis",indip:"indipendente",fase:"oss",val:"trend",err:"~±0,1 °C/dec",fid:3,att:2,proj:2},
+ {voce:"Squilibrio energetico",cl:"mis",indip:"derivata",fase:"attr",val:"0,85 W/m²",err:"±18%",fid:4,att:2,proj:2},
+ {voce:"Forzante gas serra",cl:"mis",indip:"derivata",fase:"attr",val:"+3,84 W/m²",err:"±11%",fid:4,att:1,proj:2},
+ {voce:"Uso del suolo (forzante regionale)",cl:"str",indip:"derivata",fase:"attr",val:"regionale",err:"n/q",fid:3,att:2,proj:2},
+ {voce:"Vulcanismo storico",cl:"qa",indip:"derivata",fase:"attr",val:"ricostruito",err:"grande",fid:2,att:3,proj:2},
+ {voce:"Temperatura globale moderna",cl:"mis",indip:"derivata",fase:"oss",val:"anomalia",err:"±0,05 °C",fid:5,att:1,proj:1},
+ {voce:"Giuntura ghiaccio-aria",cl:"mis",indip:"derivata",fase:"oss",val:"~2 ppm",err:"scarto",fid:4,att:1,proj:1},
+ {voce:"Scenari socioeconomici",cl:"sce",indip:"indipendente",fase:"proj",val:"scelta",err:"scelta",fid:null,att:1,proj:5},
+ {voce:"Rappresentatività globale del campione",cl:"str",indip:"correlata",fase:"oss",val:"costruzione statistica",err:"grande nel passato",fid:2,att:3,proj:1},
+ {voce:"Attribuzione antropica (quota, da modelli)",cl:"str",indip:"derivata",fase:"attr",val:"inferenza",err:"metodo-dipendente",fid:3,att:4,proj:2},
+ {voce:"Separazione osservazione/modello",cl:"str",indip:"correlata",fase:"oss",val:"n/q",err:"n/q",fid:2,att:3,proj:2},
+ {voce:"Correlazione delle incertezze (indipendenza?)",cl:"str",indip:"correlata",fase:"attr",val:"n/q",err:"n/q",fid:2,att:3,proj:3},
+ {voce:"Copertura oceanica del XIX secolo",cl:"str",indip:"correlata",fase:"oss",val:"n/q",err:"grande",fid:2,att:3,proj:1},
+ {voce:"Dati pre-1950 (guerre, copertura, strumenti)",cl:"str",indip:"correlata",fase:"oss",val:"n/q",err:"grande",fid:2,att:3,proj:1},
+ {voce:"Feedback biologici (fertilizzazione CO₂)",cl:"str",indip:"derivata",fase:"proj",val:"n/q",err:"n/q",fid:2,att:1,proj:4},
+ {voce:"Stazionarietà dei feedback (ECS storica vs futura)",cl:"str",indip:"derivata",fase:"proj",val:"n/q",err:"n/q",fid:2,att:1,proj:4},
+ {voce:"Effetto isola di calore urbana (UHI)",cl:"str",indip:"correlata",fase:"oss",val:"n/q",err:"piccolo-medio",fid:3,att:2,proj:1},
+ {voce:"Persistenza delle revisioni dei dataset",cl:"str",indip:"correlata",fase:"oss",val:"n/q",err:"piccola",fid:3,att:2,proj:1},
+ {voce:"Selezione delle stazioni",cl:"str",indip:"correlata",fase:"oss",val:"n/q",err:"piccola",fid:3,att:2,proj:1},
+];
+data.forEach(d=>{ d.pp=d.fid===null?null:d.proj*(6-d.fid); d.pa=d.fid===null?null:d.att*(6-d.fid); });
+const tb=document.querySelector("#t tbody");
+function heat(p){ if(p===null) return "#bbb";
+  const t=Math.max(0,Math.min(1,(p-1)/24));
+  return `rgb(${Math.round(70+t*165)},${Math.round(150-t*110)},${Math.round(80-t*30)})`; }
+const peso=v=>`<span class="pill" style="background:${["#9aa","#7a9e6f","#c9a227","#e08a2b","#cf4520"][v-1]}">${v}</span>`;
+const CLS={mis:["MIS","#2f6d4f"],qa:["Q-A","#b8902a"],str:["STR","#d98b2b"],epi:["EPI","#a8341f"],sce:["SCE","#5a6b8c"]};
+const INDIP={indipendente:["indip","#2f6d4f"],correlata:["corr","#c9a227"],derivata:["deriv","#d98b2b"],na:["—","#999"]};
+const FASE={oss:["oss","#3a6ea5"],attr:["attr","#d98b2b"],proj:["proj","#a8341f"]};
+function render(rows){
+  tb.innerHTML="";
+  rows.forEach(d=>{
+    const tr=document.createElement("tr");
+    if(d.fid===null) tr.className="scenario";
+    tr.innerHTML=`<td class="voce">${d.voce}</td>
+      <td class="num"><span class="pill" style="background:${CLS[d.cl][1]}">${CLS[d.cl][0]}</span></td>
+      <td class="num"><span class="pill" style="background:${INDIP[d.indip][1]}">${INDIP[d.indip][0]}</span></td>
+      <td class="num"><span class="pill" style="background:${FASE[d.fase][1]}">${FASE[d.fase][0]}</span></td>
+      <td>${d.val}</td><td>${d.err}</td>
+      <td class="num">${d.fid===null?"—":d.fid}</td>
+      <td class="num">${peso(d.att)}</td><td class="num">${peso(d.proj)}</td>
+      <td class="num"><span class="pill" style="background:${heat(d.pa)}">${d.pa===null?"—":d.pa}</span></td>
+      <td class="num"><span class="pill" style="background:${heat(d.pp)}">${d.pp===null?"scelta":d.pp}</span></td>`;
+    tb.appendChild(tr);
+  });
+}
+let asc={};
+function sortBy(k){
+  asc[k]=!asc[k];
+  const s=[...data].sort((a,b)=>{
+    let x=a[k]??-1,y=b[k]??-1;
+    if(typeof x==="string") return asc[k]? x.localeCompare(y): y.localeCompare(x);
+    return asc[k]? x-y : y-x;
+  });
+  render(s);
+}
+document.querySelectorAll("th").forEach(th=>th.onclick=()=>sortBy(th.dataset.k));
+render([...data].sort((a,b)=>(b.pp??-1)-(a.pp??-1)));
+</script>
+</body>
+</html>

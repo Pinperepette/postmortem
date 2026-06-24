@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="it"><head><meta charset="UTF-8">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1200px;height:630px;overflow:hidden}
+  body{background:radial-gradient(circle at 16% 0%,#2a2114,#0d1117 62%);color:#e6edf3;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    padding:50px 56px;display:flex;flex-direction:column;justify-content:space-between}
+  .kick{color:#d98b2b;font-size:18px;font-weight:800;letter-spacing:4px;text-transform:uppercase}
+  h1{font-size:62px;line-height:1.03;letter-spacing:-1.6px;margin:12px 0 4px;font-weight:800}
+  h1 .em{color:#e0a04a}
+  .sub{color:#9aa6b2;font-size:23px;max-width:760px;margin-top:14px;line-height:1.35}
+  .kpis{display:flex;gap:14px;margin-top:8px}
+  .kpi{background:#161b22;border:1px solid #2a3340;border-radius:14px;padding:12px 20px}
+  .kpi .n{font-size:30px;font-weight:800;letter-spacing:-1px;color:#e0a04a}
+  .kpi .l{color:#8b98a5;font-size:13px;margin-top:1px}
+  .bar{display:flex;margin-top:6px;border-radius:12px;overflow:hidden;border:1px solid #2a3340}
+  .seg{padding:14px 18px;color:#0d1117;font-weight:800;font-size:17px;display:flex;flex-direction:column;gap:2px}
+  .seg small{font-weight:700;font-size:12px;opacity:.8}
+  .s1{background:#3fb06f;flex:1}
+  .s2{background:#e0a04a;flex:1.3}
+  .s3{background:#cf5b3b;flex:1.7;color:#fff}
+  .foot{display:flex;justify-content:space-between;align-items:flex-end;color:#8b98a5;font-size:16px}
+  .note{max-width:740px;line-height:1.35;color:#aeb8c2;font-size:16px}
+  .brand{color:#d98b2b;font-weight:800;letter-spacing:1px}
+</style></head>
+<body>
+  <div>
+    <div class="kick">Incertezze climatiche</div>
+    <h1>Dove si trova l'incertezza,<br>e quanto è <span class="em">lontana dalla misura</span></h1>
+    <div class="sub">Inventario di ~120 fonti di incertezza, classificate per tipo e per distanza dalla misura diretta.</div>
+    <div class="kpis">
+      <div class="kpi"><div class="n">~120</div><div class="l">voci</div></div>
+      <div class="kpi"><div class="n">4</div><div class="l">classi</div></div>
+      <div class="kpi"><div class="n">1 → 73</div><div class="l">carico inferenziale</div></div>
+    </div>
+  </div>
+
+  <div class="bar">
+    <div class="seg s1">Osservazione<small>misura diretta · carico ~1</small></div>
+    <div class="seg s2">Attribuzione<small>+ inferenze · carico crescente</small></div>
+    <div class="seg s3">Proiezione<small>+ feedback e scenari · carico massimo</small></div>
+  </div>
+
+  <div class="foot">
+    <div class="note">Non per negare il riscaldamento. La presenza di molte incertezze non rende falsa una conclusione: segnala solo che non è un fatto direttamente osservato.</div>
+    <div class="brand">postmortem</div>
+  </div>
+</body></html>

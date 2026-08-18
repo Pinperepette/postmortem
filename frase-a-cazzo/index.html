@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Frase a cazzo</title>
+<meta name="description" content="Inserisci un termine, esce la frase. Pronta per X.">
+<meta property="og:title" content="Frase a cazzo">
+<meta property="og:description" content="Inserisci un termine, esce la frase. Pronta per X.">
+<meta name="twitter:card" content="summary">
+<style>
+  :root{
+    --bg:#0e1116; --card:#161b22; --line:#2a313a; --fg:#e6edf3;
+    --mut:#8b949e; --acc:#4aa3ff; --accfg:#0b0f14;
+  }
+  @media (prefers-color-scheme: light){
+    :root{ --bg:#f6f7f9; --card:#fff; --line:#e2e5ea; --fg:#14181d;
+           --mut:#6a737d; --acc:#1a72d6; --accfg:#fff; }
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--fg);
+    font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    display:flex; justify-content:center; padding:48px 18px;
+  }
+  .wrap{width:100%; max-width:620px}
+  h1{font-size:26px; margin:0 0 6px; letter-spacing:-.02em}
+  .sub{color:var(--mut); font-size:14px; margin:0 0 26px}
+  label{display:block; font-size:13px; color:var(--mut); margin:0 0 8px}
+  .row{display:flex; gap:10px; flex-wrap:wrap}
+  input[type=text]{
+    flex:1 1 240px; min-width:0; padding:13px 14px; font-size:16px;
+    background:var(--card); color:var(--fg);
+    border:1px solid var(--line); border-radius:10px; outline:none;
+  }
+  input[type=text]:focus{border-color:var(--acc)}
+  button{
+    font:inherit; font-weight:600; padding:13px 20px; border-radius:10px;
+    border:1px solid var(--line); background:var(--card); color:var(--fg); cursor:pointer;
+  }
+  button:hover{border-color:var(--acc)}
+  button.primary{background:var(--acc); color:var(--accfg); border-color:var(--acc)}
+  button:disabled{opacity:.45; cursor:not-allowed}
+  .out{
+    margin-top:26px; background:var(--card); border:1px solid var(--line);
+    border-radius:12px; padding:18px 18px 16px;
+  }
+  pre{
+    margin:0; white-space:pre-wrap; word-wrap:break-word;
+    font:15px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  .meta{display:flex; justify-content:space-between; align-items:center;
+        margin-top:14px; padding-top:12px; border-top:1px solid var(--line);
+        font-size:12.5px; color:var(--mut)}
+  .meta .over{color:#f85149; font-weight:600}
+  footer{margin-top:34px; color:var(--mut); font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Frase a cazzo</h1>
+  <p class="sub">Metti una parola al posto di “woke”. Il resto viene da sé.</p>
+
+  <label for="term">Termine</label>
+  <div class="row">
+    <input id="term" type="text" placeholder="es. nazzismo" autocomplete="off" autofocus>
+    <button id="post" class="primary">Post</button>
+  </div>
+
+  <div class="out">
+    <pre id="preview"></pre>
+    <div class="meta">
+      <span id="count">0 caratteri</span>
+      <span id="hint">Invio per postare</span>
+    </div>
+  </div>
+
+  <footer>Pagina statica, niente server, niente tracciamento.</footer>
+
+</div>
+
+<script>
+(function(){
+  var TPL =
+    'Ora dico una cosa fuori moda.\n' +
+    'I fondamenti della buona educazione e del rispetto sono sostanzialmente quello che alcuni definiscono {X}.\n' +
+    'Se vi fa piacere, non lo chiamiamo {X}.\n\n' +
+    'Ma io sono attaccata come una cozza alla buona educazione e al senso del rispetto datomi dai miei.';
+
+  var termEl = document.getElementById('term');
+  var preEl  = document.getElementById('preview');
+  var cntEl  = document.getElementById('count');
+  var postEl = document.getElementById('post');
+
+  function capitalize(s){
+    return s.charAt(0).toLocaleUpperCase('it-IT') + s.slice(1);
+  }
+
+  function build(){
+    var t = termEl.value.trim().replace(/[.,;:!?]+$/,'');
+    return TPL.replace(/\{X\}/g, t ? capitalize(t) : 'woke');
+  }
+
+  function render(){
+    var txt = build();
+    preEl.textContent = txt;
+    var n = Array.from(txt).length;
+    cntEl.textContent = n + ' caratteri';
+    cntEl.className = n > 280 ? 'over' : '';
+    postEl.disabled = !termEl.value.trim();
+    return txt;
+  }
+
+  function post(){
+    if (!termEl.value.trim()) { termEl.focus(); return; }
+    var url = 'https://x.com/intent/post?text=' + encodeURIComponent(build());
+    window.open(url, '_blank', 'noopener');
+  }
+
+  termEl.addEventListener('input', render);
+  termEl.addEventListener('keydown', function(e){ if (e.key === 'Enter') post(); });
+  postEl.addEventListener('click', post);
+
+  render();
+})();
+</script>
+</body>
+</html>

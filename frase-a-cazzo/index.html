@@ -112,10 +112,29 @@
     return txt;
   }
 
+  var MOBILE = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
   function post(){
     if (!termEl.value.trim()) { termEl.focus(); return; }
-    var url = 'https://x.com/intent/post?text=' + encodeURIComponent(build());
-    window.open(url, '_blank', 'noopener');
+    var txt = build();
+    var web = 'https://x.com/intent/post?text=' + encodeURIComponent(txt);
+
+    // Desktop: scheda nuova sul compositore web.
+    if (!MOBILE) { window.open(web, '_blank', 'noopener'); return; }
+
+    // Mobile: prova l'app, e se non risponde entro un attimo ripiega sul web.
+    var left = false;
+    var fallback = setTimeout(function(){
+      if (!left && !document.hidden) window.location.href = web;
+    }, 900);
+    function cancel(){ left = true; clearTimeout(fallback); }
+    window.addEventListener('pagehide', cancel, {once:true});
+    window.addEventListener('blur', cancel, {once:true});
+    document.addEventListener('visibilitychange', function(){
+      if (document.hidden) cancel();
+    }, {once:true});
+
+    window.location.href = 'twitter://post?message=' + encodeURIComponent(txt);
   }
 
   termEl.addEventListener('input', render);
